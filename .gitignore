@@ -1,0 +1,18 @@
+# build/test jenkins environment folders
+/node
+/etc
+
+# dependencies
+/node_modules
+
+# testing
+/coverage
+
+# production
+/build
+
+# debug logs
+npm-debug.log*
+
+# misc
+/.idea
