@@ -1,27 +1,12 @@
-import React, { Component, Fragment } from "react"
+import React, { Component } from "react"
 import PropTypes from "prop-types"
-import {
-    bindActionCreators,
-    compose,
-} from "redux"
+import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
-import {
-    Redirect,
-    Route,
-} from "react-router-dom"
-
-import { emoji } from "../../lib/utils"
-
-import {
-    Paper,
-    Typography,
-} from "@material-ui/core"
-
-import {
-    ConnectedSwitch as Switch,
-    resolvePath,
-} from "../FusionRouter"
+import { Redirect, Route } from "react-router-dom"
+import { Paper, Typography } from "@material-ui/core"
+import { ConnectedSwitch as Switch, resolvePath } from "../FusionRouter"
+import { Motion, presets, spring } from "react-motion"
 
 
 
@@ -71,21 +56,24 @@ export default compose(
             ({ classes, }) =>
                 <Switch>
                     <Route exact path={this.rr(".")}>
-                        <Fragment>
-                            <Paper className={classes.paperCanvas}>
-                                <Typography noWrap>
-                                    <span className={classes.emoji}>
-                                        <emoji.Bomb />
-                                    </span>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    Hello, <b>FUSION-UserManagement</b>!
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span className={classes.emoji}>
-                                        <emoji.Boom />
-                                    </span>
-                                </Typography>
-                            </Paper>
-                        </Fragment>
+
+                        <Paper className={classes.paperCanvas}>
+                            <Motion defaultStyle={{ x: -10, }}
+                                style={{ x: spring(5, presets.gentle), }}
+                            >
+                                {value =>
+                                    <Typography style={{
+                                        position: "relative",
+                                        WebkitTransform: `translate(${value.x}px, 0)`,
+                                        transform: `translate(${value.x}px, 0)`,
+                                    }} variant="title"
+                                    >
+                                        Hello Galaxy
+                                    </Typography>
+                                }
+                            </Motion>
+                        </Paper>
+
                     </Route>
                     <Redirect to={this.rr(".")} />
                 </Switch>
