@@ -72,3 +72,51 @@ select:-webkit-autofill:focus {
 .content-flex-end {
     justify-content: flex-end;
 }
+
+.p-r {
+    padding-right: 1em;
+}
+
+.p-l {
+    padding-left: 1em;
+}
+
+.p-r-small {
+    padding-right: 0.5em;
+}
+
+.p-l-small {
+    padding-left: 0.5em;
+}
+
+.p-r-tiny {
+    padding-right: 0.3em;
+}
+
+.p-l-tiny {
+    padding-left: 0.3em;
+}
+
+.m-l {
+    margin-left: 1em;
+}
+
+.m-r {
+    margin-right: 1em;
+}
+
+.m-l-small {
+    margin-left: 0.5em;
+}
+
+.m-r-small {
+    margin-right: 0.5em;
+}
+
+.m-l-tiny {
+    margin-left: 0.3em;
+}
+
+.m-r-tiny {
+    margin-right: 0.3em;
+}
