@@ -7,7 +7,11 @@ import {
 import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
 import {
+    AccountBalance, Contacts, CreditCard, EuroSymbol,
+} from "@material-ui/icons"
+import {
     AppBar,
+    Hidden,
     IconButton,
     Toolbar,
     Typography,
@@ -24,14 +28,6 @@ import { env } from "../Fusion"
 // <AppBar> component
 export default compose(
     withStyles((theme) => ({
-
-        root: {
-            display: "flex",
-            flexGrow: 1,
-            height: "100%",
-            overflow: "hidden",
-            position: "relative",
-        },
 
         appBar: {
             zIndex: theme.zIndex.drawer + 1,
@@ -50,9 +46,18 @@ export default compose(
             }),
         },
 
+        toolbarRoot: {
+            display: "block",
+        },
+
         appLogo: {
             ...theme.fusion.appLogo,
             marginRight: 36,
+        },
+
+        appLogoSm: {
+            ...theme.fusion.appLogoSm,
+            margin: "0 1em 0 0.75em",
         },
 
         menuButton: {
@@ -63,21 +68,6 @@ export default compose(
         hide: { display: "none", },
 
         iconButtonShift: { marginRight: 12, },
-
-        toolbar: {
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-end",
-            padding: "0 8px",
-            ...theme.mixins.toolbar,
-        },
-
-        content: {
-            flexGrow: 1,
-            backgroundColor: theme.palette.background.default,
-            padding: theme.spacing.unit * 3,
-            overflowY: "auto",
-        },
 
         version: {
             fontSize: "0.7rem",
@@ -121,75 +111,105 @@ export default compose(
         render = () => (
             ({ classes, authenticated, }, { open, }) =>
                 <Fragment>
-                    <AppBar
-                        position="absolute"
-                        className={
-                            classNames(
-                                classes.appBar,
-                                open && classes.appBarShift
-                            )
-                        }
-                    >
-                        <Toolbar
-                            disableGutters={!open}
+                    <Hidden smDown>
+                        <AppBar
+                            position="absolute"
+                            className={
+                                classNames(
+                                    classes.appBar,
+                                    open && classes.appBarShift
+                                )
+                            }
                         >
-                            <IconButton
-                                color="inherit"
-                                aria-label="open drawer"
-                                onClick={this.handleDrawerOpen}
-                                className={
-                                    classNames(
-                                        classes.menuButton,
-                                        open && classes.hide
-                                    )
-                                }
+                            <Toolbar
+                                disableGutters={!open}
                             >
-                                <MenuIcon />
-                            </IconButton>
-                            <div style={{
-                                width: "100%", display: "flex",
-                                alignItems: "center",
-                            }}
-                            >
-                                <img
-                                    className={classes.appLogo}
-                                    src={logo} alt="logo"
-                                />
-                                <Typography
-                                    variant="title"
+                                <IconButton
                                     color="inherit"
-                                    noWrap
+                                    aria-label="open drawer"
+                                    onClick={this.handleDrawerOpen}
+                                    className={
+                                        classNames(
+                                            classes.menuButton,
+                                            open && classes.hide
+                                        )
+                                    }
                                 >
-                                    {env.appVisName}
-                                    <Typography align="center"
-                                        variant="caption"
-                                        noWrap
-                                        classes={{ caption: classes.caption, }}
-                                    >
-                                        v.{env.appVersion}
-                                    </Typography>
-                                </Typography>
-                            </div>
-                            <div
-                                className={
-                                    classNames(
-                                        classes.menuButton,
-                                        open && classes.iconButtonShift
-                                    )
-                                }
-                                style={{
-                                    display: "flex", alignItems: "center",
+                                    <MenuIcon />
+                                </IconButton>
+                                <div style={{
+                                    width: "100%", display: "flex",
+                                    alignItems: "center",
                                 }}
-                            >
-                                {authenticated ? <UserMenu /> : null}
-                            </div>
-                        </Toolbar>
-                    </AppBar>
+                                >
+                                    <img
+                                        className={classes.appLogo}
+                                        src={logo} alt="logo"
+                                    />
+                                    <Typography
+                                        variant="title"
+                                        color="inherit"
+                                        noWrap
+                                    >
+                                        {env.appVisName}
+                                        <Typography align="center"
+                                            variant="caption"
+                                            noWrap
+                                            classes={{ caption: classes.caption, }}
+                                        >
+                                            v.{env.appVersion}
+                                        </Typography>
+                                    </Typography>
+                                </div>
+                                <div
+                                    className={
+                                        classNames(
+                                            classes.menuButton,
+                                            open && classes.iconButtonShift
+                                        )
+                                    }
+                                    style={{
+                                        display: "flex", alignItems: "center",
+                                    }}
+                                >
+                                    {authenticated ? <UserMenu /> : null}
+                                </div>
+                            </Toolbar>
+                        </AppBar>
 
-                    <DashboardDrawer
-                        open={open}
-                        handleDrawerClose={this.handleDrawerClose}
-                    />
+                        <DashboardDrawer
+                            open={open}
+                            handleDrawerClose={this.handleDrawerClose}
+                        />
+                    </Hidden>
+
+                    <Hidden mdUp>
+                        <AppBar
+                            position="absolute"
+                            className={classes.appBar}
+                        >
+                            <Toolbar
+                                disableGutters={true}
+                                variant="dense"
+                                classes={{ root: classes.toolbarRoot, }}
+                            >
+                                <div className="flex-box-row space-between items-centered">
+                                    <div className="flex-box-row items-centered">
+                                        <img
+                                            className={classes.appLogoSm}
+                                            src={logo} alt="logo"
+                                        />
+                                        <EuroSymbol className="m-r" />
+                                        <CreditCard className="m-r" />
+                                        <AccountBalance className="m-r" />
+                                        <Contacts />
+
+                                    </div>
+                                    {authenticated && <UserMenu />}
+                                </div>
+                            </Toolbar>
+                        </AppBar>
+                    </Hidden>
 
                 </Fragment>
         )(this.props, this.state)

@@ -4,7 +4,9 @@ import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
 import AccountCircle from "@material-ui/icons/AccountCircle"
-import { IconButton, Menu, MenuItem, Typography } from "@material-ui/core"
+import {
+    Hidden, IconButton, Menu, MenuItem, Typography,
+} from "@material-ui/core"
 import { action as AuthActions } from "../../redux/Auth"
 import { action as GroupManagementActions } from "../../redux/GroupManagement"
 
@@ -77,11 +79,11 @@ class UserMenu extends Component {
                         this.handleClose(event, this.logout)}
                     >Logout</MenuItem>
                 </Menu>
-                <Typography variant="caption" noWrap
-                    color="inherit"
-                >
-                    {this.props.userFullName}
-                </Typography>
+                <Hidden smDown>
+                    <Typography variant="caption" noWrap color="inherit">
+                        {this.props.userFullName}
+                    </Typography>
+                </Hidden>
             </Fragment>
         )
     }

@@ -3,8 +3,6 @@ import PropTypes from "prop-types"
 import { compose } from "redux"
 import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
-import { Hidden } from "@material-ui/core"
-import { env } from "../Fusion"
 import DashboardContent from "./DashboardContent"
 import AppBar from "../AppBar"
 import "./index.css"
@@ -24,37 +22,6 @@ export default compose(
             position: "relative",
         },
 
-        appBar: {
-            zIndex: theme.zIndex.drawer + 1,
-            transition: theme.transitions.create(["width", "margin",], {
-                easing: theme.transitions.easing.easeIn,
-                duration: theme.transitions.duration.leavingScreen,
-            }),
-        },
-
-        appBarShift: {
-            marginLeft: env.drawerWidth,
-            width: `calc(100% - ${env.drawerWidth}px)`,
-            transition: theme.transitions.create(["width", "margin",], {
-                easing: theme.transitions.easing.easeIn,
-                duration: theme.transitions.duration.enteringScreen,
-            }),
-        },
-
-        appLogo: {
-            ...theme.fusion.appLogo,
-            marginRight: 36,
-        },
-
-        menuButton: {
-            marginLeft: 12,
-            marginRight: 36,
-        },
-
-        hide: { display: "none", },
-
-        iconButtonShift: { marginRight: 12, },
-
         toolbar: {
             display: "flex",
             alignItems: "center",
@@ -68,15 +35,6 @@ export default compose(
             backgroundColor: theme.palette.background.default,
             padding: theme.spacing.unit * 1.5,
             overflowY: "auto",
-        },
-
-        version: {
-            fontSize: "0.7rem",
-            color: "white",
-        },
-
-        caption: {
-            color: theme.palette.secondary.faded,
         },
 
     })),
@@ -98,12 +56,12 @@ export default compose(
             ({ classes, }) =>
                 <div className={classes.root}>
 
-                    <Hidden smDown>
-                        <AppBar />
-                    </Hidden>
+                    <AppBar />
 
                     <main className={classes.content}>
+
                         <div className={classes.toolbar} />
+
                         <DashboardContent />
                     </main>
 
