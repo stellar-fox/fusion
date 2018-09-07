@@ -22,7 +22,6 @@ export default compose(
         },
 
         paperCanvas: {
-            backgroundColor: "rgb(156, 157, 162)",
             padding: "10px",
         },
 
@@ -80,7 +79,7 @@ export default compose(
                                 H2 Roboto Condensed
                             </Typography>
                             <Typography variant="display3">
-                                H3 Eczar
+                                H3 Eczar $ 12,345.67890
                             </Typography>
                             <Typography variant="display4">
                                 H4 Roboto Condensed
@@ -95,7 +94,7 @@ export default compose(
                                 Subtitle1 (subheading) Roboto Condensed
                             </Typography>
                             <Typography variant="body1">
-                                Body1 Eczar
+                                Body1 Eczar $ 12,345.67890
                             </Typography>
                             <Typography variant="body2">
                                 Body2 Roboto Condensed

@@ -147,16 +147,12 @@ export default compose(
                                         src={logo} alt="logo"
                                     />
                                     <Typography
-                                        variant="title"
+                                        variant="headline"
                                         color="inherit"
                                         noWrap
                                     >
                                         {env.appVisName}
-                                        <Typography align="center"
-                                            variant="caption"
-                                            noWrap
-                                            classes={{ caption: classes.caption, }}
-                                        >
+                                        <Typography variant="caption">
                                             v.{env.appVersion}
                                         </Typography>
                                     </Typography>
