@@ -68,10 +68,53 @@ export default compose(
                                         transform: `translate(${value.x}px, 0)`,
                                     }} variant="title"
                                     >
-                                        Hello Galaxy
+                                        Typography
                                     </Typography>
                                 }
                             </Motion>
+
+                            <Typography variant="display1">
+                                H1 Roboto Condensed
+                            </Typography>
+                            <Typography variant="display2">
+                                H2 Roboto Condensed
+                            </Typography>
+                            <Typography variant="display3">
+                                H3 Eczar
+                            </Typography>
+                            <Typography variant="display4">
+                                H4 Roboto Condensed
+                            </Typography>
+                            <Typography variant="headline">
+                                H5 (headline) Roboto Condensed
+                            </Typography>
+                            <Typography variant="title">
+                                H6 (title) Roboto Condensed
+                            </Typography>
+                            <Typography variant="subheading">
+                                Subtitle1 (subheading) Roboto Condensed
+                            </Typography>
+                            <Typography variant="body1">
+                                Body1 Eczar
+                            </Typography>
+                            <Typography variant="body2">
+                                Body2 Roboto Condensed
+                            </Typography>
+                            <Typography variant="button">
+                                Button Roboto Condensed
+                            </Typography>
+                            <Typography variant="caption">
+                                Caption Roboto Condensed
+                            </Typography>
+
+                            <div style={{
+                                fontSize: 10,
+                                textTransform: "uppercase",
+                                fontFamily: "'Roboto Condensed', sans-serif",
+                            }}
+                            >
+                                Overline Roboto Condensed
+                            </div>
                         </Paper>
 
                     </Route>
