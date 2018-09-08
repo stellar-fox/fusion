@@ -125,26 +125,133 @@ select:-webkit-autofill:focus {
     margin-right: 0.3em;
 }
 
+.text-overline {
+    font-size: 10px;
+    font-variant-caps: petite-caps;
+    font-family: "Roboto Condensed", sans-serif;
+}
+
+.bg-green-darker {
+    background-color: rgb(4,93,86);
+}
+
+.bg-green-dark {
+    background-color: rgb(0,139,82);
+}
+
 .bg-green {
     background-color: rgb(30,185,128);
 }
 
-.bg-dark-green {
-    background-color: rgb(4,93,86);
+.bg-green-light {
+    background-color: rgb(88,197,150);
 }
+
 
 .bg-orange {
     background-color: rgb(255,104,89);
+}
+
+.bg-orange-light {
+    background-color: rgb(249,165,161);
+}
+
+.bg-yellow-dark {
+    background-color: rgb(254,187,0);
 }
 
 .bg-yellow {
     background-color: rgb(255,207,68);
 }
 
-.bg-purple {
+.bg-yellow-light {
+    background-color: rgb(255,221,124);
+}
+
+.bg-purple-dark {
     background-color: rgb(177,93,255);
+}
+
+.bg-purple {
+    background-color: rgb(201,142,254);
+}
+
+.bg-purple-light {
+    background-color: rgb(243,228,255);
+}
+
+.bg-blue-dark {
+    background-color: rgb(0,151,172);
 }
 
 .bg-blue {
     background-color: rgb(114,222,255);
+}
+
+.bg-blue-light {
+    background-color: rgb(172,235,245);
+}
+
+.green-darker {
+    color: rgb(4,93,86);
+}
+
+.green-dark {
+    color: rgb(0,139,82);
+}
+
+.green {
+    color: rgb(30,185,128);
+}
+
+.green-light {
+    color: rgb(88,197,150);
+}
+
+
+
+
+
+.orange {
+    color: rgb(255,104,89);
+}
+
+.orange-light {
+    color: rgb(249,165,161);
+}
+
+.yellow-dark {
+    color: rgb(254,187,0);
+}
+
+.yellow {
+    color: rgb(255,207,68);
+}
+
+.yellow-light {
+    color: rgb(255,221,124);
+}
+
+.purple-dark {
+    color: rgb(177,93,255);
+}
+
+.purple {
+    color: rgb(201,142,254);
+}
+
+.purple-light {
+    color: rgb(243,228,255);
+}
+
+.blue-dark {
+    color: rgb(0,151,172);
+}
+
+.blue {
+    color: rgb(114,222,255);
+}
+
+.blue-light {
+    color: rgb(172,235,245);
 }
