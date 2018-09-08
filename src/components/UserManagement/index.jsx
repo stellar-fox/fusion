@@ -73,37 +73,37 @@ export default compose(
                             </Motion>
 
                             <Typography variant="display1">
-                                H1 Roboto Condensed
+                                display1: Roboto Condensed
                             </Typography>
                             <Typography variant="display2">
-                                H2 Roboto Condensed
+                                display2: Roboto Condensed
                             </Typography>
                             <Typography variant="display3">
-                                H3 Eczar $ 12,345.67890
+                                display3: $ 12,345.67
                             </Typography>
                             <Typography variant="display4">
-                                H4 Roboto Condensed
+                                display4: Roboto Condensed
                             </Typography>
                             <Typography variant="headline">
-                                H5 (headline) Roboto Condensed
+                                headline: Eczar $ 12,345.67890
                             </Typography>
                             <Typography variant="title">
-                                H6 (title) Roboto Condensed
+                                title: Roboto Condensed
                             </Typography>
                             <Typography variant="subheading">
-                                Subtitle1 (subheading) Roboto Condensed
+                                subheading: Roboto Condensed
                             </Typography>
                             <Typography variant="body1">
-                                Body1 Eczar $ 12,345.67890
+                                body1: Eczar $ 12,345.67890
                             </Typography>
                             <Typography variant="body2">
-                                Body2 Roboto Condensed
+                                body2: Roboto Condensed
                             </Typography>
                             <Typography variant="button">
-                                Button Roboto Condensed
+                                button: Roboto Condensed
                             </Typography>
                             <Typography variant="caption">
-                                Caption Roboto Condensed
+                                caption: Roboto Condensed
                             </Typography>
 
                             <div style={{
@@ -116,12 +116,36 @@ export default compose(
                             </div>
                             <br />
                             <div className="flex-box-row space-around">
-                                <div className="bg-green" style={{ width: 10, height: 30, }}></div>
-                                <div className="bg-dark-green" style={{ width: 10, height: 30, }}></div>
-                                <div className="bg-orange" style={{ width: 10, height: 30, }}></div>
-                                <div className="bg-yellow" style={{ width: 10, height: 30, }}></div>
-                                <div className="bg-purple" style={{ width: 10, height: 30, }}></div>
-                                <div className="bg-blue" style={{ width: 10, height: 30, }}></div>
+                                <div className="flex-box-row space-around">
+                                    <div className="bg-green-darker" style={{ width: 10, height: 30, }}></div>
+                                    <div className="bg-green-dark" style={{ width: 10, height: 30, }}></div>
+                                    <div className="bg-green" style={{ width: 10, height: 30, }}></div>
+                                    <div className="bg-green-light" style={{ width: 10, height: 30, }}></div>
+                                </div>
+
+                                <div className="flex-box-row space-around">
+                                    <div className="bg-orange" style={{ width: 10, height: 30, }}></div>
+                                    <div className="bg-orange-light" style={{ width: 10, height: 30, }}></div>
+                                </div>
+
+                                <div className="flex-box-row space-around">
+                                    <div className="bg-yellow-dark" style={{ width: 10, height: 30, }}></div>
+                                    <div className="bg-yellow" style={{ width: 10, height: 30, }}></div>
+                                    <div className="bg-yellow-light" style={{ width: 10, height: 30, }}></div>
+                                </div>
+
+                                <div className="flex-box-row space-around">
+                                    <div className="bg-purple-dark" style={{ width: 10, height: 30, }}></div>
+                                    <div className="bg-purple" style={{ width: 10, height: 30, }}></div>
+                                    <div className="bg-purple-light" style={{ width: 10, height: 30, }}></div>
+                                </div>
+
+                                <div className="flex-box-row space-around">
+                                    <div className="bg-blue-dark" style={{ width: 10, height: 30, }}></div>
+                                    <div className="bg-blue" style={{ width: 10, height: 30, }}></div>
+                                    <div className="bg-blue-light" style={{ width: 10, height: 30, }}></div>
+                                </div>
+
                             </div>
 
                         </Paper>

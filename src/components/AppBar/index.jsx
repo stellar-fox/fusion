@@ -7,7 +7,7 @@ import {
 import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
 import {
-    AccountBalance, Contacts, CreditCard, EuroSymbol,
+    MoneyRounded, ContactsRounded, AccountBalanceRounded, AttachMoneyRounded,
 } from "@material-ui/icons"
 import {
     AppBar,
@@ -125,7 +125,7 @@ export default compose(
                                 disableGutters={!open}
                             >
                                 <IconButton
-                                    color="inherit"
+                                    color="secondary"
                                     aria-label="open drawer"
                                     onClick={this.handleDrawerOpen}
                                     className={
@@ -137,38 +137,31 @@ export default compose(
                                 >
                                     <MenuIcon />
                                 </IconButton>
-                                <div style={{
-                                    width: "100%", display: "flex",
-                                    alignItems: "center",
-                                }}
-                                >
+                                <div style={{width: "100%",}} className="flex-box-row items-centered">
                                     <img
                                         className={classes.appLogo}
                                         src={logo} alt="logo"
                                     />
-                                    <Typography
-                                        variant="headline"
-                                        color="inherit"
-                                        noWrap
-                                    >
-                                        {env.appVisName}
-                                        <Typography variant="caption">
-                                            v.{env.appVersion}
+                                    <div className="flex-box-col">
+                                        <Typography variant="display4">
+                                            {env.appVisName}
                                         </Typography>
-                                    </Typography>
+                                        <div className="text-overline yellow-dark">
+                                            v.{env.appVersion}
+                                        </div>
+                                    </div>
                                 </div>
+
                                 <div
                                     className={
                                         classNames(
+                                            "flex-box-row items-centered",
                                             classes.menuButton,
                                             open && classes.iconButtonShift
                                         )
                                     }
-                                    style={{
-                                        display: "flex", alignItems: "center",
-                                    }}
                                 >
-                                    {authenticated ? <UserMenu /> : null}
+                                    {authenticated && <UserMenu />}
                                 </div>
                             </Toolbar>
                         </AppBar>
@@ -195,10 +188,13 @@ export default compose(
                                             className={classes.appLogoSm}
                                             src={logo} alt="logo"
                                         />
-                                        <EuroSymbol className="m-r" />
-                                        <CreditCard className="m-r" />
-                                        <AccountBalance className="m-r" />
-                                        <Contacts />
+                                        <div className="flex-box-row items-centered m-r">
+                                            <AttachMoneyRounded color="secondary" />
+                                            <Typography color="secondary" variant="caption">Balances</Typography>
+                                        </div>
+                                        <AccountBalanceRounded color="secondary" className="m-r" />
+                                        <MoneyRounded color="secondary" className="m-r" />
+                                        <ContactsRounded color="secondary" />
 
                                     </div>
                                     {authenticated && <UserMenu />}

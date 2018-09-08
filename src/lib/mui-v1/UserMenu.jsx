@@ -62,7 +62,7 @@ class UserMenu extends Component {
                     aria-owns={anchorEl ? "user-menu" : null}
                     aria-haspopup="true"
                     onClick={this.openMenu}
-                    color="inherit"
+                    color="secondary"
                 >
                     <AccountCircle />
                 </IconButton>
@@ -80,7 +80,7 @@ class UserMenu extends Component {
                     >Logout</MenuItem>
                 </Menu>
                 <Hidden smDown>
-                    <Typography variant="caption" noWrap color="inherit">
+                    <Typography variant="subheading" noWrap>
                         {this.props.userFullName}
                     </Typography>
                 </Hidden>
