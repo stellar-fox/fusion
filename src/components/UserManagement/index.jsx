@@ -114,6 +114,16 @@ export default compose(
                             >
                                 Overline Roboto Condensed
                             </div>
+                            <br />
+                            <div className="flex-box-row space-around">
+                                <div className="bg-green" style={{ width: 10, height: 30, }}></div>
+                                <div className="bg-dark-green" style={{ width: 10, height: 30, }}></div>
+                                <div className="bg-orange" style={{ width: 10, height: 30, }}></div>
+                                <div className="bg-yellow" style={{ width: 10, height: 30, }}></div>
+                                <div className="bg-purple" style={{ width: 10, height: 30, }}></div>
+                                <div className="bg-blue" style={{ width: 10, height: 30, }}></div>
+                            </div>
+
                         </Paper>
 
                     </Route>
