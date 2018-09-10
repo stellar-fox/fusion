@@ -66,7 +66,7 @@ export default compose(
                 </Grid>
             </Hidden>
 
-            <Hidden mdDown>
+            <Hidden smDown>
                 <Grid
                     className={classes.container}
                     container
