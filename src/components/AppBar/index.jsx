@@ -1,25 +1,14 @@
 import React, { Component, Fragment } from "react"
 import PropTypes from "prop-types"
-import {
-    bindActionCreators,
-    compose,
-} from "redux"
+import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
 import {
-    AttachMoneyRounded, BarChartRounded, PeopleRounded
-} from "@material-ui/icons"
-import {
-    AppBar,
-    Hidden,
-    IconButton,
-    Tab,
-    Tabs,
-    Toolbar,
-    Typography,
+    AppBar, Hidden, IconButton, Toolbar, Typography,
 } from "@material-ui/core"
 import MenuIcon from "@material-ui/icons/Menu"
 import UserMenu from "../../lib/mui-v1/UserMenu"
+import TabBar from "../../lib/mui-v1/TabBar"
 import DashboardDrawer from "../Dashboard/DashboardDrawer"
 import classNames from "classnames"
 import logo from "../Fusion/static/logo.svg"
@@ -98,13 +87,7 @@ export default compose(
 
 
         // ...
-        state = {
-            open: false,
-            value: 0,
-        }
-
-        // ...
-        handleTabChange = (_event, value) => this.setState({ value, })
+        state = { open: false, }
 
 
         // ...
@@ -117,7 +100,7 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, authenticated, }, { open, value,}) =>
+            ({ classes, authenticated, }, { open, }) =>
                 <Fragment>
                     <Hidden smDown>
                         <AppBar
@@ -197,11 +180,7 @@ export default compose(
                                             src={logo} alt="logo"
                                         />
 
-                                        <Tabs value={value} onChange={this.handleTabChange}>
-                                            <Tab icon={<BarChartRounded color="secondary" />} />
-                                            <Tab icon={<AttachMoneyRounded color="secondary" />} />
-                                            <Tab icon={<PeopleRounded color="secondary" />} />
-                                        </Tabs>
+                                        <TabBar color="secondary" />
 
                                     </div>
                                     {authenticated && <UserMenu />}
