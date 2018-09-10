@@ -7,12 +7,14 @@ import {
 import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
 import {
-    MoneyRounded, ContactsRounded, AccountBalanceRounded, AttachMoneyRounded,
+    AttachMoneyRounded, BarChartRounded, PeopleRounded
 } from "@material-ui/icons"
 import {
     AppBar,
     Hidden,
     IconButton,
+    Tab,
+    Tabs,
     Toolbar,
     Typography,
 } from "@material-ui/core"
@@ -96,7 +98,13 @@ export default compose(
 
 
         // ...
-        state = { open: false, }
+        state = {
+            open: false,
+            value: 0,
+        }
+
+        // ...
+        handleTabChange = (_event, value) => this.setState({ value, })
 
 
         // ...
@@ -109,7 +117,7 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, authenticated, }, { open, }) =>
+            ({ classes, authenticated, }, { open, value,}) =>
                 <Fragment>
                     <Hidden smDown>
                         <AppBar
@@ -188,13 +196,12 @@ export default compose(
                                             className={classes.appLogoSm}
                                             src={logo} alt="logo"
                                         />
-                                        <div className="flex-box-row items-centered m-r">
-                                            <AttachMoneyRounded color="secondary" />
-                                            <Typography color="secondary" variant="caption">Balances</Typography>
-                                        </div>
-                                        <AccountBalanceRounded color="secondary" className="m-r" />
-                                        <MoneyRounded color="secondary" className="m-r" />
-                                        <ContactsRounded color="secondary" />
+
+                                        <Tabs value={value} onChange={this.handleTabChange}>
+                                            <Tab icon={<BarChartRounded color="secondary" />} />
+                                            <Tab icon={<AttachMoneyRounded color="secondary" />} />
+                                            <Tab icon={<PeopleRounded color="secondary" />} />
+                                        </Tabs>
 
                                     </div>
                                     {authenticated && <UserMenu />}
