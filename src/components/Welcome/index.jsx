@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Fragment } from "react"
 import { compose } from "redux"
 import { withStyles } from "@material-ui/core/styles"
 import {
@@ -8,6 +8,7 @@ import {
 
 import {
     Grid,
+    Hidden,
     Paper,
 } from "@material-ui/core"
 
@@ -32,8 +33,8 @@ export default compose(
 
         appLogo: {
             ...theme.fusion.appLogo,
-            height: "80px",
-            margin: "20px",
+            height: "60px",
+            margin: "40px",
         },
 
         loginPaper: {
@@ -42,27 +43,53 @@ export default compose(
             backgroundColor: rgba(29, 36, 46, 0.25),
         },
     }))
-)(({ classes, }) =>
-    <Grid
-        className={classes.container}
-        container
-        direction={"column"}
-        justify={"space-around"}
-        alignItems={"center"}
-    >
-        <Grid item>
-            <img
-                className={classes.appLogo}
-                src={logo} alt="logo"
-            />
-        </Grid>
-        <Grid item>
-            <Paper elevation={2} className={classes.loginPaper}>
-                <UserLogin />
-            </Paper>
-        </Grid>
-        <Grid item>
-            <div className={classes.appLogo} />
-        </Grid>
-    </Grid>
-)
+)(({ classes, }) => {
+
+    return (
+        <Fragment>
+            <Hidden mdUp>
+                <Grid
+                    container
+                    direction={"column"}
+                    justify={"space-around"}
+                    alignItems={"center"}
+                >
+                    <Grid item>
+                        <img
+                            className={classes.appLogo}
+                            src={logo} alt="logo"
+                        />
+                    </Grid>
+                    <Grid item>
+                        <UserLogin />
+                    </Grid>
+                </Grid>
+            </Hidden>
+
+            <Hidden mdDown>
+                <Grid
+                    className={classes.container}
+                    container
+                    direction={"column"}
+                    justify={"space-around"}
+                    alignItems={"center"}
+                >
+                    <Grid item>
+                        <img
+                            className={classes.appLogo}
+                            src={logo} alt="logo"
+                        />
+                    </Grid>
+                    <Grid item>
+                        <Paper elevation={2} className={classes.loginPaper}>
+                            <UserLogin />
+                        </Paper>
+                    </Grid>
+                    <Grid item>
+                        <div className={classes.appLogo} />
+                    </Grid>
+                </Grid>
+            </Hidden>
+        </Fragment>
+    )
+})

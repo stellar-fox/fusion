@@ -16,7 +16,6 @@ import { withStyles } from "@material-ui/core/styles"
 import { LinearProgress } from "@material-ui/core"
 
 import Button from "./Button"
-
 import TextInput from "./TextInput"
 import { Typography } from "@material-ui/core"
 import { env } from "../../components/Fusion"
@@ -143,7 +142,7 @@ export default compose(
                         {env.appVisName}
                     </Typography>
                     <Typography variant="subheading">
-                        Sign-in and explore.
+                        Sign-in and bank.
                     </Typography>
                     <TextInput
                         id="username"
@@ -167,10 +166,10 @@ export default compose(
                         error={this.state.error}
                         errorMessage={this.state.errorMessage}
                     />
-                    <div>&nbsp;</div>
+
                     <Button
                         fullWidth
-                        color="primary"
+                        color="green"
                         disabled={this.state.disabled}
                         onClick={this.authenticate}
                     >
@@ -197,6 +196,15 @@ export default compose(
                         }}
                         style={{ opacity: this.state.progressBarOpacity, }}
                     />
+                    <div className="m-t-large"></div>
+                    <Button
+                        fullWidth
+                        color="yellowDark"
+                        disabled={this.state.disabled}
+                        onClick={this.authenticate}
+                    >
+                        Sign Up
+                    </Button>
                 </div>
         )(this.props)
     }

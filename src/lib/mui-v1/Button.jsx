@@ -12,13 +12,13 @@ export default withStyles((theme) => ({
 
     primary: {
         color: theme.palette.primary.contrastText,
+    },
+
+    common: {
         backgroundColor: theme.palette.background.button,
         "&:hover": {
             backgroundColor: theme.palette.primary.highlight,
         },
-    },
-
-    common: {
         borderRadius: "2px",
         paddingTop: "0.75rem",
         fontSize: "0.75rem",
@@ -33,6 +33,30 @@ export default withStyles((theme) => ({
     disabled: {
         color: `${theme.lui.contextChrome.main} !important`,
         backgroundColor: `${theme.lui.contextChrome.faded} !important`,
+    },
+
+    yellowLight: {
+        color: theme.palette.custom.yellowLight,
+    },
+
+    yellow: {
+        color: theme.palette.custom.yellow,
+    },
+
+    yellowDark: {
+        color: theme.palette.custom.yellowDark,
+    },
+
+    greenDark: {
+        color: theme.palette.custom.greenDark,
+    },
+
+    green: {
+        color: theme.palette.custom.green,
+    },
+
+    greenLight: {
+        color: theme.palette.custom.greenLight,
     },
 
 }))(
