@@ -15,7 +15,7 @@ import {
 export default withStyles((theme) => ({
 
     input: {
-        color: theme.lui.canvas.background,
+        color: theme.palette.secondary.main,
     },
 
     underline: {
@@ -31,7 +31,7 @@ export default withStyles((theme) => ({
 
     focused: {
         "&$root": {
-            color: theme.lui.brandMembrane.main,
+            color: theme.palette.secondary.dark,
         },
     },
 
