@@ -1,5 +1,5 @@
 import { createReducer } from "@xcmats/js-toolbox"
-import { authenticate, signOut } from "../firebase"
+import { authenticate, signout, signup } from "../firebase"
 
 
 
@@ -42,7 +42,7 @@ export const action = {
     // ...
     logout: () =>
         async (dispatch, _getState) => {
-            await signOut()
+            await signout()
             dispatch(action.resetState())
         },
 
@@ -50,6 +50,19 @@ export const action = {
     // ...
     resetState: () => ({ type: RESET_STATE, }),
 
+
+    // ...
+    signup: (...args) =>
+        async (dispatch, _getState) => {
+            const auth = await signup(...args)
+            dispatch(action.setState({
+                uid: auth.user.uid,
+                email: auth.user.email,
+                name: auth.user.displayName,
+                photoUrl: auth.user.photoURL,
+                emailVerified: auth.user.emailVerified,
+            }))
+        },
 
     // ...
     setState: (state) => ({
