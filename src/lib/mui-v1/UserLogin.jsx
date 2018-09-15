@@ -6,7 +6,7 @@ import {
 } from "redux"
 import { connect } from "react-redux"
 import {
-    access,
+    // access,
     emptyString
 } from "@xcmats/js-toolbox"
 
@@ -19,13 +19,26 @@ import Button from "./Button"
 import TextInput from "./TextInput"
 import { Typography } from "@material-ui/core"
 import { env } from "../../components/Fusion"
-
-
+import Avatar from "@material-ui/core/Avatar"
+import facebook from "../../components/Fusion/static/facebook.svg"
+import google from "../../components/Fusion/static/google.svg"
+import twitter from "../../components/Fusion/static/twitter.svg"
+import github from "../../components/Fusion/static/github.svg"
 
 
 // <UserLogin> component
 export default compose(
-    withStyles((_theme) => ({
+    withStyles((theme) => ({
+        avatar: {
+            margin: "0rem 1rem",
+            backgroundColor: theme.palette.background.default,
+            boxShadow: "0px 0px 20px 2px #0ff",
+        },
+
+        avatarRoot: {
+            borderRadius: "3px",
+            opacity: "0.5",
+        },
 
         root: {
             display: "flex",
@@ -110,24 +123,24 @@ export default compose(
                     this.state.password
                 )
             } catch (error) {
-                let
-                    errorMessage = emptyString(),
-                    status = access(error, ["response", "status",])
+                // let
+                //     errorMessage = emptyString(),
+                //     status = access(error, ["response", "status",])
 
-                if (status === 401) {
-                    errorMessage = "Possibly invalid credentials."
-                } else if (status === 503) {
-                    errorMessage =
-                        "HERE LDAP Server is deaf " +
-                        `(${error.response.retries} attempts made)`
-                } else {
-                    errorMessage = error.message
-                }
+                // if (status === 401) {
+                //     errorMessage = "Possibly invalid credentials."
+                // } else if (status === 503) {
+                //     errorMessage =
+                //         "HERE LDAP Server is deaf " +
+                //         `(${error.response.retries} attempts made)`
+                // } else {
+                //     errorMessage = error.message
+                // }
 
                 this.setState({
                     disabled: false,
                     error: true,
-                    errorMessage,
+                    errorMessage: error.message,
                     progressBarOpacity: 0,
                 })
             }
@@ -196,7 +209,36 @@ export default compose(
                         }}
                         style={{ opacity: this.state.progressBarOpacity, }}
                     />
-                    <div className="m-t-large"></div>
+                    <div className="flex-box-row space-around items-centered m-t m-b">
+                        <Avatar classes={{root: classes.avatarRoot, }} className={classes.avatar}>
+                            <img
+                                className={classes.logo}
+                                src={facebook} alt="Facebook"
+                                style={{ height: "38px",}}
+                            />
+                        </Avatar>
+                        <Avatar classes={{ root: classes.avatarRoot, }} className={classes.avatar}>
+                            <img
+                                className={classes.logo}
+                                src={google} alt="Google"
+                                style={{ height: "36px",}}
+                            />
+                        </Avatar>
+                        <Avatar classes={{ root: classes.avatarRoot, }} className={classes.avatar}>
+                            <img
+                                className={classes.logo}
+                                src={twitter} alt="Twitter"
+                                style={{ width: "36px", }}
+                            />
+                        </Avatar>
+                        <Avatar classes={{ root: classes.avatarRoot, }} className={classes.avatar}>
+                            <img
+                                className={classes.logo}
+                                src={github} alt="Github"
+                                style={{ width: "36px", }}
+                            />
+                        </Avatar>
+                    </div>
                     <Button
                         fullWidth
                         color="yellowDark"
