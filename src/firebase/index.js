@@ -34,6 +34,22 @@ const signup = (email, password) =>
         )
 
 
+// Send verification email
+const verifyEmail = () =>
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+        .then((_) => firebase.auth()
+            .currentUser.sendEmailVerification()
+        )
+
+
+// Apply verification code
+const applyVerificationCode = (actionCode) =>
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+        .then((_) => firebase.auth()
+            .applyActionCode(actionCode)
+        )
+
+
 // ...
 const read = async (uid) => {
     try {
@@ -56,5 +72,11 @@ const write = async (uid, userData) => {
     }
 }
 
+
+
+
 // ...
-export { authenticate, read, signout, signup, write, }
+export {
+    applyVerificationCode, authenticate, read, signout, signup, verifyEmail,
+    write,
+}

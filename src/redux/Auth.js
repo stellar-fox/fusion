@@ -1,5 +1,7 @@
 import { createReducer } from "@xcmats/js-toolbox"
-import { authenticate, signout, signup, write, } from "../firebase"
+import {
+    applyVerificationCode, authenticate, signout, signup, verifyEmail, write,
+} from "../firebase"
 
 
 
@@ -56,6 +58,7 @@ export const action = {
         async (dispatch, _getState) => {
             const auth = await signup(...args)
             await write(auth.user.uid, { foo: "bar", })
+            await verifyEmail()
             dispatch(action.setState({
                 uid: auth.user.uid,
                 email: auth.user.email,
@@ -71,6 +74,24 @@ export const action = {
         state,
     }),
 
+
+    // ...
+    verify: (...args) =>
+        async (dispatch, _getState) => {
+            try {
+                const verification = await applyVerificationCode(...args)
+                dispatch(action.setState({
+                    emailVerified: true,
+                    emailVerificationMessage: verification,
+                }))
+            } catch (error) {
+                dispatch(action.setState({
+                    emailVerified: false,
+                    emailVerificationMessage: error.message,
+                }))
+            }
+
+        },
 }
 
 

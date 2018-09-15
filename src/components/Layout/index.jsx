@@ -13,6 +13,7 @@ import { Null } from "../../lib/utils"
 import Snackbar from "../../lib/mui-v1/Snackbar"
 import Welcome from "../Welcome"
 import Signup from "../Signup"
+import FirebaseActions from "../FirebaseActions"
 import { Typography } from "@material-ui/core"
 
 
@@ -59,6 +60,7 @@ export default compose(
                 "welcome": this.rr("."),
                 "dashboard": this.rr("dashboard/"),
                 "signup": this.rr("signup/"),
+                "actions": this.rr("actions/"),
             })
         }
 
@@ -85,6 +87,11 @@ export default compose(
             !this.props.authenticated ?
                 <Signup {...routeProps} /> :
                 <Redirect to={this.props.staticRouter.getPath("dashboard")} />
+
+
+        // ...
+        renderFirebaseActions = (routeProps) =>
+            <FirebaseActions {...routeProps} />
 
 
         // ...
@@ -118,6 +125,9 @@ export default compose(
                     <Switch>
                         <Route exact path={getPath("signup")}>
                             {this.renderSignup}
+                        </Route>
+                        <Route exact path={getPath("actions")}>
+                            {this.renderFirebaseActions}
                         </Route>
                         <Route exact path={getPath("welcome")}>
                             { this.renderWelcome }
