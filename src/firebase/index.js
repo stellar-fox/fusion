@@ -1,6 +1,7 @@
 import { config } from "./config"
 import firebase from "firebase/app"
 import "firebase/auth"
+import "firebase/database"
 
 
 
@@ -34,4 +35,26 @@ const signup = (email, password) =>
 
 
 // ...
-export { authenticate, signout, signup, }
+const read = async (uid) => {
+    try {
+        let snapshot = await firebase.database().ref(`user/${uid}`)
+            .once("value")
+        return { user: snapshot.val(), }
+    } catch (error) {
+        return { error: error.message, }
+    }
+}
+
+
+// ...
+const write = async (uid, userData) => {
+    try {
+        await firebase.database().ref(`user/${uid}`).set(userData)
+        return { ok: true, }
+    } catch (error) {
+        return { error: error.message, }
+    }
+}
+
+// ...
+export { authenticate, read, signout, signup, write, }

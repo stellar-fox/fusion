@@ -1,15 +1,11 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
-import {
-    bindActionCreators,
-    compose,
-} from "redux"
+import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
 import { emptyString } from "@xcmats/js-toolbox"
 import { action as AuthActions } from "../../redux/Auth"
 import { withStyles } from "@material-ui/core/styles"
 import { LinearProgress } from "@material-ui/core"
-
 import Button from "./Button"
 import TextInput from "./TextInput"
 import { Typography } from "@material-ui/core"

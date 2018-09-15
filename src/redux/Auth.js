@@ -1,5 +1,5 @@
 import { createReducer } from "@xcmats/js-toolbox"
-import { authenticate, signout, signup } from "../firebase"
+import { authenticate, signout, signup, write, } from "../firebase"
 
 
 
@@ -55,6 +55,7 @@ export const action = {
     signup: (...args) =>
         async (dispatch, _getState) => {
             const auth = await signup(...args)
+            await write(auth.user.uid, { foo: "bar", })
             dispatch(action.setState({
                 uid: auth.user.uid,
                 email: auth.user.email,
