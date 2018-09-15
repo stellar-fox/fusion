@@ -70,9 +70,9 @@ export default withStyles((theme) => ({
 
         // ...
         render = () => (
-            ({ children, classes, color, disabled, fullWidth, onClick, }) =>
+            ({ children, classes, color, disabled, fullWidth, onClick, variant, }) =>
                 <Button
-                    variant="raised"
+                    variant={variant || "raised"}
                     className={
                         classNames(
                             disabled ? classes.disabled : classes[color],
