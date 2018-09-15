@@ -23,7 +23,7 @@ export default compose(
     connect(
         // map state to props.
         (state) => ({
-            authenticated: toBool(state.Auth.authToken),
+            authenticated: toBool(state.Auth.uid),
             snackbarMessage: state.Snackbar.message,
             snackbarState: state.Snackbar.visible,
         }),

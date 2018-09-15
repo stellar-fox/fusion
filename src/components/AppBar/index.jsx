@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react"
 import PropTypes from "prop-types"
 import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
+import { toBool } from "@xcmats/js-toolbox"
 import { withStyles } from "@material-ui/core/styles"
 import {
     AppBar, Hidden, IconButton, Toolbar, Typography,
@@ -72,7 +73,7 @@ export default compose(
     })),
     connect(
         (state) => ({
-            authenticated: !!state.Auth.authToken,
+            authenticated: toBool(state.Auth.uid),
         }),
         (dispatch) => bindActionCreators({}, dispatch)
     )
