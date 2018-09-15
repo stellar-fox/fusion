@@ -12,7 +12,7 @@ import {
     Paper,
 } from "@material-ui/core"
 
-import UserLogin from "../../lib/mui-v1/UserLogin"
+import UserSignup from "../../lib/mui-v1/UserSignup"
 
 import logo from "../Fusion/static/logo.svg"
 import matte from "../Fusion/static/matte-01.jpg"
@@ -20,7 +20,7 @@ import matte from "../Fusion/static/matte-01.jpg"
 
 
 
-// <Welcome> component
+// <Signup> component
 export default compose(
     withStyles((theme) => ({
 
@@ -62,7 +62,7 @@ export default compose(
                         />
                     </Grid>
                     <Grid item>
-                        <UserLogin />
+                        <UserSignup />
                     </Grid>
                 </Grid>
             </Hidden>
@@ -83,7 +83,7 @@ export default compose(
                     </Grid>
                     <Grid item>
                         <Paper elevation={2} className={classes.loginPaper}>
-                            <UserLogin />
+                            <UserSignup />
                         </Paper>
                     </Grid>
                     <Grid item>

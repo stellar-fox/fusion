@@ -12,6 +12,7 @@ import {
 import { Null } from "../../lib/utils"
 import Snackbar from "../../lib/mui-v1/Snackbar"
 import Welcome from "../Welcome"
+import Signup from "../Signup"
 import { Typography } from "@material-ui/core"
 
 
@@ -57,6 +58,7 @@ export default compose(
             this.props.staticRouter.addPaths({
                 "welcome": this.rr("."),
                 "dashboard": this.rr("dashboard/"),
+                "signup": this.rr("signup/"),
             })
         }
 
@@ -76,6 +78,13 @@ export default compose(
 
         // ...
         onAutoClose = () => this.props.resetSnackbar()
+
+
+        // ...
+        renderSignup = (routeProps) =>
+            !this.props.authenticated ?
+                <Signup {...routeProps} /> :
+                <Redirect to={this.props.staticRouter.getPath("dashboard")} />
 
 
         // ...
@@ -107,6 +116,9 @@ export default compose(
                         onClose={this.onAutoClose}
                     />
                     <Switch>
+                        <Route exact path={getPath("signup")}>
+                            {this.renderSignup}
+                        </Route>
                         <Route exact path={getPath("welcome")}>
                             { this.renderWelcome }
                         </Route>

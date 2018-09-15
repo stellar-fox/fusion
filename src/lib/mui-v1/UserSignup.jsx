@@ -1,18 +1,22 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
-import { bindActionCreators, compose } from "redux"
+import {
+    bindActionCreators,
+    compose,
+} from "redux"
 import { connect } from "react-redux"
 import { emptyString } from "@xcmats/js-toolbox"
 import { action as AuthActions } from "../../redux/Auth"
 import { withStyles } from "@material-ui/core/styles"
 import { LinearProgress } from "@material-ui/core"
+
 import Button from "./Button"
 import TextInput from "./TextInput"
 import { Typography } from "@material-ui/core"
 import { env } from "../../components/Fusion"
 
 
-// <UserLogin> component
+// <UserSignup> component
 export default compose(
     withStyles((theme) => ({
         avatar: {
@@ -56,12 +60,11 @@ export default compose(
 
     })),
     connect(
-        (state) => ({
-            loginAttempts: state.Auth.status.loginAttempts,
-            maxLoginAttempts: state.Auth.status.maxLoginAttempts,
+        (_state) => ({
+
         }),
         (dispatch) => bindActionCreators({
-            login: AuthActions.login,
+            signup: AuthActions.signup,
         }, dispatch)
     ),
 )(
@@ -70,7 +73,7 @@ export default compose(
         // ...
         static propTypes = {
             classes: PropTypes.object.isRequired,
-            login: PropTypes.func.isRequired,
+            signup: PropTypes.func.isRequired,
         }
 
 
@@ -79,6 +82,7 @@ export default compose(
             disabled: false,
             username: emptyString(),
             password: emptyString(),
+            passwordConf: emptyString(),
             progressBarOpacity: 0,
         }
 
@@ -94,7 +98,26 @@ export default compose(
 
 
         // ...
-        authenticate = async (_e) => {
+        setPasswordConf = (e) =>
+            this.setState({ passwordConf: e.target.value, })
+
+
+        // ...
+        passwordsMatch = () => this.state.password === this.state.passwordConf
+
+
+        // ...
+        signup = async (_e) => {
+            if(!this.passwordsMatch()) {
+                this.setState({
+                    error: true,
+                    disabled: false,
+                    errorMessage: "Passwords do not match.",
+                    progressBarOpacity: 0,
+                })
+                return
+            }
+
             try {
                 this.setState({
                     disabled: true,
@@ -102,13 +125,11 @@ export default compose(
                     errorMessage: emptyString(),
                     progressBarOpacity: 1,
                 })
-                await this.props.login(
+                await this.props.signup(
                     this.state.username,
                     this.state.password
                 )
             } catch (error) {
-
-
                 this.setState({
                     disabled: false,
                     error: true,
@@ -127,7 +148,7 @@ export default compose(
                         {env.appVisName}
                     </Typography>
                     <Typography variant="subheading">
-                        Sign-in and bank.
+                        Sign-up and bank.
                     </Typography>
                     <TextInput
                         id="username"
@@ -151,14 +172,25 @@ export default compose(
                         error={this.state.error}
                         errorMessage={this.state.errorMessage}
                     />
+                    <TextInput
+                        id="passwordconf"
+                        label="Password Confirmation"
+                        type="password"
+                        fullWidth
+                        value={this.state.passwordConf}
+                        onChange={this.setPasswordConf}
+                        autocomplete={false}
+                        error={this.state.error}
+                        errorMessage={this.state.errorMessage}
+                    />
 
                     <Button
                         fullWidth
-                        color="green"
+                        color="yellowDark"
                         disabled={this.state.disabled}
-                        onClick={this.authenticate}
+                        onClick={this.signup}
                     >
-                        Sign In
+                        Sign Up
                     </Button>
                     <LinearProgress
                         variant="indeterminate"
