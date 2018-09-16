@@ -33,6 +33,10 @@ export default compose(
             backgroundSize: "cover",
             height: "100%",
         },
+        link: {
+            textDecoration: "none",
+            color: theme.palette.secondary.light,
+        },
         loginPaper: {
             [theme.breakpoints.up("md")]: {
                 padding: "1em",
@@ -62,7 +66,7 @@ export default compose(
 
         // ...
         render = () => (({
-            actionMessage, classes, emailVerificationMessage,
+            actionMessage, classes, continueUrl, emailVerificationMessage,
         }) =>
             <Grid
                 className={classes.container}
@@ -88,6 +92,16 @@ export default compose(
                             <Typography align="center" variant="body2">
                                 {emailVerificationMessage}
                             </Typography>
+                            {continueUrl &&
+                            <Fragment>
+                                <br />
+                                <Typography align="center" variant="caption">
+                                    <a className={classes.link}
+                                        href={`${continueUrl}`}
+                                    >Continue</a> to your account.
+                                </Typography>
+                            </Fragment>
+                            }
                         </Fragment>
                     </Paper>
                 </Grid>

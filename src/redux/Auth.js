@@ -1,4 +1,4 @@
-import { createReducer } from "@xcmats/js-toolbox"
+import { createReducer, emptyString } from "@xcmats/js-toolbox"
 import {
     applyVerificationCode, authenticate, signout, signup, verifyEmail, write,
 } from "../firebase"
@@ -76,17 +76,18 @@ export const action = {
 
 
     // ...
-    processVerificationLink: (...args) =>
+    processVerificationLink: (qs) =>
         async (dispatch, _getState) => {
             try {
                 dispatch(action.setState({
                     actionMessage: "Veryfying email ...",
                 }))
-                const verification = await applyVerificationCode(...args)
+                await applyVerificationCode(qs.oobCode)
                 dispatch(action.setState({
                     actionMessage: "Email verified.",
                     emailVerified: true,
-                    emailVerificationMessage: verification,
+                    emailVerificationMessage: emptyString(),
+                    continueUrl: qs.continueUrl,
                 }))
             } catch (error) {
                 dispatch(action.setState({

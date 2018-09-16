@@ -32,22 +32,21 @@ export default compose(
 
 
         // ...
-        componentDidMount = () => ((qs) => {
-            const mode = qs.mode,
-                oobCode = qs.oobCode
+        componentDidMount = () => {
+            this.qs.mode === "verifyEmail" &&
+                this.props.processVerificationLink(this.qs)
+        }
 
-            mode === "verifyEmail" &&
-                this.props.processVerificationLink(oobCode)
 
-        })(
-            queryString.parse(
-                this.props.location.search,
-                { ignoreQueryPrefix: true, }
-            )
+        // Parsed query-string from URI.
+        qs = queryString.parse(
+            this.props.location.search,
+            { ignoreQueryPrefix: true, }
         )
 
 
         // ...
-        render = () => <ActionMessage />
+        render = () =>
+            <ActionMessage continueUrl={this.qs.continueUrl} />
     }
 )

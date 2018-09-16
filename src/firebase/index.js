@@ -37,8 +37,12 @@ const signup = (email, password) =>
 // Send verification email
 const verifyEmail = () =>
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
-        .then((_) => firebase.auth()
-            .currentUser.sendEmailVerification()
+        .then((_) =>
+            firebase.auth().currentUser.sendEmailVerification({
+                url: `https://localhost/?email=${
+                    firebase.auth().currentUser.email
+                }`,
+            })
         )
 
 
