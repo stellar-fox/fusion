@@ -11,7 +11,7 @@ import { Grid, Paper, Typography, } from "@material-ui/core"
 
 
 
-// <ActionMessage> component
+// <VerifyEmail> component
 export default compose(
     withStyles((theme) => ({
         appLogo: {

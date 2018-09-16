@@ -9,7 +9,8 @@ import { Snackbar } from "@material-ui/core"
 // <CustomSnackbar> component
 export default withStyles((theme) => ({
     root: {
-        backgroundColor: theme.palette.background.brand,
+        backgroundColor: theme.palette.secondary.main,
+        color: theme.palette.primary.main,
     },
 }))(
     class extends Component {
@@ -31,7 +32,11 @@ export default withStyles((theme) => ({
                         "aria-describedby": "message-id",
                         classes: { root: classes.root, },
                     }}
-                    message={<span id="message-id">{message}</span>}
+                    message={
+                        <span id="message-id">
+                            {message}
+                        </span>
+                    }
                     transitionDuration={{ enter: 300, exit: 200, }}
                     disableWindowBlurListener={true}
                 />

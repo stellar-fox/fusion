@@ -1,6 +1,7 @@
 import { createReducer, emptyString } from "@xcmats/js-toolbox"
 import {
-    applyVerificationCode, authenticate, signout, signup, verifyEmail, write,
+    applyVerificationCode, authenticate, resetPassword, signout, signup,
+    updatePassword, verifyEmail, verifyPasswordResetCode, write,
 } from "../firebase"
 
 
@@ -20,6 +21,7 @@ const initState = {
 // ...
 export const RESET_STATE = "@Auth/RESET_STATE"
 export const SET_STATE = "@Auth/SET_STATE"
+export const SEND_EMAIL_VERIFICATION = "@Auth/SEND_EMAIL_VERIFICATION"
 
 
 
@@ -58,7 +60,7 @@ export const action = {
         async (dispatch, _getState) => {
             const auth = await signup(...args)
             await write(auth.user.uid, { foo: "bar", })
-            await verifyEmail()
+            dispatch(action.sendEmailVerification())
             dispatch(action.setState({
                 uid: auth.user.uid,
                 email: auth.user.email,
@@ -68,11 +70,28 @@ export const action = {
             }))
         },
 
+
     // ...
     setState: (state) => ({
         type: SET_STATE,
         state,
     }),
+
+
+    // ...
+    sendEmailVerification: () => {
+        verifyEmail()
+        return {
+            type: SEND_EMAIL_VERIFICATION,
+        }
+    },
+
+
+    // ...
+    sendPasswordReset: () =>
+        async (_dispatch, getState) => {
+            await resetPassword(getState().Auth.email)
+        },
 
 
     // ...
@@ -98,6 +117,44 @@ export const action = {
             }
 
         },
+
+
+    // ...
+    processPasswordResetLink: (qs) =>
+        async (dispatch, _getState) => {
+            try {
+                await verifyPasswordResetCode(qs.oobCode)
+                dispatch(action.setState({
+                    resetLinkValid: true,
+                    resetLinkInvalid: false,
+                    resetPasswordVerificationMessage: emptyString(),
+                }))
+
+            } catch (error) {
+                dispatch(action.setState({
+                    resetLinkValid: false,
+                    resetLinkInvalid: true,
+                    resetPasswordVerificationMessage: error.message,
+                }))
+            }
+        },
+
+
+    // ...
+    updatePassword: (code, newPassword) =>
+        async (dispatch, _getState) => {
+            try {
+                await updatePassword(code, newPassword)
+                dispatch(action.setState({
+                    resetLinkValid: true,
+                }))
+
+            } catch (error) {
+                dispatch(action.setState({
+                    resetLinkValid: false,
+                }))
+            }
+        },
 }
 
 
@@ -114,6 +171,12 @@ export const reducer = createReducer(initState)({
     [SET_STATE]: (state, action) => ({
         ...state,
         ...action.state,
+    }),
+
+
+    // ...
+    [SEND_EMAIL_VERIFICATION]: (state) => ({
+        ...state,
     }),
 
 })

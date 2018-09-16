@@ -21,9 +21,6 @@ const authenticate = (email, password) =>
 
 // Sign out the user from Firebase
 const signout = () => firebase.auth().signOut()
-// .then((_) => console.log("User signed out from Firebase."))
-
-
 
 
 // Signup new user with Firebase
@@ -49,9 +46,13 @@ const verifyEmail = () =>
 // Apply verification code
 const applyVerificationCode = (actionCode) =>
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
-        .then((_) => firebase.auth()
-            .applyActionCode(actionCode)
-        )
+        .then((_) => firebase.auth().applyActionCode(actionCode))
+
+
+// Verify password reset code
+const verifyPasswordResetCode = (actionCode) =>
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+        .then((_) => firebase.auth().verifyPasswordResetCode(actionCode))
 
 
 // ...
@@ -77,10 +78,22 @@ const write = async (uid, userData) => {
 }
 
 
+// Send password reset link.
+const resetPassword = (emailAddress) =>
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+        .then((_) => firebase.auth().sendPasswordResetEmail(emailAddress))
+
+
+// Send password reset link.
+const updatePassword = (code, newPassword) =>
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+        .then((_) => firebase.auth().confirmPasswordReset(code, newPassword))
+
+
 
 
 // ...
 export {
-    applyVerificationCode, authenticate, read, signout, signup, verifyEmail,
-    write,
+    applyVerificationCode, authenticate, read, resetPassword, signout, signup,
+    updatePassword, verifyEmail, verifyPasswordResetCode, write,
 }
