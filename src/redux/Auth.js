@@ -76,16 +76,21 @@ export const action = {
 
 
     // ...
-    verify: (...args) =>
+    processVerificationLink: (...args) =>
         async (dispatch, _getState) => {
             try {
+                dispatch(action.setState({
+                    actionMessage: "Veryfying email ...",
+                }))
                 const verification = await applyVerificationCode(...args)
                 dispatch(action.setState({
+                    actionMessage: "Email verified.",
                     emailVerified: true,
                     emailVerificationMessage: verification,
                 }))
             } catch (error) {
                 dispatch(action.setState({
+                    actionMessage: "Email verification failed.",
                     emailVerified: false,
                     emailVerificationMessage: error.message,
                 }))

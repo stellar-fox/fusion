@@ -15,7 +15,7 @@ import Welcome from "../Welcome"
 import Signup from "../Signup"
 import FirebaseActions from "../FirebaseActions"
 import { Typography } from "@material-ui/core"
-
+import queryString from "query-string"
 
 
 
@@ -90,8 +90,17 @@ export default compose(
 
 
         // ...
-        renderFirebaseActions = (routeProps) =>
-            <FirebaseActions {...routeProps} />
+        renderFirebaseActions = (routeProps) => {
+            const qs = queryString.parse(
+                this.props.location.search,
+                { ignoreQueryPrefix: true, }
+            )
+            return qs.mode ?
+                <FirebaseActions {...routeProps} /> :
+                this.props.authenticated ?
+                    <this.state.Dashboard {...routeProps} /> :
+                    <Redirect to={this.props.staticRouter.getPath("welcome")} />
+        }
 
 
         // ...
