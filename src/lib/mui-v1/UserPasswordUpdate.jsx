@@ -12,7 +12,7 @@ import { Typography } from "@material-ui/core"
 import { env } from "../../components/Fusion"
 
 
-// <UserLogin> component
+// <PasswordUpdate> component
 export default compose(
     withStyles((theme) => ({
         avatar: {

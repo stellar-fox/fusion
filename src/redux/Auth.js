@@ -88,9 +88,9 @@ export const action = {
 
 
     // ...
-    sendPasswordReset: () =>
-        async (_dispatch, getState) => {
-            await resetPassword(getState().Auth.email)
+    sendPasswordReset: (email) =>
+        async (_dispatch, _getState) => {
+            await resetPassword(email)
         },
 
 

@@ -13,6 +13,7 @@ import { Null } from "../../lib/utils"
 import Snackbar from "../../lib/mui-v1/Snackbar"
 import Welcome from "../Welcome"
 import Signup from "../Signup"
+import PasswordReset from "../PasswordReset"
 import FirebaseActions from "../FirebaseActions"
 import { Typography } from "@material-ui/core"
 import queryString from "query-string"
@@ -61,6 +62,7 @@ export default compose(
                 "dashboard": this.rr("dashboard/"),
                 "signup": this.rr("signup/"),
                 "actions": this.rr("actions/"),
+                "reset": this.rr("reset/"),
             })
         }
 
@@ -87,6 +89,10 @@ export default compose(
             !this.props.authenticated ?
                 <Signup {...routeProps} /> :
                 <Redirect to={this.props.staticRouter.getPath("dashboard")} />
+
+
+        // ...
+        renderReset = (routeProps) => <PasswordReset {...routeProps} />
 
 
         // ...
@@ -132,6 +138,9 @@ export default compose(
                         onClose={this.onAutoClose}
                     />
                     <Switch>
+                        <Route exact path={getPath("reset")}>
+                            {this.renderReset}
+                        </Route>
                         <Route exact path={getPath("signup")}>
                             {this.renderSignup}
                         </Route>
