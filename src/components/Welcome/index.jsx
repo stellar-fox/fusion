@@ -1,23 +1,12 @@
 import React, { Fragment } from "react"
 import { compose } from "redux"
 import { withStyles } from "@material-ui/core/styles"
-import {
-    url,
-    rgba,
-} from "../../lib/utils"
-
-import {
-    Grid,
-    Hidden,
-    Paper,
-} from "@material-ui/core"
-
+import { url, rgba } from "../../lib/utils"
+import { Button, Grid, Hidden, Paper } from "@material-ui/core"
 import UserLogin from "../../lib/mui-v1/UserLogin"
-
 import logo from "../Fusion/static/logo.svg"
 import matte from "../Fusion/static/matte-01.jpg"
-
-
+import { Link } from "react-router-dom"
 
 
 // <Welcome> component
@@ -42,6 +31,10 @@ export default compose(
             padding: "40px 80px 40px 80px",
             backgroundColor: rgba(29, 36, 46, 0.25),
         },
+        button: {
+            marginTop: "1em",
+            lineHeight: "1em",
+        },
     }))
 )(({ classes, }) => {
 
@@ -53,7 +46,6 @@ export default compose(
                     direction={"column"}
                     justify={"space-around"}
                     alignItems={"center"}
-                    style={{ height: "100%", }}
                 >
                     <Grid item>
                         <img
@@ -63,6 +55,16 @@ export default compose(
                     </Grid>
                     <Grid item>
                         <UserLogin />
+                        <div className="flex-box-row space-between">
+                            <Button size="small" component={Link} to="/reset"
+                                variant="outlined" color="secondary"
+                                className={classes.button}
+                            >Reset Password</Button>
+                            <Button size="small" component={Link} to="/signup"
+                                variant="outlined" color="secondary"
+                                className={classes.button}
+                            >Signup</Button>
+                        </div>
                     </Grid>
                 </Grid>
             </Hidden>
@@ -84,6 +86,16 @@ export default compose(
                     <Grid item>
                         <Paper elevation={2} className={classes.loginPaper}>
                             <UserLogin />
+                            <div className="flex-box-row space-between m-t-small">
+                                <Button size="small" component={Link} to="/reset"
+                                    variant="outlined" color="secondary"
+                                    className={classes.button}
+                                >Reset Password</Button>
+                                <Button size="small" component={Link} to="/signup"
+                                    variant="outlined" color="secondary"
+                                    className={classes.button}
+                                >Signup</Button>
+                            </div>
                         </Paper>
                     </Grid>
                     <Grid item>
