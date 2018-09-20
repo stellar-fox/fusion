@@ -32,8 +32,9 @@ export default compose(
             backgroundColor: rgba(29, 36, 46, 0.25),
         },
         button: {
-            marginTop: "1em",
-            lineHeight: "1em",
+            margin: "1em 0em",
+            fontSize: "12px",
+            borderRadius: "3px",
         },
     }))
 )(({ classes, }) => {
