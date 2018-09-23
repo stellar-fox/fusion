@@ -15,7 +15,7 @@ import {
 export default withStyles((theme) => ({
 
     input: {
-        color: theme.palette.secondary.main,
+        color: theme.palette.text.primary,
     },
 
     underline: {
@@ -27,16 +27,20 @@ export default withStyles((theme) => ({
         "&:after": { borderBottomColor: theme.lui.canvas.faded, },
     },
 
-    root: { color: theme.lui.brandMembrane.label, },
+    root: {
+        fontFamily: "'Roboto Condensed', sans-serif",
+    },
 
     focused: {
         "&$root": {
-            color: theme.palette.secondary.dark,
+            color: theme.palette.text.secondary,
         },
     },
 
     error: {
-        color: `${theme.palette.error.light} !important`,
+        color: `${theme.palette.text.primary} !important`,
+        fontFamily: "'Roboto Condensed', sans-serif",
+        fontSize: "0.75em",
     },
 
     inputError: {
