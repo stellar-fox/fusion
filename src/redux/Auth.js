@@ -32,14 +32,18 @@ export const action = {
     // ...
     login: (...args) =>
         async (dispatch, _getState) => {
-            const auth = await authenticate(...args)
-            dispatch(action.setState({
-                uid: auth.user.uid,
-                email: auth.user.email,
-                name: auth.user.displayName,
-                photoUrl: auth.user.photoURL,
-                emailVerified: auth.user.emailVerified,
-            }))
+            try {
+                const auth = await authenticate(...args)
+                dispatch(action.setState({
+                    uid: auth.user.uid,
+                    email: auth.user.email,
+                    name: auth.user.displayName,
+                    photoUrl: auth.user.photoURL,
+                    emailVerified: auth.user.emailVerified,
+                }))
+            } catch (error) {
+                return Promise.reject(error)
+            }
         },
 
 

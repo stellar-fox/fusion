@@ -17,6 +17,9 @@ const authenticate = (email, password) =>
         .then((_) => firebase.auth()
             .signInWithEmailAndPassword(email, password)
         )
+        .catch((error) => {
+            return Promise.reject(error)
+        })
 
 
 // Sign out the user from Firebase
@@ -29,6 +32,9 @@ const signup = (email, password) =>
         .then((_) => firebase.auth()
             .createUserWithEmailAndPassword(email, password)
         )
+        .catch((error) => {
+            return Promise.reject(error)
+        })
 
 
 // Send verification email
