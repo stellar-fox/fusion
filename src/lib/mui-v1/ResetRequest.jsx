@@ -15,17 +15,7 @@ import { env } from "../../components/Fusion"
 
 // <ResetRequest> component
 export default compose(
-    withStyles((theme) => ({
-        avatar: {
-            margin: "0rem 1rem",
-            backgroundColor: theme.palette.background.default,
-            boxShadow: "0px 0px 20px 2px #0ff",
-        },
-
-        avatarRoot: {
-            borderRadius: "3px",
-            opacity: "0.5",
-        },
+    withStyles((_theme) => ({
 
         root: {
             display: "flex",
@@ -34,22 +24,8 @@ export default compose(
             flexDirection: "column",
         },
 
-        header: {
-            color: "white",
-            textAlign: "center",
-            fontSize: "1.2rem",
-            marginBottom: "10px",
-        },
-
-        subHeader: {
-            color: "white",
-            textAlign: "center",
-            fontSize: "1rem",
-            marginBottom: "30px",
-        },
-
         progressBar: {
-            width: "300px",
+            width: "100%",
             height: "2px",
             borderRadius: "2px",
             marginTop: "2px",
@@ -77,15 +53,17 @@ export default compose(
         state = {
             open: false,
             disabled: false,
-            username: emptyString(),
-            message: emptyString(),
+            email: emptyString(),
+            errorEmail: false,
+            errorMessageEmail: emptyString(),
             progressBarOpacity: 0,
+            snackbarMessage: emptyString(),
         }
 
 
         // ...
-        setUsername = (e) =>
-            this.setState({ username: e.target.value, })
+        setEmail = (e) =>
+            this.setState({ email: e.target.value, })
 
 
         // ...
@@ -93,9 +71,9 @@ export default compose(
 
 
         // ...
-        popupSnackbar = (message) => this.setState({
+        popupSnackbar = (snackbarMessage) => this.setState({
             open: true,
-            message,
+            snackbarMessage,
         })
 
 
@@ -105,26 +83,49 @@ export default compose(
             try {
                 await this.setState({
                     disabled: true,
-                    error: false,
-                    errorMessage: emptyString(),
+                    errorEmail: false,
+                    errorEmailMessage: emptyString(),
                     progressBarOpacity: 1,
                 })
-                await this.props.sendPasswordReset(this.state.username)
+                await this.props.sendPasswordReset(this.state.email)
                 await this.setState({
                     disabled: false,
-                    error: false,
-                    errorMessage: emptyString(),
                     progressBarOpacity: 0,
                 })
+                this.popupSnackbar("Reset link sent.")
             } catch (error) {
+
+                // reset button and progress bar
                 this.setState({
-                    disabled: false,
-                    // error: true,
-                    // errorMessage: error.message,
                     progressBarOpacity: 0,
+                    disabled: false,
                 })
-            } finally {
-                this.popupSnackbar("Reset link was sent out.")
+
+                // THE CHECKS BELOW NEED TO BE DONE ON THE BACKEND.
+
+                // handle error on UI based on error code
+                if (error.code === "auth/invalid-email") {
+                    this.setState({
+                        errorEmail: true,
+                        errorMessageEmail: error.message,
+                    })
+                    return
+                }
+
+                if (error.code === "auth/user-not-found") {
+                    this.setState({
+                        errorEmail: true,
+                        errorMessageEmail: "Invalid email.",
+                    })
+                    return
+                }
+
+                // in case of other error - display the code/message
+                this.setState({
+                    errorEmail: true,
+                    errorMessageEmail: error.message,
+                })
+
             }
 
         }
@@ -150,7 +151,7 @@ export default compose(
                         message={
                             <span id="message-id">
                                 <Typography variant="body2" color="inherit">
-                                    {this.state.message}
+                                    {this.state.snackbarMessage}
                                 </Typography>
                             </span>
                         }
@@ -178,11 +179,11 @@ export default compose(
                         label="Email"
                         type="text"
                         fullWidth
-                        value={this.state.username}
-                        onChange={this.setUsername}
+                        value={this.state.email}
+                        onChange={this.setEmail}
                         autocomplete={false}
-                        error={this.state.error}
-                        errorMessage={this.state.errorMessage}
+                        error={this.state.errorEmail}
+                        errorMessage={this.state.errorMessageEmail}
                     />
                     <Button
                         fullWidth
