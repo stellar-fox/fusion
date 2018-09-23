@@ -14,17 +14,7 @@ import { env } from "../../components/Fusion"
 
 // <UserSignup> component
 export default compose(
-    withStyles((theme) => ({
-        avatar: {
-            margin: "0rem 1rem",
-            backgroundColor: theme.palette.background.default,
-            boxShadow: "0px 0px 20px 2px #0ff",
-        },
-
-        avatarRoot: {
-            borderRadius: "3px",
-            opacity: "0.5",
-        },
+    withStyles((_theme) => ({
 
         root: {
             display: "flex",
@@ -33,22 +23,8 @@ export default compose(
             flexDirection: "column",
         },
 
-        header: {
-            color: "white",
-            textAlign: "center",
-            fontSize: "1.2rem",
-            marginBottom: "10px",
-        },
-
-        subHeader: {
-            color: "white",
-            textAlign: "center",
-            fontSize: "1rem",
-            marginBottom: "30px",
-        },
-
         progressBar: {
-            width: "300px",
+            width: "100%",
             height: "2px",
             borderRadius: "2px",
             marginTop: "2px",
@@ -76,16 +52,21 @@ export default compose(
         // ...
         state = {
             disabled: false,
-            username: emptyString(),
+            email: emptyString(),
             password: emptyString(),
             passwordConf: emptyString(),
             progressBarOpacity: 0,
+            errorEmail: false,
+            errorPassword: false,
+            errorPasswordConf: false,
+            errorMessagePassword: emptyString(),
+            errorMessagePasswordConf: emptyString(),
         }
 
 
         // ...
-        setUsername = (e) =>
-            this.setState({ username: e.target.value, })
+        setEmail = (e) =>
+            this.setState({ email: e.target.value, })
 
 
         // ...
@@ -106,9 +87,11 @@ export default compose(
         signup = async (_e) => {
             if(!this.passwordsMatch()) {
                 this.setState({
-                    error: true,
+                    errorPassword: true,
+                    errorPasswordConf: true,
                     disabled: false,
-                    errorMessage: "Passwords do not match.",
+                    errorMessagePassword: "Passwords do not match.",
+                    errorMessagePasswordConf: "Passwords do not match.",
                     progressBarOpacity: 0,
                 })
                 return
@@ -117,21 +100,57 @@ export default compose(
             try {
                 this.setState({
                     disabled: true,
-                    error: false,
-                    errorMessage: emptyString(),
+                    errorEmail: false,
+                    errorPassword: false,
+                    errorPasswordConf: false,
+                    errorMessageEmail: emptyString(),
+                    errorMessagePassword: emptyString(),
+                    errorMessagePasswordConf: emptyString(),
                     progressBarOpacity: 1,
                 })
                 await this.props.signup(
-                    this.state.username,
+                    this.state.email,
                     this.state.password
                 )
             } catch (error) {
+
+                // reset button and progress bar
                 this.setState({
-                    disabled: false,
-                    error: true,
-                    errorMessage: error.message,
                     progressBarOpacity: 0,
+                    disabled: false,
                 })
+
+                // THE CHECKS BELOW NEED TO BE DONE ON THE BACKEND.
+
+                // handle error on UI based on error code
+                if (error.code === "auth/invalid-email") {
+                    this.setState({
+                        errorEmail: true,
+                        errorMessageEmail: error.message,
+                        errorPassword: false,
+                        errorMessagePassword: emptyString(),
+                    })
+                    return
+                }
+
+                if (error.code === "auth/wrong-password") {
+                    this.setState({
+                        errorEmail: false,
+                        errorMessagePassword: "Password is invalid.",
+                        errorPassword: true,
+                        errorMessageEmail: emptyString(),
+                    })
+                    return
+                }
+
+                // in case of other error - display the code/message
+                this.setState({
+                    errorEmail: true,
+                    errorPassword: true,
+                    errorMessageEmail: error.code,
+                    errorMessagePassword: error.message,
+                })
+
             }
         }
 
@@ -147,15 +166,15 @@ export default compose(
                         Sign-up and bank.
                     </Typography>
                     <TextInput
-                        id="username"
+                        id="email"
                         label="Email"
                         type="text"
                         fullWidth
-                        value={this.state.username}
-                        onChange={this.setUsername}
+                        value={this.state.email}
+                        onChange={this.setEmail}
                         autocomplete={false}
-                        error={this.state.error}
-                        errorMessage={this.state.errorMessage}
+                        error={this.state.errorEmail}
+                        errorMessage={this.state.errorMessageEmail}
                     />
                     <TextInput
                         id="password"
@@ -165,8 +184,8 @@ export default compose(
                         value={this.state.password}
                         onChange={this.setPassword}
                         autocomplete={false}
-                        error={this.state.error}
-                        errorMessage={this.state.errorMessage}
+                        error={this.state.errorPassword}
+                        errorMessage={this.state.errorMessagePassword}
                     />
                     <TextInput
                         id="passwordconf"
@@ -176,8 +195,8 @@ export default compose(
                         value={this.state.passwordConf}
                         onChange={this.setPasswordConf}
                         autocomplete={false}
-                        error={this.state.error}
-                        errorMessage={this.state.errorMessage}
+                        error={this.state.errorPasswordConf}
+                        errorMessage={this.state.errorMessagePasswordConf}
                     />
 
                     <Button
