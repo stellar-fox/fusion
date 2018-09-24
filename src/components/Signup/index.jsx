@@ -4,27 +4,20 @@ import { withStyles } from "@material-ui/core/styles"
 import { url, rgba } from "../../lib/utils"
 import { Button, Grid, Hidden, Paper } from "@material-ui/core"
 import UserSignup from "../../lib/mui-v1/UserSignup"
-import logo from "../Fusion/static/logo.svg"
-import matte from "../Fusion/static/matte-01.jpg"
+import background from "../Fusion/static/bg.png"
 import { Link } from "react-router-dom"
 
 
 
 // <Signup> component
 export default compose(
-    withStyles((theme) => ({
+    withStyles((_theme) => ({
 
         container: {
-            backgroundImage: url(matte),
+            backgroundImage: url(background),
             backgroundPosition: "center center",
             backgroundSize: "cover",
             height: "100%",
-        },
-
-        appLogo: {
-            ...theme.fusion.appLogo,
-            height: "60px",
-            margin: "40px",
         },
 
         loginPaper: {
@@ -32,11 +25,13 @@ export default compose(
             padding: "40px 80px 40px 80px",
             backgroundColor: rgba(29, 36, 46, 0.25),
         },
+
         button: {
             margin: "1em 0em",
             fontSize: "12px",
             borderRadius: "3px",
         },
+
     }))
 )(({ classes, }) => {
 
@@ -48,14 +43,8 @@ export default compose(
                     direction={"column"}
                     justify={"space-around"}
                     alignItems={"center"}
-                    style={{ height: "100%", }}
+                    wrap={"nowrap"}
                 >
-                    <Grid item>
-                        <img
-                            className={classes.appLogo}
-                            src={logo} alt="logo"
-                        />
-                    </Grid>
                     <Grid item>
                         <UserSignup />
                         <div className="flex-box-row space-between">
@@ -75,13 +64,8 @@ export default compose(
                     direction={"column"}
                     justify={"space-around"}
                     alignItems={"center"}
+                    wrap={"nowrap"}
                 >
-                    <Grid item>
-                        <img
-                            className={classes.appLogo}
-                            src={logo} alt="logo"
-                        />
-                    </Grid>
                     <Grid item>
                         <Paper elevation={2} className={classes.loginPaper}>
                             <UserSignup />
@@ -92,9 +76,6 @@ export default compose(
                                 >Log In</Button>
                             </div>
                         </Paper>
-                    </Grid>
-                    <Grid item>
-                        <div className={classes.appLogo} />
                     </Grid>
                 </Grid>
             </Hidden>

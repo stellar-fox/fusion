@@ -10,11 +10,23 @@ import Button from "./Button"
 import TextInput from "./TextInput"
 import { Typography } from "@material-ui/core"
 import { env } from "../../components/Fusion"
-
+import logo from "../../components/Fusion/static/logo.svg"
 
 // <UserSignup> component
 export default compose(
-    withStyles((_theme) => ({
+    withStyles((theme) => ({
+
+        appLogo: {
+            ...theme.fusion.appLogo,
+            [theme.breakpoints.up("md")]: {
+                height: "100px",
+                margin: "40px",
+            },
+            [theme.breakpoints.down("sm")]: {
+                height: "80px",
+                margin: "20px",
+            },
+        },
 
         root: {
             display: "flex",
@@ -143,6 +155,26 @@ export default compose(
                     return
                 }
 
+                if (error.code === "auth/weak-password") {
+                    this.setState({
+                        errorEmail: false,
+                        errorMessagePassword: error.message,
+                        errorPassword: true,
+                        errorMessageEmail: emptyString(),
+                    })
+                    return
+                }
+
+                if (error.code === "auth/email-already-in-use") {
+                    this.setState({
+                        errorEmail: true,
+                        errorMessageEmail: error.message,
+                        errorPassword: false,
+                        errorMessagePassword: emptyString(),
+                    })
+                    return
+                }
+
                 // in case of other error - display the code/message
                 this.setState({
                     errorEmail: true,
@@ -159,6 +191,10 @@ export default compose(
         render = () => (
             ({ classes, }) =>
                 <div className={classes.root}>
+                    <img
+                        className={classes.appLogo}
+                        src={logo} alt="logo"
+                    />
                     <Typography variant="title">
                         {env.appVisName}
                     </Typography>

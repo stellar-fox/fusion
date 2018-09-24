@@ -11,11 +11,23 @@ import TextInput from "./TextInput"
 import { IconButton, Snackbar, Typography } from "@material-ui/core"
 import { Close } from "@material-ui/icons"
 import { env } from "../../components/Fusion"
-
+import logo from "../../components/Fusion/static/logo.svg"
 
 // <ResetRequest> component
 export default compose(
-    withStyles((_theme) => ({
+    withStyles((theme) => ({
+
+        appLogo: {
+            ...theme.fusion.appLogo,
+            [theme.breakpoints.up("md")]: {
+                height: "100px",
+                margin: "40px",
+            },
+            [theme.breakpoints.down("sm")]: {
+                height: "80px",
+                margin: "20px",
+            },
+        },
 
         root: {
             display: "flex",
@@ -168,6 +180,10 @@ export default compose(
                         ]}
                     />
 
+                    <img
+                        className={classes.appLogo}
+                        src={logo} alt="logo"
+                    />
                     <Typography variant="title">
                         {env.appVisName}
                     </Typography>

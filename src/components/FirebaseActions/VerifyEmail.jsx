@@ -5,7 +5,7 @@ import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
 import { url, rgba } from "../../lib/utils"
 import logo from "../Fusion/static/logo.svg"
-import matte from "../Fusion/static/matte-01.jpg"
+import background from "../Fusion/static/bg.png"
 import { Grid, Paper, Typography, } from "@material-ui/core"
 
 
@@ -27,7 +27,7 @@ export default compose(
         },
         container: {
             [theme.breakpoints.up("md")]: {
-                backgroundImage: url(matte),
+                backgroundImage: url(background),
             },
             backgroundPosition: "center center",
             backgroundSize: "cover",
