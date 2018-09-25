@@ -61,7 +61,7 @@ export default compose(
         },
 
         progressBar: {
-            width: "300px",
+            width: "100%",
             height: "2px",
             borderRadius: "2px",
             marginTop: "2px",
@@ -83,12 +83,13 @@ export default compose(
         // ...
         static propTypes = {
             classes: PropTypes.object.isRequired,
-            login: PropTypes.func.isRequired,
         }
 
 
         // ...
         state = {
+            errorPassword: false,
+            errorMessagePassword: emptyString(),
             disabled: false,
             password: emptyString(),
             progressBarOpacity: 0,
@@ -104,24 +105,39 @@ export default compose(
         // ...
         resetPassword = async (_e) => {
             try {
+
                 await this.setState({
                     disabled: true,
                     error: false,
                     errorMessage: emptyString(),
                     progressBarOpacity: 1,
                 })
-                await this.props.updatePassword(this.props.oobCode, this.state.password)
+
+                await this.props.updatePassword(
+                    this.props.oobCode, this.state.password
+                )
 
                 await this.setState({
                     progressBarOpacity: 0,
                     passwordUpdated: true,
                 })
 
+
             } catch (error) {
+
+                if (error.code === "auth/weak-password") {
+                    this.setState({
+                        errorMessagePassword: "Password is invalid.",
+                    })
+                } else {
+                    this.setState({
+                        errorMessagePassword: error.message,
+                    })
+                }
+
                 this.setState({
+                    errorPassword: true,
                     disabled: false,
-                    error: true,
-                    errorMessage: error.message,
                     progressBarOpacity: 0,
                 })
             }
@@ -162,8 +178,8 @@ export default compose(
                                 value={this.state.password}
                                 onChange={this.setPassword}
                                 autocomplete={false}
-                                error={this.state.error}
-                                errorMessage={this.state.errorMessage}
+                                error={this.state.errorPassword}
+                                errorMessage={this.state.errorMessagePassword}
                             />
                             <Button
                                 fullWidth
