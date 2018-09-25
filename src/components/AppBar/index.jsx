@@ -44,22 +44,24 @@ export default compose(
 
         appLogo: {
             ...theme.fusion.appLogo,
-            marginRight: 36,
-        },
-
-        appLogoSm: {
-            ...theme.fusion.appLogoSm,
-            margin: "0 1em 0 0.75em",
+            [theme.breakpoints.up("md")]: {
+                marginRight: "1em",
+            },
+            [theme.breakpoints.down("sm")]: {},
         },
 
         menuButton: {
-            marginLeft: 12,
-            marginRight: 36,
+            [theme.breakpoints.up("md")]: {
+                margin: "0 1em 0 0.5em",
+            },
+            [theme.breakpoints.down("sm")]: {
+                margin: "0 0 0 0",
+            },
         },
 
         hide: { display: "none", },
 
-        iconButtonShift: { marginRight: 12, },
+        iconButtonShift: { marginRight: "1em", },
 
         version: {
             fontSize: "0.7rem",
@@ -129,7 +131,9 @@ export default compose(
                                 >
                                     <MenuIcon />
                                 </IconButton>
-                                <div style={{width: "100%",}} className="flex-box-row items-centered">
+                                <div style={{width: "100%",}}
+                                    className="flex-box-row items-centered"
+                                >
                                     <img
                                         className={classes.appLogo}
                                         src={logo} alt="logo"
@@ -174,12 +178,20 @@ export default compose(
                                 variant="dense"
                                 classes={{ root: classes.toolbarRoot, }}
                             >
-                                <div className="flex-box-row space-between items-centered">
+                                <div
+                                    className="flex-box-row space-between items-centered"
+                                >
                                     <div className="flex-box-row items-centered">
-                                        <img
-                                            className={classes.appLogoSm}
-                                            src={logo} alt="logo"
-                                        />
+                                        <IconButton
+                                            color="secondary"
+                                            aria-label="open drawer"
+                                            onClick={this.handleDrawerOpen}
+                                            className={
+                                                classNames(classes.menuButton)
+                                            }
+                                        >
+                                            <MenuIcon />
+                                        </IconButton>
 
                                         <TabBar color="secondary" />
 
@@ -188,6 +200,10 @@ export default compose(
                                 </div>
                             </Toolbar>
                         </AppBar>
+                        <DashboardDrawer
+                            open={open}
+                            handleDrawerClose={this.handleDrawerClose}
+                        />
                     </Hidden>
 
                 </Fragment>
