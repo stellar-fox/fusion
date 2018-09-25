@@ -56,9 +56,12 @@ const applyVerificationCode = (actionCode) =>
 
 
 // Verify password reset code
-const verifyPasswordResetCode = (actionCode) =>
+const verifyPasswordResetCode = async (actionCode) =>
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
         .then((_) => firebase.auth().verifyPasswordResetCode(actionCode))
+        .catch((error) => {
+            return Promise.reject(error)
+        })
 
 
 // ...
@@ -88,13 +91,18 @@ const write = async (uid, userData) => {
 const resetPassword = (emailAddress) =>
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
         .then((_) => firebase.auth().sendPasswordResetEmail(emailAddress))
+        .catch((error) => {
+            return Promise.reject(error)
+        })
 
 
 // Send password reset link.
 const updatePassword = (code, newPassword) =>
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
         .then((_) => firebase.auth().confirmPasswordReset(code, newPassword))
-
+        .catch((error) => {
+            return Promise.reject(error)
+        })
 
 
 

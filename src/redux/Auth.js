@@ -154,9 +154,7 @@ export const action = {
                 }))
 
             } catch (error) {
-                dispatch(action.setState({
-                    resetLinkValid: false,
-                }))
+                return Promise.reject(error)
             }
         },
 }
