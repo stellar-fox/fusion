@@ -61,7 +61,9 @@ export default compose(
 
         hide: { display: "none", },
 
-        iconButtonShift: { marginRight: "1em", },
+        iconButtonShift: {
+            marginRight: "-0.5em !important",
+        },
 
         version: {
             fontSize: "0.7rem",
