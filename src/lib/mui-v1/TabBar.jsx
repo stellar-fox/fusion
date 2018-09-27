@@ -1,10 +1,12 @@
 import React, { Component } from "react"
+import PropTypes from "prop-types"
 import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
+import { withDynamicRoutes, withStaticRouter } from "../../components/FusionRouter"
 import { withStyles } from "@material-ui/core/styles"
 import { Tabs, Tab } from "@material-ui/core"
 import {
-    AttachMoneyRounded, BarChartRounded, PeopleRounded
+    AccountBalanceWalletRounded, ContactsRounded, VpnKeyRounded
 } from "@material-ui/icons"
 
 
@@ -12,6 +14,8 @@ import {
 
 // <TabBar> component
 export default compose(
+    withStaticRouter,
+    withDynamicRoutes,
     withStyles( (theme) => ({
         tabsIndicator: {
             backgroundColor: theme.palette.error.dark,
@@ -21,28 +25,75 @@ export default compose(
         },
     })),
     connect(
-        (_state) => ({}),
+        (state) => ({
+            currentView: state.Router.currentView,
+        }),
         (dispatch) => bindActionCreators({}, dispatch)
     )
 )(
     class extends Component {
 
-        state = { value: 0, }
+        // ...
+        static propTypes = {
+            classes: PropTypes.object.isRequired,
+            currentPath: PropTypes.string.isRequired,
+            staticRouter: PropTypes.object.isRequired,
+        }
 
-        handleTabChange = (_event, value) => this.setState({ value, })
+
+        // ...
+        selectView = (viewName) => {
+            if (
+                !this.props
+                    .currentPath
+                    .startsWith(
+                        this.props
+                            .staticRouter
+                            .getPath(viewName)
+                    )
+            ) {
+                console.info("switching to (from tabbar): " + viewName)
+                this.props.staticRouter.pushByView(viewName)
+            } else {
+                console.log("This view is not mapped to quick access tab")
+            }
+        }
+
+
+        // ...
+        handleTabChange = (_event, value) => {
+            this.setState({ value, })
+            this.selectView(value)
+        }
+
 
         // ...
         render = () => (
-            ({ classes, color, disabled, }, { value, }) =>
+            ({ classes, color, currentView, disabled, }) =>
                 <Tabs
-                    classes={{ root: classes.tabsRoot, indicator: classes.tabsIndicator, }}
-                    value={value} onChange={this.handleTabChange}
+                    classes={{
+                        root: classes.tabsRoot,
+                        indicator: classes.tabsIndicator,
+                    }}
+                    value={currentView} onChange={this.handleTabChange}
                 >
-                    <Tab classes={{ selected: classes.tabSelected, }} disabled={disabled} icon={<BarChartRounded color={color} />} />
-                    <Tab classes={{ selected: classes.tabSelected, }} disabled={disabled} icon={<AttachMoneyRounded color={color} />} />
-                    <Tab classes={{ selected: classes.tabSelected, }} disabled={disabled} icon={<PeopleRounded color={color} />} />
+                    <Tab classes={{ selected: classes.tabSelected, }}
+                        disabled={disabled}
+                        icon={<VpnKeyRounded color={color} />}
+                        value="keys"
+                    />
+                    <Tab classes={{ selected: classes.tabSelected, }}
+                        disabled={disabled}
+                        icon={<AccountBalanceWalletRounded color={color} />}
+                        value="balances"
+                    />
+                    <Tab classes={{ selected: classes.tabSelected, }}
+                        disabled={disabled}
+                        icon={<ContactsRounded color={color} />}
+                        value="contacts"
+                    />
                 </Tabs>
-        )(this.props, this.state)
+        )(this.props)
 
     }
 )
