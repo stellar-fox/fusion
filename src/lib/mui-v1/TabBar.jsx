@@ -40,6 +40,10 @@ export default compose(
             staticRouter: PropTypes.object.isRequired,
         }
 
+        // ...
+        state = {
+            quickAccessList: ["keys", "balances", "contacts",],
+        }
 
         // ...
         selectView = (viewName) => {
@@ -75,7 +79,11 @@ export default compose(
                         root: classes.tabsRoot,
                         indicator: classes.tabsIndicator,
                     }}
-                    value={currentView} onChange={this.handleTabChange}
+                    value={
+                        this.state.quickAccessList.includes(currentView) ?
+                            currentView : false
+                    }
+                    onChange={this.handleTabChange}
                 >
                     <Tab classes={{ selected: classes.tabSelected, }}
                         disabled={disabled}
