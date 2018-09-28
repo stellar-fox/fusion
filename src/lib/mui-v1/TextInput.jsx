@@ -20,11 +20,11 @@ export default withStyles((theme) => ({
 
     underline: {
         "&:hover:before": {
-            borderBottomColor: `${theme.lui.canvas.faded} !important`,
+            borderBottomColor: `${theme.palette.custom.outerSpace} !important`,
             borderBottomWidth: "1px !important",
         },
-        "&:before": { borderBottomColor: theme.lui.canvas.faded, },
-        "&:after": { borderBottomColor: theme.lui.canvas.faded, },
+        "&:before": { borderBottomColor: theme.palette.primary.light, },
+        "&:after": { borderBottomColor: theme.palette.primary.light, },
     },
 
     root: {
@@ -33,7 +33,7 @@ export default withStyles((theme) => ({
 
     focused: {
         "&$root": {
-            color: theme.palette.text.secondary,
+            color: theme.palette.custom.arsenic,
         },
     },
 

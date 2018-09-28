@@ -11,13 +11,13 @@ import { Button } from "@material-ui/core"
 export default withStyles((theme) => ({
 
     primary: {
-        color: theme.palette.primary.contrastText,
+        color: theme.palette.primary.light,
     },
 
     common: {
-        backgroundColor: theme.palette.background.button,
+        backgroundColor: theme.palette.primary.dark,
         "&:hover": {
-            backgroundColor: theme.palette.primary.highlight,
+            backgroundColor: theme.palette.primary.main,
         },
         borderRadius: "2px",
         paddingTop: "0.75rem",
@@ -31,8 +31,9 @@ export default withStyles((theme) => ({
     },
 
     disabled: {
-        color: `${theme.lui.contextChrome.main} !important`,
-        backgroundColor: `${theme.lui.contextChrome.faded} !important`,
+        color: `${theme.palette.custom.arsenic} !important`,
+        backgroundColor: `${theme.palette.primary.main} !important`,
+        opacity: "0.5",
     },
 
     yellowLight: {
@@ -45,6 +46,9 @@ export default withStyles((theme) => ({
 
     yellowDark: {
         color: theme.palette.custom.yellowDark,
+        "&:hover": {
+            backgroundColor: theme.palette.custom.yellowDarkHighlight,
+        },
     },
 
     greenDark: {
@@ -53,6 +57,9 @@ export default withStyles((theme) => ({
 
     green: {
         color: theme.palette.custom.green,
+        "&:hover": {
+            backgroundColor: theme.palette.custom.greenHighlight,
+        },
     },
 
     greenLight: {

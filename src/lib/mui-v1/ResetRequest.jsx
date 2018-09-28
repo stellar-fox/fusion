@@ -203,7 +203,7 @@ export default compose(
                     />
                     <Button
                         fullWidth
-                        color="yellow"
+                        color="yellowDark"
                         disabled={this.state.disabled}
                         onClick={this.sendPasswordResetLink}
                     >

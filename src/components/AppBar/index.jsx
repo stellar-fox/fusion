@@ -27,6 +27,7 @@ export default compose(
                 easing: theme.transitions.easing.easeIn,
                 duration: theme.transitions.duration.leavingScreen,
             }),
+            backgroundColor: theme.palette.common.black,
         },
 
         appBarShift: {
@@ -63,15 +64,6 @@ export default compose(
 
         iconButtonShift: {
             marginRight: "-0.5em !important",
-        },
-
-        version: {
-            fontSize: "0.7rem",
-            color: "white",
-        },
-
-        caption: {
-            color: theme.palette.secondary.faded,
         },
 
     })),

@@ -199,14 +199,7 @@ export default compose(
                     </Button>
                     <LinearProgress
                         variant="indeterminate"
-                        classes={{
-                            root:
-                                this.props.classes.progressBar,
-                            colorPrimary:
-                                this.props.classes.colorPrimary,
-                            barColorPrimary:
-                                this.props.classes.barColorPrimary,
-                        }}
+                        classes={{ root: this.props.classes.progressBar, }}
                         style={{ opacity: this.state.progressBarOpacity, }}
                     />
                 </div>
