@@ -44,7 +44,6 @@ export const dynamicImportLibs = async () => {
         api, axios, base64, jss, lodash,
         mui, redux, toolbox, utils,
     ] = await Promise.all([
-        import("./api-calls"),
         import("axios"),
         import("js-base64"),
         import("jss"),
