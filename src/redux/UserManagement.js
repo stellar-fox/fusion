@@ -1,6 +1,4 @@
 import { createReducer } from "@xcmats/js-toolbox"
-import { authToken } from "../lib/utils"
-import { listUsers } from "../lib/api-calls"
 
 
 
@@ -20,12 +18,6 @@ export const SET_STATE = "@UserManagement/SET_STATE"
 
 // ...
 export const action = {
-
-    // ...
-    listUsers: () =>
-        async (_dispatch, getState) =>
-            listUsers(authToken(getState)),
-
 
     // ...
     resetState: () => ({ type: RESET_STATE, }),

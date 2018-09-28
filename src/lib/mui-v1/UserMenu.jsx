@@ -8,7 +8,6 @@ import {
     Hidden, IconButton, Menu, MenuItem, Typography,
 } from "@material-ui/core"
 import { action as AuthActions } from "../../redux/Auth"
-import { action as GroupManagementActions } from "../../redux/GroupManagement"
 
 
 
@@ -45,10 +44,7 @@ class UserMenu extends Component {
 
 
     // ...
-    logout = () => {
-        this.props.logout()
-        this.props.resetGroupManagementState()
-    }
+    logout = () => this.props.logout()
 
 
     // ...
@@ -108,7 +104,6 @@ export default compose(
         }),
         (dispatch) => bindActionCreators({
             logout: AuthActions.logout,
-            resetGroupManagementState: GroupManagementActions.resetState,
         }, dispatch)
     ),
     withStyles(styles)
