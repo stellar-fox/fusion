@@ -65,10 +65,7 @@ export default compose(
 
 
         // ...
-        handleTabChange = (_event, value) => {
-            this.setState({ value, })
-            this.selectView(value)
-        }
+        handleTabChange = (_event, value) => this.selectView(value)
 
 
         // ...
