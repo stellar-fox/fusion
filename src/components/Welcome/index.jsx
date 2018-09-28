@@ -3,7 +3,7 @@ import { compose } from "redux"
 import { withStyles } from "@material-ui/core/styles"
 import { url, rgba } from "../../lib/utils"
 import { Button, Grid, Hidden, Paper } from "@material-ui/core"
-import UserLogin from "../../lib/mui-v1/UserLogin"
+import UserLogin from "../UserLogin"
 import background from "../Fusion/static/bg.png"
 import { Link } from "react-router-dom"
 

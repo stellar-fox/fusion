@@ -6,11 +6,11 @@ import { emptyString } from "@xcmats/js-toolbox"
 import { action as AuthActions } from "../../redux/Auth"
 import { withStyles } from "@material-ui/core/styles"
 import { LinearProgress } from "@material-ui/core"
-import Button from "./Button"
-import TextInput from "./TextInput"
+import Button from "../../lib/mui-v1/Button"
+import TextInput from "../../lib/mui-v1/TextInput"
 import { Typography } from "@material-ui/core"
-import { env } from "../../components/Fusion"
-import logo from "../../components/Fusion/static/logo.svg"
+import { env } from "../Fusion"
+import logo from "../Fusion/static/logo.svg"
 
 // <PasswordUpdate> component
 export default compose(

@@ -6,14 +6,14 @@ import { emptyString } from "@xcmats/js-toolbox"
 import { action as AuthActions } from "../../redux/Auth"
 import { withStyles } from "@material-ui/core/styles"
 import { LinearProgress } from "@material-ui/core"
-import Button from "./Button"
-import TextInput from "./TextInput"
-import { Typography } from "@material-ui/core"
-import { env } from "../../components/Fusion"
-import logo from "../../components/Fusion/static/logo.svg"
+import Button from "../../lib/mui-v1/Button"
+import TextInput from "../../lib/mui-v1/TextInput"
+import { IconButton, Snackbar, Typography } from "@material-ui/core"
+import { Close } from "@material-ui/icons"
+import { env } from "../Fusion"
+import logo from "../Fusion/static/logo.svg"
 
-
-// <UserLogin> component
+// <ResetRequest> component
 export default compose(
     withStyles((theme) => ({
 
@@ -45,12 +45,10 @@ export default compose(
 
     })),
     connect(
-        (state) => ({
-            loginAttempts: state.Auth.status.loginAttempts,
-            maxLoginAttempts: state.Auth.status.maxLoginAttempts,
+        (_state) => ({
         }),
         (dispatch) => bindActionCreators({
-            login: AuthActions.login,
+            sendPasswordReset: AuthActions.sendPasswordReset,
         }, dispatch)
     ),
 )(
@@ -59,18 +57,19 @@ export default compose(
         // ...
         static propTypes = {
             classes: PropTypes.object.isRequired,
-            login: PropTypes.func.isRequired,
+            sendPasswordReset: PropTypes.func.isRequired,
         }
 
 
         // ...
         state = {
+            open: false,
             disabled: false,
             email: emptyString(),
-            password: emptyString(),
-            progressBarOpacity: 0,
+            errorEmail: false,
             errorMessageEmail: emptyString(),
-            errorMessagePassword: emptyString(),
+            progressBarOpacity: 0,
+            snackbarMessage: emptyString(),
         }
 
 
@@ -80,25 +79,32 @@ export default compose(
 
 
         // ...
-        setPassword = (e) =>
-            this.setState({ password: e.target.value, })
+        closeSnackbar = () => this.setState({ open: false, })
 
 
         // ...
-        authenticate = async (_e) => {
+        popupSnackbar = (snackbarMessage) => this.setState({
+            open: true,
+            snackbarMessage,
+        })
+
+
+        // ...
+        sendPasswordResetLink = async () => {
+
             try {
-                this.setState({
+                await this.setState({
                     disabled: true,
                     errorEmail: false,
-                    errorMessageEmail: emptyString(),
-                    errorPassword: false,
-                    errorMessagePassword: emptyString(),
+                    errorEmailMessage: emptyString(),
                     progressBarOpacity: 1,
                 })
-                await this.props.login(
-                    this.state.email,
-                    this.state.password
-                )
+                await this.props.sendPasswordReset(this.state.email)
+                await this.setState({
+                    disabled: false,
+                    progressBarOpacity: 0,
+                })
+                this.popupSnackbar("Reset link sent.")
             } catch (error) {
 
                 // reset button and progress bar
@@ -114,18 +120,6 @@ export default compose(
                     this.setState({
                         errorEmail: true,
                         errorMessageEmail: error.message,
-                        errorPassword: false,
-                        errorMessagePassword: emptyString(),
-                    })
-                    return
-                }
-
-                if (error.code === "auth/wrong-password") {
-                    this.setState({
-                        errorEmail: false,
-                        errorMessagePassword: "Password is invalid.",
-                        errorPassword: true,
-                        errorMessageEmail: emptyString(),
                     })
                     return
                 }
@@ -133,9 +127,7 @@ export default compose(
                 if (error.code === "auth/user-not-found") {
                     this.setState({
                         errorEmail: true,
-                        errorPassword: true,
-                        errorMessageEmail: "Invalid credentials.",
-                        errorMessagePassword: "Invalid credentials.",
+                        errorMessageEmail: "Invalid email.",
                     })
                     return
                 }
@@ -143,19 +135,51 @@ export default compose(
                 // in case of other error - display the code/message
                 this.setState({
                     errorEmail: true,
-                    errorPassword: true,
-                    errorMessageEmail: error.code,
-                    errorMessagePassword: error.message,
+                    errorMessageEmail: error.message,
                 })
 
             }
+
         }
 
 
         // ...
         render = () => (
             ({ classes, }) =>
+
                 <div className={classes.root}>
+
+                    <Snackbar
+                        anchorOrigin={{
+                            vertical: "bottom",
+                            horizontal: "left",
+                        }}
+                        open={this.state.open}
+                        autoHideDuration={3000}
+                        onClose={this.closeSnackbar}
+                        ContentProps={{
+                            "aria-describedby": "message-id",
+                        }}
+                        message={
+                            <span id="message-id">
+                                <Typography variant="body2" color="inherit">
+                                    {this.state.snackbarMessage}
+                                </Typography>
+                            </span>
+                        }
+                        action={[
+                            <IconButton
+                                key="close"
+                                aria-label="Close"
+                                color="inherit"
+                                className={classes.close}
+                                onClick={this.closeSnackbar}
+                            >
+                                <Close />
+                            </IconButton>,
+                        ]}
+                    />
+
                     <img
                         className={classes.appLogo}
                         src={logo} alt="logo"
@@ -164,10 +188,10 @@ export default compose(
                         {env.appVisName}
                     </Typography>
                     <Typography variant="subheading">
-                        Sign-in and bank.
+                        Request password reset.
                     </Typography>
                     <TextInput
-                        id="email"
+                        id="username"
                         label="Email"
                         type="text"
                         fullWidth
@@ -177,31 +201,27 @@ export default compose(
                         error={this.state.errorEmail}
                         errorMessage={this.state.errorMessageEmail}
                     />
-                    <TextInput
-                        id="password"
-                        label="Password"
-                        type="password"
-                        fullWidth
-                        value={this.state.password}
-                        onChange={this.setPassword}
-                        autocomplete={false}
-                        error={this.state.errorPassword}
-                        errorMessage={this.state.errorMessagePassword}
-                    />
-
                     <Button
                         fullWidth
-                        color="green"
+                        color="yellowDark"
                         disabled={this.state.disabled}
-                        onClick={this.authenticate}
+                        onClick={this.sendPasswordResetLink}
                     >
-                        Sign In
+                        Request
                     </Button>
                     <LinearProgress
                         variant="indeterminate"
-                        classes={{ root: this.props.classes.progressBar, }}
+                        classes={{
+                            root:
+                                this.props.classes.progressBar,
+                            colorPrimary:
+                                this.props.classes.colorPrimary,
+                            barColorPrimary:
+                                this.props.classes.barColorPrimary,
+                        }}
                         style={{ opacity: this.state.progressBarOpacity, }}
                     />
+
                 </div>
         )(this.props)
     }
