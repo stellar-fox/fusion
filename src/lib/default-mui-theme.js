@@ -4,21 +4,24 @@ import { rgb, rgba } from "./utils"
 
 // Named color definitions.
 const
-    onyx = rgb(49, 55, 65),
-    outerSpace = rgb(67, 73, 82),
-    darkGunmetal = rgb(29, 36, 46),
-    arsenic = rgb(56, 60, 69),
-    eerieBlack = rgb(15, 22, 33),
-    silverChalice = rgb(171, 173, 181),
-    antiFlashWhite = rgb(237, 242, 244),
-    yellowDark = rgb(254, 187, 0),
+    onyx                = rgb(49, 55, 65),
+    outerSpace          = rgb(67, 73, 82),
+    darkGunmetal        = rgb(29, 36, 46),
+    arsenic             = rgb(56, 60, 69),
+    eerieBlack          = rgb(15, 22, 33),
+    silverChalice       = rgb(171, 173, 181),
+    antiFlashWhite      = rgb(237, 242, 244),
+    yellowDark          = rgb(254, 187, 0),
     yellowDarkHighlight = rgb(47, 41, 23),
-    yellow = rgb(255, 207, 68),
-    yellowLight = rgb(255, 221, 124),
-    greenDark = rgb(0, 139, 82),
-    green = rgb(30, 185, 128),
-    greenHighlight = rgb(6, 34, 24),
-    greenLight = rgb(88, 197, 150)
+    yellow              = rgb(255, 207, 68),
+    yellowLight         = rgb(255, 221, 124),
+    greenDark           = rgb(0, 139, 82),
+    green               = rgb(30, 185, 128),
+    greenHighlight      = rgb(6, 34, 24),
+    greenLight          = rgb(88, 197, 150),
+    blueDark            = rgb(0,151,172),
+    blue                = rgb(114,222,255),
+    blueLight           = rgb(172,235,245)
 
 // ...
 export default createMuiTheme({
@@ -38,6 +41,10 @@ export default createMuiTheme({
             green,
             greenHighlight,
             greenLight,
+
+            blueDark,
+            blue,
+            blueLight,
 
             arsenic,
             outerSpace,

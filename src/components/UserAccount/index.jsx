@@ -110,14 +110,18 @@ export default compose(
                             <br />
 
 
-                            <Motion defaultStyle={{ x: -10, }}
-                                style={{ x: spring(5, presets.gentle), }}
+                            <Motion defaultStyle={{ x: -10, opacity: 0, }}
+                                style={{
+                                    x: spring(0, presets.gentle),
+                                    opacity: spring(1),
+                                }}
                             >
                                 {value =>
                                     <Typography style={{
                                         position: "relative",
                                         WebkitTransform: `translate(${value.x}px, 0)`,
                                         transform: `translate(${value.x}px, 0)`,
+                                        opacity: value.opacity,
                                     }} variant="title"
                                     >
                                         User Account
