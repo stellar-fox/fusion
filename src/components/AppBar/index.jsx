@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core"
 import MenuIcon from "@material-ui/icons/Menu"
 import UserMenu from "../../lib/mui-v1/UserMenu"
-import TabBar from "../../lib/mui-v1/TabBar"
+import TabBar from "../TabBar"
 import DashboardDrawer from "../Dashboard/DashboardDrawer"
 import classNames from "classnames"
 import logo from "../Fusion/static/logo.svg"

@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import PropTypes from "prop-types"
 import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
-import { withDynamicRoutes, withStaticRouter } from "../../components/FusionRouter"
+import { withDynamicRoutes, withStaticRouter } from "../FusionRouter"
 import { withStyles } from "@material-ui/core/styles"
 import { Tabs, Tab } from "@material-ui/core"
 import {
@@ -16,7 +16,7 @@ import {
 export default compose(
     withStaticRouter,
     withDynamicRoutes,
-    withStyles( (theme) => ({
+    withStyles((theme) => ({
         tabsIndicator: {
             backgroundColor: theme.palette.error.dark,
         },
