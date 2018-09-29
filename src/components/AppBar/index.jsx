@@ -8,7 +8,7 @@ import {
     AppBar, Hidden, IconButton, Toolbar, Typography,
 } from "@material-ui/core"
 import MenuIcon from "@material-ui/icons/Menu"
-import UserMenu from "../../lib/mui-v1/UserMenu"
+import UserMenu from "../UserMenu"
 import TabBar from "../TabBar"
 import DashboardDrawer from "../Dashboard/DashboardDrawer"
 import classNames from "classnames"
