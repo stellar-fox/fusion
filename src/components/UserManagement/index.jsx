@@ -13,6 +13,7 @@ import { action as UserManagementActions } from "../../redux/UserManagement"
 import Tab from "@material-ui/core/Tab"
 import Tabs from "@material-ui/core/Tabs"
 import SwipeableViews from "react-swipeable-views"
+import Profile from "./Profile"
 
 
 
@@ -157,10 +158,11 @@ export default compose(
                             >
                                 <Typography component="div"
                                     dir={this.props.theme.direction}
-                                    style={{ padding: "2rem 0", }}
+                                    style={{ padding: "1rem 0.5rem", }}
                                 >
-                                    Profile
+                                    <Profile />
                                 </Typography>
+
                                 <Typography component="div"
                                     dir={this.props.theme.direction}
                                     style={{ padding: "2rem 0", }}
