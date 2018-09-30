@@ -7,6 +7,7 @@ import { rgb, rgba } from "./utils"
 // Named color definitions.
 const
     onyx                = rgb(49, 55, 65),
+    davysGray           = rgb(86,87,91),
     outerSpace          = rgb(67, 73, 82),
     darkGunmetal        = rgb(29, 36, 46),
     arsenic             = rgb(56, 60, 69),
@@ -51,6 +52,7 @@ export default createMuiTheme({
 
             arsenic,
             outerSpace,
+            davysGray,
 
         },
 

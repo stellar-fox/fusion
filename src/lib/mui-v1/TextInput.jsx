@@ -27,6 +27,15 @@ export default withStyles((theme) => ({
         "&:after": { borderBottomColor: theme.palette.primary.light, },
     },
 
+    underlineLighter: {
+        "&:hover:before": {
+            borderBottomColor: `${theme.palette.custom.davysGray} !important`,
+            borderBottomWidth: "1px !important",
+        },
+        "&:before": { borderBottomColor: theme.palette.custom.outerSpace, },
+        "&:after": { borderBottomColor: theme.palette.custom.outerSpace, },
+    },
+
     root: {
         fontFamily: "'Roboto Condensed', sans-serif",
     },
@@ -34,6 +43,12 @@ export default withStyles((theme) => ({
     focused: {
         "&$root": {
             color: theme.palette.custom.arsenic,
+        },
+    },
+
+    focusedLighter: {
+        "&$root": {
+            color: theme.palette.custom.davysGray,
         },
     },
 
@@ -68,8 +83,8 @@ export default withStyles((theme) => ({
         // ...
         render = () => (
             ({
-                classes, id, error, errorMessage, margin,
-                label, type, onChange, fullWidth, autoComplete,
+                classes, id, error, errorMessage, margin, label, type,
+                onChange, fullWidth, autoComplete, lighter, value,
             }) =>
                 <FormControl
                     error={error}
@@ -80,7 +95,8 @@ export default withStyles((theme) => ({
                     <InputLabel
                         FormLabelClasses={{
                             root: classes.root,
-                            focused: classes.focused,
+                            focused: lighter ? classes.focusedLighter :
+                                classes.focused,
                             error: classes.focused,
                         }}
                     >
@@ -90,13 +106,15 @@ export default withStyles((theme) => ({
                         id={id}
                         autoComplete={autoComplete}
                         classes={{
-                            underline: classes.underline,
+                            underline: lighter ? classes.underlineLighter :
+                                classes.underline,
                             input: classes.input,
                             error: classes.inputError,
                         }}
                         type={type}
                         onChange={onChange}
                         fullWidth={fullWidth}
+                        value={value}
                     />
                     <FormHelperText
                         classes={{
