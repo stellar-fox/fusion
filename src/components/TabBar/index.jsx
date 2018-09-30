@@ -20,9 +20,6 @@ export default compose(
         tabsIndicator: {
             backgroundColor: theme.palette.error.dark,
         },
-        tabSelected: {
-            color: theme.palette.error.dark,
-        },
     })),
     connect(
         (state) => ({
@@ -73,7 +70,6 @@ export default compose(
             ({ classes, color, currentView, disabled, }) =>
                 <Tabs
                     classes={{
-                        root: classes.tabsRoot,
                         indicator: classes.tabsIndicator,
                     }}
                     value={
@@ -82,17 +78,17 @@ export default compose(
                     }
                     onChange={this.handleTabChange}
                 >
-                    <Tab classes={{ selected: classes.tabSelected, }}
+                    <Tab
                         disabled={disabled}
                         icon={<VpnKeyRounded color={color} />}
                         value="keys"
                     />
-                    <Tab classes={{ selected: classes.tabSelected, }}
+                    <Tab
                         disabled={disabled}
                         icon={<AccountBalanceWalletRounded color={color} />}
                         value="balances"
                     />
-                    <Tab classes={{ selected: classes.tabSelected, }}
+                    <Tab
                         disabled={disabled}
                         icon={<ContactsRounded color={color} />}
                         value="contacts"
