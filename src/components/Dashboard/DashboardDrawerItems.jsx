@@ -8,6 +8,7 @@ import {
 import {
     AccountBalanceRounded,
     AccountBalanceWalletRounded,
+    AccountBoxRounded,
     ContactsRounded,
     CreditCardRounded,
     VpnKeyRounded,
@@ -52,6 +53,19 @@ export const ActionItems = withStyles(styles)(
                     variant: "subheading",
                     color: "default",
                 }} secondary="Keys"
+                />
+            </ListItem>
+            <ListItem classes={{ selected: classes.selectedGreen, }}
+                selected={selectedItem === "user"}
+                button onClick={() => itemClick("user")}
+            >
+                <ListItemIcon>
+                    <AccountBoxRounded className="drawer-svg-icon" />
+                </ListItemIcon>
+                <ListItemText secondaryTypographyProps={{
+                    variant: "subheading",
+                    color: "default",
+                }} secondary="User Management"
                 />
             </ListItem>
         </List>

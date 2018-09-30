@@ -10,6 +10,7 @@ import {
 } from "../FusionRouter"
 import { withStyles } from "@material-ui/core/styles"
 import KeyManagement from "../KeyManagement"
+import UserManagement from "../UserManagement"
 import Balances from "../Balances"
 import Transactions from "../Transactions"
 import UserAccount from "../UserAccount"
@@ -55,6 +56,7 @@ export default compose(
             // static paths
             this.props.staticRouter.addPaths({
                 "keys": this.rr("keys/"),
+                "user": this.rr("user/"),
                 "balances": this.rr("balances/"),
                 "transactions": this.rr("transactions/"),
                 "account": this.rr("account/"),
@@ -74,6 +76,9 @@ export default compose(
                         />
                         <Route path={getPath("keys")}>
                             { (routeProps) => <KeyManagement {...routeProps} /> }
+                        </Route>
+                        <Route path={getPath("user")}>
+                            {(routeProps) => <UserManagement {...routeProps} />}
                         </Route>
                         <Route path={getPath("balances")}>
                             { (routeProps) => <Balances {...routeProps} /> }
