@@ -11,7 +11,7 @@ import { action as AuthActions } from "../../redux/Auth"
 
 
 
-// <COMPONENT_NAME> component
+// <FirebaseActions> component
 export default compose(
     withStyles((_theme) => ({
 

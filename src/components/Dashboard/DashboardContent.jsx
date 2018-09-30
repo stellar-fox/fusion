@@ -4,7 +4,9 @@ import { compose } from "redux"
 import { connect } from "react-redux"
 import { Redirect, Route } from "react-router-dom"
 import {
-    ConnectedSwitch as Switch, resolvePath, withStaticRouter
+    ConnectedSwitch as Switch,
+    resolvePath,
+    withStaticRouter,
 } from "../FusionRouter"
 import { withStyles } from "@material-ui/core/styles"
 import KeyManagement from "../KeyManagement"
@@ -12,7 +14,6 @@ import Balances from "../Balances"
 import Transactions from "../Transactions"
 import UserAccount from "../UserAccount"
 import Contacts from "../Contacts"
-
 
 
 

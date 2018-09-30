@@ -5,10 +5,13 @@ import "firebase/database"
 
 
 
+
 // initialize Firebase app
 if (!firebase.apps.length) {
     firebase.initializeApp(config.firebase)
 }
+
+
 
 
 // Authenticate with Firebase email/password
@@ -22,8 +25,12 @@ const authenticate = (email, password) =>
         })
 
 
+
+
 // Sign out the user from Firebase
 const signout = () => firebase.auth().signOut()
+
+
 
 
 // Signup new user with Firebase
@@ -35,6 +42,8 @@ const signup = (email, password) =>
         .catch((error) => {
             return Promise.reject(error)
         })
+
+
 
 
 // Send verification email
@@ -49,10 +58,14 @@ const verifyEmail = () =>
         )
 
 
+
+
 // Apply verification code
 const applyVerificationCode = (actionCode) =>
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
         .then((_) => firebase.auth().applyActionCode(actionCode))
+
+
 
 
 // Verify password reset code
@@ -62,6 +75,8 @@ const verifyPasswordResetCode = async (actionCode) =>
         .catch((error) => {
             return Promise.reject(error)
         })
+
+
 
 
 // ...
@@ -76,6 +91,8 @@ const read = async (uid) => {
 }
 
 
+
+
 // ...
 const write = async (uid, userData) => {
     try {
@@ -87,6 +104,8 @@ const write = async (uid, userData) => {
 }
 
 
+
+
 // Send password reset link.
 const resetPassword = (emailAddress) =>
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
@@ -96,6 +115,8 @@ const resetPassword = (emailAddress) =>
         })
 
 
+
+
 // Send password reset link.
 const updatePassword = (code, newPassword) =>
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
@@ -103,6 +124,7 @@ const updatePassword = (code, newPassword) =>
         .catch((error) => {
             return Promise.reject(error)
         })
+
 
 
 

@@ -10,6 +10,7 @@ import { Motion, presets, spring } from "react-motion"
 
 
 
+
 // <Balances> component
 export default compose(
     withStyles((theme) => ({

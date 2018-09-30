@@ -22,12 +22,6 @@ export const appVersion = version
 
 
 
-// active development period
-export const appCopyDates = "2017-2018"
-
-
-
-
 // DOM attach point
 export const appRootDomId = "app"
 
