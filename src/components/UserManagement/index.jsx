@@ -9,6 +9,10 @@ import { Close } from "@material-ui/icons"
 import { ConnectedSwitch as Switch, resolvePath } from "../FusionRouter"
 import { Motion, presets, spring } from "react-motion"
 import { action as AuthActions } from "../../redux/Auth"
+import { action as UserManagementActions } from "../../redux/UserManagement"
+import Tab from "@material-ui/core/Tab"
+import Tabs from "@material-ui/core/Tabs"
+import SwipeableViews from "react-swipeable-views"
 
 
 
@@ -21,26 +25,27 @@ export default compose(
             height: theme.spacing.unit * 4,
         },
 
-        emoji: {
-            fontSize: "2rem",
-            lineHeight: "3rem",
-            verticalAlign: "middle",
-        },
-
         paperCanvas: {
             padding: "10px",
+        },
+
+        indicator: {
+            backgroundColor: theme.palette.custom.greenDark,
         },
 
     })),
     connect(
         // map state to props.
-        (state) => ({
+        (state, theme) => ({
             Auth: state.Auth,
+            tabSelected: state.UserManagement.tabSelected,
+            theme,
         }),
         // match dispatch to props.
         (dispatch) => bindActionCreators({
             sendEmailVerification: AuthActions.sendEmailVerification,
             sendPasswordReset: AuthActions.sendPasswordReset,
+            changeTab: UserManagementActions.changeTab,
         }, dispatch)
     )
 )(
@@ -64,20 +69,29 @@ export default compose(
             open: false,
         }
 
+
+        // ...
+        onTabChange = (_event, value) =>
+            this.props.changeTab(value)
+
+
+        // ...
+        closeSnackbar = () => this.setState({ open: false, })
+
+
         // ...
         popupSnackbar = (message) => this.setState({
             open: true,
             message,
         })
 
-        // ...
-        closeSnackbar = () => this.setState({ open: false, })
 
         // ...
         sendPasswordResetLink = () => {
             this.props.sendPasswordReset()
             this.popupSnackbar(`Password reset link sent to: ${this.props.Auth.email}.`)
         }
+
 
         // ...
         sendVerificationLink = () => {
@@ -88,7 +102,7 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, Auth, }) =>
+            ({ classes, Auth, tabSelected, }) =>
                 <Switch>
                     <Route exact path={this.rr(".")}>
 
@@ -124,6 +138,45 @@ export default compose(
                                     </IconButton>,
                                 ]}
                             />
+
+                            <Tabs
+                                value={tabSelected}
+                                onChange={this.onTabChange}
+                                fullWidth
+                                classes={{ indicator: classes.indicator, }}
+                            >
+                                <Tab disableRipple label="Profile" />
+                                <Tab disableRipple label="Settings" />
+                                <Tab disableRipple label="Security" />
+                            </Tabs>
+
+                            <SwipeableViews
+                                axis={this.props.theme.direction === "rtl" ? "x-reverse" : "x"}
+                                index={tabSelected}
+                                onChangeIndex={this.handleChangeIndex}
+                            >
+                                <Typography component="div"
+                                    dir={this.props.theme.direction}
+                                    style={{ padding: "2rem 0", }}
+                                >
+                                    Profile
+                                </Typography>
+                                <Typography component="div"
+                                    dir={this.props.theme.direction}
+                                    style={{ padding: "2rem 0", }}
+                                >
+                                    Settings
+                                </Typography>
+                                <Typography component="div"
+                                    dir={this.props.theme.direction}
+                                    style={{ padding: "2rem 0", }}
+                                >
+                                    Security
+                                </Typography>
+
+                            </SwipeableViews>
+
+
 
                             <Typography variant="display1">
                                 User: {Auth.uid}

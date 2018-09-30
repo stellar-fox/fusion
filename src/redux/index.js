@@ -3,6 +3,7 @@ import { reducer as AuthReducer } from "./Auth"
 import { reducer as ModalReducer } from "./Modal"
 import { reducer as RouterReducer } from "./FusionRouter"
 import { reducer as SnackbarReducer } from "./Snackbar"
+import { reducer as UserManagement } from "./UserManagement"
 
 
 
@@ -15,5 +16,5 @@ export default {
     Modal: ModalReducer,
     Router: RouterReducer,
     Snackbar: SnackbarReducer,
-
+    UserManagement,
 }
