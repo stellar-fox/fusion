@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
-import AccountCircle from "@material-ui/icons/AccountCircle"
+import AccountBoxRounded from "@material-ui/icons/AccountBoxRounded"
 import {
     Hidden, IconButton, Menu, MenuItem, Typography,
 } from "@material-ui/core"
@@ -60,7 +60,7 @@ class UserMenu extends Component {
                     onClick={this.openMenu}
                     color="secondary"
                 >
-                    <AccountCircle />
+                    <AccountBoxRounded />
                 </IconButton>
                 <Menu
                     classes={{ paper: classes.menu, }}
