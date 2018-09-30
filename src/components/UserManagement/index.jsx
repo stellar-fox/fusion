@@ -4,7 +4,7 @@ import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
 import { Redirect, Route } from "react-router-dom"
-import { Button, IconButton, Paper, Snackbar, Typography } from "@material-ui/core"
+import { IconButton, Paper, Snackbar, Typography } from "@material-ui/core"
 import { Close } from "@material-ui/icons"
 import { ConnectedSwitch as Switch, resolvePath } from "../FusionRouter"
 import { Motion, presets, spring } from "react-motion"
@@ -21,10 +21,6 @@ import Profile from "./Profile"
 // <UserManagement> component
 export default compose(
     withStyles((theme) => ({
-        close: {
-            width: theme.spacing.unit * 4,
-            height: theme.spacing.unit * 4,
-        },
 
         paperCanvas: {
             padding: "10px",
@@ -40,6 +36,8 @@ export default compose(
         (state, theme) => ({
             Auth: state.Auth,
             tabSelected: state.UserManagement.tabSelected,
+            snackbarOpen: state.UserManagement.snackbarOpen,
+            snackbarMessage: state.UserManagement.snackbarMessage,
             theme,
         }),
         // match dispatch to props.
@@ -47,6 +45,7 @@ export default compose(
             sendEmailVerification: AuthActions.sendEmailVerification,
             sendPasswordReset: AuthActions.sendPasswordReset,
             changeTab: UserManagementActions.changeTab,
+            closeSnackbar: UserManagementActions.closeSnackbar,
         }, dispatch)
     )
 )(
@@ -66,44 +65,18 @@ export default compose(
             this.rr = resolvePath(this.props.match.path)
         }
 
-        state = {
-            open: false,
-        }
+
+        // ...
+        onTabChange = (_event, value) => this.props.changeTab(value)
 
 
         // ...
-        onTabChange = (_event, value) =>
-            this.props.changeTab(value)
-
-
-        // ...
-        closeSnackbar = () => this.setState({ open: false, })
-
-
-        // ...
-        popupSnackbar = (message) => this.setState({
-            open: true,
-            message,
-        })
-
-
-        // ...
-        sendPasswordResetLink = () => {
-            this.props.sendPasswordReset()
-            this.popupSnackbar(`Password reset link sent to: ${this.props.Auth.email}.`)
-        }
-
-
-        // ...
-        sendVerificationLink = () => {
-            this.props.sendEmailVerification()
-            this.popupSnackbar(`Verification link sent to: ${this.props.Auth.email}.`)
-        }
+        closeSnackbar = () => this.props.closeSnackbar()
 
 
         // ...
         render = () => (
-            ({ classes, Auth, tabSelected, }) =>
+            ({ classes, snackbarOpen, snackbarMessage, tabSelected, }) =>
                 <Switch>
                     <Route exact path={this.rr(".")}>
 
@@ -114,7 +87,7 @@ export default compose(
                                     vertical: "bottom",
                                     horizontal: "left",
                                 }}
-                                open={this.state.open}
+                                open={snackbarOpen}
                                 autoHideDuration={3000}
                                 onClose={this.closeSnackbar}
                                 ContentProps={{
@@ -122,8 +95,10 @@ export default compose(
                                 }}
                                 message={
                                     <span id="message-id">
-                                        <Typography variant="body2" color="inherit">
-                                            {this.state.message}
+                                        <Typography variant="body2"
+                                            color="inherit"
+                                        >
+                                            {snackbarMessage}
                                         </Typography>
                                     </span>
                                 }
@@ -132,7 +107,6 @@ export default compose(
                                         key="close"
                                         aria-label="Close"
                                         color="inherit"
-                                        className={classes.close}
                                         onClick={this.closeSnackbar}
                                     >
                                         <Close />
@@ -178,25 +152,6 @@ export default compose(
 
                             </SwipeableViews>
 
-
-
-                            <Typography variant="display1">
-                                User: {Auth.uid}
-                            </Typography>
-                            <Typography variant="display1">
-                                Email: {Auth.email} {Auth.emailVerified && "(verified)"}
-                            </Typography>
-                            <br />
-                            <Button onClick={this.sendVerificationLink}>
-                                Send Verification Link
-                            </Button>
-                            <br />
-                            <br />
-                            <Button onClick={this.sendPasswordResetLink}>
-                                Send Password Reset Link
-                            </Button>
-                            <br />
-                            <br />
 
                             <Motion defaultStyle={{ x: -10, }}
                                 style={{ x: spring(5, presets.gentle), }}
