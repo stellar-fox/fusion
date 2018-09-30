@@ -1,4 +1,4 @@
-import { createReducer } from "@xcmats/js-toolbox"
+import { createReducer, emptyString } from "@xcmats/js-toolbox"
 
 
 
@@ -6,6 +6,8 @@ import { createReducer } from "@xcmats/js-toolbox"
 // <UserManagement> initial state
 const initState = {
     tabSelected: 0,
+    snackbarOpen: false,
+    snackbarMessage: emptyString(),
 }
 
 
@@ -28,8 +30,20 @@ export const action = {
     })),
 
     // ...
-    resetState: () => ({ type: RESET_STATE, }),
+    openSnackbar: () => (dispatch) => dispatch(action.setState({
+        snackbarOpen: true,
+    })),
 
+    setSnackbarMessage: (message) => (dispatch) => dispatch(action.setState({
+        snackbarMessage: message,
+    })),
+
+    closeSnackbar: () => (dispatch) => dispatch(action.setState({
+        snackbarOpen: false,
+    })),
+
+    // ...
+    resetState: () => ({ type: RESET_STATE, }),
 
     // ...
     setState: (state) => ({
