@@ -15,7 +15,7 @@ const
     silverChalice       = rgb(171, 173, 181),
     antiFlashWhite      = rgb(237, 242, 244),
     yellowDark          = rgb(254, 187, 0),
-    yellowDarkHighlight = rgb(47, 41, 23),
+    yellowDarkHighlight = rgb(35, 30, 17),
     yellow              = rgb(255, 207, 68),
     yellowLight         = rgb(255, 221, 124),
     greenDark           = rgb(0, 139, 82),
