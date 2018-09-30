@@ -1,4 +1,5 @@
 ### Create symbolic link.
+
 Make sure that `src/config.localhost.js` and/or
 `config.production.js` exists and then create symbolic
 link in this directory to point to one of those.
