@@ -1,11 +1,5 @@
 import React, { Fragment } from "react"
-import {
-    access,
-    capitalize,
-    emptyString,
-    objectMap,
-    wrap,
-} from "@xcmats/js-toolbox"
+import { string, utils } from "@xcmats/js-toolbox"
 
 
 
@@ -125,9 +119,9 @@ export const htmlEntities = {
 
 
 // emoji components (built on the 'emojis' object base)
-export const emoji = objectMap(emojis,
+export const emoji = utils.objectMap(emojis,
     ([k, v,]) => [
-        capitalize(k),
+        string.capitalize(k),
         () => React.createElement(Fragment, null, v),
     ]
 )
@@ -142,28 +136,28 @@ export const Null = () => null
 
 
 // little helper for JSS urls
-export const url = (x) => wrap(x, "url(", ")")
+export const url = (x) => string.wrap(x, "url(", ")")
 
 
 
 
 // little helper for JSS colors
 export const rgba = (r, g, b, a) =>
-    wrap([r, g, b, a,].join(", "), "rgba(", ")")
+    string.wrap([r, g, b, a,].join(", "), "rgba(", ")")
 
 
 
 
 // another little helper for JSS colors
 export const rgb = (r, g, b) =>
-    wrap([r, g, b,].join(", "), "rgb(", ")")
+    string.wrap([r, g, b,].join(", "), "rgb(", ")")
 
 
 
 
 // helper extracting 'authToken' from redux state
-export const authToken = (getState) => access(
+export const authToken = (getState) => utils.access(
     getState(),
     ["Auth", "authToken",],
-    emptyString()
+    string.empty()
 )
