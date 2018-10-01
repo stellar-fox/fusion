@@ -3,7 +3,8 @@ import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import {
-    Button as GenericButton, Typography, withStyles,
+    Button as GenericButton, CircularProgress, DialogContent,
+    DialogContentText, DialogTitle, Typography, withStyles,
 } from "@material-ui/core"
 import { VerifiedUserRounded } from "@material-ui/icons"
 import TextInput from "../../lib/mui-v1/TextInput"
@@ -11,8 +12,10 @@ import withWidth, { isWidthDown } from "@material-ui/core/withWidth"
 import { emptyString } from "@xcmats/js-toolbox"
 import { htmlEntities as he } from "../../lib/utils"
 import Button from "../../lib/mui-v1/Button"
+import ConfirmDialog from "../../lib/mui-v1/ConfirmDialog"
 import { action as AuthActions } from "../../redux/Auth"
 import { action as UserManagementActions } from "../../redux/UserManagement"
+
 
 
 
@@ -60,6 +63,8 @@ export default compose(
             displayName: emptyString(),
             nameChanged: false,
             disabled: true,
+            dialogReAuthVisible: true,
+            saveInProgress: true,
         }
 
 
@@ -106,14 +111,41 @@ export default compose(
         // ...
         saveData = async () => {
 
+            await this.setState({
+                saveInProgress: true,
+                errorEmail: false,
+                errorEmailMessage: emptyString(),
+            })
+
             if (this.state.emailChanged) {
                 try {
                     await this.props.updateEmail(this.state.email)
                 } catch (error) {
-                    await this.props.setSnackbarMessage(
-                        error.message
-                    )
+                    if (error.code === "auth/requires-recent-login") {
+                        this.setState({ dialogReAuthVisible: true, })
+                        return
+                    }
+
+                    if (error.code === "auth/invalid-email") {
+                        this.setState({
+                            errorEmail: true,
+                            errorEmailMessage: error.message,
+                        })
+                        return
+                    }
+
+                    if (error.code === "auth/email-already-in-use") {
+                        this.setState({
+                            errorEmail: true,
+                            errorEmailMessage: error.message,
+                        })
+                        return
+                    }
+
+                    // handle other type of error
+                    await this.props.setSnackbarMessage(error.message)
                     await this.props.openSnackbar()
+
                 }
             }
 
@@ -141,6 +173,8 @@ export default compose(
                 }
             }
 
+            await this.setState({ saveInProgress: false, })
+
         }
 
 
@@ -155,6 +189,24 @@ export default compose(
             })
             this.fieldSetChanged()
         }
+
+
+        // ...
+        reAuthenticate = async () => {
+            await this.setState({
+                dialogReAuthVisible: false,
+            })
+            console.log("Re Authenticate.")
+            this.saveData()
+        }
+
+
+        // ...
+        hideDialog = () => this.setState({
+            dialogReAuthVisible: false,
+            saveInProgress: false,
+        })
+
 
         // ...
         sendPasswordResetLink = async () => {
@@ -180,6 +232,31 @@ export default compose(
         render = () => (
             ({ classes, width, uid, }) =>
                 <Fragment>
+
+                    <ConfirmDialog dialogVisible={this.state.dialogReAuthVisible}
+                        onOk={this.reAuthenticate}
+                        onCancel={this.hideDialog}
+                    >
+                        <DialogTitle id="responsive-dialog-title">
+                            {"Recent Authentication Required"}
+                        </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText style={{ paddingBottom: "1em", }}>
+                                This operation is sensitive and requires your
+                                password confirmation.
+                            </DialogContentText>
+                            <TextInput
+                                id="password"
+                                label="Password"
+                                type="password"
+                                fullWidth
+                                lighter
+                                autocomplete={false}
+                                error={this.state.errorPassword}
+                                errorMessage={this.state.errorMessagePassword}
+                            />
+                        </DialogContent>
+                    </ConfirmDialog>
 
                     <Typography variant="subheading">
                         Manage user profile data here.
@@ -230,7 +307,9 @@ export default compose(
                         disabled={this.state.disabled}
                         onClick={this.saveData}
                     >
-                        Save
+                        {this.state.saveInProgress ? <CircularProgress
+                            color="secondary" thickness={4} size={16}
+                        /> : "Save"}
                     </Button>
                     <he.Nbsp /><he.Nbsp />
                     <Button
