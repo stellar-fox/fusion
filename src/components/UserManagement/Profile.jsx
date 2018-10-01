@@ -114,7 +114,7 @@ export default compose(
             await this.setState({
                 saveInProgress: true,
                 errorEmail: false,
-                errorEmailMessage: string,
+                errorEmailMessage: string.empty(),
             })
 
             if (this.state.emailChanged) {
