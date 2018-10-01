@@ -106,13 +106,20 @@ const write = async (uid, userData) => {
 
 
 
+// Update user email
+const updateEmail = (newEmail) =>
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+        .then((_) => firebase.auth().currentUser.updateEmail(newEmail))
+        .catch((error) => Promise.reject(error))
+
+
+
+
 // Send password reset link.
 const resetPassword = (emailAddress) =>
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
         .then((_) => firebase.auth().sendPasswordResetEmail(emailAddress))
-        .catch((error) => {
-            return Promise.reject(error)
-        })
+        .catch((error) => Promise.reject(error))
 
 
 
@@ -121,15 +128,21 @@ const resetPassword = (emailAddress) =>
 const updatePassword = (code, newPassword) =>
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
         .then((_) => firebase.auth().confirmPasswordReset(code, newPassword))
-        .catch((error) => {
-            return Promise.reject(error)
-        })
+        .catch((error) => Promise.reject(error))
 
 
+
+
+// Update user attributes
+const updateUserProfile = (...args) =>
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+        .then((_) => firebase.auth().currentUser.updateProfile(...args))
+        .catch((error) => Promise.reject(error))
 
 
 // ...
 export {
     applyVerificationCode, authenticate, read, resetPassword, signout, signup,
-    updatePassword, verifyEmail, verifyPasswordResetCode, write,
+    updateEmail, updatePassword, updateUserProfile, verifyEmail,
+    verifyPasswordResetCode, write,
 }

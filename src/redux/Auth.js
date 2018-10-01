@@ -1,7 +1,8 @@
 import { createReducer, emptyString } from "@xcmats/js-toolbox"
 import {
     applyVerificationCode, authenticate, resetPassword, signout, signup,
-    updatePassword, verifyEmail, verifyPasswordResetCode, write,
+    updateEmail, updateUserProfile, updatePassword, verifyEmail,
+    verifyPasswordResetCode, write,
 } from "../firebase"
 
 
@@ -37,8 +38,8 @@ export const action = {
                 dispatch(action.setState({
                     uid: auth.user.uid,
                     email: auth.user.email,
-                    name: auth.user.displayName,
-                    photoUrl: auth.user.photoURL,
+                    displayName: auth.user.displayName || emptyString(),
+                    photoUrl: auth.user.photoURL || emptyString(),
                     emailVerified: auth.user.emailVerified,
                 }))
             } catch (error) {
@@ -68,10 +69,18 @@ export const action = {
             dispatch(action.setState({
                 uid: auth.user.uid,
                 email: auth.user.email,
-                name: auth.user.displayName,
+                displayName: auth.user.displayName,
                 photoUrl: auth.user.photoURL,
                 emailVerified: auth.user.emailVerified,
             }))
+        },
+
+
+    // ...
+    updateUserProfile: (...args) =>
+        async (dispatch, _getState) => {
+            await updateUserProfile(...args)
+            dispatch(action.setState(...args))
         },
 
 
@@ -140,6 +149,20 @@ export const action = {
                     resetLinkInvalid: true,
                     resetPasswordVerificationMessage: error.message,
                 }))
+            }
+        },
+
+
+    // ...
+    updateEmail: (newEmail) =>
+        async (dispatch, _getState) => {
+            try {
+                await updateEmail(newEmail)
+                dispatch(action.setState({
+                    email: newEmail,
+                }))
+            } catch (error) {
+                return Promise.reject(error)
             }
         },
 

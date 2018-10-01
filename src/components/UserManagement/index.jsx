@@ -7,7 +7,6 @@ import { Redirect, Route } from "react-router-dom"
 import { IconButton, Paper, Snackbar, Typography } from "@material-ui/core"
 import { Close } from "@material-ui/icons"
 import { ConnectedSwitch as Switch, resolvePath } from "../FusionRouter"
-import { Motion, presets, spring } from "react-motion"
 import { action as AuthActions } from "../../redux/Auth"
 import { action as UserManagementActions } from "../../redux/UserManagement"
 import Tab from "@material-ui/core/Tab"
@@ -88,7 +87,7 @@ export default compose(
                                     horizontal: "left",
                                 }}
                                 open={snackbarOpen}
-                                autoHideDuration={3000}
+                                autoHideDuration={6000}
                                 onClose={this.closeSnackbar}
                                 ContentProps={{
                                     "aria-describedby": "message-id",
@@ -153,7 +152,7 @@ export default compose(
                             </SwipeableViews>
 
 
-                            <Motion defaultStyle={{ x: -10, }}
+                            {/* <Motion defaultStyle={{ x: -10, }}
                                 style={{ x: spring(5, presets.gentle), }}
                             >
                                 {value =>
@@ -242,7 +241,7 @@ export default compose(
                                     <div className="bg-blue-light" style={{ width: 10, height: 30, }}></div>
                                 </div>
 
-                            </div>
+                            </div> */}
 
                         </Paper>
 

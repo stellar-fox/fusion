@@ -31,12 +31,15 @@ export default compose(
             email: state.Auth.email,
             emailVerified: state.Auth.emailVerified,
             uid: state.Auth.uid,
+            displayName: state.Auth.displayName,
         }),
         (dispatch) => bindActionCreators({
             sendEmailVerification: AuthActions.sendEmailVerification,
             sendPasswordReset: AuthActions.sendPasswordReset,
             openSnackbar: UserManagementActions.openSnackbar,
             setSnackbarMessage: UserManagementActions.setSnackbarMessage,
+            updateUserProfile: AuthActions.updateUserProfile,
+            updateEmail: AuthActions.updateEmail,
         }, dispatch)
     ),
     withWidth(),
@@ -52,8 +55,11 @@ export default compose(
         // ...
         state = {
             email: emptyString(),
+            emailChanged: false,
             emailVerified: false,
-            name: emptyString(),
+            displayName: emptyString(),
+            nameChanged: false,
+            disabled: true,
         }
 
 
@@ -62,22 +68,93 @@ export default compose(
             this.setState({
                 email: this.props.email,
                 emailVerified: this.props.emailVerified,
+                displayName: this.props.displayName,
             })
         }
 
 
         // ...
-        setEmail = (e) => this.setState({
-            email: e.target.value,
-            emailVerified: e.target.value === this.props.email,
-        })
+        setEmail = async (e) => {
+            await this.setState({
+                email: e.target.value,
+                emailVerified: this.props.emailVerified &&
+                    e.target.value === this.props.email,
+                emailChanged: e.target.value !== this.props.email,
+            })
+            this.fieldSetChanged()
+        }
 
 
         // ...
-        setName = (e) => this.setState({
-            name: e.target.value,
-        })
+        setName = async (e) => {
+            await this.setState({
+                displayName: e.target.value,
+                nameChanged: e.target.value !== this.props.displayName,
+            })
+            this.fieldSetChanged()
+        }
 
+
+        // ...
+        fieldSetChanged = () => {
+            this.setState({
+                disabled: !(this.state.emailChanged || this.state.nameChanged),
+            })
+        }
+
+
+        // ...
+        saveData = async () => {
+
+            if (this.state.emailChanged) {
+                try {
+                    await this.props.updateEmail(this.state.email)
+                } catch (error) {
+                    await this.props.setSnackbarMessage(
+                        error.message
+                    )
+                    await this.props.openSnackbar()
+                }
+            }
+
+            if (this.state.nameChanged) {
+                try {
+                    await this.setState({
+                        disabled: true,
+                    })
+
+                    await this.props.updateUserProfile({
+                        displayName: this.state.displayName,
+                    })
+
+                    await this.props.setSnackbarMessage(
+                        "User data saved."
+                    )
+
+                    await this.props.openSnackbar()
+
+                } catch (error) {
+                    await this.props.setSnackbarMessage(
+                        error.message
+                    )
+                    await this.props.openSnackbar()
+                }
+            }
+
+        }
+
+
+        // ...
+        cancelSave = async () => {
+            await this.setState({
+                displayName: this.props.displayName,
+                nameChanged: false,
+                email: this.props.email,
+                emailVerified: this.props.emailVerified,
+                emailChanged: false,
+            })
+            this.fieldSetChanged()
+        }
 
         // ...
         sendPasswordResetLink = async () => {
@@ -140,7 +217,7 @@ export default compose(
                             type="text"
                             lighter
                             fullWidth={isWidthDown("sm", width)}
-                            value={this.state.name}
+                            value={this.state.displayName}
                             onChange={this.setName}
                             autocomplete={false}
                             error={this.state.errorName}
