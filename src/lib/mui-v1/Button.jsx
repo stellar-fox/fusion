@@ -20,7 +20,6 @@ export default withStyles((theme) => ({
             backgroundColor: theme.palette.primary.main,
         },
         borderRadius: "2px",
-        paddingTop: "0.75rem",
         fontSize: "0.75rem",
         transition: "text-shadow 350ms ease-out, background-color 350ms ease",
         boxShadow: "0 3px 7px rgba(0, 0, 0, 0.3)",
@@ -77,7 +76,7 @@ export default withStyles((theme) => ({
 
         // ...
         render = () => (
-            ({ children, classes, color, disabled, fullWidth, onClick, variant, }) =>
+            ({ autoFocus, children, classes, color, disabled, fullWidth, onClick, variant, style, }) =>
                 <Button
                     variant={variant || "raised"}
                     className={
@@ -89,7 +88,8 @@ export default withStyles((theme) => ({
                     onClick={onClick}
                     disabled={disabled}
                     fullWidth={fullWidth}
-
+                    autoFocus={autoFocus}
+                    style={style}
                 >
                     { children ? children : "Button" }
                 </Button>
