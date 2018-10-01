@@ -1,4 +1,7 @@
-import { createReducer, emptyString } from "@xcmats/js-toolbox"
+import {
+    createReducer,
+    string,
+} from "@xcmats/js-toolbox"
 
 
 
@@ -7,7 +10,7 @@ import { createReducer, emptyString } from "@xcmats/js-toolbox"
 const initState = {
     tabSelected: 0,
     snackbarOpen: false,
-    snackbarMessage: emptyString(),
+    snackbarMessage: string.empty(),
 }
 
 

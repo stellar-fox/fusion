@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react"
 import PropTypes from "prop-types"
 import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
-import { emptyString } from "@xcmats/js-toolbox"
+import { string } from "@xcmats/js-toolbox"
 import { action as AuthActions } from "../../redux/Auth"
 import { withStyles } from "@material-ui/core/styles"
 import { LinearProgress } from "@material-ui/core"
@@ -92,9 +92,9 @@ export default compose(
         // ...
         state = {
             errorPassword: false,
-            errorMessagePassword: emptyString(),
+            errorMessagePassword: string.empty(),
             disabled: false,
-            password: emptyString(),
+            password: string.empty(),
             progressBarOpacity: 0,
             passwordUpdated: false,
         }
@@ -112,7 +112,7 @@ export default compose(
                 await this.setState({
                     disabled: true,
                     error: false,
-                    errorMessage: emptyString(),
+                    errorMessage: string.empty(),
                     progressBarOpacity: 1,
                 })
 
