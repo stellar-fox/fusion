@@ -1,4 +1,7 @@
-import { createReducer, emptyString } from "@xcmats/js-toolbox"
+import {
+    createReducer,
+    string,
+} from "@xcmats/js-toolbox"
 import {
     applyVerificationCode, authenticate, resetPassword, signout, signup,
     updateEmail, updateUserProfile, updatePassword, verifyEmail,
@@ -38,8 +41,8 @@ export const action = {
                 dispatch(action.setState({
                     uid: auth.user.uid,
                     email: auth.user.email,
-                    displayName: auth.user.displayName || emptyString(),
-                    photoUrl: auth.user.photoURL || emptyString(),
+                    displayName: auth.user.displayName || string.empty(),
+                    photoUrl: auth.user.photoURL || string.empty(),
                     emailVerified: auth.user.emailVerified,
                 }))
             } catch (error) {
@@ -118,7 +121,7 @@ export const action = {
                 dispatch(action.setState({
                     actionMessage: "Email verified.",
                     emailVerified: true,
-                    emailVerificationMessage: emptyString(),
+                    emailVerificationMessage: string.empty(),
                     continueUrl: qs.continueUrl,
                 }))
             } catch (error) {
@@ -140,7 +143,7 @@ export const action = {
                 dispatch(action.setState({
                     resetLinkValid: true,
                     resetLinkInvalid: false,
-                    resetPasswordVerificationMessage: emptyString(),
+                    resetPasswordVerificationMessage: string.empty(),
                 }))
 
             } catch (error) {

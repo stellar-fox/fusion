@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import PropTypes from "prop-types"
 import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
-import { emptyString } from "@xcmats/js-toolbox"
+import { string } from "@xcmats/js-toolbox"
 import { action as AuthActions } from "../../redux/Auth"
 import { withStyles } from "@material-ui/core/styles"
 import { LinearProgress } from "@material-ui/core"
@@ -67,15 +67,15 @@ export default compose(
         // ...
         state = {
             disabled: false,
-            email: emptyString(),
-            password: emptyString(),
-            passwordConf: emptyString(),
+            email: string.empty(),
+            password: string.empty(),
+            passwordConf: string.empty(),
             progressBarOpacity: 0,
             errorEmail: false,
             errorPassword: false,
             errorPasswordConf: false,
-            errorMessagePassword: emptyString(),
-            errorMessagePasswordConf: emptyString(),
+            errorMessagePassword: string.empty(),
+            errorMessagePasswordConf: string.empty(),
         }
 
 
@@ -118,9 +118,9 @@ export default compose(
                     errorEmail: false,
                     errorPassword: false,
                     errorPasswordConf: false,
-                    errorMessageEmail: emptyString(),
-                    errorMessagePassword: emptyString(),
-                    errorMessagePasswordConf: emptyString(),
+                    errorMessageEmail: string.empty(),
+                    errorMessagePassword: string.empty(),
+                    errorMessagePasswordConf: string.empty(),
                     progressBarOpacity: 1,
                 })
                 await this.props.signup(
@@ -143,7 +143,7 @@ export default compose(
                         errorEmail: true,
                         errorMessageEmail: error.message,
                         errorPassword: false,
-                        errorMessagePassword: emptyString(),
+                        errorMessagePassword: string.empty(),
                     })
                     return
                 }
@@ -153,7 +153,7 @@ export default compose(
                         errorEmail: false,
                         errorMessagePassword: "Password is invalid.",
                         errorPassword: true,
-                        errorMessageEmail: emptyString(),
+                        errorMessageEmail: string.empty(),
                     })
                     return
                 }
@@ -163,7 +163,7 @@ export default compose(
                         errorEmail: false,
                         errorMessagePassword: error.message,
                         errorPassword: true,
-                        errorMessageEmail: emptyString(),
+                        errorMessageEmail: string.empty(),
                     })
                     return
                 }
@@ -173,7 +173,7 @@ export default compose(
                         errorEmail: true,
                         errorMessageEmail: error.message,
                         errorPassword: false,
-                        errorMessagePassword: emptyString(),
+                        errorMessagePassword: string.empty(),
                     })
                     return
                 }

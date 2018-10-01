@@ -8,7 +8,7 @@ import {
 import { VerifiedUserRounded } from "@material-ui/icons"
 import TextInput from "../../lib/mui-v1/TextInput"
 import withWidth, { isWidthDown } from "@material-ui/core/withWidth"
-import { emptyString } from "@xcmats/js-toolbox"
+import { string } from "@xcmats/js-toolbox"
 import { htmlEntities as he } from "../../lib/utils"
 import Button from "../../lib/mui-v1/Button"
 import { action as AuthActions } from "../../redux/Auth"
@@ -54,10 +54,10 @@ export default compose(
 
         // ...
         state = {
-            email: emptyString(),
+            email: string.empty(),
             emailChanged: false,
             emailVerified: false,
-            displayName: emptyString(),
+            displayName: string.empty(),
             nameChanged: false,
             disabled: true,
         }
