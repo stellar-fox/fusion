@@ -120,9 +120,7 @@ export const action = {
                 await applyVerificationCode(qs.oobCode)
                 dispatch(action.setState({
                     actionMessage: "Email recovered.",
-                    emailRecoveryMessage: "If you didn’t ask to change your \
-                    sign-in email, it’s possible someone is trying to access \
-                    your account and you should change your password right away.",
+                    emailRecoveryMessage: "If you didn’t ask to change your sign-in email, it’s possible someone is trying to access your account and you should change your password right away.",
                 }))
             } catch (error) {
                 dispatch(action.setState({
