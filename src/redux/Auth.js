@@ -111,6 +111,29 @@ export const action = {
 
 
     // ...
+    processEmailRecoveryLink: (qs) =>
+        async (dispatch, _getState) => {
+            try {
+                dispatch(action.setState({
+                    actionMessage: "Recovering email ...",
+                }))
+                await applyVerificationCode(qs.oobCode)
+                dispatch(action.setState({
+                    actionMessage: "Email recovered.",
+                    emailRecoveryMessage: "If you didn’t ask to change your \
+                    sign-in email, it’s possible someone is trying to access \
+                    your account and you should change your password right away.",
+                }))
+            } catch (error) {
+                dispatch(action.setState({
+                    actionMessage: "Email recovery failed.",
+                    emailRecoveryMessage: error.message,
+                }))
+            }
+        },
+
+
+    // ...
     processVerificationLink: (qs) =>
         async (dispatch, _getState) => {
             try {
@@ -122,7 +145,6 @@ export const action = {
                     actionMessage: "Email verified.",
                     emailVerified: true,
                     emailVerificationMessage: string.empty(),
-                    continueUrl: qs.continueUrl,
                 }))
             } catch (error) {
                 dispatch(action.setState({

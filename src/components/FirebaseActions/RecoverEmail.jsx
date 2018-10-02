@@ -11,7 +11,7 @@ import { Grid, Paper, Typography, } from "@material-ui/core"
 
 
 
-// <VerifyEmail> component
+// <RecoverEmail> component
 export default compose(
     withStyles((theme) => ({
         appLogo: {
@@ -51,8 +51,8 @@ export default compose(
     connect(
         (state) => ({
             actionMessage: state.Auth.actionMessage,
-            emailVerified: state.Auth.emailVerified,
-            emailVerificationMessage: state.Auth.emailVerificationMessage,
+            emailRecovered: state.Auth.emailRecovered,
+            emailRecoveryMessage: state.Auth.emailRecoveryMessage,
         }),
         (dispatch) => bindActionCreators({}, dispatch)
     )
@@ -66,7 +66,7 @@ export default compose(
 
         // ...
         render = () => (({
-            actionMessage, classes, emailVerificationMessage,
+            actionMessage, classes, emailRecoveryMessage,
         }) =>
             <Grid
                 className={classes.container}
@@ -90,7 +90,7 @@ export default compose(
                                 {actionMessage}
                             </Typography>
                             <Typography align="center" variant="body2">
-                                {emailVerificationMessage}
+                                {emailRecoveryMessage}
                             </Typography>
                         </Fragment>
                     </Paper>
