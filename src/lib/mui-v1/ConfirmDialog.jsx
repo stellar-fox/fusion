@@ -4,7 +4,7 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
 import {
-    Dialog, DialogActions, withMobileDialog
+    CircularProgress, Dialog, DialogActions, withMobileDialog
 } from "@material-ui/core"
 import Button from "../../lib/mui-v1/Button"
 
@@ -54,7 +54,7 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, children, fullScreen, dialogVisible, onOk, onCancel, }) =>
+            ({ classes, children, fullScreen, dialogVisible, onOk, onCancel, inProgress, }) =>
 
                 <Dialog
                     fullScreen={fullScreen}
@@ -68,9 +68,15 @@ export default compose(
                     <DialogActions>
                         <Button style={{ margin: "0.5em 0.75em 0.25em 0", }}
                             onClick={onOk} color="green"
-                        >Authenticate</Button>
+                            disabled={inProgress}
+                        >
+                            {inProgress ? <CircularProgress
+                                color="secondary" thickness={4} size={16}
+                            /> : "Authenticate"}
+                        </Button>
                         <Button style={{ margin: "0.5em 0.5em 0.25em 0", }}
                             onClick={onCancel} color="yellowDark"
+                            disabled={inProgress}
                         >Cancel</Button>
                     </DialogActions>
                 </Dialog>
