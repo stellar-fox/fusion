@@ -16,7 +16,7 @@ import ConfirmDialog from "../../lib/mui-v1/ConfirmDialog"
 import { action as AuthActions } from "../../redux/Auth"
 import { action as UserManagementActions } from "../../redux/UserManagement"
 import { reauthenticate, verifyEmail } from "../../firebase"
-
+import Gravatar from "../Gravatar"
 
 
 // <Profile> component
@@ -263,9 +263,8 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, width, uid, }) =>
+            ({ classes, email, width, uid, }) =>
                 <Fragment>
-
                     <ConfirmDialog
                         dialogVisible={this.state.dialogReAuthVisible}
                         onOk={this.reAuthenticate}
@@ -297,9 +296,21 @@ export default compose(
                     <Typography variant="subheading">
                         Manage user profile data here.
                     </Typography>
-                    <Typography variant="display2">
-                        User ID: {uid}
-                    </Typography>
+
+                    <div className="flex-box-row items-centered m-t m-b">
+                        <Gravatar email={email} />
+
+                        <div className="flex-box-col m-l-small">
+                            <Typography variant="display1">
+                                USER ID
+                            </Typography>
+                            <Typography variant="display2">
+                                {uid}
+                            </Typography>
+                        </div>
+
+                    </div>
+
 
                     <div className="flex-box-row items-centered">
                         <TextInput

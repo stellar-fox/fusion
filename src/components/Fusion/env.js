@@ -54,3 +54,9 @@ export const ssSaveThrottlingTime = timeUnit.second
 
 // default drawer width (when unfolded)
 export const drawerWidth = 260
+
+
+
+
+// Gravatar base URL
+export const gravatarBase = "https://www.gravatar.com/avatar/"
