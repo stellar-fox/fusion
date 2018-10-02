@@ -183,6 +183,7 @@ export const action = {
                 await updateEmail(newEmail)
                 dispatch(action.setState({
                     email: newEmail,
+                    emailVerified: false,
                 }))
             } catch (error) {
                 return Promise.reject(error)

@@ -13,7 +13,7 @@ import classNames from "classnames"
 export default compose(
     withStyles({
         avatar: {
-            border: "1px solid rgba(255,255,255,0.3)",
+            border: "1px solid rgba(255,255,255,0.1)",
         },
         square: {
             borderRadius: 3,

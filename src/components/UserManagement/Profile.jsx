@@ -59,7 +59,7 @@ export default compose(
         state = {
             email: string.empty(),
             errorEmail: false,
-            errorEmailMessage: string.empty(),
+            errorMessageEmail: string.empty(),
             emailChanged: false,
             emailVerified: false,
             displayName: string.empty(),
@@ -124,7 +124,7 @@ export default compose(
             await this.setState({
                 saveInProgress: true,
                 errorEmail: false,
-                errorEmailMessage: string.empty(),
+                errorMessageEmail: string.empty(),
                 errorPassword: false,
                 errorMessagePassword: string.empty(),
             })
@@ -145,7 +145,8 @@ export default compose(
                     if (error.code === "auth/invalid-email") {
                         this.setState({
                             errorEmail: true,
-                            errorEmailMessage: error.message,
+                            errorMessageEmail: error.message,
+                            saveInProgress: false,
                         })
                         return
                     }
@@ -153,7 +154,8 @@ export default compose(
                     if (error.code === "auth/email-already-in-use") {
                         this.setState({
                             errorEmail: true,
-                            errorEmailMessage: error.message,
+                            errorMessageEmail: error.message,
+                            saveInProgress: false,
                         })
                         return
                     }
@@ -206,6 +208,8 @@ export default compose(
                 displayName: this.props.displayName,
                 nameChanged: false,
                 email: this.props.email,
+                errorEmail: false,
+                errorMessageEmail: string.empty(),
                 emailVerified: this.props.emailVerified,
                 emailChanged: false,
             })
@@ -310,7 +314,6 @@ export default compose(
                         </div>
 
                     </div>
-
 
                     <div className="flex-box-row items-centered">
                         <TextInput
