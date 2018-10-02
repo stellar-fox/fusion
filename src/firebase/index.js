@@ -140,9 +140,24 @@ const updateUserProfile = (...args) =>
         .catch((error) => Promise.reject(error))
 
 
+
+
+// Reauthenticate
+const reauthenticate = (password) =>
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+        .then((_) => firebase.auth().signInAndRetrieveDataWithCredential(
+            new firebase.auth.EmailAuthProvider.credential(
+                firebase.auth().currentUser.email, password
+            ))
+        )
+        .catch((error) => Promise.reject(error))
+
+
+
+
 // ...
 export {
     applyVerificationCode, authenticate, read, resetPassword, signout, signup,
     updateEmail, updatePassword, updateUserProfile, verifyEmail,
-    verifyPasswordResetCode, write,
+    verifyPasswordResetCode, write, reauthenticate
 }

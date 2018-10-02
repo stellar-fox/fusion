@@ -15,7 +15,7 @@ import Button from "../../lib/mui-v1/Button"
 import ConfirmDialog from "../../lib/mui-v1/ConfirmDialog"
 import { action as AuthActions } from "../../redux/Auth"
 import { action as UserManagementActions } from "../../redux/UserManagement"
-
+import { reauthenticate, verifyEmail } from "../../firebase"
 
 
 
@@ -58,13 +58,18 @@ export default compose(
         // ...
         state = {
             email: string.empty(),
+            errorEmail: false,
+            errorEmailMessage: string.empty(),
             emailChanged: false,
             emailVerified: false,
             displayName: string.empty(),
             nameChanged: false,
             disabled: true,
-            dialogReAuthVisible: true,
-            saveInProgress: true,
+            dialogReAuthVisible: false,
+            saveInProgress: false,
+            password: string.empty(),
+            errorPassword: false,
+            errorMessagePassword: string.empty(),
         }
 
 
@@ -101,6 +106,11 @@ export default compose(
 
 
         // ...
+        setPassword = (e) =>
+            this.setState({ password: e.target.value, })
+
+
+        // ...
         fieldSetChanged = () => {
             this.setState({
                 disabled: !(this.state.emailChanged || this.state.nameChanged),
@@ -115,14 +125,20 @@ export default compose(
                 saveInProgress: true,
                 errorEmail: false,
                 errorEmailMessage: string.empty(),
+                errorPassword: false,
+                errorMessagePassword: string.empty(),
             })
 
             if (this.state.emailChanged) {
                 try {
                     await this.props.updateEmail(this.state.email)
+                    await verifyEmail()
                 } catch (error) {
                     if (error.code === "auth/requires-recent-login") {
-                        this.setState({ dialogReAuthVisible: true, })
+                        await this.setState({
+                            dialogReAuthVisible: true,
+                            saveInProgress: false,
+                        })
                         return
                     }
 
@@ -159,21 +175,27 @@ export default compose(
                         displayName: this.state.displayName,
                     })
 
-                    await this.props.setSnackbarMessage(
-                        "User data saved."
-                    )
-
-                    await this.props.openSnackbar()
-
                 } catch (error) {
                     await this.props.setSnackbarMessage(
                         error.message
                     )
                     await this.props.openSnackbar()
+                    return
                 }
             }
 
-            await this.setState({ saveInProgress: false, })
+
+            await this.setState({
+                emailChanged: false,
+                nameChanged: false,
+                saveInProgress: false,
+            })
+
+            this.fieldSetChanged()
+
+            await this.props.setSnackbarMessage("User data saved.")
+
+            await this.props.openSnackbar()
 
         }
 
@@ -193,11 +215,22 @@ export default compose(
 
         // ...
         reAuthenticate = async () => {
-            await this.setState({
-                dialogReAuthVisible: false,
-            })
-            console.log("Re Authenticate.")
-            this.saveData()
+            try {
+                await this.setState({ reauthInProgress: true, })
+                await reauthenticate(this.state.password)
+                await this.saveData()
+                await this.setState({
+                    dialogReAuthVisible: false,
+                })
+            } catch (error) {
+                if (error.code === "auth/wrong-password") {
+                    await this.setState({
+                        errorPassword: true,
+                        errorMessagePassword: "Password is invalid.",
+                    })
+                }
+                await this.setState({ reauthInProgress: false, })
+            }
         }
 
 
@@ -233,9 +266,11 @@ export default compose(
             ({ classes, width, uid, }) =>
                 <Fragment>
 
-                    <ConfirmDialog dialogVisible={this.state.dialogReAuthVisible}
+                    <ConfirmDialog
+                        dialogVisible={this.state.dialogReAuthVisible}
                         onOk={this.reAuthenticate}
                         onCancel={this.hideDialog}
+                        inProgress={this.state.reauthInProgress}
                     >
                         <DialogTitle id="responsive-dialog-title">
                             {"Recent Authentication Required"}
@@ -252,6 +287,7 @@ export default compose(
                                 fullWidth
                                 lighter
                                 autocomplete={false}
+                                onChange={this.setPassword}
                                 error={this.state.errorPassword}
                                 errorMessage={this.state.errorMessagePassword}
                             />
