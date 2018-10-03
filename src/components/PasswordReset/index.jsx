@@ -37,7 +37,7 @@ export default compose(
 
     return (
         <Fragment>
-            <Hidden mdUp>
+            <Hidden smUp>
                 <Grid
                     container
                     direction={"column"}

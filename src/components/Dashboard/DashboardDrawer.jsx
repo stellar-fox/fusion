@@ -3,10 +3,7 @@ import PropTypes from "prop-types"
 import classNames from "classnames"
 import { compose } from "redux"
 import { connect } from "react-redux"
-import {
-    withDynamicRoutes,
-    withStaticRouter,
-} from "../FusionRouter"
+import { withDynamicRoutes, withStaticRouter } from "../FusionRouter"
 import { withStyles } from "@material-ui/core/styles"
 import { env } from "../Fusion"
 import {
@@ -17,6 +14,7 @@ import {
     ActionItems, DashboardItems, ManagementItems
 } from "./DashboardDrawerItems"
 import logo from "../Fusion/static/logo.svg"
+import withWidth, { isWidthDown } from "@material-ui/core/withWidth"
 
 
 
@@ -78,6 +76,7 @@ export default compose(
     })),
     withStaticRouter,
     withDynamicRoutes,
+    withWidth(),
     connect(
         // map state to props.
         (state) => ({
@@ -107,8 +106,9 @@ export default compose(
                             .getPath(viewName)
                     )
             ) {
-                console.info("switching to: " + viewName)
                 this.props.staticRouter.pushByView(viewName)
+                isWidthDown("sm", this.props.width) &&
+                    this.props.handleDrawerClose()
             }
         }
 
@@ -150,7 +150,7 @@ export default compose(
                         />
                     </Drawer>
                 </Hidden>
-                <Hidden mdUp>
+                <Hidden smUp>
                     <Drawer
                         classes={{ paper: classNames(classes.drawerPaper), }}
                         open={open}

@@ -53,7 +53,6 @@ export default compose(
                             .getPath(viewName)
                     )
             ) {
-                console.info("switching to (from tabbar): " + viewName)
                 this.props.staticRouter.pushByView(viewName)
             } else {
                 console.log("This view is not mapped to quick access tab")
