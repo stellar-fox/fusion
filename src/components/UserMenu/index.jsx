@@ -3,11 +3,14 @@ import PropTypes from "prop-types"
 import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
+import withWidth, { isWidthDown } from "@material-ui/core/withWidth"
 import AccountBoxRounded from "@material-ui/icons/AccountBoxRounded"
 import {
-    Hidden, IconButton, Menu, MenuItem, Typography,
+    Divider, IconButton, Menu, MenuItem, Typography,
 } from "@material-ui/core"
 import { action as AuthActions } from "../../redux/Auth"
+import Gravatar from "../Gravatar"
+import { Link } from "react-router-dom"
 
 
 
@@ -17,6 +20,17 @@ const styles = theme => ({
     menu: {
         backgroundColor: theme.palette.background.paper,
     },
+    menuItem: {
+        "&:hover": {
+            backgroundColor: theme.palette.custom.outerSpace,
+        },
+    },
+    menuHeader: {
+        cursor: "auto",
+        "&:hover": {
+            backgroundColor: "transparent",
+        },
+    },
 })
 
 
@@ -25,6 +39,7 @@ const styles = theme => ({
 // ...
 class UserMenu extends Component {
 
+    // ...
     state = {
         anchorEl: null,
     }
@@ -50,7 +65,7 @@ class UserMenu extends Component {
     // ...
     render = () => {
         const { anchorEl, } = this.state
-        const { classes, } = this.props
+        const { classes, displayName, email, width, } = this.props
 
         return (
             <Fragment>
@@ -60,7 +75,8 @@ class UserMenu extends Component {
                     onClick={this.openMenu}
                     color="secondary"
                 >
-                    <AccountBoxRounded />
+                    {isWidthDown("sm", width) ? <AccountBoxRounded /> :
+                        <Gravatar email={email} />}
                 </IconButton>
                 <Menu
                     classes={{ paper: classes.menu, }}
@@ -69,17 +85,27 @@ class UserMenu extends Component {
                     open={Boolean(anchorEl)}
                     onClose={this.handleClose}
                 >
-                    <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                    <MenuItem onClick={this.handleClose}>My Account</MenuItem>
-                    <MenuItem onClick={(event) =>
+                    <MenuItem component="div" className={classes.menuHeader}>
+                        <div>
+                            <Typography variant="body2" noWrap>
+                                {displayName}
+                            </Typography>
+                            <Typography variant="display1" noWrap>
+                                Admin
+                            </Typography>
+                        </div>
+                    </MenuItem>
+                    <Divider />
+                    <MenuItem className={classes.menuItem} component={Link}
+                        to="/dashboard/user"
+                    >Profile</MenuItem>
+                    <MenuItem className={classes.menuItem} component={Link}
+                        to="/dashboard/account"
+                    >Account</MenuItem>
+                    <MenuItem className={classes.menuItem} onClick={(event) =>
                         this.handleClose(event, this.logout)}
                     >Logout</MenuItem>
                 </Menu>
-                <Hidden smDown>
-                    <Typography variant="subheading" noWrap>
-                        {this.props.userFullName}
-                    </Typography>
-                </Hidden>
             </Fragment>
         )
     }
@@ -100,11 +126,13 @@ UserMenu.propTypes = {
 export default compose(
     connect(
         (state) => ({
-            userFullName: state.Auth.fullName,
+            email: state.Auth.email,
+            displayName: state.Auth.displayName,
         }),
         (dispatch) => bindActionCreators({
             logout: AuthActions.logout,
         }, dispatch)
     ),
-    withStyles(styles)
+    withStyles(styles),
+    withWidth()
 )(UserMenu)

@@ -103,26 +103,20 @@ export default compose(
                     <Hidden smDown>
                         <AppBar
                             position="absolute"
-                            className={
-                                classNames(
-                                    classes.appBar,
-                                    open && classes.appBarShift
-                                )
-                            }
+                            className={classNames(
+                                classes.appBar,
+                                open && classes.appBarShift
+                            )}
                         >
-                            <Toolbar
-                                disableGutters={!open}
-                            >
+                            <Toolbar disableGutters={!open}>
                                 <IconButton
                                     color="secondary"
                                     aria-label="open drawer"
                                     onClick={this.handleDrawerOpen}
-                                    className={
-                                        classNames(
-                                            classes.menuButton,
-                                            open && classes.hide
-                                        )
-                                    }
+                                    className={classNames(
+                                        classes.menuButton,
+                                        open && classes.hide
+                                    )}
                                 >
                                     <MenuIcon />
                                 </IconButton>
@@ -137,28 +131,26 @@ export default compose(
                                         <Typography variant="display4">
                                             {env.appVisName}
                                         </Typography>
-                                        <div className="text-overline yellow-dark">
-                                            v.{env.appVersion}
-                                        </div>
+                                        <Typography variant="display1">
+                                            <span className="yellow-dark">
+                                                v.{env.appVersion}
+                                            </span>
+                                        </Typography>
                                     </div>
                                 </div>
 
-                                <div
-                                    className={
-                                        classNames(
-                                            "flex-box-row items-centered",
-                                            classes.menuButton,
-                                            open && classes.iconButtonShift
-                                        )
-                                    }
+                                <div className={classNames(
+                                    "flex-box-row items-centered",
+                                    classes.menuButton,
+                                    open && classes.iconButtonShift
+                                )}
                                 >
                                     {authenticated && <UserMenu />}
                                 </div>
                             </Toolbar>
                         </AppBar>
 
-                        <DashboardDrawer
-                            open={open}
+                        <DashboardDrawer open={open}
                             handleDrawerClose={this.handleDrawerClose}
                         />
                     </Hidden>
@@ -168,14 +160,10 @@ export default compose(
                             position="absolute"
                             className={classes.appBar}
                         >
-                            <Toolbar
-                                disableGutters={true}
-                                variant="dense"
+                            <Toolbar disableGutters={true} variant="dense"
                                 classes={{ root: classes.toolbarRoot, }}
                             >
-                                <div
-                                    className="flex-box-row space-between items-centered"
-                                >
+                                <div className="flex-box-row space-between items-centered">
                                     <div className="flex-box-row items-centered">
                                         <IconButton
                                             color="secondary"
@@ -195,8 +183,7 @@ export default compose(
                                 </div>
                             </Toolbar>
                         </AppBar>
-                        <DashboardDrawer
-                            open={open}
+                        <DashboardDrawer open={open}
                             handleDrawerClose={this.handleDrawerClose}
                         />
                     </Hidden>
