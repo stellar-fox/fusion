@@ -17,6 +17,7 @@ import { action as AuthActions } from "../../redux/Auth"
 import { action as UserManagementActions } from "../../redux/UserManagement"
 import { reauthenticate, verifyEmail } from "../../firebase"
 import Gravatar from "../Gravatar"
+import { read } from "../../firebase"
 
 
 // <Profile> component
@@ -70,6 +71,7 @@ export default compose(
             password: string.empty(),
             errorPassword: false,
             errorMessagePassword: string.empty(),
+            foo: string.empty(),
         }
 
 
@@ -79,6 +81,9 @@ export default compose(
                 email: this.props.email,
                 emailVerified: this.props.emailVerified,
                 displayName: this.props.displayName,
+            })
+            read(this.props.uid).then((userData) => {
+                this.setState({ foo: userData.user.foo, })
             })
         }
 
@@ -267,130 +272,144 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, email, width, uid, }) =>
-                <Fragment>
-                    <ConfirmDialog
-                        dialogVisible={this.state.dialogReAuthVisible}
-                        onOk={this.reAuthenticate}
-                        onCancel={this.hideDialog}
-                        inProgress={this.state.reauthInProgress}
-                    >
-                        <DialogTitle id="responsive-dialog-title">
-                            {"Recent Authentication Required"}
-                        </DialogTitle>
-                        <DialogContent>
-                            <DialogContentText style={{ paddingBottom: "1em", }}>
-                                This operation is sensitive and requires your
-                                password confirmation.
-                            </DialogContentText>
-                            <TextInput
-                                id="password"
-                                label="Password"
-                                type="password"
-                                fullWidth
-                                lighter
-                                autocomplete={false}
-                                onChange={this.setPassword}
-                                error={this.state.errorPassword}
-                                errorMessage={this.state.errorMessagePassword}
-                            />
-                        </DialogContent>
-                    </ConfirmDialog>
+            ({ classes, email, width, uid, }) => <Fragment>
+                <ConfirmDialog
+                    dialogVisible={this.state.dialogReAuthVisible}
+                    onOk={this.reAuthenticate}
+                    onCancel={this.hideDialog}
+                    inProgress={this.state.reauthInProgress}
+                >
+                    <DialogTitle id="responsive-dialog-title">
+                        {"Recent Authentication Required"}
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText style={{ paddingBottom: "1em", }}>
+                            This operation is sensitive and requires your
+                            password confirmation.
+                        </DialogContentText>
+                        <TextInput
+                            id="password"
+                            label="Password"
+                            type="password"
+                            fullWidth
+                            lighter
+                            autocomplete={false}
+                            onChange={this.setPassword}
+                            error={this.state.errorPassword}
+                            errorMessage={this.state.errorMessagePassword}
+                        />
+                    </DialogContent>
+                </ConfirmDialog>
 
-                    <Typography variant="subheading">
-                        Manage user profile data here.
-                    </Typography>
+                <div className={isWidthDown("sm", width) ? "flex-box-col" : "flex-box-row space-around"}>
+                    <div>
+                        <Typography variant="subheading">
+                            Manage user profile data here.
+                        </Typography>
 
-                    <div className="flex-box-row items-centered m-t m-b">
-                        <Gravatar email={email} />
+                        <div className="flex-box-row items-centered m-t m-b">
+                            <Gravatar email={email} />
 
-                        <div className="flex-box-col m-l-small">
-                            <Typography variant="display1">
-                                USER ID
-                            </Typography>
-                            <Typography variant="display2">
-                                {uid}
-                            </Typography>
+                            <div className="flex-box-col m-l-small">
+                                <Typography variant="display1">
+                                    USER ID
+                                </Typography>
+                                <Typography variant="display2">
+                                    {uid}
+                                </Typography>
+                            </div>
+
                         </div>
 
-                    </div>
-
-                    <div className="flex-box-row items-centered">
-                        <TextInput
-                            id="email"
-                            label="Email"
-                            type="text"
-                            lighter
-                            fullWidth={isWidthDown("sm", width)}
-                            value={this.state.email}
-                            onChange={this.setEmail}
-                            autocomplete={false}
-                            error={this.state.errorEmail}
-                            errorMessage={this.state.errorMessageEmail}
-                        />
-                        {this.state.emailVerified &&
-                        <Fragment>
-                            <he.Nbsp />
-                            <VerifiedUserRounded
-                                classes={{ root: classes.iconVerified, }}
+                        <div className="flex-box-row items-centered">
+                            <TextInput
+                                id="email"
+                                label="Email"
+                                type="text"
+                                lighter
+                                fullWidth={isWidthDown("sm", width)}
+                                value={this.state.email}
+                                onChange={this.setEmail}
+                                autocomplete={false}
+                                error={this.state.errorEmail}
+                                errorMessage={this.state.errorMessageEmail}
                             />
-                        </Fragment>
-                        }
-                    </div>
-                    <div className="flex-box-row">
-                        <TextInput
-                            id="name"
-                            label="Name"
-                            type="text"
-                            lighter
-                            fullWidth={isWidthDown("sm", width)}
-                            value={this.state.displayName}
-                            onChange={this.setName}
-                            autocomplete={false}
-                            error={this.state.errorName}
-                            errorMessage={this.state.errorMessageName}
-                        />
-                    </div>
+                            {this.state.emailVerified &&
+                            <Fragment>
+                                <he.Nbsp />
+                                <VerifiedUserRounded
+                                    classes={{ root: classes.iconVerified, }}
+                                />
+                            </Fragment>
+                            }
+                        </div>
+                        <div className="flex-box-row">
+                            <TextInput
+                                id="name"
+                                label="Name"
+                                type="text"
+                                lighter
+                                fullWidth={isWidthDown("sm", width)}
+                                value={this.state.displayName}
+                                onChange={this.setName}
+                                autocomplete={false}
+                                error={this.state.errorName}
+                                errorMessage={this.state.errorMessageName}
+                            />
+                        </div>
 
-                    <Button
-                        color="green"
-                        disabled={this.state.disabled}
-                        onClick={this.saveData}
-                    >
-                        {this.state.saveInProgress ? <CircularProgress
-                            color="secondary" thickness={4} size={16}
-                        /> : "Save"}
-                    </Button>
-                    <he.Nbsp /><he.Nbsp />
-                    <Button
-                        color="yellowDark"
-                        disabled={this.state.disabled}
-                        onClick={this.cancelSave}
-                    >
-                        Cancel
-                    </Button>
-                    <br /><br />
-                    <Typography style={{ paddingBottom: "1em", }}
-                        variant="display1"
-                    >
-                        Verification link didn't arrive?
-                    </Typography>
-                    <GenericButton size="small"
-                        onClick={this.sendVerificationLink}
-                        variant="outlined" color="secondary"
-                    >Send Link Again</GenericButton>
-                    <br /><br />
-                    <Typography style={{ paddingBottom: "1em", }}
-                        variant="display1"
-                    >
-                        Forgot password?
-                    </Typography>
-                    <GenericButton size="small"
-                        onClick={this.sendPasswordResetLink}
-                        variant="outlined" color="secondary"
-                    >Reset Password</GenericButton>
+                        <Button
+                            color="green"
+                            disabled={this.state.disabled}
+                            onClick={this.saveData}
+                        >
+                            {this.state.saveInProgress ? <CircularProgress
+                                color="secondary" thickness={4} size={16}
+                            /> : "Save"}
+                        </Button>
+                        <he.Nbsp /><he.Nbsp />
+                        <Button
+                            color="yellowDark"
+                            disabled={this.state.disabled}
+                            onClick={this.cancelSave}
+                        >
+                            Cancel
+                        </Button>
+                        <br /><br />
+                        <Typography style={{ paddingBottom: "1em", }}
+                            variant="display1"
+                        >
+                            Verification link didn't arrive?
+                        </Typography>
+                        <GenericButton size="small"
+                            onClick={this.sendVerificationLink}
+                            variant="outlined" color="secondary"
+                        >Send Link Again</GenericButton>
+                        <br /><br />
+                        <Typography style={{ paddingBottom: "1em", }}
+                            variant="display1"
+                        >
+                            Forgot password?
+                        </Typography>
+                        <GenericButton style={{ marginBottom: "1em", }}
+                            size="small"
+                            onClick={this.sendPasswordResetLink}
+                            variant="outlined" color="secondary"
+                        >Reset Password</GenericButton>
+                    </div>
+                    <div >
+                        <Typography variant="subheading">
+                            User Custom Data
+                        </Typography>
 
-                </Fragment>
+                        <div className="m-t m-b">
+                            <Typography variant="display1">
+                                FOO: {this.state.foo}
+                            </Typography>
+                        </div>
+                    </div>
+                </div>
+            </Fragment>
         )(this.props)
 
     }
