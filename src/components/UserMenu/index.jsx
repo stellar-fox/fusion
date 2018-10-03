@@ -31,6 +31,9 @@ const styles = theme => ({
             backgroundColor: "transparent",
         },
     },
+    iconButton: {
+        padding: 5,
+    },
 })
 
 
@@ -70,6 +73,7 @@ class UserMenu extends Component {
         return (
             <Fragment>
                 <IconButton
+                    classes={{ root: classes.iconButton, }}
                     aria-owns={anchorEl ? "user-menu" : null}
                     aria-haspopup="true"
                     onClick={this.openMenu}
@@ -102,8 +106,9 @@ class UserMenu extends Component {
                     <MenuItem className={classes.menuItem} component={Link}
                         to="/dashboard/account/" onClick={this.handleClose}
                     >Account</MenuItem>
-                    <MenuItem className={classes.menuItem} onClick={(event) =>
-                        this.handleClose(event, this.logout)}
+                    <Divider />
+                    <MenuItem className={classes.menuItem} onClick={
+                        (event) => this.handleClose(event, this.logout)}
                     >Logout</MenuItem>
                 </Menu>
             </Fragment>
