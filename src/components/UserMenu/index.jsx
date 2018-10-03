@@ -97,10 +97,10 @@ class UserMenu extends Component {
                     </MenuItem>
                     <Divider />
                     <MenuItem className={classes.menuItem} component={Link}
-                        to="/dashboard/user" onClick={this.handleClose}
+                        to="/dashboard/user/" onClick={this.handleClose}
                     >Profile</MenuItem>
                     <MenuItem className={classes.menuItem} component={Link}
-                        to="/dashboard/account" onClick={this.handleClose}
+                        to="/dashboard/account/" onClick={this.handleClose}
                     >Account</MenuItem>
                     <MenuItem className={classes.menuItem} onClick={(event) =>
                         this.handleClose(event, this.logout)}
