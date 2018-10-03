@@ -247,7 +247,7 @@ export default compose(
 
         // ...
         sendPasswordResetLink = async () => {
-            // this.props.sendPasswordReset()
+            this.props.sendPasswordReset()
             await this.props.setSnackbarMessage(
                 "Password reset link sent."
             )
@@ -257,7 +257,7 @@ export default compose(
 
         // ...
         sendVerificationLink = async () => {
-            // this.props.sendEmailVerification()
+            this.props.sendEmailVerification()
             await this.props.setSnackbarMessage(
                 "Email verification link sent."
             )
