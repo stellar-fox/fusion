@@ -5,7 +5,7 @@ import {
 import {
     applyVerificationCode, authenticate, resetPassword, signout, signup,
     updateEmail, updateUserProfile, updatePassword, verifyEmail,
-    verifyPasswordResetCode, write,
+    verifyPasswordResetCode, write, storageRef,
 } from "../firebase"
 
 
@@ -38,17 +38,34 @@ export const action = {
         async (dispatch, _getState) => {
             try {
                 const auth = await authenticate(...args)
-                dispatch(action.setState({
-                    uid: auth.user.uid,
-                    email: auth.user.email,
-                    displayName: auth.user.displayName || string.empty(),
-                    photoUrl: auth.user.photoURL || string.empty(),
-                    emailVerified: auth.user.emailVerified,
-                }))
+                auth.user.photoURL ?
+                    dispatch(action.setState({
+                        uid: auth.user.uid,
+                        email: auth.user.email,
+                        displayName: auth.user.displayName || string.empty(),
+                        photoUrl: auth.user.photoURL || string.empty(),
+                        emailVerified: auth.user.emailVerified,
+                    })) : dispatch(action.getStorageAvatar(auth.user))
+
             } catch (error) {
                 return Promise.reject(error)
             }
         },
+
+
+    // ...
+    getStorageAvatar: (user) =>
+        async (dispatch, _getState) =>
+            storageRef().child(`${user.uid}/avatar.jpeg`)
+                .getDownloadURL().then((photoUrl) => {
+                    dispatch(action.setState({
+                        photoUrl,
+                        uid: user.uid,
+                        email: user.email,
+                        displayName: user.displayName || string.empty(),
+                        emailVerified: user.emailVerified,
+                    }))
+                }),
 
 
     // ...

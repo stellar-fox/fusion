@@ -2,6 +2,7 @@ import { config } from "./config"
 import firebase from "firebase/app"
 import "firebase/auth"
 import "firebase/database"
+import "firebase/storage"
 
 
 
@@ -153,11 +154,14 @@ const reauthenticate = (password) =>
         .catch((error) => Promise.reject(error))
 
 
+// Storage Reference
+const storageRef = () => firebase.storage().ref()
+
 
 
 // ...
 export {
     applyVerificationCode, authenticate, read, resetPassword, signout, signup,
     updateEmail, updatePassword, updateUserProfile, verifyEmail,
-    verifyPasswordResetCode, write, reauthenticate
+    verifyPasswordResetCode, write, reauthenticate, storageRef,
 }
