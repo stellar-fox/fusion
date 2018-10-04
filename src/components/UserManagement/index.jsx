@@ -37,6 +37,7 @@ export default compose(
             tabSelected: state.UserManagement.tabSelected,
             snackbarOpen: state.UserManagement.snackbarOpen,
             snackbarMessage: state.UserManagement.snackbarMessage,
+            cropInProgress: state.UserManagement.cropInProgress,
             theme,
         }),
         // match dispatch to props.
@@ -75,7 +76,7 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, snackbarOpen, snackbarMessage, tabSelected, }) =>
+            ({ classes, cropInProgress, snackbarOpen, snackbarMessage, tabSelected, }) =>
                 <Switch>
                     <Route exact path={this.rr(".")}>
 
@@ -128,6 +129,7 @@ export default compose(
                                 axis={this.props.theme.direction === "rtl" ? "x-reverse" : "x"}
                                 index={tabSelected}
                                 onChangeIndex={this.handleChangeIndex}
+                                disabled={cropInProgress}
                             >
                                 <Typography component="div"
                                     dir={this.props.theme.direction}

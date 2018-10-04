@@ -45,6 +45,10 @@ export const action = {
         snackbarOpen: false,
     })),
 
+    setCropStatus: (status) => (dispatch) => dispatch(action.setState({
+        cropInProgress: status,
+    })),
+
     // ...
     resetState: () => ({ type: RESET_STATE, }),
 
