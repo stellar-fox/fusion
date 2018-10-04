@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core"
 import { action as AuthActions } from "../../redux/Auth"
 import Gravatar from "../Gravatar"
+import PhotoAvatar from "../PhotoAvatar"
 import { Link } from "react-router-dom"
 
 
@@ -33,6 +34,7 @@ const styles = theme => ({
     },
     iconButton: {
         padding: 5,
+        marginRight: "0.25em",
     },
 })
 
@@ -68,7 +70,7 @@ class UserMenu extends Component {
     // ...
     render = () => {
         const { anchorEl, } = this.state
-        const { classes, displayName, email, width, } = this.props
+        const { classes, displayName, email, photoUrl, width, } = this.props
 
         return (
             <Fragment>
@@ -80,7 +82,8 @@ class UserMenu extends Component {
                     color="secondary"
                 >
                     {isWidthDown("sm", width) ? <AccountBoxRounded /> :
-                        <Gravatar email={email} />}
+                        photoUrl ? <PhotoAvatar src={photoUrl} /> :
+                            <Gravatar email={email} />}
                 </IconButton>
                 <Menu
                     classes={{ paper: classes.menu, }}
@@ -133,6 +136,7 @@ export default compose(
         (state) => ({
             email: state.Auth.email,
             displayName: state.Auth.displayName,
+            photoUrl: state.Auth.photoUrl,
         }),
         (dispatch) => bindActionCreators({
             logout: AuthActions.logout,

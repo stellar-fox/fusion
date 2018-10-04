@@ -17,6 +17,7 @@ import { action as AuthActions } from "../../redux/Auth"
 import { action as UserManagementActions } from "../../redux/UserManagement"
 import { reauthenticate, verifyEmail } from "../../firebase"
 import Gravatar from "../Gravatar"
+import PhotoAvatar from "../PhotoAvatar"
 import { read } from "../../firebase"
 import ImageCropper from "../ImageCropper"
 
@@ -39,6 +40,7 @@ export default compose(
             emailVerified: state.Auth.emailVerified,
             uid: state.Auth.uid,
             displayName: state.Auth.displayName,
+            photoUrl: state.Auth.photoUrl,
         }),
         (dispatch) => bindActionCreators({
             sendEmailVerification: AuthActions.sendEmailVerification,
@@ -281,7 +283,7 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, email, width, uid, }) => <Fragment>
+            ({ classes, email, photoUrl, uid, width, }) => <Fragment>
                 <ConfirmDialog
                     dialogVisible={this.state.dialogReAuthVisible}
                     onOk={this.reAuthenticate}
@@ -317,7 +319,8 @@ export default compose(
                         </Typography>
 
                         <div className="flex-box-row items-centered m-t m-b">
-                            <Gravatar email={email} />
+                            {photoUrl ? <PhotoAvatar src={photoUrl} /> :
+                                <Gravatar email={email} />}
 
                             <div className="flex-box-col m-l-small">
                                 <Typography variant="display1">
@@ -417,6 +420,7 @@ export default compose(
                             </Typography>
                         </div>
 
+
                         <div className="m-t-large">
                             <Typography style={{ paddingBottom: "1em", }}
                                 variant="display1"
@@ -425,6 +429,8 @@ export default compose(
                             </Typography>
                             <ImageCropper />
                         </div>
+
+
                     </div>
                 </div>
             </Fragment>
