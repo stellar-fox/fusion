@@ -18,6 +18,9 @@ import { action as UserManagementActions } from "../../redux/UserManagement"
 import { reauthenticate, verifyEmail } from "../../firebase"
 import Gravatar from "../Gravatar"
 import { read } from "../../firebase"
+import ImageCropper from "../ImageCropper"
+
+
 
 
 // <Profile> component
@@ -271,6 +274,12 @@ export default compose(
 
 
         // ...
+        uploadPhoto = async () => {
+            console.log("APLOŁD FOTO")
+        }
+
+
+        // ...
         render = () => (
             ({ classes, email, width, uid, }) => <Fragment>
                 <ConfirmDialog
@@ -406,6 +415,15 @@ export default compose(
                             <Typography variant="display1">
                                 FOO: {this.state.foo}
                             </Typography>
+                        </div>
+
+                        <div className="m-t-large">
+                            <Typography style={{ paddingBottom: "1em", }}
+                                variant="display1"
+                            >
+                                Don't like Gravatar photo?
+                            </Typography>
+                            <ImageCropper />
                         </div>
                     </div>
                 </div>
