@@ -9,7 +9,7 @@ import md5 from "../../lib/md5"
 import classNames from "classnames"
 
 
-// <COMPONENT_NAME> component
+// <Gravatar> component
 export default compose(
     withStyles({
         avatar: {
