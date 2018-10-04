@@ -6,10 +6,11 @@ import { withStyles } from "@material-ui/core/styles"
 import ReactCrop, { makeAspectCrop } from "react-image-crop"
 import "react-image-crop/dist/ReactCrop.css"
 import { Button as GenericButton, CircularProgress } from "@material-ui/core"
-import { action as UserManagementAction } from "../../redux/UserManagement"
+import { action as UserManagementActions } from "../../redux/UserManagement"
+import { action as AuthActions } from "../../redux/Auth"
 import Button from "../../lib/mui-v1/Button"
 import { htmlEntities as he } from "../../lib/utils"
-
+import { storageRef } from "../../firebase"
 
 
 
@@ -21,11 +22,14 @@ export default compose(
         },
     }),
     connect(
-        (_state) => ({}),
+        (state) => ({
+            uid: state.Auth.uid,
+        }),
         (dispatch) => bindActionCreators({
-            setCropStatus: UserManagementAction.setCropStatus,
-            openSnackbar: UserManagementAction.openSnackbar,
-            setSnackbarMessage: UserManagementAction.setSnackbarMessage,
+            setCropStatus: UserManagementActions.setCropStatus,
+            openSnackbar: UserManagementActions.openSnackbar,
+            setSnackbarMessage: UserManagementActions.setSnackbarMessage,
+            updateUserProfile: AuthActions.updateUserProfile,
         }, dispatch)
     )
 )(
@@ -174,6 +178,17 @@ export default compose(
             const imgData = this.getCroppedImage(
                 this.state.image, this.state.pixelCrop
             )
+            try {
+                const avatarRef = storageRef().child(`${this.props.uid}/avatar.jpeg`)
+                await avatarRef.putString(imgData, "data_url")
+
+                await this.props.updateUserProfile({
+                    photoUrl: imgData,
+                })
+            } catch (error) {
+                console.log(error)
+            }
+
             console.log(imgData)
         }
 
