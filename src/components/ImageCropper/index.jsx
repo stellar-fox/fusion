@@ -5,7 +5,9 @@ import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
 import ReactCrop, { makeAspectCrop } from "react-image-crop"
 import "react-image-crop/dist/ReactCrop.css"
-import { Button as GenericButton, CircularProgress } from "@material-ui/core"
+import {
+    Button as GenericButton, CircularProgress, Typography
+} from "@material-ui/core"
 import { action as UserManagementActions } from "../../redux/UserManagement"
 import { action as AuthActions } from "../../redux/Auth"
 import Button from "../../lib/mui-v1/Button"
@@ -111,8 +113,6 @@ export default compose(
 
         // ...
         onCropComplete = (crop, pixelCrop) => {
-            console.log(crop)
-            console.log(pixelCrop)
             this.setState({ crop, pixelCrop, })
         }
 
@@ -206,10 +206,15 @@ export default compose(
                         onChange={this.onSelectFile}
                     />
                     <label htmlFor="photo-upload">
-                        <GenericButton style={{ marginBottom: "1em", }}
+                        <GenericButton style={{ marginBottom: "0.5em", }}
                             size="small" component="span"
                             variant="outlined" color="secondary"
                         >Upload Custom Photo</GenericButton>
+                        <Typography style={{ marginBottom: "0.5em", }}
+                            variant="display2"
+                        >
+                            Maximum size: 100kb
+                        </Typography>
                     </label>
                     {this.state.src &&
                     <Fragment>

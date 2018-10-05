@@ -276,12 +276,6 @@ export default compose(
 
 
         // ...
-        uploadPhoto = async () => {
-            console.log("APLOŁD FOTO")
-        }
-
-
-        // ...
         render = () => (
             ({ classes, email, photoUrl, uid, width, }) => <Fragment>
                 <ConfirmDialog
