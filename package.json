@@ -2,6 +2,12 @@
     "bugs": {
         "url": "https://github.com/stellar-fox/fusion/issues"
     },
+    "browserslist": [
+        ">0.2%",
+        "not dead",
+        "not ie <= 11",
+        "not op_mini all"
+    ],
     "contributors": [
         {
             "name": "drmats",
@@ -27,10 +33,10 @@
         "@types/react-redux": "^6.0.9",
         "@types/react-router-dom": "^4.3.1",
         "@types/react-router-redux": "^5.0.16",
-        "@xcmats/js-toolbox": "^0.6.2",
+        "@xcmats/js-toolbox": "^0.6.5",
         "axios": "^0.18.0",
         "classnames": "^2.2.6",
-        "firebase": "^5.5.2",
+        "firebase": "^5.5.3",
         "fuse.js": "^3.2.1",
         "history": "^4.7.2",
         "hoist-non-react-statics": "^3.0.1",
@@ -38,7 +44,7 @@
         "jss": "^9.8.7",
         "lodash": "^4.17.11",
         "prop-types": "^15.6.2",
-        "query-string": "^6.1.0",
+        "query-string": "^6.2.0",
         "raf": "^3.4.0",
         "react": "^16.5.2",
         "react-dom": "^16.5.2",
@@ -49,7 +55,7 @@
         "react-redux": "^5.0.7",
         "react-router-dom": "^4.3.1",
         "react-router-redux": "^5.0.0-alpha.9",
-        "react-scripts": "1.1.5",
+        "react-scripts": "2.0.4",
         "react-scrollbar-size": "^2.1.0",
         "react-swipeable-views": "^0.13.0",
         "redux": "^4.0.0",
@@ -61,11 +67,7 @@
     },
     "description": "Fusion (Stellar Fox frontend)",
     "devDependencies": {
-        "babel-eslint": "^10.0.1",
         "cross-env": "^5.2.0",
-        "eslint": "^5.6.1",
-        "eslint-config-react-app": "^2.1.0",
-        "eslint-plugin-react": "^7.11.1",
         "rimraf": "^2.6.2"
     },
     "engines": {
