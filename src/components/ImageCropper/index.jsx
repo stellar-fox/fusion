@@ -170,26 +170,26 @@ export default compose(
         // ...
         uploadImage = async () => {
             await this.setState({ uploadInProgress: true, })
-            await this.setState({
-                uploadInProgress: false,
-                src: null,
-            })
             await this.props.setCropStatus(false)
             const imgData = this.getCroppedImage(
                 this.state.image, this.state.pixelCrop
             )
             try {
                 const avatarRef = storageRef().child(`${this.props.uid}/avatar.jpeg`)
-                await avatarRef.putString(imgData, "data_url")
-
-                await this.props.updateUserProfile({
-                    photoUrl: imgData,
+                let uploadTask = avatarRef.putString(imgData, "data_url")
+                uploadTask.on("state_changed", (snapshot) => {
+                    if ((snapshot.bytesTransferred / snapshot.totalBytes) * 100 === 100) {
+                        this.props.setSnackbarMessage("Image uploaded.")
+                        this.props.openSnackbar()
+                        this.props.updateUserProfile({ photoUrl: imgData, })
+                        this.setState({ uploadInProgress: false, src: null, })
+                    }
                 })
             } catch (error) {
-                console.log(error)
+                await this.props.setSnackbarMessage("Image upload failed.")
+                await this.props.openSnackbar()
+                await this.setState({ uploadInProgress: false, src: null, })
             }
-
-            console.log(imgData)
         }
 
 
