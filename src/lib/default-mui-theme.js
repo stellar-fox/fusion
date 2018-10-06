@@ -77,6 +77,7 @@ export default createMuiTheme({
             main: rgb(211, 85, 102),
             light: rgb(255, 141, 153),
             dark: rgb(196, 28, 51),
+            contrastText: eerieBlack,
         },
 
         background: {
