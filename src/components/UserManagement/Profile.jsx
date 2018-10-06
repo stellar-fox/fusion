@@ -14,13 +14,12 @@ import { htmlEntities as he } from "../../lib/utils"
 import Button from "../../lib/mui-v1/Button"
 import ConfirmDialog from "../../lib/mui-v1/ConfirmDialog"
 import { action as AuthActions } from "../../redux/Auth"
-import { action as UserManagementActions } from "../../redux/UserManagement"
 import { reauthenticate, verifyEmail } from "../../firebase"
 import Gravatar from "../Gravatar"
 import PhotoAvatar from "../PhotoAvatar"
 import { read } from "../../firebase"
 import ImageCropper from "../ImageCropper"
-
+import { action as SnackyActions } from "../../redux/Snacky"
 
 
 
@@ -45,8 +44,9 @@ export default compose(
         (dispatch) => bindActionCreators({
             sendEmailVerification: AuthActions.sendEmailVerification,
             sendPasswordReset: AuthActions.sendPasswordReset,
-            openSnackbar: UserManagementActions.openSnackbar,
-            setSnackbarMessage: UserManagementActions.setSnackbarMessage,
+            showSnacky: SnackyActions.showSnacky,
+            setSnackyMessage: SnackyActions.setMessage,
+            setSnackyColor: SnackyActions.setColor,
             updateUserProfile: AuthActions.updateUserProfile,
             updateEmail: AuthActions.updateEmail,
         }, dispatch)
@@ -171,27 +171,24 @@ export default compose(
                     }
 
                     // handle other type of error
-                    await this.props.setSnackbarMessage(error.message)
-                    await this.props.openSnackbar()
+                    await this.props.setSnackyColor("error")
+                    await this.props.setSnackyMessage(error.message)
+                    await this.props.showSnacky()
 
                 }
             }
 
             if (this.state.nameChanged) {
                 try {
-                    await this.setState({
-                        disabled: true,
-                    })
-
+                    await this.setState({ disabled: true, })
                     await this.props.updateUserProfile({
                         displayName: this.state.displayName,
                     })
 
                 } catch (error) {
-                    await this.props.setSnackbarMessage(
-                        error.message
-                    )
-                    await this.props.openSnackbar()
+                    await this.props.setSnackyColor("error")
+                    await this.props.setSnackyMessage(error.message)
+                    await this.props.showSnacky()
                     return
                 }
             }
@@ -205,9 +202,9 @@ export default compose(
 
             this.fieldSetChanged()
 
-            await this.props.setSnackbarMessage("User data saved.")
-
-            await this.props.openSnackbar()
+            await this.props.setSnackyColor("success")
+            await this.props.setSnackyMessage("User data saved.")
+            await this.props.showSnacky()
 
         }
 
@@ -258,20 +255,18 @@ export default compose(
         // ...
         sendPasswordResetLink = async () => {
             this.props.sendPasswordReset()
-            await this.props.setSnackbarMessage(
-                "Password reset link sent."
-            )
-            await this.props.openSnackbar()
+            await this.props.setSnackyColor("success")
+            await this.props.setSnackyMessage("Password reset link sent.")
+            await this.props.showSnacky()
         }
 
 
         // ...
         sendVerificationLink = async () => {
             this.props.sendEmailVerification()
-            await this.props.setSnackbarMessage(
-                "Email verification link sent."
-            )
-            await this.props.openSnackbar()
+            await this.props.setSnackyColor("success")
+            await this.props.setSnackyMessage("Email verification link sent.")
+            await this.props.showSnacky()
         }
 
 
@@ -306,7 +301,9 @@ export default compose(
                     </DialogContent>
                 </ConfirmDialog>
 
-                <div className={isWidthDown("sm", width) ? "flex-box-col" : "flex-box-row space-around"}>
+                <div className={isWidthDown("sm", width) ?
+                    "flex-box-col" : "flex-box-row space-around"}
+                >
                     <div>
                         <Typography variant="subheading">
                             Manage user profile data here.

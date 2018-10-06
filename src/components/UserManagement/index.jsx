@@ -4,8 +4,7 @@ import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
 import { Redirect, Route } from "react-router-dom"
-import { IconButton, Paper, Snackbar, Typography } from "@material-ui/core"
-import { Close } from "@material-ui/icons"
+import { Paper, Typography } from "@material-ui/core"
 import { ConnectedSwitch as Switch, resolvePath } from "../FusionRouter"
 import { action as AuthActions } from "../../redux/Auth"
 import { action as UserManagementActions } from "../../redux/UserManagement"
@@ -13,6 +12,7 @@ import Tab from "@material-ui/core/Tab"
 import Tabs from "@material-ui/core/Tabs"
 import SwipeableViews from "react-swipeable-views"
 import Profile from "./Profile"
+import Snacky from "../../lib/mui-v1/Snacky"
 
 
 
@@ -35,8 +35,8 @@ export default compose(
         (state, theme) => ({
             Auth: state.Auth,
             tabSelected: state.UserManagement.tabSelected,
-            snackbarOpen: state.UserManagement.snackbarOpen,
-            snackbarMessage: state.UserManagement.snackbarMessage,
+            snackyOpen: state.Snacky.open,
+            snackyMessage: state.Snacky.message,
             cropInProgress: state.UserManagement.cropInProgress,
             theme,
         }),
@@ -45,7 +45,6 @@ export default compose(
             sendEmailVerification: AuthActions.sendEmailVerification,
             sendPasswordReset: AuthActions.sendPasswordReset,
             changeTab: UserManagementActions.changeTab,
-            closeSnackbar: UserManagementActions.closeSnackbar,
         }, dispatch)
     )
 )(
@@ -71,48 +70,13 @@ export default compose(
 
 
         // ...
-        closeSnackbar = () => this.props.closeSnackbar()
-
-
-        // ...
         render = () => (
-            ({ classes, cropInProgress, snackbarOpen, snackbarMessage, tabSelected, }) =>
+            ({ classes, cropInProgress, tabSelected, }) =>
                 <Switch>
                     <Route exact path={this.rr(".")}>
 
                         <Paper className={classes.paperCanvas}>
-
-                            <Snackbar
-                                anchorOrigin={{
-                                    vertical: "bottom",
-                                    horizontal: "left",
-                                }}
-                                open={snackbarOpen}
-                                autoHideDuration={6000}
-                                onClose={this.closeSnackbar}
-                                ContentProps={{
-                                    "aria-describedby": "message-id",
-                                }}
-                                message={
-                                    <span id="message-id">
-                                        <Typography variant="body2"
-                                            color="inherit"
-                                        >
-                                            {snackbarMessage}
-                                        </Typography>
-                                    </span>
-                                }
-                                action={[
-                                    <IconButton
-                                        key="close"
-                                        aria-label="Close"
-                                        color="inherit"
-                                        onClick={this.closeSnackbar}
-                                    >
-                                        <Close />
-                                    </IconButton>,
-                                ]}
-                            />
+                            <Snacky />
 
                             <Tabs
                                 value={tabSelected}
@@ -120,9 +84,9 @@ export default compose(
                                 fullWidth
                                 classes={{ indicator: classes.indicator, }}
                             >
-                                <Tab disableRipple label="Profile" />
-                                <Tab disableRipple label="Settings" />
-                                <Tab disableRipple label="Security" />
+                                <Tab label="Profile" />
+                                <Tab label="Settings" />
+                                <Tab label="Security" />
                             </Tabs>
 
                             <SwipeableViews
