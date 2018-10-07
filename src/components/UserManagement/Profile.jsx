@@ -254,7 +254,7 @@ export default compose(
 
         // ...
         sendPasswordResetLink = async () => {
-            this.props.sendPasswordReset()
+            this.props.sendPasswordReset(this.props.email)
             await this.props.setSnackyColor("success")
             await this.props.setSnackyMessage("Password reset link sent.")
             await this.props.showSnacky()
