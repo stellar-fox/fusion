@@ -9,10 +9,12 @@ import {
     Button as GenericButton, CircularProgress, Typography
 } from "@material-ui/core"
 import { action as UserManagementActions } from "../../redux/UserManagement"
+import { action as SnackyActions } from "../../redux/Snacky"
 import { action as AuthActions } from "../../redux/Auth"
 import Button from "../../lib/mui-v1/Button"
 import { htmlEntities as he } from "../../lib/utils"
 import { storageRef } from "../../firebase"
+
 
 
 
@@ -29,8 +31,9 @@ export default compose(
         }),
         (dispatch) => bindActionCreators({
             setCropStatus: UserManagementActions.setCropStatus,
-            openSnackbar: UserManagementActions.openSnackbar,
-            setSnackbarMessage: UserManagementActions.setSnackbarMessage,
+            showSnacky: SnackyActions.showSnacky,
+            setSnackyMessage: SnackyActions.setMessage,
+            setSnackyColor: SnackyActions.setColor,
             updateUserProfile: AuthActions.updateUserProfile,
         }, dispatch)
     )
@@ -70,10 +73,11 @@ export default compose(
                 // reject non-image files
                 if (!imageType.test(e.target.files[0].type)) {
                     const showError = async () => {
-                        await this.props.setSnackbarMessage(
+                        await this.props.setSnackyColor("error")
+                        await this.props.setSnackyMessage(
                             "Invalid image file selected."
                         )
-                        await this.props.openSnackbar()
+                        await this.props.showSnacky()
                     }
                     showError()
                     return
@@ -82,10 +86,11 @@ export default compose(
                 // reject images larger than 100kb
                 if (e.target.files[0].size > fileSizeLimit) {
                     const showError = async () => {
-                        await this.props.setSnackbarMessage(
+                        await this.props.setSnackyColor("error")
+                        await this.props.setSnackyMessage(
                             "Image file too big."
                         )
-                        await this.props.openSnackbar()
+                        await this.props.showSnacky()
                     }
                     showError()
                     return
@@ -175,19 +180,25 @@ export default compose(
                 this.state.image, this.state.pixelCrop
             )
             try {
-                const avatarRef = storageRef().child(`${this.props.uid}/avatar.jpeg`)
+                const avatarRef = storageRef().child(
+                    `${this.props.uid}/avatar.jpeg`
+                )
                 let uploadTask = avatarRef.putString(imgData, "data_url")
-                uploadTask.on("state_changed", (snapshot) => {
-                    if ((snapshot.bytesTransferred / snapshot.totalBytes) * 100 === 100) {
-                        this.props.setSnackbarMessage("Image uploaded.")
-                        this.props.openSnackbar()
+                uploadTask.on("state_changed", async (snapshot) => {
+                    if ((
+                        snapshot.bytesTransferred / snapshot.totalBytes
+                    ) * 100 === 100) {
+                        await this.props.setSnackyColor("success")
+                        await this.props.setSnackyMessage("Image uploaded.")
+                        await this.props.showSnacky()
                         this.props.updateUserProfile({ photoUrl: imgData, })
                         this.setState({ uploadInProgress: false, src: null, })
                     }
                 })
             } catch (error) {
-                await this.props.setSnackbarMessage("Image upload failed.")
-                await this.props.openSnackbar()
+                await this.props.setSnackyColor("error")
+                await this.props.setSnackyMessage("Image upload failed.")
+                await this.props.showSnacky()
                 await this.setState({ uploadInProgress: false, src: null, })
             }
         }
