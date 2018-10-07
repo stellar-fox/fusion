@@ -8,10 +8,11 @@ import { withStyles } from "@material-ui/core/styles"
 import { LinearProgress } from "@material-ui/core"
 import Button from "../../lib/mui-v1/Button"
 import TextInput from "../../lib/mui-v1/TextInput"
-import { IconButton, Snackbar, Typography } from "@material-ui/core"
-import { Close } from "@material-ui/icons"
+import Snacky from "../../lib/mui-v1/Snacky"
+import { Typography } from "@material-ui/core"
 import { env } from "../Fusion"
 import logo from "../Fusion/static/logo.svg"
+import { action as SnackyActions } from "../../redux/Snacky"
 
 
 
@@ -52,6 +53,9 @@ export default compose(
         }),
         (dispatch) => bindActionCreators({
             sendPasswordReset: AuthActions.sendPasswordReset,
+            showSnacky: SnackyActions.showSnacky,
+            setSnackyMessage: SnackyActions.setMessage,
+            setSnackyColor: SnackyActions.setColor,
         }, dispatch)
     ),
 )(
@@ -72,24 +76,12 @@ export default compose(
             errorEmail: false,
             errorMessageEmail: string.empty(),
             progressBarOpacity: 0,
-            snackbarMessage: string.empty(),
         }
 
 
         // ...
         setEmail = (e) =>
             this.setState({ email: e.target.value, })
-
-
-        // ...
-        closeSnackbar = () => this.setState({ open: false, })
-
-
-        // ...
-        popupSnackbar = (snackbarMessage) => this.setState({
-            open: true,
-            snackbarMessage,
-        })
 
 
         // ...
@@ -107,7 +99,9 @@ export default compose(
                     disabled: false,
                     progressBarOpacity: 0,
                 })
-                this.popupSnackbar("Reset link sent.")
+                await this.props.setSnackyColor("success")
+                await this.props.setSnackyMessage("Reset link sent.")
+                await this.props.showSnacky()
             } catch (error) {
 
                 // reset button and progress bar
@@ -151,38 +145,7 @@ export default compose(
             ({ classes, }) =>
 
                 <div className={classes.root}>
-
-                    <Snackbar
-                        anchorOrigin={{
-                            vertical: "bottom",
-                            horizontal: "left",
-                        }}
-                        open={this.state.open}
-                        autoHideDuration={3000}
-                        onClose={this.closeSnackbar}
-                        ContentProps={{
-                            "aria-describedby": "message-id",
-                        }}
-                        message={
-                            <span id="message-id">
-                                <Typography variant="body2" color="inherit">
-                                    {this.state.snackbarMessage}
-                                </Typography>
-                            </span>
-                        }
-                        action={[
-                            <IconButton
-                                key="close"
-                                aria-label="Close"
-                                color="inherit"
-                                className={classes.close}
-                                onClick={this.closeSnackbar}
-                            >
-                                <Close />
-                            </IconButton>,
-                        ]}
-                    />
-
+                    <Snacky />
                     <img
                         className={classes.appLogo}
                         src={logo} alt="logo"

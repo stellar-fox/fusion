@@ -62,13 +62,13 @@ export const dynamicImportLibs = async () => {
 export const dynamicImportReducers = async () => {
     let [
         Auth, Fusion, Modal,
-        FusionRouter, Snackbar, UserManagement,
+        FusionRouter, Snacky, UserManagement,
     ] = await Promise.all([
         import("../redux/Auth"),
         import("../redux/Fusion"),
         import("../redux/Modal"),
         import("../redux/FusionRouter"),
-        import("../redux/Snackbar"),
+        import("../redux/Snacky"),
         import("../redux/UserManagement"),
     ])
     return {
@@ -76,7 +76,7 @@ export const dynamicImportReducers = async () => {
         Application: Fusion,
         Modal,
         Router: FusionRouter,
-        Snackbar,
+        Snacky,
         UserManagement,
     }
 }

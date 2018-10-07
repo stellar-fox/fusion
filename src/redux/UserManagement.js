@@ -1,7 +1,4 @@
-import {
-    createReducer,
-    string,
-} from "@xcmats/js-toolbox"
+import { createReducer, string } from "@xcmats/js-toolbox"
 
 
 
@@ -19,7 +16,6 @@ const initState = {
 // state const definitions
 export const RESET_STATE = "@UserManagement/RESET_STATE"
 export const SET_STATE = "@UserManagement/SET_STATE"
-export const CHANGE_TAB = "@UserManagment/CHANGE_TAB"
 
 
 
@@ -33,18 +29,6 @@ export const action = {
     })),
 
     // ...
-    openSnackbar: () => (dispatch) => dispatch(action.setState({
-        snackbarOpen: true,
-    })),
-
-    setSnackbarMessage: (message) => (dispatch) => dispatch(action.setState({
-        snackbarMessage: message,
-    })),
-
-    closeSnackbar: () => (dispatch) => dispatch(action.setState({
-        snackbarOpen: false,
-    })),
-
     setCropStatus: (status) => (dispatch) => dispatch(action.setState({
         cropInProgress: status,
     })),
