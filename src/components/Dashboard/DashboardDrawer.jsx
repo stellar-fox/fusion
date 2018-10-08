@@ -171,10 +171,14 @@ export default compose(
                                     </div>
                                 </div>
                             </div>
-                            <IconButton onClick={handleDrawerClose} >
-                                <ChevronLeftIcon />
-                            </IconButton>
-
+                            <div className={classes.toolbar}>
+                                <IconButton className={
+                                    classNames(classes.paperRoot)
+                                } onClick={handleDrawerClose}
+                                >
+                                    <ChevronLeftIcon />
+                                </IconButton>
+                            </div>
                         </div>
                         <Divider />
                         <ActionItems itemClick={this.handleItemClick}
