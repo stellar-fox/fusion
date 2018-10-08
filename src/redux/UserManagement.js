@@ -1,4 +1,4 @@
-import { createReducer, string } from "@xcmats/js-toolbox"
+import { createReducer } from "@xcmats/js-toolbox"
 
 
 
@@ -6,8 +6,6 @@ import { createReducer, string } from "@xcmats/js-toolbox"
 // <UserManagement> initial state
 const initState = {
     tabSelected: 0,
-    snackbarOpen: false,
-    snackbarMessage: string.empty(),
 }
 
 
