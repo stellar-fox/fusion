@@ -54,7 +54,10 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, children, fullScreen, dialogVisible, onOk, onCancel, inProgress, }) =>
+            ({
+                classes, children, fullScreen, dialogVisible, onOk, onCancel,
+                inProgress,
+            }) =>
 
                 <Dialog
                     fullScreen={fullScreen}

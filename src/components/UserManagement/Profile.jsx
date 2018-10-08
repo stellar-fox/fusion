@@ -278,6 +278,7 @@ export default compose(
                     onOk={this.reAuthenticate}
                     onCancel={this.hideDialog}
                     inProgress={this.state.reauthInProgress}
+                    fullScreen={isWidthDown("sm", width)}
                 >
                     <DialogTitle id="responsive-dialog-title">
                         {"Recent Authentication Required"}
