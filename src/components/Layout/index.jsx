@@ -5,17 +5,14 @@ import { connect } from "react-redux"
 import { Redirect, Route } from "react-router-dom"
 import raf from "raf"
 import { toBool } from "@xcmats/js-toolbox"
-import { action as SnackbarAction } from "../../redux/Snackbar"
 import {
     ConnectedSwitch as Switch, resolvePath, withStaticRouter,
 } from "../FusionRouter"
 import { Null } from "../../lib/utils"
-import Snackbar from "../../lib/mui-v1/Snackbar"
 import Welcome from "../Welcome"
 import Signup from "../Signup"
 import PasswordReset from "../PasswordReset"
 import FirebaseActions from "../FirebaseActions"
-import { Typography } from "@material-ui/core"
 import queryString from "query-string"
 
 
@@ -28,13 +25,9 @@ export default compose(
         // map state to props.
         (state) => ({
             authenticated: toBool(state.Auth.uid),
-            snackbarMessage: state.Snackbar.message,
-            snackbarState: state.Snackbar.visible,
         }),
         // map actions to props.
-        (dispatch) => bindActionCreators({
-            resetSnackbar: SnackbarAction.reset,
-        }, dispatch)
+        (dispatch) => bindActionCreators({}, dispatch)
     )
 )(
     class extends Component {
@@ -43,9 +36,6 @@ export default compose(
         static propTypes = {
             authenticated: PropTypes.bool.isRequired,
             match: PropTypes.object.isRequired,
-            resetSnackbar: PropTypes.func.isRequired,
-            snackbarMessage: PropTypes.string.isRequired,
-            snackbarState: PropTypes.bool.isRequired,
             staticRouter: PropTypes.object.isRequired,
         }
 
@@ -79,10 +69,6 @@ export default compose(
                     () => ({ Dashboard: D.default, })
                 ))
         )
-
-
-        // ...
-        onAutoClose = () => this.props.resetSnackbar()
 
 
         // ...
@@ -128,16 +114,6 @@ export default compose(
         render = () => (
             (getPath) =>
                 <Fragment>
-                    <Snackbar open={this.props.snackbarState}
-                        message={
-                            <Typography style={{paddingTop: "5px",}}
-                                variant="body1" color="primary"
-                            >
-                                {this.props.snackbarMessage}
-                            </Typography>
-                        }
-                        onClose={this.onAutoClose}
-                    />
                     <Switch>
                         <Route exact path={getPath("reset")}>
                             {this.renderReset}
