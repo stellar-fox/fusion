@@ -1,15 +1,8 @@
 import React, { Fragment } from "react"
-import { string, utils } from "@xcmats/js-toolbox"
-
-
-
-
-// determine runtime environment
-// devEnv() -> true/false
-export const devEnv = () =>
-    Object.prototype.hasOwnProperty.call(sessionStorage, "dev")  ||
-    // eslint-disable-next-line
-    process.env.NODE_ENV !== "production"
+import {
+    string,
+    utils
+} from "@xcmats/js-toolbox"
 
 
 
@@ -35,7 +28,7 @@ export const isReader = (role) => role === "ROLE_RO"
 // asynchronously load libraries (used in dev. environment)
 export const dynamicImportLibs = async () => {
     let [
-        api, axios, base64, jss, lodash,
+        axios, base64, jss, lodash,
         mui, redux, toolbox, utils,
     ] = await Promise.all([
         import("axios"),
@@ -48,7 +41,7 @@ export const dynamicImportLibs = async () => {
         import("./utils"),
     ])
     return {
-        api, axios,
+        axios,
         Base64: base64.Base64,
         jss, lodash, mui, redux,
         toolbox, utils,

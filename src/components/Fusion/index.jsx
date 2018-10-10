@@ -14,7 +14,11 @@ import {
     composeWithDevTools as composeWithDevTools_dev
 } from "redux-devtools-extension"
 
-import { isObject } from "@xcmats/js-toolbox"
+import {
+    devEnv,
+    getProcess,
+    isObject,
+} from "@xcmats/js-toolbox"
 
 import throttle from "lodash/throttle"
 import createHistory from "history/createBrowserHistory"
@@ -34,7 +38,6 @@ import {
 } from "../../lib/state-persistence"
 import reducers from "../../redux"
 import {
-    devEnv,
     dynamicImportLibs,
     dynamicImportReducers,
 } from "../../lib/utils"
@@ -109,13 +112,13 @@ export default () =>
 
 
 
-// expose 'fusion' dev. namespace only in dev. environment
+// expose 'sf' dev. namespace only in dev. environment
 if (devEnv()  &&  isObject(window)) {
-    (async () => { window.fusion = {
+    (async () => { window.sf = {
         env, history, store, React,
         dispatch: store.dispatch,
         ...await dynamicImportLibs(),
-        process, // eslint-disable-line
+        process: getProcess(),
         r: await dynamicImportReducers(),
     }})()
 }
