@@ -85,9 +85,9 @@ const read = async (uid) => {
     try {
         let snapshot = await firebase.database().ref(`user/${uid}`)
             .once("value")
-        return { user: snapshot.val(), }
+        return { user: snapshot.val() }
     } catch (error) {
-        return { error: error.message, }
+        return { error: error.message }
     }
 }
 
@@ -98,9 +98,9 @@ const read = async (uid) => {
 const write = async (uid, userData) => {
     try {
         await firebase.database().ref(`user/${uid}`).set(userData)
-        return { ok: true, }
+        return { ok: true }
     } catch (error) {
-        return { error: error.message, }
+        return { error: error.message }
     }
 }
 

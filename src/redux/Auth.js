@@ -77,14 +77,14 @@ export const action = {
 
 
     // ...
-    resetState: () => ({ type: RESET_STATE, }),
+    resetState: () => ({ type: RESET_STATE }),
 
 
     // ...
     signup: (...args) =>
         async (dispatch, _getState) => {
             const auth = await signup(...args)
-            await write(auth.user.uid, { foo: "bar", })
+            await write(auth.user.uid, { foo: "bar" })
             dispatch(action.sendEmailVerification())
             dispatch(action.setState({
                 uid: auth.user.uid,

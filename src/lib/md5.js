@@ -1,11 +1,11 @@
 // taken from: https://css-tricks.com/snippets/javascript/javascript-md5/
 
 export default (string) => {
-    function RotateLeft(lValue, iShiftBits) {
+    function RotateLeft (lValue, iShiftBits) {
         return (lValue << iShiftBits) | (lValue >>> (32 - iShiftBits))
     }
 
-    function AddUnsigned(lX, lY) {
+    function AddUnsigned (lX, lY) {
         var lX4, lY4, lX8, lY8, lResult
         lX8 = lX & 0x80000000
         lY8 = lY & 0x80000000
@@ -26,40 +26,40 @@ export default (string) => {
         }
     }
 
-    function F(x, y, z) {
+    function F (x, y, z) {
         return (x & y) | (~x & z)
     }
-    function G(x, y, z) {
+    function G (x, y, z) {
         return (x & z) | (y & ~z)
     }
-    function H(x, y, z) {
+    function H (x, y, z) {
         return x ^ y ^ z
     }
-    function I(x, y, z) {
+    function I (x, y, z) {
         return y ^ (x | ~z)
     }
 
-    function FF(a, b, c, d, x, s, ac) {
+    function FF (a, b, c, d, x, s, ac) {
         a = AddUnsigned(a, AddUnsigned(AddUnsigned(F(b, c, d), x), ac))
         return AddUnsigned(RotateLeft(a, s), b)
     }
 
-    function GG(a, b, c, d, x, s, ac) {
+    function GG (a, b, c, d, x, s, ac) {
         a = AddUnsigned(a, AddUnsigned(AddUnsigned(G(b, c, d), x), ac))
         return AddUnsigned(RotateLeft(a, s), b)
     }
 
-    function HH(a, b, c, d, x, s, ac) {
+    function HH (a, b, c, d, x, s, ac) {
         a = AddUnsigned(a, AddUnsigned(AddUnsigned(H(b, c, d), x), ac))
         return AddUnsigned(RotateLeft(a, s), b)
     }
 
-    function II(a, b, c, d, x, s, ac) {
+    function II (a, b, c, d, x, s, ac) {
         a = AddUnsigned(a, AddUnsigned(AddUnsigned(I(b, c, d), x), ac))
         return AddUnsigned(RotateLeft(a, s), b)
     }
 
-    function ConvertToWordArray(string) {
+    function ConvertToWordArray (string) {
         var lWordCount
         var lMessageLength = string.length
         var lNumberOfWords_temp1 = lMessageLength + 8
@@ -86,7 +86,7 @@ export default (string) => {
         return lWordArray
     }
 
-    function WordToHex(lValue) {
+    function WordToHex (lValue) {
         var WordToHexValue = "",
             WordToHexValue_temp = "",
             lByte,
@@ -101,7 +101,7 @@ export default (string) => {
         return WordToHexValue
     }
 
-    function Utf8Encode(string) {
+    function Utf8Encode (string) {
         string = string.replace(/\r\n/g, "\n")
         var utftext = ""
 

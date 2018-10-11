@@ -111,7 +111,7 @@ export const htmlEntities = {
 
 // emoji components (built on the 'emojis' object base)
 export const emoji = utils.objectMap(emojis,
-    ([k, v,]) => [
+    ([k, v]) => [
         string.capitalize(k),
         () => React.createElement(Fragment, null, v),
     ]
@@ -134,14 +134,14 @@ export const url = (x) => string.wrap(x, "url(", ")")
 
 // little helper for JSS colors
 export const rgba = (r, g, b, a) =>
-    string.wrap([r, g, b, a,].join(", "), "rgba(", ")")
+    string.wrap([r, g, b, a].join(", "), "rgba(", ")")
 
 
 
 
 // another little helper for JSS colors
 export const rgb = (r, g, b) =>
-    string.wrap([r, g, b,].join(", "), "rgb(", ")")
+    string.wrap([r, g, b].join(", "), "rgb(", ")")
 
 
 
@@ -149,6 +149,6 @@ export const rgb = (r, g, b) =>
 // helper extracting 'authToken' from redux state
 export const authToken = (getState) => utils.access(
     getState(),
-    ["Auth", "authToken",],
+    ["Auth", "authToken"],
     string.empty()
 )

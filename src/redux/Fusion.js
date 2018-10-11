@@ -27,7 +27,7 @@ export const action = {
 
 
     // ...
-    resetState: () => ({ type: RESET_STATE, }),
+    resetState: () => ({ type: RESET_STATE }),
 
 }
 
