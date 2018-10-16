@@ -59,14 +59,14 @@ export default compose(
 
 
         // ...
-        state = { Dashboard: Null, }
+        state = { Dashboard: Null }
 
 
         // ...
         componentDidMount = () => raf(() =>
             import("../Dashboard")
                 .then((D) => this.setState(
-                    () => ({ Dashboard: D.default, })
+                    () => ({ Dashboard: D.default })
                 ))
         )
 
@@ -86,7 +86,7 @@ export default compose(
         renderFirebaseActions = (routeProps) => {
             const qs = queryString.parse(
                 this.props.location.search,
-                { ignoreQueryPrefix: true, }
+                { ignoreQueryPrefix: true }
             )
             return qs.mode ?
                 <FirebaseActions {...routeProps} /> :
