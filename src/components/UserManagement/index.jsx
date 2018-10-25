@@ -139,10 +139,10 @@ export default compose(
                             <Typography variant="h3">
                                 display2: Roboto Condensed
                             </Typography>
-                            <Typography variant="display3">
+                            <Typography variant="h2">
                                 display3: $ 12,345.67
                             </Typography>
-                            <Typography variant="display4">
+                            <Typography variant="h1">
                                 display4: Roboto Condensed
                             </Typography>
                             <Typography variant="headline">

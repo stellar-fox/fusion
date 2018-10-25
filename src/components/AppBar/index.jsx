@@ -128,7 +128,7 @@ export default compose(
                                         src={logo} alt="logo"
                                     />
                                     <div className="flex-box-col">
-                                        <Typography variant="display4">
+                                        <Typography variant="h1">
                                             {env.appVisName}
                                         </Typography>
                                         <Typography variant="h4">

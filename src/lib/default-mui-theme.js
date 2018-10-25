@@ -110,12 +110,12 @@ export default createMuiTheme({
             fontWeight: 100,
         },
 
-        display3: {
+        h2: {
             fontSize: 48,
             fontFamily: "Eczar, sans-serif",
         },
 
-        display4: {
+        h1: {
             fontSize: 34,
             fontFamily: "'Roboto Condensed', sans-serif",
         },
