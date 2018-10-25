@@ -39,13 +39,13 @@ export const action = {
             try {
                 const auth = await authenticate(...args)
                 auth.user.photoURL ?
-                    dispatch(action.setState({
+                    await dispatch(action.setState({
                         uid: auth.user.uid,
                         email: auth.user.email,
                         displayName: auth.user.displayName || string.empty(),
                         photoUrl: auth.user.photoURL || string.empty(),
                         emailVerified: auth.user.emailVerified,
-                    })) : dispatch(action.getStorageAvatar(auth.user))
+                    })) : await dispatch(action.getStorageAvatar(auth.user))
 
             } catch (error) {
                 return Promise.reject(error)
