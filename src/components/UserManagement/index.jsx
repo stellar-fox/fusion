@@ -71,7 +71,7 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, cropInProgress, tabSelected, }) =>
+            ({ classes, cropInProgress, tabSelected }) =>
                 <Switch>
                     <Route exact path={this.rr(".")}>
 
@@ -82,7 +82,7 @@ export default compose(
                                 value={tabSelected}
                                 onChange={this.onTabChange}
                                 fullWidth
-                                classes={{ indicator: classes.indicator, }}
+                                classes={{ indicator: classes.indicator }}
                             >
                                 <Tab label="Profile" />
                                 <Tab label="Settings" />
@@ -97,20 +97,20 @@ export default compose(
                             >
                                 <Typography component="div"
                                     dir={this.props.theme.direction}
-                                    style={{ padding: "1rem 0.5rem", }}
+                                    style={{ padding: "1rem 0.5rem" }}
                                 >
                                     <Profile />
                                 </Typography>
 
                                 <Typography component="div"
                                     dir={this.props.theme.direction}
-                                    style={{ padding: "2rem 0", }}
+                                    style={{ padding: "2rem 0" }}
                                 >
                                     Settings
                                 </Typography>
                                 <Typography component="div"
                                     dir={this.props.theme.direction}
-                                    style={{ padding: "2rem 0", }}
+                                    style={{ padding: "2rem 0" }}
                                 >
                                     Security
                                 </Typography>
@@ -133,7 +133,7 @@ export default compose(
                                 }
                             </Motion>
 
-                            <Typography variant="display1">
+                            <Typography variant="h4">
                                 display1: Roboto Condensed
                             </Typography>
                             <Typography variant="display2">

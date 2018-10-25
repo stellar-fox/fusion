@@ -52,13 +52,13 @@ class UserMenu extends Component {
 
     // ...
     openMenu = (event) => {
-        this.setState({ anchorEl: event.currentTarget, })
+        this.setState({ anchorEl: event.currentTarget })
     }
 
 
     // ...
     handleClose = (_event, action) => {
-        this.setState({ anchorEl: null, })
+        this.setState({ anchorEl: null })
         typeof action === "function" && action()
     }
 
@@ -69,13 +69,13 @@ class UserMenu extends Component {
 
     // ...
     render = () => {
-        const { anchorEl, } = this.state
-        const { classes, displayName, email, photoUrl, width, } = this.props
+        const { anchorEl } = this.state
+        const { classes, displayName, email, photoUrl, width } = this.props
 
         return (
             <Fragment>
                 <IconButton
-                    classes={{ root: classes.iconButton, }}
+                    classes={{ root: classes.iconButton }}
                     aria-owns={anchorEl ? "user-menu" : null}
                     aria-haspopup="true"
                     onClick={this.openMenu}
@@ -86,7 +86,7 @@ class UserMenu extends Component {
                             <Gravatar email={email} />}
                 </IconButton>
                 <Menu
-                    classes={{ paper: classes.menu, }}
+                    classes={{ paper: classes.menu }}
                     id="user-menu"
                     anchorEl={anchorEl}
                     open={Boolean(anchorEl)}
@@ -97,7 +97,7 @@ class UserMenu extends Component {
                             <Typography variant="body2" noWrap>
                                 {displayName}
                             </Typography>
-                            <Typography variant="display1" noWrap>
+                            <Typography variant="h4" noWrap>
                                 Admin
                             </Typography>
                         </div>

@@ -99,7 +99,7 @@ export default createMuiTheme({
 
     typography: {
 
-        display1: {
+        h4: {
             fontSize: 11,
             fontFamily: "'Roboto Condensed', sans-serif",
         },

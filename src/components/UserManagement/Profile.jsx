@@ -88,7 +88,7 @@ export default compose(
                 displayName: this.props.displayName,
             })
             read(this.props.uid).then((userData) => {
-                this.setState({ foo: userData.user.foo, })
+                this.setState({ foo: userData.user.foo })
             })
         }
 
@@ -117,7 +117,7 @@ export default compose(
 
         // ...
         setPassword = (e) =>
-            this.setState({ password: e.target.value, })
+            this.setState({ password: e.target.value })
 
 
         // ...
@@ -180,7 +180,7 @@ export default compose(
 
             if (this.state.nameChanged) {
                 try {
-                    await this.setState({ disabled: true, })
+                    await this.setState({ disabled: true })
                     await this.props.updateUserProfile({
                         displayName: this.state.displayName,
                     })
@@ -227,7 +227,7 @@ export default compose(
         // ...
         reAuthenticate = async () => {
             try {
-                await this.setState({ reauthInProgress: true, })
+                await this.setState({ reauthInProgress: true })
                 await reauthenticate(this.state.password)
                 await this.saveData()
                 await this.setState({
@@ -240,7 +240,7 @@ export default compose(
                         errorMessagePassword: "Password is invalid.",
                     })
                 }
-                await this.setState({ reauthInProgress: false, })
+                await this.setState({ reauthInProgress: false })
             }
         }
 
@@ -272,7 +272,7 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, email, photoUrl, uid, width, }) => <Fragment>
+            ({ classes, email, photoUrl, uid, width }) => <Fragment>
                 <ConfirmDialog
                     dialogVisible={this.state.dialogReAuthVisible}
                     onOk={this.reAuthenticate}
@@ -284,7 +284,7 @@ export default compose(
                         {"Recent Authentication Required"}
                     </DialogTitle>
                     <DialogContent>
-                        <DialogContentText style={{ paddingBottom: "1em", }}>
+                        <DialogContentText style={{ paddingBottom: "1em" }}>
                             This operation is sensitive and requires your
                             password confirmation.
                         </DialogContentText>
@@ -315,7 +315,7 @@ export default compose(
                                 <Gravatar email={email} />}
 
                             <div className="flex-box-col m-l-small">
-                                <Typography variant="display1">
+                                <Typography variant="h4">
                                     USER ID
                                 </Typography>
                                 <Typography variant="display2">
@@ -342,7 +342,7 @@ export default compose(
                             <Fragment>
                                 <he.Nbsp />
                                 <VerifiedUserRounded
-                                    classes={{ root: classes.iconVerified, }}
+                                    classes={{ root: classes.iconVerified }}
                                 />
                             </Fragment>
                             }
@@ -380,8 +380,8 @@ export default compose(
                             Cancel
                         </Button>
                         <br /><br />
-                        <Typography style={{ paddingBottom: "1em", }}
-                            variant="display1"
+                        <Typography style={{ paddingBottom: "1em" }}
+                            variant="h4"
                         >
                             Verification link didn't arrive?
                         </Typography>
@@ -390,12 +390,12 @@ export default compose(
                             variant="outlined" color="secondary"
                         >Send Link Again</GenericButton>
                         <br /><br />
-                        <Typography style={{ paddingBottom: "1em", }}
-                            variant="display1"
+                        <Typography style={{ paddingBottom: "1em" }}
+                            variant="h4"
                         >
                             Forgot password?
                         </Typography>
-                        <GenericButton style={{ marginBottom: "1em", }}
+                        <GenericButton style={{ marginBottom: "1em" }}
                             size="small"
                             onClick={this.sendPasswordResetLink}
                             variant="outlined" color="secondary"
@@ -407,15 +407,15 @@ export default compose(
                         </Typography>
 
                         <div className="m-t m-b">
-                            <Typography variant="display1">
+                            <Typography variant="h4">
                                 FOO: {this.state.foo}
                             </Typography>
                         </div>
 
 
                         <div className="m-t-large">
-                            <Typography style={{ paddingBottom: "1em", }}
-                                variant="display1"
+                            <Typography style={{ paddingBottom: "1em" }}
+                                variant="h4"
                             >
                                 Don't like Gravatar photo?
                             </Typography>

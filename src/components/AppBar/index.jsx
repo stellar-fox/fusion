@@ -24,7 +24,7 @@ export default compose(
 
         appBar: {
             zIndex: theme.zIndex.drawer + 1,
-            transition: theme.transitions.create(["width", "margin",], {
+            transition: theme.transitions.create(["width", "margin"], {
                 easing: theme.transitions.easing.easeIn,
                 duration: theme.transitions.duration.leavingScreen,
             }),
@@ -34,7 +34,7 @@ export default compose(
         appBarShift: {
             marginLeft: env.drawerWidth,
             width: `calc(100% - ${env.drawerWidth}px)`,
-            transition: theme.transitions.create(["width", "margin",], {
+            transition: theme.transitions.create(["width", "margin"], {
                 easing: theme.transitions.easing.easeIn,
                 duration: theme.transitions.duration.enteringScreen,
             }),
@@ -61,7 +61,7 @@ export default compose(
             },
         },
 
-        hide: { display: "none", },
+        hide: { display: "none" },
 
         iconButtonShift: {
             marginRight: "-0.5em !important",
@@ -85,20 +85,20 @@ export default compose(
 
 
         // ...
-        state = { open: false, }
+        state = { open: false }
 
 
         // ...
-        handleDrawerOpen = () => this.setState({ open: true, })
+        handleDrawerOpen = () => this.setState({ open: true })
 
 
         // ...
-        handleDrawerClose = () => this.setState({ open: false, })
+        handleDrawerClose = () => this.setState({ open: false })
 
 
         // ...
         render = () => (
-            ({ classes, authenticated, }, { open, }) =>
+            ({ classes, authenticated }, { open }) =>
                 <Fragment>
                     <Hidden smDown>
                         <AppBar
@@ -120,7 +120,7 @@ export default compose(
                                 >
                                     <MenuIcon />
                                 </IconButton>
-                                <div style={{width: "100%",}}
+                                <div style={{ width: "100%" }}
                                     className="flex-box-row items-centered"
                                 >
                                     <img
@@ -131,7 +131,7 @@ export default compose(
                                         <Typography variant="display4">
                                             {env.appVisName}
                                         </Typography>
-                                        <Typography variant="display1">
+                                        <Typography variant="h4">
                                             <span className="yellow-dark">
                                                 v.{env.appVersion}
                                             </span>
@@ -161,7 +161,7 @@ export default compose(
                             className={classes.appBar}
                         >
                             <Toolbar disableGutters={true} variant="dense"
-                                classes={{ root: classes.toolbarRoot, }}
+                                classes={{ root: classes.toolbarRoot }}
                             >
                                 <div className="flex-box-row space-between items-centered">
                                     <div className="flex-box-row items-centered">
