@@ -2,6 +2,9 @@
 /node
 /etc
 
+# dev.
+src/lib/shambhala.client.js
+
 # dependencies
 /node_modules
 
