@@ -32,7 +32,7 @@ export default compose(
             borderRadius: "3px",
         },
     }))
-)(({ classes, }) => {
+)(({ classes }) => {
 
     return (
         <Fragment>

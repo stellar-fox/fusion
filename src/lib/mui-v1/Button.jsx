@@ -76,9 +76,9 @@ export default withStyles((theme) => ({
 
         // ...
         render = () => (
-            ({ autoFocus, children, classes, color, disabled, fullWidth, onClick, variant, style, }) =>
+            ({ autoFocus, children, classes, color, disabled, fullWidth, onClick, variant, style }) =>
                 <Button
-                    variant={variant || "raised"}
+                    variant={variant || "contained"}
                     className={
                         classNames(
                             disabled ? classes.disabled : classes[color],
