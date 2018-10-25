@@ -145,7 +145,7 @@ export default compose(
                             <Typography variant="h1">
                                 display4: Roboto Condensed
                             </Typography>
-                            <Typography variant="headline">
+                            <Typography variant="h5">
                                 headline: Eczar $ 12,345.67890
                             </Typography>
                             <Typography variant="title">
