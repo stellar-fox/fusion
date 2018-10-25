@@ -318,7 +318,7 @@ export default compose(
                                 <Typography variant="h4">
                                     USER ID
                                 </Typography>
-                                <Typography variant="display2">
+                                <Typography variant="h3">
                                     {uid}
                                 </Typography>
                             </div>

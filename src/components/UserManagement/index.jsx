@@ -136,7 +136,7 @@ export default compose(
                             <Typography variant="h4">
                                 display1: Roboto Condensed
                             </Typography>
-                            <Typography variant="display2">
+                            <Typography variant="h3">
                                 display2: Roboto Condensed
                             </Typography>
                             <Typography variant="display3">

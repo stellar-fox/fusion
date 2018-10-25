@@ -112,13 +112,13 @@ export default compose(
 
         // ...
         onCropChange = (crop, pixelCrop) => {
-            this.setState({ crop, pixelCrop, })
+            this.setState({ crop, pixelCrop })
         }
 
 
         // ...
         onCropComplete = (crop, pixelCrop) => {
-            this.setState({ crop, pixelCrop, })
+            this.setState({ crop, pixelCrop })
         }
 
 
@@ -167,14 +167,14 @@ export default compose(
 
         // ...
         cancelUpload = async () => {
-            await this.setState({ src: null, })
+            await this.setState({ src: null })
             await this.props.setCropStatus(false)
         }
 
 
         // ...
         uploadImage = async () => {
-            await this.setState({ uploadInProgress: true, })
+            await this.setState({ uploadInProgress: true })
             await this.props.setCropStatus(false)
             const imgData = this.getCroppedImage(
                 this.state.image, this.state.pixelCrop
@@ -191,22 +191,22 @@ export default compose(
                         await this.props.setSnackyColor("success")
                         await this.props.setSnackyMessage("Image uploaded.")
                         await this.props.showSnacky()
-                        this.props.updateUserProfile({ photoUrl: imgData, })
-                        this.setState({ uploadInProgress: false, src: null, })
+                        this.props.updateUserProfile({ photoUrl: imgData })
+                        this.setState({ uploadInProgress: false, src: null })
                     }
                 })
             } catch (error) {
                 await this.props.setSnackyColor("error")
                 await this.props.setSnackyMessage("Image upload failed.")
                 await this.props.showSnacky()
-                await this.setState({ uploadInProgress: false, src: null, })
+                await this.setState({ uploadInProgress: false, src: null })
             }
         }
 
 
         // ...
         render = () => (
-            ({ classes, }) =>
+            ({ classes }) =>
                 <div className="flex-box-col">
                     <input
                         accept="image/*"
@@ -217,12 +217,12 @@ export default compose(
                         onChange={this.onSelectFile}
                     />
                     <label htmlFor="photo-upload">
-                        <GenericButton style={{ marginBottom: "0.5em", }}
+                        <GenericButton style={{ marginBottom: "0.5em" }}
                             size="small" component="span"
                             variant="outlined" color="secondary"
                         >Upload Custom Photo</GenericButton>
-                        <Typography style={{ marginBottom: "0.5em", }}
-                            variant="display2"
+                        <Typography style={{ marginBottom: "0.5em" }}
+                            variant="h3"
                         >
                             Maximum size: 100kb
                         </Typography>
@@ -230,7 +230,7 @@ export default compose(
                     {this.state.src &&
                     <Fragment>
                         <ReactCrop
-                            style={{ maxWidth: "95vw", }}
+                            style={{ maxWidth: "95vw" }}
                             src={this.state.src}
                             crop={this.state.crop}
                             onImageLoaded={this.onImageLoaded}
