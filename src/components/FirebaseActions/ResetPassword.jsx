@@ -60,7 +60,7 @@ export default compose(
         }
 
         // ...
-        render = () => (({ classes, continueUrl, oobCode, resetLinkValid, resetLinkInvalid, }) =>
+        render = () => (({ classes, continueUrl, oobCode, resetLinkValid, resetLinkInvalid }) =>
             <Grid
                 className={classes.container}
                 container
@@ -76,7 +76,7 @@ export default compose(
                         }
                         {resetLinkInvalid &&
                             <Fragment>
-                                <Typography align="center" variant="subheading">Try resetting your password again.</Typography>
+                                <Typography align="center" variant="subtitle1">Try resetting your password again.</Typography>
                                 <Typography align="center" variant="body2">Your request to reset your password has expired or the link has already been used.</Typography>
                             </Fragment>
                         }

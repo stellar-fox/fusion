@@ -155,7 +155,7 @@ export default compose(
 
                     {this.state.passwordUpdated ?
                         <Fragment>
-                            <Typography variant="subheading">
+                            <Typography variant="subtitle1">
                                 Password has been updated.
                             </Typography>
                             <Typography variant="body2">
@@ -170,7 +170,7 @@ export default compose(
                             <Typography variant="h6">
                                 {env.appVisName}
                             </Typography>
-                            <Typography variant="subheading">
+                            <Typography variant="subtitle1">
                                 Update your password.
                             </Typography>
                             <TextInput

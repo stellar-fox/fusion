@@ -151,7 +151,7 @@ export default compose(
                             <Typography variant="h6">
                                 title: Roboto Condensed
                             </Typography>
-                            <Typography variant="subheading">
+                            <Typography variant="subtitle1">
                                 subheading: Roboto Condensed
                             </Typography>
                             <Typography variant="body1">

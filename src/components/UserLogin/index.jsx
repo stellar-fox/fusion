@@ -165,7 +165,7 @@ export default compose(
                     <Typography variant="h6">
                         {env.appVisName}
                     </Typography>
-                    <Typography variant="subheading">
+                    <Typography variant="subtitle1">
                         Sign-in and bank.
                     </Typography>
                     <TextInput

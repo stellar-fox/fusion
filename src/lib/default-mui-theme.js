@@ -99,6 +99,12 @@ export default createMuiTheme({
 
     typography: {
 
+        h6: {
+            fontSize: 20,
+            fontFamily: "'Roboto Condensed', sans-serif",
+            fontWeight: 200,
+        },
+
         h5: {
             fontSize: 24,
             fontFamily: "Eczar, sans-serif",
@@ -125,15 +131,7 @@ export default createMuiTheme({
             fontFamily: "'Roboto Condensed', sans-serif",
         },
 
-
-
-        h6: {
-            fontSize: 20,
-            fontFamily: "'Roboto Condensed', sans-serif",
-            fontWeight: 200,
-        },
-
-        subheading: {
+        subtitle1: {
             fontSize: 16,
             fontFamily: "'Roboto Condensed', sans-serif",
         },

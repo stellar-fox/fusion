@@ -74,7 +74,7 @@ export default compose(
                 direction={"column"}
                 justify={"space-around"}
                 alignItems={"center"}
-                style={{ height: "100%", }}
+                style={{ height: "100%" }}
             >
                 <Grid item>
                     <img
@@ -86,7 +86,7 @@ export default compose(
                 <Grid item>
                     <Paper elevation={2} className={classes.loginPaper}>
                         <Fragment>
-                            <Typography align="center" variant="subheading">
+                            <Typography align="center" variant="subtitle1">
                                 {actionMessage}
                             </Typography>
                             <Typography align="center" variant="body2">

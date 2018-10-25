@@ -306,7 +306,7 @@ export default compose(
                     "flex-box-col" : "flex-box-row space-around"}
                 >
                     <div>
-                        <Typography variant="subheading">
+                        <Typography variant="subtitle1">
                             Manage user profile data here.
                         </Typography>
 
@@ -402,7 +402,7 @@ export default compose(
                         >Reset Password</GenericButton>
                     </div>
                     <div >
-                        <Typography variant="subheading">
+                        <Typography variant="subtitle1">
                             User Custom Data
                         </Typography>
 
