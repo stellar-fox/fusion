@@ -78,12 +78,12 @@ export default compose(
 
         // ...
         setEmail = (e) =>
-            this.setState({ email: e.target.value, })
+            this.setState({ email: e.target.value })
 
 
         // ...
         setPassword = (e) =>
-            this.setState({ password: e.target.value, })
+            this.setState({ password: e.target.value })
 
 
         // ...
@@ -156,7 +156,7 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, }) =>
+            ({ classes }) =>
                 <div className={classes.root}>
                     <img
                         className={classes.appLogo}
@@ -201,8 +201,8 @@ export default compose(
                     </Button>
                     <LinearProgress
                         variant="indeterminate"
-                        classes={{ root: this.props.classes.progressBar, }}
-                        style={{ opacity: this.state.progressBarOpacity, }}
+                        classes={{ root: this.props.classes.progressBar }}
+                        style={{ opacity: this.state.progressBarOpacity }}
                     />
                 </div>
         )(this.props)
