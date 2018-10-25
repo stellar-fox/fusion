@@ -115,7 +115,7 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, open, handleDrawerClose, currentView, }) => <Fragment>
+            ({ classes, open, handleDrawerClose, currentView }) => <Fragment>
                 <Hidden smDown>
                     <Drawer
                         variant="permanent"
@@ -126,7 +126,7 @@ export default compose(
                             ),
                         }}
                         open={open}
-                        PaperProps={{ classes: { root: classes.paperRoot, }, }}
+                        PaperProps={{ classes: { root: classes.paperRoot } }}
                     >
                         <div className={classes.toolbar}>
                             <IconButton className={
@@ -152,9 +152,9 @@ export default compose(
                 </Hidden>
                 <Hidden smUp>
                     <Drawer
-                        classes={{ paper: classNames(classes.drawerPaper), }}
+                        classes={{ paper: classNames(classes.drawerPaper) }}
                         open={open}
-                        PaperProps={{ classes: { root: classes.paperRoot, }, }}
+                        PaperProps={{ classes: { root: classes.paperRoot } }}
                     >
                         <div className={classes.toolbar}>
                             <div className="flex-box-row items-centered">
@@ -163,7 +163,7 @@ export default compose(
                                     src={logo} alt="logo"
                                 />
                                 <div className="flex-box-col">
-                                    <Typography variant="title">
+                                    <Typography variant="h6">
                                         {env.appVisName}
                                     </Typography>
                                     <div className="text-overline yellow-dark">

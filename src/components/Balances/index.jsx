@@ -27,7 +27,7 @@ export default compose(
     class extends Component {
 
         // ...
-        constructor(props) {
+        constructor (props) {
             super(props)
 
             // relative resolve
@@ -37,13 +37,13 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, }) =>
+            ({ classes }) =>
                 <Switch>
                     <Route exact path={this.rr(".")}>
 
                         <Paper className={classes.paperCanvas}>
 
-                            <Motion defaultStyle={{ x: -10, opacity: 0, }}
+                            <Motion defaultStyle={{ x: -10, opacity: 0 }}
                                 style={{
                                     x: spring(0, presets.gentle),
                                     opacity: spring(1),
@@ -55,7 +55,7 @@ export default compose(
                                         WebkitTransform: `translate(${value.x}px, 0)`,
                                         transform: `translate(${value.x}px, 0)`,
                                         opacity: value.opacity,
-                                    }} variant="title"
+                                    }} variant="h6"
                                     >
                                         Balances
                                     </Typography>

@@ -127,7 +127,7 @@ export default createMuiTheme({
 
 
 
-        title: {
+        h6: {
             fontSize: 20,
             fontFamily: "'Roboto Condensed', sans-serif",
             fontWeight: 200,

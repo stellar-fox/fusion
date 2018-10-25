@@ -81,7 +81,7 @@ export default compose(
 
         // ...
         setEmail = (e) =>
-            this.setState({ email: e.target.value, })
+            this.setState({ email: e.target.value })
 
 
         // ...
@@ -142,7 +142,7 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, }) =>
+            ({ classes }) =>
 
                 <div className={classes.root}>
                     <Snacky />
@@ -150,7 +150,7 @@ export default compose(
                         className={classes.appLogo}
                         src={logo} alt="logo"
                     />
-                    <Typography variant="title">
+                    <Typography variant="h6">
                         {env.appVisName}
                     </Typography>
                     <Typography variant="subheading">
@@ -185,7 +185,7 @@ export default compose(
                             barColorPrimary:
                                 this.props.classes.barColorPrimary,
                         }}
-                        style={{ opacity: this.state.progressBarOpacity, }}
+                        style={{ opacity: this.state.progressBarOpacity }}
                     />
 
                 </div>

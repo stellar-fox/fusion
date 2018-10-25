@@ -162,7 +162,7 @@ export default compose(
                         className={classes.appLogo}
                         src={logo} alt="logo"
                     />
-                    <Typography variant="title">
+                    <Typography variant="h6">
                         {env.appVisName}
                     </Typography>
                     <Typography variant="subheading">

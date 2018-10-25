@@ -126,7 +126,7 @@ export default compose(
                                         position: "relative",
                                         WebkitTransform: `translate(${value.x}px, 0)`,
                                         transform: `translate(${value.x}px, 0)`,
-                                    }} variant="title"
+                                    }} variant="h6"
                                     >
                                         Typography
                                     </Typography>
@@ -148,7 +148,7 @@ export default compose(
                             <Typography variant="h5">
                                 headline: Eczar $ 12,345.67890
                             </Typography>
-                            <Typography variant="title">
+                            <Typography variant="h6">
                                 title: Roboto Condensed
                             </Typography>
                             <Typography variant="subheading">
