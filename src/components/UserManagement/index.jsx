@@ -152,7 +152,7 @@ export default compose(
                                 title: Roboto Condensed
                             </Typography>
                             <Typography variant="subtitle1">
-                                subheading: Roboto Condensed
+                                subtitle1: Roboto Condensed
                             </Typography>
                             <Typography variant="body1">
                                 body1: Eczar $ 12,345.67890

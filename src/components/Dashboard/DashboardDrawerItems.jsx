@@ -40,9 +40,9 @@ const styles = theme => ({
 
 // ...
 export const ActionItems = withStyles(styles)(
-    ({ classes, itemClick, selectedItem, }) =>
+    ({ classes, itemClick, selectedItem }) =>
         <List>
-            <ListItem classes={{ selected: classes.selectedGreen, }}
+            <ListItem classes={{ selected: classes.selectedGreen }}
                 selected={selectedItem === "keys"}
                 button onClick={ () => itemClick("keys") }
             >
@@ -50,12 +50,12 @@ export const ActionItems = withStyles(styles)(
                     <VpnKeyRounded className="drawer-svg-icon" />
                 </ListItemIcon>
                 <ListItemText secondaryTypographyProps={{
-                    variant: "subheading",
+                    variant: "subtitle1",
                     color: "default",
                 }} secondary="Keys"
                 />
             </ListItem>
-            <ListItem classes={{ selected: classes.selectedGreen, }}
+            <ListItem classes={{ selected: classes.selectedGreen }}
                 selected={selectedItem === "user"}
                 button onClick={() => itemClick("user")}
             >
@@ -63,7 +63,7 @@ export const ActionItems = withStyles(styles)(
                     <AccountBoxRounded className="drawer-svg-icon" />
                 </ListItemIcon>
                 <ListItemText secondaryTypographyProps={{
-                    variant: "subheading",
+                    variant: "subtitle1",
                     color: "default",
                 }} secondary="User Management"
                 />
@@ -76,9 +76,9 @@ export const ActionItems = withStyles(styles)(
 
 // ...
 export const DashboardItems = withStyles(styles)(
-    ({ classes, itemClick, selectedItem, }) =>
+    ({ classes, itemClick, selectedItem }) =>
         <List>
-            <ListItem classes={{ selected: classes.selectedYellow, }}
+            <ListItem classes={{ selected: classes.selectedYellow }}
                 selected={selectedItem === "balances"}
                 button onClick={() => itemClick("balances")}
             >
@@ -86,12 +86,12 @@ export const DashboardItems = withStyles(styles)(
                     <AccountBalanceWalletRounded className="drawer-svg-icon" />
                 </ListItemIcon>
                 <ListItemText secondaryTypographyProps={{
-                    variant: "subheading",
+                    variant: "subtitle1",
                     color: selectedItem === "balances" ? "primary" : "default",
                 }} secondary="Financial Overview"
                 />
             </ListItem>
-            <ListItem classes={{ selected: classes.selectedYellow, }}
+            <ListItem classes={{ selected: classes.selectedYellow }}
                 selected={selectedItem === "transactions"}
                 button onClick={() => itemClick("transactions")}
             >
@@ -99,12 +99,12 @@ export const DashboardItems = withStyles(styles)(
                     <CreditCardRounded className="drawer-svg-icon" />
                 </ListItemIcon>
                 <ListItemText secondaryTypographyProps={{
-                    variant: "subheading",
+                    variant: "subtitle1",
                     color: selectedItem === "transactions" ? "primary" : "default",
                 }} secondary="Transaction History"
                 />
             </ListItem>
-            <ListItem classes={{ selected: classes.selectedYellow, }}
+            <ListItem classes={{ selected: classes.selectedYellow }}
                 selected={selectedItem === "account"}
                 button onClick={ () => itemClick("account") }
             >
@@ -112,7 +112,7 @@ export const DashboardItems = withStyles(styles)(
                     <AccountBalanceRounded className="drawer-svg-icon" />
                 </ListItemIcon>
                 <ListItemText secondaryTypographyProps={{
-                    variant: "subheading",
+                    variant: "subtitle1",
                     color: selectedItem === "account" ? "primary" : "default",
                 }} secondary="User Account"
                 />
@@ -125,9 +125,9 @@ export const DashboardItems = withStyles(styles)(
 
 // ...
 export const ManagementItems = withStyles(styles)(
-    ({ classes, itemClick, selectedItem, }) =>
+    ({ classes, itemClick, selectedItem }) =>
         <List>
-            <ListItem classes={{ selected: classes.selectedBlue, }}
+            <ListItem classes={{ selected: classes.selectedBlue }}
                 selected={selectedItem === "contacts"}
                 button onClick={() => itemClick("contacts") }
             >
@@ -135,7 +135,7 @@ export const ManagementItems = withStyles(styles)(
                     <ContactsRounded className="drawer-svg-icon" />
                 </ListItemIcon>
                 <ListItemText secondaryTypographyProps={{
-                    variant: "subheading",
+                    variant: "subtitle1",
                     color: selectedItem === "contacts" ? "primary" : "default",
                 }} secondary="Contact Book"
                 />

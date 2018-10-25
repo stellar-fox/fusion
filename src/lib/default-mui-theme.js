@@ -99,6 +99,8 @@ export default createMuiTheme({
 
     typography: {
 
+        useNextVariants: true,
+
         h6: {
             fontSize: 20,
             fontFamily: "'Roboto Condensed', sans-serif",
