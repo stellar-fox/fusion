@@ -17,10 +17,10 @@
 
 ## clone the repository
 
-* github
-    ```
-    $ git clone
-    ```
+```
+$ git clone git@github.com:stellar-fox/fusion.git
+Cloning into 'fusion'...
+```
 
 </br>
 
@@ -39,6 +39,19 @@ $ npm i
 
 
 
+## prepare [configuration file][config]
+
+```
+$ cp src/config.example.js src/config.localhost.js
+$ vi src/config.localhost.js
+$ ln -s src/config.localhost.js src/firebase/config.js
+```
+
+<br />
+
+
+
+
 ## run local development server
 
 ```
@@ -48,7 +61,7 @@ Compiled successfully!
 
 You can now view fusion-ui in the browser.
 
-  Local:            http://localhost:3001/
+  Local:            http://localhost:3000/
 
 Note that the development build is not optimized.
 To create a production build, use npm run build.
@@ -77,3 +90,19 @@ $ npm run build
 Creating an optimized production build...
 Compiled successfully.
 ```
+
+<br />
+
+
+
+
+## Support
+
+```
+GAUWLOIHFR2E52DYNEYDO6ZADIDVWZKK3U77V7PMFBNOIOBNREQBHBRR
+```
+
+
+
+
+[config]: src/config.example.js
