@@ -6,8 +6,10 @@ import { Redirect, Route } from "react-router-dom"
 import { Paper, Typography } from "@material-ui/core"
 import { ConnectedSwitch as Switch, resolvePath } from "../FusionRouter"
 import { Motion, presets, spring } from "react-motion"
-
-
+import ShambhalaPureCard from "./ShambhalaPureCard"
+import ShambhalaLedgerCard from "./ShambhalaLedgerCard"
+import ShambhalaScepticCard from "./ShambhalaScepticCard"
+import withWidth, { isWidthDown } from "@material-ui/core/withWidth"
 
 
 // <KeyManagement> component
@@ -23,7 +25,8 @@ export default compose(
         (_state) => ({}),
         // match dispatch to props.
         (dispatch) => bindActionCreators({}, dispatch)
-    )
+    ),
+    withWidth(),
 )(
     class extends Component {
 
@@ -38,7 +41,7 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes }) =>
+            ({ classes, width }) =>
                 <Switch>
                     <Route exact path={this.rr(".")}>
 
@@ -62,6 +65,19 @@ export default compose(
                                     </Typography>
                                 }
                             </Motion>
+
+                            <div className={isWidthDown("sm", width) ?
+                                "m-t m-b flex-box-col items-centered" :
+                                "m-t m-b flex-box-row space-around"}
+                            >
+                                <ShambhalaPureCard />
+                                {isWidthDown("sm", width) &&
+                                    <div className="m-b"></div>}
+                                <ShambhalaLedgerCard />
+                                {isWidthDown("sm", width) &&
+                                    <div className="m-b"></div>}
+                                <ShambhalaScepticCard />
+                            </div>
 
                         </Paper>
 

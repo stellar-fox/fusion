@@ -13,6 +13,7 @@ const
     arsenic             = rgb(56, 60, 69),
     eerieBlack          = rgb(15, 22, 33),
     silverChalice       = rgb(171, 173, 181),
+    spanishGray         = rgb(152,155,160),
     antiFlashWhite      = rgb(237, 242, 244),
     yellowDark          = rgb(254, 187, 0),
     yellowDarkHighlight = rgb(35, 30, 17),
@@ -53,6 +54,7 @@ export default createMuiTheme({
             arsenic,
             outerSpace,
             davysGray,
+            spanishGray,
 
         },
 
