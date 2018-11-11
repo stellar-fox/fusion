@@ -19,7 +19,7 @@ export default compose(
     withStyles((theme) => ({
         card: {
             maxWidth: 345,
-            backgroundColor: theme.palette.custom.outerSpace,
+            backgroundColor: theme.palette.custom.purpleDark,
         },
         media: {
             // ⚠️ object-fit is not supported by IE11.
@@ -29,8 +29,8 @@ export default compose(
             fontSize: "12px",
             borderRadius: "3px",
         },
-        greenLight: {
-            color: theme.palette.custom.spanishGray,
+        purpleLight: {
+            color: theme.palette.custom.purpleLight,
         },
     })),
     connect(
@@ -80,7 +80,7 @@ export default compose(
                     <CardActions>
                         <Button classes={{
                             root: classes.button,
-                            label: classes.greenLight,
+                            label: classes.purpleLight,
                         }} variant="outlined" size="small"
                         >Select</Button>
                         <Button classes={{

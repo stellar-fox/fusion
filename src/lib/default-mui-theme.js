@@ -25,7 +25,10 @@ const
     greenLight          = rgb(88, 197, 150),
     blueDark            = rgb(0,151,172),
     blue                = rgb(114,222,255),
-    blueLight           = rgb(172,235,245)
+    blueLight           = rgb(172,235,245),
+    purpleDark          = rgb(177,93,255),
+    purple              = rgb(191,122,255),
+    purpleLight         = rgb(212,166,255)
 
 
 
@@ -55,6 +58,10 @@ export default createMuiTheme({
             outerSpace,
             davysGray,
             spanishGray,
+
+            purpleDark,
+            purple,
+            purpleLight,
 
         },
 
