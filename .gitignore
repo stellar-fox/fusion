@@ -30,3 +30,6 @@ yarn-error.log*
 /src/firebase/config.js
 /src/config.localhost.js
 /src/config.production.js
+
+# npm
+package-lock.json
