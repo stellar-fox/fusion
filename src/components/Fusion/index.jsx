@@ -18,6 +18,7 @@ import {
     devEnv,
     getProcess,
     isObject,
+    to_,
 } from "@xcmats/js-toolbox"
 
 import throttle from "lodash/throttle"
@@ -114,13 +115,16 @@ export default () =>
 
 // expose 'sf' dev. namespace only in dev. environment
 if (devEnv()  &&  isObject(window)) {
-    (async () => { window.sf = {
-        env, history, store, React,
-        dispatch: store.dispatch,
-        ...await dynamicImportLibs(),
-        process: getProcess(),
-        r: await dynamicImportReducers(),
-    }})()
+    (async () => {
+        window.sf = {
+            env, history, store, React,
+            dispatch: store.dispatch,
+            ...await dynamicImportLibs(),
+            process: getProcess(),
+            r: await dynamicImportReducers(),
+        }
+        window.to_ = to_
+    })()
 }
 
 
