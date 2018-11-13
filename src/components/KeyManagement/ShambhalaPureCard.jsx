@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { Component, Fragment } from "react"
 import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
@@ -12,6 +12,9 @@ import CardMedia from "@material-ui/core/CardMedia"
 import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography"
 import background from "../Fusion/static/bg.png"
+import ModalSignupPure from "./ModalSignupPure"
+import { action as KeysActions} from "../../redux/Keys"
+
 
 
 // <ShambhalaPureCard> component
@@ -35,7 +38,9 @@ export default compose(
     })),
     connect(
         (_state) => ({}),
-        (dispatch) => bindActionCreators({}, dispatch)
+        (dispatch) => bindActionCreators({
+            showModal: KeysActions.showSignupPureModal,
+        }, dispatch)
     ),
     withWidth(),
 )(
@@ -52,18 +57,23 @@ export default compose(
 
 
         // ...
+        showModal = () => this.props.showModal()
+
+
+        // ...
         render = () => (
-            ({ classes, width }) =>
+            ({ classes, width }) => <Fragment>
+                <ModalSignupPure />
                 <Card raised className={classes.card}>
                     <CardActionArea>
                         {isWidthUp("md", width) &&
                         <CardMedia
                             component="img"
-                            alt="Contemplative Reptile"
+                            alt="Shambhala Pure"
                             className={classes.media}
                             height="140"
                             image={background}
-                            title="Contemplative Reptile"
+                            title="Shambhala Pure"
                         />
                         }
                         <CardContent>
@@ -78,10 +88,13 @@ export default compose(
                         </CardContent>
                     </CardActionArea>
                     <CardActions>
-                        <Button classes={{
-                            root: classes.button,
-                            label: classes.blue,
-                        }} variant="outlined" size="small"
+                        <Button
+                            classes={{
+                                root: classes.button,
+                                label: classes.blue,
+                            }}
+                            variant="outlined" size="small"
+                            onClick={this.showModal}
                         >Select</Button>
                         <Button classes={{
                             root: classes.button,
@@ -89,6 +102,7 @@ export default compose(
                         >Learn More</Button>
                     </CardActions>
                 </Card>
+            </Fragment>
         )(this.props)
 
     }
