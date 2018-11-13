@@ -1,7 +1,10 @@
 import React, { Fragment } from "react"
 import {
+    access,
+    devEnv,
     string,
-    utils
+    type,
+    objectMap,
 } from "@xcmats/js-toolbox"
 
 
@@ -29,22 +32,24 @@ export const isReader = (role) => role === "ROLE_RO"
 export const dynamicImportLibs = async () => {
     let [
         axios, base64, jss, lodash,
-        mui, redux, toolbox, utils,
+        mui, redshift, redux, stellar, toolbox, utils,
     ] = await Promise.all([
         import("axios"),
         import("js-base64"),
         import("jss"),
         import("lodash"),
         import("@material-ui/core"),
+        import("@stellar-fox/redshift"),
         import("redux"),
+        import("stellar-sdk"),
         import("@xcmats/js-toolbox"),
         import("./utils"),
     ])
     return {
         axios,
         Base64: base64.Base64,
-        jss, lodash, mui, redux,
-        toolbox, utils,
+        jss, lodash, mui, redshift, redux,
+        stellar, toolbox, utils,
     }
 }
 
@@ -110,7 +115,7 @@ export const htmlEntities = {
 
 
 // emoji components (built on the 'emojis' object base)
-export const emoji = utils.objectMap(emojis,
+export const emoji = objectMap(emojis,
     ([k, v]) => [
         string.capitalize(k),
         () => React.createElement(Fragment, null, v),
@@ -147,8 +152,53 @@ export const rgb = (r, g, b) =>
 
 
 // helper extracting 'authToken' from redux state
-export const authToken = (getState) => utils.access(
+export const authToken = (getState) => access(
     getState(),
     ["Auth", "authToken"],
     string.empty()
 )
+
+
+
+
+// dev. only - shambhala integration testing
+export const shambhalaTesting = devEnv() ? {
+    init: async () => {
+        let
+            logger = console,
+            context = {},
+            {
+                Shambhala,
+                shambhalaTestingModule,
+            } = await import("./shambhala.client"),
+            testing = shambhalaTestingModule(logger, context)
+
+        // expose to dev. namespace
+        if (type.isObject(window.sf)) {
+            window.sf.Shambhala = Shambhala
+            window.sf.context = context
+            window.sf.testing = testing
+        }
+
+        // prepare test environment
+        await testing.setEnv()
+        await testing.instantiate(
+            "https://secrets.localhost/shambhala/shambhala.html"
+        )
+        await context.shambhala._openShambhala()
+
+        // instruct what to do next
+        logger.info(
+            "Try one of these:\n",
+            Object.keys(testing.scenario).map(
+                (n) => `sf.testing.scenario.${n}()`
+            ).join("\n ")
+        )
+
+        return { Shambhala, context, testing }
+    },
+} : {
+    init: () => {
+        throw new Error("Sorry. Not in the production.")
+    },
+}
