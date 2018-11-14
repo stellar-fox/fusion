@@ -1,10 +1,9 @@
 import React, { Fragment } from "react"
 import {
-    access,
     devEnv,
     string,
+    struct,
     type,
-    objectMap,
 } from "@xcmats/js-toolbox"
 
 
@@ -115,7 +114,7 @@ export const htmlEntities = {
 
 
 // emoji components (built on the 'emojis' object base)
-export const emoji = objectMap(emojis,
+export const emoji = struct.objectMap(emojis,
     ([k, v]) => [
         string.capitalize(k),
         () => React.createElement(Fragment, null, v),
@@ -152,10 +151,8 @@ export const rgb = (r, g, b) =>
 
 
 // helper extracting 'authToken' from redux state
-export const authToken = (getState) => access(
-    getState(),
-    ["Auth", "authToken"],
-    string.empty()
+export const authToken = (getState) => struct.access(
+    getState(), ["Auth", "authToken"], string.empty()
 )
 
 

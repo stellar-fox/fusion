@@ -3,7 +3,6 @@ import {
     string,
     swap,
 } from "@xcmats/js-toolbox"
-
 import {
     LOCATION_CHANGE,
     routerReducer,

@@ -1,4 +1,7 @@
-import { createReducer, string } from "@xcmats/js-toolbox"
+import {
+    createReducer,
+    string,
+} from "@xcmats/js-toolbox"
 
 
 
