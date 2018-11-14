@@ -5,6 +5,7 @@ import { createReducer } from "@xcmats/js-toolbox"
 
 // <Keys> initial state
 const initState = {
+    ModalAwaitPure: { showing: false },
     ModalSignupPure: { showing: false },
     ModalSignupLedger: { showing: false },
     ModalSignupSceptic: { showing: false },
@@ -31,6 +32,16 @@ export const action = {
     // ...
     hideSignupPureModal: () => (dispatch) => dispatch(action.setState({
         ModalSignupPure: { showing: false },
+    })),
+
+    // ...
+    showAwaitPureModal: () => (dispatch) => dispatch(action.setState({
+        ModalAwaitPure: { showing: true },
+    })),
+
+    // ...
+    hideAwaitPureModal: () => (dispatch) => dispatch(action.setState({
+        ModalAwaitPure: { showing: false },
     })),
 
     // ...

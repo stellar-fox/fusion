@@ -13,6 +13,7 @@ import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography"
 import background from "../Fusion/static/bg.png"
 import ModalSignupPure from "./ModalSignupPure"
+import ModalAwaitPure from "./ModalAwaitPure"
 import { action as KeysActions} from "../../redux/Keys"
 
 
@@ -39,7 +40,7 @@ export default compose(
     connect(
         (_state) => ({}),
         (dispatch) => bindActionCreators({
-            showModal: KeysActions.showSignupPureModal,
+            showSignupPureModal: KeysActions.showSignupPureModal,
         }, dispatch)
     ),
     withWidth(),
@@ -57,13 +58,14 @@ export default compose(
 
 
         // ...
-        showModal = () => this.props.showModal()
+        showModal = () => this.props.showSignupPureModal()
 
 
         // ...
         render = () => (
             ({ classes, width }) => <Fragment>
                 <ModalSignupPure />
+                <ModalAwaitPure />
                 <Card raised className={classes.card}>
                     <CardActionArea>
                         {isWidthUp("md", width) &&

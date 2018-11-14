@@ -4,29 +4,33 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
 import {
-    Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
-    withMobileDialog
+    CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText,
+    DialogTitle, Typography, withMobileDialog
 } from "@material-ui/core"
 import { action as KeysActions} from "../../redux/Keys"
 import Button from "../../lib/mui-v1/Button"
 
 
-
-// <ModalSignupPure> component
+// <ModalAwaitPure> component
 export default compose(
     withMobileDialog(),
     withStyles((theme) => ({
         textBlue: {
             color: theme.palette.custom.blue,
         },
+        circle: {
+            color: theme.palette.custom.blue,
+        },
+        circularProgress: {
+            marginRight: "1rem",
+        },
     })),
     connect(
         (state) => ({
-            open: state.Keys.ModalSignupPure.showing,
+            open: state.Keys.ModalAwaitPure.showing,
         }),
         (dispatch) => bindActionCreators({
-            hideSignupPureModal: KeysActions.hideSignupPureModal,
-            showAwaitPureModal: KeysActions.showAwaitPureModal,
+            hideAwaitPureModal: KeysActions.hideAwaitPureModal,
         }, dispatch)
     )
 )(
@@ -39,15 +43,8 @@ export default compose(
 
 
         // ...
-        handleYes = () => {
-            this.props.hideSignupPureModal()
-            this.props.showAwaitPureModal()
-        }
-
-
-        // ...
         handleNo = () => {
-            this.props.hideSignupPureModal()
+            this.props.hideAwaitPureModal()
         }
 
 
@@ -60,25 +57,31 @@ export default compose(
                     aria-labelledby="responsive-dialog-title"
                 >
                     <DialogTitle id="responsive-dialog-title">
-                        Shambhala Pure - Welcome
+                        Shambhala Pure
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText classes={{ root: classes.textBlue }}>
-                        In a moment we will generate a random super secret key.
-                        DO NOT EVER share it with anyone. This key has the total
-                        control over your funds and entire account. This is why
-                        it will only be shown to you once here and never again.
-                        Understandably, we will never have access to this key
-                        and therefore cannot help you, should you loose access
-                        to it. Make sure to store it safely!
+                            <div className="flex-box-col items-centered content-centered">
+                                <Typography variant="body2">
+                                    Please switch to Shambhala tab and follow
+                                    the procedure there first. Leave this tab
+                                    open.
+                                </Typography>
+                                <div className="m-t flex-box-row items-centered">
+                                    <CircularProgress disableShrink size={20}
+                                        classes={{
+                                            circle: classes.circle,
+                                            root: classes.circularProgress,
+                                        }}
+                                    />
+                                    <Typography variant="h4">
+                                        Awaiting response ...
+                                    </Typography>
+                                </div>
+                            </div>
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleYes} color="green"
-                            autoFocus
-                        >
-                            Proceed
-                        </Button>
                         <Button style={{margin: "0 3px 0 10px"}}
                             onClick={this.handleNo} color="yellow"
                         >
