@@ -9,6 +9,7 @@ const initState = {
     ModalSignupPure: { showing: false },
     ModalSignupLedger: { showing: false },
     ModalSignupSceptic: { showing: false },
+    awaitingShambhalaResponse: false,
 }
 
 
@@ -43,6 +44,17 @@ export const action = {
     hideAwaitPureModal: () => (dispatch) => dispatch(action.setState({
         ModalAwaitPure: { showing: false },
     })),
+
+    // ...
+    setAwaitingResponse: () => (dispatch) => dispatch(action.setState({
+        awaitingShambhalaResponse: true,
+    })),
+
+    // ...
+    cancelAwaitingResponse: () => (dispatch) => dispatch(action.setState({
+        awaitingShambhalaResponse: false,
+    })),
+
 
     // ...
     resetState: () => ({ type: RESET_STATE }),

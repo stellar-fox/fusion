@@ -25,6 +25,7 @@ export default compose(
             open: state.Keys.ModalSignupPure.showing,
         }),
         (dispatch) => bindActionCreators({
+            setAwaitingResponse: KeysActions.setAwaitingResponse,
             hideSignupPureModal: KeysActions.hideSignupPureModal,
             showAwaitPureModal: KeysActions.showAwaitPureModal,
         }, dispatch)
@@ -41,6 +42,8 @@ export default compose(
         // ...
         handleYes = () => {
             this.props.hideSignupPureModal()
+            // ... init shambhala
+            this.props.setAwaitingResponse()
             this.props.showAwaitPureModal()
         }
 

@@ -9,6 +9,9 @@ import {
 } from "@material-ui/core"
 import { action as KeysActions} from "../../redux/Keys"
 import Button from "../../lib/mui-v1/Button"
+import { Motion, presets, spring } from "react-motion"
+
+
 
 
 // <ModalAwaitPure> component
@@ -28,8 +31,10 @@ export default compose(
     connect(
         (state) => ({
             open: state.Keys.ModalAwaitPure.showing,
+            awaiting: state.Keys.awaitingShambhalaResponse,
         }),
         (dispatch) => bindActionCreators({
+            cancelAwaitingResponse: KeysActions.cancelAwaitingResponse,
             hideAwaitPureModal: KeysActions.hideAwaitPureModal,
         }, dispatch)
     )
@@ -44,6 +49,7 @@ export default compose(
 
         // ...
         handleNo = () => {
+            this.props.cancelAwaitingResponse()
             this.props.hideAwaitPureModal()
         }
 
@@ -67,17 +73,28 @@ export default compose(
                                     the procedure there first. Leave this tab
                                     open.
                                 </Typography>
-                                <div className="m-t flex-box-row items-centered">
-                                    <CircularProgress disableShrink size={20}
-                                        classes={{
-                                            circle: classes.circle,
-                                            root: classes.circularProgress,
-                                        }}
-                                    />
-                                    <Typography variant="h4">
-                                        Awaiting response ...
-                                    </Typography>
-                                </div>
+                                <Motion defaultStyle={{ opacity: 0 }}
+                                    style={{
+                                        opacity: spring(1, presets.gentle),
+                                    }}
+                                >
+                                    {value =>
+                                        <div style={{
+                                            opacity: value.opacity,
+                                        }} className="m-t flex-box-row items-centered"
+                                        >
+                                            <CircularProgress disableShrink size={20}
+                                                classes={{
+                                                    circle: classes.circle,
+                                                    root: classes.circularProgress,
+                                                }}
+                                            />
+                                            <Typography variant="h4">
+                                                Awaiting response ...
+                                            </Typography>
+                                        </div>
+                                    }
+                                </Motion>
                             </div>
                         </DialogContentText>
                     </DialogContent>
