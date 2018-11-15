@@ -150,7 +150,7 @@ export default compose(
                         />
                     </Drawer>
                 </Hidden>
-                <Hidden smUp>
+                <Hidden mdUp>
                     <Drawer
                         classes={{ paper: classNames(classes.drawerPaper) }}
                         open={open}

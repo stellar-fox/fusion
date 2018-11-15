@@ -155,7 +155,7 @@ export default compose(
                         />
                     </Hidden>
 
-                    <Hidden smUp>
+                    <Hidden mdUp>
                         <AppBar
                             position="absolute"
                             className={classes.appBar}

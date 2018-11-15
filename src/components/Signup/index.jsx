@@ -34,11 +34,11 @@ export default compose(
         },
 
     }))
-)(({ classes, }) => {
+)(({ classes }) => {
 
     return (
         <Fragment>
-            <Hidden smUp>
+            <Hidden mdUp>
                 <Grid
                     container
                     direction={"column"}

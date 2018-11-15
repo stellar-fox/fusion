@@ -33,11 +33,11 @@ export default compose(
             borderRadius: "3px",
         },
     }))
-)(({ classes, }) => {
+)(({ classes }) => {
 
     return (
         <Fragment>
-            <Hidden smUp>
+            <Hidden mdUp>
                 <Grid
                     container
                     direction={"column"}
