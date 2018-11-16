@@ -37,14 +37,19 @@ export const action = {
     login: (...args) =>
         async (dispatch, _getState) => {
             const auth = await authenticate(...args)
-            auth.user.photoURL ?
-                await dispatch(action.setState({
-                    uid: auth.user.uid,
-                    email: auth.user.email,
-                    displayName: auth.user.displayName || string.empty(),
-                    photoUrl: auth.user.photoURL || string.empty(),
-                    emailVerified: auth.user.emailVerified,
-                })) : await dispatch(action.getStorageAvatar(auth.user))
+            const jwt = await auth.user.getIdToken()
+
+            await dispatch(action.setState({
+                uid: auth.user.uid,
+                email: auth.user.email,
+                displayName: auth.user.displayName || string.empty(),
+                photoUrl: auth.user.photoURL || string.empty(),
+                emailVerified: auth.user.emailVerified,
+                jwt,
+            }))
+
+            !auth.user.photoURL &&
+                await dispatch(action.getStorageAvatar(auth.user))
         },
 
 
@@ -53,13 +58,7 @@ export const action = {
         async (dispatch, _getState) =>
             storageRef().child(`${user.uid}/avatar.jpeg`)
                 .getDownloadURL().then((photoUrl) => {
-                    dispatch(action.setState({
-                        photoUrl,
-                        uid: user.uid,
-                        email: user.email,
-                        displayName: user.displayName || string.empty(),
-                        emailVerified: user.emailVerified,
-                    }))
+                    dispatch(action.setState({ photoUrl }))
                 }),
 
 

@@ -4,7 +4,7 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
 import {
-    CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText,
+    CircularProgress, Dialog, DialogActions, DialogContent,
     DialogTitle, Typography, withMobileDialog
 } from "@material-ui/core"
 import { action as KeysActions} from "../../redux/Keys"
@@ -18,9 +18,6 @@ import { Motion, presets, spring } from "react-motion"
 export default compose(
     withMobileDialog(),
     withStyles((theme) => ({
-        textBlue: {
-            color: theme.palette.custom.blue,
-        },
         circle: {
             color: theme.palette.custom.blue,
         },
@@ -32,6 +29,7 @@ export default compose(
         (state) => ({
             open: state.Keys.ModalAwaitPure.showing,
             awaiting: state.Keys.awaitingShambhalaResponse,
+            progressMessage: state.Keys.progressMessage,
         }),
         (dispatch) => bindActionCreators({
             cancelAwaitingResponse: KeysActions.cancelAwaitingResponse,
@@ -66,37 +64,35 @@ export default compose(
                         Shambhala Pure
                     </DialogTitle>
                     <DialogContent>
-                        <DialogContentText classes={{ root: classes.textBlue }}>
-                            <div className="flex-box-col items-centered content-centered">
-                                <Typography variant="body2">
-                                    Please switch to Shambhala tab and follow
-                                    the procedure there first. Leave this tab
-                                    open.
-                                </Typography>
-                                <Motion defaultStyle={{ opacity: 0 }}
-                                    style={{
-                                        opacity: spring(1, presets.gentle),
-                                    }}
-                                >
-                                    {value =>
-                                        <div style={{
-                                            opacity: value.opacity,
-                                        }} className="m-t flex-box-row items-centered"
-                                        >
-                                            <CircularProgress disableShrink size={20}
-                                                classes={{
-                                                    circle: classes.circle,
-                                                    root: classes.circularProgress,
-                                                }}
-                                            />
-                                            <Typography variant="h4">
-                                                Awaiting response ...
-                                            </Typography>
-                                        </div>
-                                    }
-                                </Motion>
-                            </div>
-                        </DialogContentText>
+                        <div className="flex-box-col items-centered content-centered">
+                            <Typography variant="body2">
+                                Please switch to Shambhala tab and follow
+                                the procedure there first. Leave this tab
+                                open.
+                            </Typography>
+                            <Motion defaultStyle={{ opacity: 0 }}
+                                style={{
+                                    opacity: spring(this.props.awaiting ? 1 : 0, presets.gentle),
+                                }}
+                            >
+                                {value =>
+                                    <div style={{
+                                        opacity: value.opacity,
+                                    }} className="m-t m-b flex-box-row items-centered"
+                                    >
+                                        <CircularProgress disableShrink size={20}
+                                            classes={{
+                                                circle: classes.circle,
+                                                root: classes.circularProgress,
+                                            }}
+                                        />
+                                    </div>
+                                }
+                            </Motion>
+                            <Typography variant="body2">
+                                {this.props.progressMessage}
+                            </Typography>
+                        </div>
                     </DialogContent>
                     <DialogActions>
                         <Button style={{margin: "0 3px 0 10px"}}

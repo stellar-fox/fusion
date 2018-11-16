@@ -1,6 +1,6 @@
 import { createReducer } from "@xcmats/js-toolbox"
-
-
+import { testNetworkPassphrase } from "../lib/constants"
+import { string } from "@xcmats/js-toolbox"
 
 // <Keys> initial state
 const initState = {
@@ -10,7 +10,11 @@ const initState = {
     ModalSignupSceptic: { showing: false },
     awaitingShambhalaResponse: false,
     signingMethod: null,
-
+    accountId: null,
+    signingKeys: {},
+    balance: "0.0000000",
+    networkPassphrase: testNetworkPassphrase,
+    progressMessage: string.empty(),
 }
 
 

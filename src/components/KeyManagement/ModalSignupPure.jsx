@@ -8,9 +8,12 @@ import {
     withMobileDialog
 } from "@material-ui/core"
 import { action as KeysActions} from "../../redux/Keys"
-import { setSigningMethod } from "../../actions/onboarding"
+import {
+    fundAccount, generateAccountId, generateSigningKeys, setProgressMessage,
+    setSigningMethod
+} from "../../actions/onboarding"
 import Button from "../../lib/mui-v1/Button"
-
+import { delay, string } from "@xcmats/js-toolbox"
 
 
 // <ModalSignupPure> component
@@ -26,9 +29,15 @@ export default compose(
             open: state.Keys.ModalSignupPure.showing,
         }),
         (dispatch) => bindActionCreators({
+            cancelAwaitingResponse: KeysActions.cancelAwaitingResponse,
             setAwaitingResponse: KeysActions.setAwaitingResponse,
             hideSignupPureModal: KeysActions.hideSignupPureModal,
             showAwaitPureModal: KeysActions.showAwaitPureModal,
+            hideAwaitPureModal: KeysActions.hideAwaitPureModal,
+            fundAccount,
+            generateAccountId,
+            generateSigningKeys,
+            setProgressMessage,
             setSigningMethod,
         }, dispatch)
     )
@@ -42,11 +51,49 @@ export default compose(
 
 
         // ...
-        handleYes = () => {
-            this.props.hideSignupPureModal()
-            // ... init shambhala
-            this.props.setAwaitingResponse()
-            this.props.showAwaitPureModal()
+        state = {
+            progressMessage: string.empty(),
+        }
+
+        // ...
+        handleYes = async () => {
+            await this.props.hideSignupPureModal()
+            await this.props.showAwaitPureModal()
+            await this.props.setAwaitingResponse()
+            await this.props.setProgressMessage(
+                "Awaiting response ..."
+            )
+
+            await delay(2500)
+
+            // SHAMBHALA -------- BEGIN
+            await this.props.setProgressMessage(
+                "Generating account number ..."
+            )
+            await delay(1500)
+
+            await this.props.generateAccountId()
+            await this.props.setProgressMessage(
+                "Generating signatures ..."
+            )
+            await this.props.generateSigningKeys()
+
+            await this.props.setProgressMessage(
+                "Funding account ..."
+            )
+
+            await this.props.fundAccount()
+            await this.props.cancelAwaitingResponse()
+            await this.props.setProgressMessage(
+                "Complete."
+            )
+
+            await delay(1500)
+
+            // SHAMBHALA -------- END
+
+
+            await this.props.hideAwaitPureModal()
         }
 
 
