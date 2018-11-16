@@ -12,8 +12,7 @@
 
 import { func } from "@xcmats/js-toolbox"
 import { Shambhala } from "../lib/shambhala.client"
-import { signingMethod as sm } from "../logic/onboarding"
-import { action } from "../redux/Onboarding"
+import { action as KeysActions, signingMethod as sm } from "../redux/Keys"
 
 
 
@@ -26,7 +25,7 @@ import { action } from "../redux/Onboarding"
  */
 export const setSigningMethod = (signingMethod) =>
     async (dispatch, _getState) =>
-        await dispatch(action.setState({ signingMethod }))
+        await dispatch(KeysActions.setState({ signingMethod }))
 
 
 
@@ -59,7 +58,7 @@ export const getAccountId = () =>
 
             }, () => Promise.reject("unknown signing method"))
 
-        await dispatch(action.setState({ accountId }))
+        await dispatch(KeysActions.setState({ accountId }))
 
         return accountId
     }

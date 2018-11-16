@@ -8,6 +8,7 @@ import {
     withMobileDialog
 } from "@material-ui/core"
 import { action as KeysActions} from "../../redux/Keys"
+import { setSigningMethod } from "../../actions/onboarding"
 import Button from "../../lib/mui-v1/Button"
 
 
@@ -28,6 +29,7 @@ export default compose(
             setAwaitingResponse: KeysActions.setAwaitingResponse,
             hideSignupPureModal: KeysActions.hideSignupPureModal,
             showAwaitPureModal: KeysActions.showAwaitPureModal,
+            setSigningMethod,
         }, dispatch)
     )
 )(
@@ -51,6 +53,7 @@ export default compose(
         // ...
         handleNo = () => {
             this.props.hideSignupPureModal()
+            this.props.setSigningMethod(null)
         }
 
 

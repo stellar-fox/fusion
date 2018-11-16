@@ -71,13 +71,12 @@ export const dynamicImportLibs = async () => {
 export const dynamicImportReducers = async () => {
     let [
         Auth, App, Router, Keys,
-        Onboarding, Snacky, UserManagement,
+        Snacky, UserManagement,
     ] = await Promise.all([
         import("../redux/Auth"),
         import("../redux/Fusion"),
         import("../redux/FusionRouter"),
         import("../redux/Keys"),
-        import("../redux/Onboarding"),
         import("../redux/Snacky"),
         import("../redux/UserManagement"),
     ])
@@ -86,7 +85,6 @@ export const dynamicImportReducers = async () => {
         App,
         Router,
         Keys,
-        Onboarding,
         Snacky,
         UserManagement,
     }

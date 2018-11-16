@@ -14,8 +14,8 @@ import Typography from "@material-ui/core/Typography"
 import background from "../Fusion/static/bg.png"
 import ModalSignupPure from "./ModalSignupPure"
 import ModalAwaitPure from "./ModalAwaitPure"
-import { action as KeysActions} from "../../redux/Keys"
-
+import { action as KeysActions, signingMethod as sm } from "../../redux/Keys"
+import { setSigningMethod } from "../../actions/onboarding"
 
 
 // <ShambhalaPureCard> component
@@ -41,6 +41,7 @@ export default compose(
         (_state) => ({}),
         (dispatch) => bindActionCreators({
             showSignupPureModal: KeysActions.showSignupPureModal,
+            setSigningMethod,
         }, dispatch)
     ),
     withWidth(),
@@ -58,7 +59,10 @@ export default compose(
 
 
         // ...
-        showModal = () => this.props.showSignupPureModal()
+        handleSelection = () => {
+            this.props.showSignupPureModal()
+            this.props.setSigningMethod(sm.SHAMBHALA)
+        }
 
 
         // ...
@@ -96,7 +100,7 @@ export default compose(
                                 label: classes.blue,
                             }}
                             variant="outlined" size="small"
-                            onClick={this.showModal}
+                            onClick={this.handleSelection}
                         >Select</Button>
                         <Button classes={{
                             root: classes.button,
