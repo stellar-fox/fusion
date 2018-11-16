@@ -1,8 +1,9 @@
-import { reducer as ApplicationReducer } from "./Fusion"
-import { reducer as AuthReducer } from "./Auth"
-import { reducer as KeysReducer } from "./Keys"
-import { reducer as RouterReducer } from "./FusionRouter"
-import { reducer as SnackyReducer } from "./Snacky"
+import { reducer as App } from "./Fusion"
+import { reducer as Auth } from "./Auth"
+import { reducer as Keys } from "./Keys"
+import { reducer as Onboarding} from "./Onboarding"
+import { reducer as Router } from "./FusionRouter"
+import { reducer as Snacky } from "./Snacky"
 import { reducer as UserManagement } from "./UserManagement"
 
 
@@ -10,10 +11,11 @@ import { reducer as UserManagement } from "./UserManagement"
 
 // ...
 export default {
-    App: ApplicationReducer,
-    Auth: AuthReducer,
-    Keys: KeysReducer,
-    Router: RouterReducer,
-    Snacky: SnackyReducer,
+    App,
+    Auth,
+    Keys,
+    Onboarding,
+    Router,
+    Snacky,
     UserManagement,
 }

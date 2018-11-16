@@ -30,8 +30,8 @@ export const isReader = (role) => role === "ROLE_RO"
 // asynchronously load libraries (used in dev. environment)
 export const dynamicImportLibs = async () => {
     let [
-        axios, base64, jss, lodash,
-        mui, redshift, redux, stellar, toolbox, utils,
+        axios, base64, jss, lodash, mui,
+        redshift, redux, stellar, toolbox, utils,
     ] = await Promise.all([
         import("axios"),
         import("js-base64"),
@@ -45,8 +45,7 @@ export const dynamicImportLibs = async () => {
         import("./utils"),
     ])
     return {
-        axios,
-        Base64: base64.Base64,
+        axios, Base64: base64.Base64,
         jss, lodash, mui, redshift, redux,
         stellar, toolbox, utils,
     }
@@ -58,19 +57,23 @@ export const dynamicImportLibs = async () => {
 // asynchronously load reducers (used in dev. environment)
 export const dynamicImportReducers = async () => {
     let [
-        Auth, Fusion,
-        FusionRouter, Snacky, UserManagement,
+        Auth, App, Router, Keys,
+        Onboarding, Snacky, UserManagement,
     ] = await Promise.all([
         import("../redux/Auth"),
         import("../redux/Fusion"),
         import("../redux/FusionRouter"),
+        import("../redux/Keys"),
+        import("../redux/Onboarding"),
         import("../redux/Snacky"),
         import("../redux/UserManagement"),
     ])
     return {
         Auth,
-        Application: Fusion,
-        Router: FusionRouter,
+        App,
+        Router,
+        Keys,
+        Onboarding,
         Snacky,
         UserManagement,
     }
@@ -186,10 +189,10 @@ export const shambhalaTesting = devEnv() ? {
 
         // instruct what to do next
         logger.info(
-            "Try one of these:\n",
+            `Try one of these:${string.nl()}`,
             Object.keys(testing.scenario).map(
                 (n) => `sf.testing.scenario.${n}()`
-            ).join("\n ")
+            ).join(`${string.nl()}${string.space()}`)
         )
 
         return { Shambhala, context, testing }
