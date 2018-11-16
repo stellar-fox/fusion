@@ -30,8 +30,13 @@ export const isReader = (role) => role === "ROLE_RO"
 // asynchronously load libraries (used in dev. environment)
 export const dynamicImportLibs = async () => {
     let [
+
         axios, base64, jss, lodash, mui,
         redshift, redux, stellar, toolbox, utils,
+
+        // actions
+        onboarding,
+
     ] = await Promise.all([
         import("axios"),
         import("js-base64"),
@@ -43,11 +48,19 @@ export const dynamicImportLibs = async () => {
         import("stellar-sdk"),
         import("@xcmats/js-toolbox"),
         import("./utils"),
+
+        // actions
+        import("../actions/onboarding"),
     ])
     return {
         axios, Base64: base64.Base64,
         jss, lodash, mui, redshift, redux,
         stellar, toolbox, utils,
+
+        // actions
+        actions: {
+            onboarding,
+        },
     }
 }
 
