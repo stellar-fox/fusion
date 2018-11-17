@@ -117,7 +117,7 @@ export default compose(
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText classes={{ root: classes.textBlue }}>
-                        In a moment we will generate a random super secret key.
+                        In a moment we will generate your signature key.
                         DO NOT EVER share it with anyone. This key has the total
                         control over your funds and entire account. This is why
                         it will only be shown to you once here and never again.
