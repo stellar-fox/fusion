@@ -11,8 +11,9 @@ import Button from "../../lib/mui-v1/Button"
 import { string } from "@xcmats/js-toolbox"
 import { action as KeysActions } from "../../redux/Keys"
 import {
-    setSigningMethod
+    setSigningMethod, setProgressMessage, queryDeviceSoftwareVersion
 } from "../../actions/onboarding"
+import { delay } from "@xcmats/js-toolbox"
 
 
 // <ModalSignupPure> component
@@ -29,7 +30,13 @@ export default compose(
         }),
         (dispatch) => bindActionCreators({
             hideSignupLedgerModal: KeysActions.hideSignupLedgerModal,
+            showAwaitLedgerModal: KeysActions.showAwaitLedgerModal,
+            hideAwaitLedgerModal: KeysActions.hideAwaitLedgerModal,
+            setAwaitingResponse: KeysActions.setAwaitingResponse,
+            cancelAwaitingResponse: KeysActions.cancelAwaitingResponse,
             setSigningMethod,
+            setProgressMessage,
+            queryDeviceSoftwareVersion,
         }, dispatch)
     )
 )(
@@ -48,7 +55,24 @@ export default compose(
 
         // ...
         handleYes = async () => {
-            this.props.showSignupLedgerModal()
+            try {
+                await this.props.hideSignupLedgerModal()
+                await this.props.showAwaitLedgerModal()
+                await this.props.setAwaitingResponse()
+                await this.props.setProgressMessage("Querying device ...")
+                await delay(2500)
+                await this.props.queryDeviceSoftwareVersion()
+
+                await this.props.cancelAwaitingResponse()
+                await this.props.setProgressMessage("Complete.")
+
+                await delay(1500)
+                await this.props.hideAwaitLedgerModal()
+            } catch (error) {
+                await this.props.cancelAwaitingResponse()
+                await this.props.setProgressMessage(error)
+            }
+            
         }
 
 

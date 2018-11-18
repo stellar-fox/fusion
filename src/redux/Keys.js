@@ -4,9 +4,10 @@ import { string } from "@xcmats/js-toolbox"
 
 // <Keys> initial state
 const initState = {
+    ModalAwaitLedger: { showing: false },
     ModalAwaitPure: { showing: false },
-    ModalSignupPure: { showing: false },
     ModalSignupLedger: { showing: false },
+    ModalSignupPure: { showing: false },
     ModalSignupSceptic: { showing: false },
     awaitingShambhalaResponse: false,
     signingMethod: null,
@@ -15,6 +16,7 @@ const initState = {
     balance: "0.0000000",
     networkPassphrase: testNetworkPassphrase,
     progressMessage: string.empty(),
+    deviceSoftwareVersion: null,
 }
 
 
@@ -68,6 +70,16 @@ export const action = {
     // ...
     hideSignupLedgerModal: () => (dispatch) => dispatch(action.setState({
         ModalSignupLedger: { showing: false },
+    })),
+
+    // ...
+    showAwaitLedgerModal: () => (dispatch) => dispatch(action.setState({
+        ModalAwaitLedger: { showing: true },
+    })),
+
+    // ...
+    hideAwaitLedgerModal: () => (dispatch) => dispatch(action.setState({
+        ModalAwaitLedger: { showing: false },
     })),
 
     // ...

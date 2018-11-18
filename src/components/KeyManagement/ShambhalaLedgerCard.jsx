@@ -15,6 +15,7 @@ import background from "../Fusion/static/bg.png"
 import { action as KeysActions, signingMethod as sm } from "../../redux/Keys"
 import { setSigningMethod } from "../../actions/onboarding"
 import ModalSignupLedger from "./ModalSignupLedger"
+import ModalAwaitLedger from "./ModalAwaitLedger"
 
 
 
@@ -65,6 +66,7 @@ export default compose(
         render = () => (
             ({ classes, width }) => <Fragment>
                 <ModalSignupLedger />
+                <ModalAwaitLedger />
             
                 <Card raised className={classes.card}>
                     <CardActionArea>

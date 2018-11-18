@@ -17,6 +17,8 @@ import { config } from "../firebase/config"
 import { testNetworkPassphrase } from "../lib/constants"
 import axios from "axios"
 import { Transaction } from "stellar-sdk"
+import { getSoftwareVersion } from "../lib/logic/ledgerhq"
+
 
 
 
@@ -132,3 +134,18 @@ export const fundAccount = () =>
 // 2. call generateSignedKeyAssocTX
 
 // 3. broadcast it to the network
+
+
+
+/**
+ *  ...
+ *  @return {Function}
+ */
+export const queryDeviceSoftwareVersion = () =>
+    async (dispatch, _getState) => {
+        const deviceSoftwareVersion = await getSoftwareVersion()
+        
+        await dispatch(KeysActions.setState({ deviceSoftwareVersion }))
+
+        return deviceSoftwareVersion
+    }

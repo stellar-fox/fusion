@@ -19,10 +19,13 @@ export default compose(
     withMobileDialog(),
     withStyles((theme) => ({
         circle: {
-            color: theme.palette.custom.blue,
+            color: theme.palette.custom.blueLight,
         },
         circularProgress: {
             marginRight: "1rem",
+        },
+        paper: {
+            backgroundColor: theme.palette.custom.blueDark,
         },
     })),
     connect(
@@ -59,9 +62,10 @@ export default compose(
                     fullScreen={fullScreen}
                     open={open}
                     aria-labelledby="responsive-dialog-title"
+                    classes={{ paper: classes.paper }}
                 >
                     <DialogTitle id="responsive-dialog-title">
-                        Shambhala Pure
+                        Shambhala Pure - Progress Report
                     </DialogTitle>
                     <DialogContent>
                         <div className="flex-box-col items-centered content-centered">

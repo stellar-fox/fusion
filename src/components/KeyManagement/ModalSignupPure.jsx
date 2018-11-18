@@ -84,9 +84,7 @@ export default compose(
 
             await this.props.fundAccount()
             await this.props.cancelAwaitingResponse()
-            await this.props.setProgressMessage(
-                "Complete."
-            )
+            await this.props.setProgressMessage("Complete.")
 
             await delay(1500)
 
