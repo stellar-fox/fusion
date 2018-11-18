@@ -23,8 +23,8 @@ export default withStyles((theme) => ({
             borderBottomColor: `${theme.palette.custom.outerSpace} !important`,
             borderBottomWidth: "1px !important",
         },
-        "&:before": { borderBottomColor: theme.palette.primary.light, },
-        "&:after": { borderBottomColor: theme.palette.primary.light, },
+        "&:before": { borderBottomColor: theme.palette.primary.light },
+        "&:after": { borderBottomColor: theme.palette.primary.light },
     },
 
     underlineLighter: {
@@ -32,8 +32,8 @@ export default withStyles((theme) => ({
             borderBottomColor: `${theme.palette.custom.davysGray} !important`,
             borderBottomWidth: "1px !important",
         },
-        "&:before": { borderBottomColor: theme.palette.custom.outerSpace, },
-        "&:after": { borderBottomColor: theme.palette.custom.outerSpace, },
+        "&:before": { borderBottomColor: theme.palette.custom.outerSpace },
+        "&:after": { borderBottomColor: theme.palette.custom.outerSpace },
     },
 
     root: {
