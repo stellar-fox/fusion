@@ -41,6 +41,7 @@ export default compose(
         (_state) => ({}),
         (dispatch) => bindActionCreators({
             showSignupLedgerModal: KeysActions.showSignupLedgerModal,
+            setSigningMethod,
         }, dispatch)
     ),
     withWidth(),
@@ -56,7 +57,7 @@ export default compose(
         // ...
         handleSelection = () => {
             this.props.showSignupLedgerModal()
-            setSigningMethod(sm.LEDGERHQ)
+            this.props.setSigningMethod(sm.LEDGERHQ)
         }
 
 

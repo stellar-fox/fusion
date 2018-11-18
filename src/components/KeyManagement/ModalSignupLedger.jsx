@@ -29,6 +29,7 @@ export default compose(
         }),
         (dispatch) => bindActionCreators({
             hideSignupLedgerModal: KeysActions.hideSignupLedgerModal,
+            setSigningMethod,
         }, dispatch)
     )
 )(
@@ -54,7 +55,7 @@ export default compose(
         // ...
         handleNo = () => {
             this.props.hideSignupLedgerModal()
-            setSigningMethod(null)
+            this.props.setSigningMethod(null)
         }
 
 
