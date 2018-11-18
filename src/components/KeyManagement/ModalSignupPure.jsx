@@ -20,8 +20,8 @@ import { delay, string } from "@xcmats/js-toolbox"
 export default compose(
     withMobileDialog(),
     withStyles((theme) => ({
-        textBlue: {
-            color: theme.palette.custom.blue,
+        paper: {
+            backgroundColor: theme.palette.custom.blueDark,
         },
     })),
     connect(
@@ -106,11 +106,12 @@ export default compose(
 
         // ...
         render = () => (
-            ({ _classes, fullScreen, open }) =>
+            ({ classes, fullScreen, open }) =>
                 <Dialog
                     fullScreen={fullScreen}
                     open={open}
                     aria-labelledby="responsive-dialog-title"
+                    classes={{ paper: classes.paper }}
                 >
                     <DialogTitle id="responsive-dialog-title">
                         Shambhala Pure - Welcome!

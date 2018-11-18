@@ -61,6 +61,16 @@ export const action = {
     })),
 
     // ...
+    showSignupLedgerModal: () => (dispatch) => dispatch(action.setState({
+        ModalSignupLedger: { showing: true },
+    })),
+
+    // ...
+    hideSignupLedgerModal: () => (dispatch) => dispatch(action.setState({
+        ModalSignupLedger: { showing: false },
+    })),
+
+    // ...
     setAwaitingResponse: () => (dispatch) => dispatch(action.setState({
         awaitingShambhalaResponse: true,
     })),

@@ -55,10 +55,6 @@ export default compose(
 
 
         // ...
-        state = {}
-
-
-        // ...
         handleSelection = () => {
             this.props.showSignupPureModal()
             this.props.setSigningMethod(sm.SHAMBHALA)
