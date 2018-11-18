@@ -30,7 +30,7 @@ export const isSupported = async () => Transport.isSupported()
  */
 export const getSoftwareVersion = async () => {
     if (!await Transport.isSupported()) {
-        throw "Platform not supported."
+        throw new Error("Platform not supported.")
     }
 
     try {    
@@ -40,6 +40,26 @@ export const getSoftwareVersion = async () => {
             result = await str.getAppConfiguration()
         return result.version
     } catch (error) {
-        throw error.message
+        throw error
     } 
+}
+
+
+
+
+/**
+ * Gets Stellar `accountId` from the _Ledger Nano S_ device based on
+ * _BIP-32_ derivation path provided as String argument [e.g. 44'/148'/0']
+ *
+ * @async
+ * @param {Number} [0] Account of the derivation path.
+ * @returns {String}
+ */
+export const getAccountId = async (account=0) => {
+    const
+        transport = await Transport.create(),
+        str = new Str(transport),
+        result = await str.getPublicKey(`44'/148'/${account}'`)
+
+    return result.publicKey
 }

@@ -11,7 +11,8 @@ import Button from "../../lib/mui-v1/Button"
 import { string } from "@xcmats/js-toolbox"
 import { action as KeysActions } from "../../redux/Keys"
 import {
-    setSigningMethod, setProgressMessage, queryDeviceSoftwareVersion
+    getAccountIdFromDevice, setSigningMethod, setProgressMessage,
+    queryDeviceSoftwareVersion
 } from "../../actions/onboarding"
 import { delay } from "@xcmats/js-toolbox"
 
@@ -37,6 +38,7 @@ export default compose(
             setSigningMethod,
             setProgressMessage,
             queryDeviceSoftwareVersion,
+            getAccountIdFromDevice,
         }, dispatch)
     )
 )(
@@ -62,6 +64,7 @@ export default compose(
                 await this.props.setProgressMessage("Querying device ...")
                 await delay(2500)
                 await this.props.queryDeviceSoftwareVersion()
+                await this.props.getAccountIdFromDevice()
 
                 await this.props.cancelAwaitingResponse()
                 await this.props.setProgressMessage("Complete.")
@@ -70,7 +73,7 @@ export default compose(
                 await this.props.hideAwaitLedgerModal()
             } catch (error) {
                 await this.props.cancelAwaitingResponse()
-                await this.props.setProgressMessage(error)
+                await this.props.setProgressMessage(error.message)
             }
             
         }

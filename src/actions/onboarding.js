@@ -17,7 +17,9 @@ import { config } from "../firebase/config"
 import { testNetworkPassphrase } from "../lib/constants"
 import axios from "axios"
 import { Transaction } from "stellar-sdk"
-import { getSoftwareVersion } from "../lib/logic/ledgerhq"
+import {
+    getAccountId, getSoftwareVersion
+} from "../lib/logic/ledgerhq"
 
 
 
@@ -148,4 +150,20 @@ export const queryDeviceSoftwareVersion = () =>
         await dispatch(KeysActions.setState({ deviceSoftwareVersion }))
 
         return deviceSoftwareVersion
+    }
+
+
+
+
+/**
+ *  ...
+ *  @return {Function}
+ */
+export const getAccountIdFromDevice = () =>
+    async (dispatch, _getState) => {
+        const accountId = await getAccountId()
+
+        await dispatch(KeysActions.setState({ accountId }))
+
+        return accountId
     }
