@@ -4,8 +4,8 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
 import {
-    Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
-    withMobileDialog
+    Dialog, DialogActions, DialogContent, DialogTitle,
+    Typography, withMobileDialog
 } from "@material-ui/core"
 import { action as KeysActions} from "../../redux/Keys"
 import {
@@ -77,7 +77,7 @@ export default compose(
                 "Generating signatures ..."
             )
             await this.props.generateSigningKeys()
-
+            
             await this.props.setProgressMessage(
                 "Funding account ..."
             )
@@ -106,25 +106,21 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, fullScreen, open }) =>
+            ({ _classes, fullScreen, open }) =>
                 <Dialog
                     fullScreen={fullScreen}
                     open={open}
                     aria-labelledby="responsive-dialog-title"
                 >
                     <DialogTitle id="responsive-dialog-title">
-                        Shambhala Pure - Welcome
+                        Shambhala Pure - Welcome!
                     </DialogTitle>
                     <DialogContent>
-                        <DialogContentText classes={{ root: classes.textBlue }}>
-                        In a moment we will generate your signature key.
-                        DO NOT EVER share it with anyone. This key has the total
-                        control over your funds and entire account. This is why
-                        it will only be shown to you once here and never again.
-                        Understandably, we will never have access to this key
-                        and therefore cannot help you, should you loose access
-                        to it. Make sure to store it safely!
-                        </DialogContentText>
+                        <Typography variant="h6">
+                            In a moment we will generate your digital signature key.
+                            Please follow the instructions in separate tab that
+                            will open momentarily.
+                        </Typography>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleYes} color="green"

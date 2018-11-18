@@ -267,3 +267,11 @@ select:-webkit-autofill:focus {
 .blue-light {
     color: rgb(172,235,245);
 }
+
+.fade { opacity: 0.8; }
+
+.fade-strong { opacity: 0.6; }
+
+.fade-extreme { opacity: 0.3; }
+
+.cursive { font-style: italic; }

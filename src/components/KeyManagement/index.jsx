@@ -12,6 +12,8 @@ import ShambhalaScepticCard from "./ShambhalaScepticCard"
 import withWidth, { isWidthDown } from "@material-ui/core/withWidth"
 
 
+
+
 // <KeyManagement> component
 export default compose(
     withStyles((_theme) => ({
@@ -71,11 +73,15 @@ export default compose(
                                 "m-t m-b flex-box-row space-around"}
                             >
                                 <ShambhalaPureCard />
+
                                 {isWidthDown("sm", width) &&
                                     <div className="m-b"></div>}
+                                
                                 <ShambhalaLedgerCard />
+                                
                                 {isWidthDown("sm", width) &&
                                     <div className="m-b"></div>}
+                                
                                 <ShambhalaScepticCard />
                             </div>
 

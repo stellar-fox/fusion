@@ -71,9 +71,10 @@ export default compose(
                                 Shambhala Ledger
                             </Typography>
                             <Typography component="p">
-                                Use your Ledger device along with Shambhala
-                                to authorize and sign transactions. Designated
-                                for more secure high volume transactions.
+                                Associate <span className="cursive">Ledger Nano S
+                                </span> device with Shambhala to increase
+                                usability. Transactions are simply signed with
+                                a PIN of your choice.
                             </Typography>
                         </CardContent>
                     </CardActionArea>
