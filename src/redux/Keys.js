@@ -12,6 +12,7 @@ const initState = {
     awaitingShambhalaResponse: false,
     signingMethod: null,
     accountId: null,
+    account: 0,
     signingKeys: {},
     balance: "0.0000000",
     networkPassphrase: testNetworkPassphrase,
@@ -90,6 +91,11 @@ export const action = {
     // ...
     cancelAwaitingResponse: () => (dispatch) => dispatch(action.setState({
         awaitingShambhalaResponse: false,
+    })),
+
+    // ...
+    setAccount: (account) => (dispatch) => dispatch(action.setState({
+        account,
     })),
 
     // ...

@@ -13,7 +13,7 @@ import {
     setSigningMethod
 } from "../../actions/onboarding"
 import Button from "../../lib/mui-v1/Button"
-import { delay, string } from "@xcmats/js-toolbox"
+import { delay } from "@xcmats/js-toolbox"
 
 
 // <ModalSignupPure> component
@@ -49,11 +49,6 @@ export default compose(
             classes: PropTypes.object.isRequired,
         }
 
-
-        // ...
-        state = {
-            progressMessage: string.empty(),
-        }
 
         // ...
         handleYes = async () => {

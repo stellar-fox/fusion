@@ -4,11 +4,10 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
 import {
-    Dialog, DialogActions, DialogContent, DialogTitle,
+    Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, Switch,
     Typography, withMobileDialog
 } from "@material-ui/core"
 import Button from "../../lib/mui-v1/Button"
-import { string } from "@xcmats/js-toolbox"
 import { action as KeysActions } from "../../redux/Keys"
 import {
     getAccountIdFromDevice, setSigningMethod, setProgressMessage,
@@ -35,6 +34,7 @@ export default compose(
             hideAwaitLedgerModal: KeysActions.hideAwaitLedgerModal,
             setAwaitingResponse: KeysActions.setAwaitingResponse,
             cancelAwaitingResponse: KeysActions.cancelAwaitingResponse,
+            setAccount: KeysActions.setAccount,
             setSigningMethod,
             setProgressMessage,
             queryDeviceSoftwareVersion,
@@ -52,8 +52,9 @@ export default compose(
 
         // ...
         state = {
-            progressMessage: string.empty(),
+            useDefaultAccount: true,
         }
+
 
         // ...
         handleYes = async () => {
@@ -87,6 +88,15 @@ export default compose(
 
 
         // ...
+        handleSwitch = () => (event) => {
+            this.setState({ useDefaultAccount: event.target.checked })
+            if (event.target.checked) {
+                this.props.setAccount(0)
+            }
+        }
+
+
+        // ...
         render = () => (
             ({ classes, fullScreen, open }) =>
                 <Dialog
@@ -105,6 +115,14 @@ export default compose(
                             Make sure your device is connected and Stellar
                             application selected.
                         </Typography>
+                        <br />
+                        <FormControlLabel control={
+                            <Switch
+                                checked={this.state.useDefaultAccount}
+                                onChange={this.handleSwitch()}
+                            />
+                        } label="Use Default Account"
+                        />
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleYes} color="green"
