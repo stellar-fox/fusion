@@ -84,7 +84,8 @@ export default withStyles((theme) => ({
         render = () => (
             ({
                 classes, id, error, errorMessage, margin, label, type,
-                onChange, fullWidth, autoComplete, lighter, value,
+                onChange, fullWidth, autoComplete, lighter, value, required,
+                errorClasses, defaultValue,
             }) =>
                 <FormControl
                     error={error}
@@ -109,12 +110,14 @@ export default withStyles((theme) => ({
                             underline: lighter ? classes.underlineLighter :
                                 classes.underline,
                             input: classes.input,
-                            error: classes.inputError,
+                            error: errorClasses || classes.inputError,
                         }}
                         type={type}
                         onChange={onChange}
                         fullWidth={fullWidth}
                         value={value}
+                        required={required}
+                        defaultValue={defaultValue}
                     />
                     <FormHelperText
                         classes={{

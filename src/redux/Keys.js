@@ -12,7 +12,7 @@ const initState = {
     awaitingShambhalaResponse: false,
     signingMethod: null,
     accountId: null,
-    account: 0,
+    account: "0",
     signingKeys: {},
     balance: "0.0000000",
     networkPassphrase: testNetworkPassphrase,
