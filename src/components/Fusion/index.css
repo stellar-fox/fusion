@@ -278,4 +278,6 @@ select:-webkit-autofill:focus {
 
 .fade-extreme { opacity: 0.3; }
 
+.transparent { opacity: 0; }
+
 .cursive { font-style: italic; }

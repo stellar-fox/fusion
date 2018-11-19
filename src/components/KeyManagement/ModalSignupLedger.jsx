@@ -14,7 +14,10 @@ import {
     getAccountIdFromDevice, setSigningMethod, setProgressMessage,
     queryDeviceSoftwareVersion
 } from "../../actions/onboarding"
-import { delay, string } from "@xcmats/js-toolbox"
+import { setUseDefaultAccount, setAccount } from "../../actions/ledgering"
+import { delay, string, type } from "@xcmats/js-toolbox"
+import classNames from "classnames"
+
 
 
 // <ModalSignupPure> component
@@ -42,7 +45,8 @@ export default compose(
     connect(
         (state) => ({
             open: state.Keys.ModalSignupLedger.showing,
-            account: state.Keys.account,
+            account: state.LedgerHQ.account,
+            useDefaultAccount: state.LedgerHQ.useDefaultAccount,
         }),
         (dispatch) => bindActionCreators({
             hideSignupLedgerModal: KeysActions.hideSignupLedgerModal,
@@ -50,11 +54,12 @@ export default compose(
             hideAwaitLedgerModal: KeysActions.hideAwaitLedgerModal,
             setAwaitingResponse: KeysActions.setAwaitingResponse,
             cancelAwaitingResponse: KeysActions.cancelAwaitingResponse,
-            setAccount: KeysActions.setAccount,
+            setAccount,
             setSigningMethod,
             setProgressMessage,
             queryDeviceSoftwareVersion,
             getAccountIdFromDevice,
+            setUseDefaultAccount,
         }, dispatch)
     )
 )(
@@ -68,7 +73,6 @@ export default compose(
 
         // ...
         state = {
-            useDefaultAccount: true,
             errorInput: false,
             errorMessageInput: string.empty(),
         }
@@ -106,16 +110,13 @@ export default compose(
 
 
         // ...
-        handleSwitch = () => (event) => {
-            this.setState({ useDefaultAccount: event.target.checked })
-            if (event.target.checked) {
-                this.props.setAccount("0")
-            }
-        }
+        handleSwitch = () => (event) =>
+            this.props.setUseDefaultAccount(event.target.checked)
 
 
         // ...
         handleChange = () => (event) => {
+
             if (!event.target.value || isNaN(event.target.value)) {
                 this.setState({
                     errorInput: true,
@@ -137,7 +138,7 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, fullScreen, open }) =>
+            ({ classes, fullScreen, open, useDefaultAccount }) =>
                 <Dialog
                     fullScreen={fullScreen}
                     open={open}
@@ -157,13 +158,18 @@ export default compose(
                         <div className="m-t flex-box-row">
                             <FormControlLabel control={
                                 <Switch
-                                    checked={this.state.useDefaultAccount}
+                                    checked={type.toBool(useDefaultAccount)}
                                     onChange={this.handleSwitch()}
                                 />
                             } label="Use Default Account"
                             />
                         </div>
-                        <div className="flex-box-row">
+                        <div className={
+                            classNames(
+                                "flex-box-row",
+                                useDefaultAccount && "transparent"
+                            )}
+                        >
                             <TextInput
                                 label="Account"
                                 defaultValue="0"
