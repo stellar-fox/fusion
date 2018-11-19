@@ -31,7 +31,7 @@ export const isReader = (role) => role === "ROLE_RO"
 export const dynamicImportLibs = async () => {
     let [
 
-        axios, base64, jss, lodash, mui,
+        axios, base64, jss, lodash, mui, cryptops,
         redshift, redux, stellar, toolbox, utils,
 
         // actions
@@ -46,6 +46,7 @@ export const dynamicImportLibs = async () => {
         import("jss"),
         import("lodash"),
         import("@material-ui/core"),
+        import("@stellar-fox/cryptops"),
         import("@stellar-fox/redshift"),
         import("redux"),
         import("stellar-sdk"),
@@ -60,8 +61,8 @@ export const dynamicImportLibs = async () => {
     ])
     return {
         axios, Base64: base64.Base64,
-        jss, lodash, mui, redshift, redux,
-        stellar, toolbox, utils,
+        jss, lodash, mui, cryptops, redshift,
+        redux, stellar, toolbox, utils,
 
         // actions
         actions: {
