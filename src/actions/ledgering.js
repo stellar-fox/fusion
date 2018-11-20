@@ -11,6 +11,7 @@
 
 
 import { action as LedgerHQActions } from "../redux/LedgerHQ"
+import { string } from "@xcmats/js-toolbox"
 
 
 
@@ -23,7 +24,6 @@ export const setUseDefaultAccount = (choice) =>
     async (dispatch, _getState) => {
 
         await dispatch(LedgerHQActions.setState({ useDefaultAccount: choice }))
-        choice && (await dispatch(LedgerHQActions.setState({ account: "0" })))
         return choice
     }
 
@@ -37,6 +37,19 @@ export const setUseDefaultAccount = (choice) =>
 export const setAccount = (account) =>
     async (dispatch, _getState) => {
 
-        await dispatch(LedgerHQActions.setState({ account }))
+        if (!account || account < 0) {
+            await dispatch(LedgerHQActions.setState({
+                account: null,
+                error: true,
+                errorMessage: "Invalid input. Integer numbers only.",
+            }))
+        } else {
+            await dispatch(LedgerHQActions.setState({
+                account,
+                error: false,
+                errorMessage: string.empty(),
+            }))
+        }
+
         return account
     }

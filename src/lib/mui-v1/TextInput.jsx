@@ -85,7 +85,7 @@ export default withStyles((theme) => ({
             ({
                 classes, id, error, errorMessage, margin, label, type,
                 onChange, fullWidth, autoComplete, lighter, value, required,
-                errorClasses, defaultValue,
+                errorClasses, defaultValue, min, max, step,
             }) =>
                 <FormControl
                     error={error}
@@ -118,6 +118,11 @@ export default withStyles((theme) => ({
                         value={value}
                         required={required}
                         defaultValue={defaultValue}
+                        inputProps={{
+                            min,
+                            max,
+                            step,
+                        }}
                     />
                     <FormHelperText
                         classes={{

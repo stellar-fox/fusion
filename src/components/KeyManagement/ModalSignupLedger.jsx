@@ -47,6 +47,8 @@ export default compose(
             open: state.Keys.ModalSignupLedger.showing,
             account: state.LedgerHQ.account,
             useDefaultAccount: state.LedgerHQ.useDefaultAccount,
+            error: state.LedgerHQ.error,
+            errorMessage: state.LedgerHQ.errorMessage,
         }),
         (dispatch) => bindActionCreators({
             hideSignupLedgerModal: KeysActions.hideSignupLedgerModal,
@@ -98,7 +100,7 @@ export default compose(
                 await this.props.cancelAwaitingResponse()
                 await this.props.setProgressMessage(error.message)
             }
-            
+
         }
 
 
@@ -115,30 +117,13 @@ export default compose(
 
 
         // ...
-        handleChange = () => (event) => {
-
-            if (!event.target.value || isNaN(event.target.value)) {
-                this.setState({
-                    errorInput: true,
-                    errorMessageInput: "Invalid input. Integer numbers only.",
-                })
-                this.props.setAccount("0")
-                return false
-            }
-
-            this.setState({
-                errorInput: false,
-                errorMessageInput: string.empty(),
-            })
-
+        handleChange = () => (event) =>
             this.props.setAccount(event.target.value)
-            
-        }
 
 
         // ...
         render = () => (
-            ({ classes, fullScreen, open, useDefaultAccount }) =>
+            ({ classes, error, errorMessage, fullScreen, open, useDefaultAccount }) =>
                 <Dialog
                     fullScreen={fullScreen}
                     open={open}
@@ -175,8 +160,9 @@ export default compose(
                                 defaultValue="0"
                                 onChange={this.handleChange()}
                                 type="number"
-                                error={this.state.errorInput}
-                                errorMessage={this.state.errorMessageInput}
+                                min="0"
+                                error={error}
+                                errorMessage={errorMessage}
                                 errorClasses={ classes.inputError }
                             />
                         </div>

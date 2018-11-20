@@ -1,9 +1,14 @@
-import { createReducer } from "@xcmats/js-toolbox"
+import { createReducer, string } from "@xcmats/js-toolbox"
+
+
+
 
 // <LedgerHQ> initial state
 const initState = {
     useDefaultAccount: true,
     account: "0",
+    error: false,
+    errorMessage: string.empty(),
 }
 
 
@@ -14,7 +19,7 @@ export const SET_STATE = "@LedgerHQ/SET_STATE"
 
 // ...
 export const action = {
-    
+
     // ...
     resetState: () => ({ type: RESET_STATE }),
 
