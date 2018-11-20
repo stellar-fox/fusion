@@ -4,8 +4,8 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
 import {
-    Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, Switch,
-    Typography, withMobileDialog
+    Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel,
+    Switch, Typography, withMobileDialog
 } from "@material-ui/core"
 import Button from "../../lib/mui-v1/Button"
 import TextInput from "../../lib/mui-v1/TextInput"
@@ -15,8 +15,9 @@ import {
     queryDeviceSoftwareVersion
 } from "../../actions/onboarding"
 import { setUseDefaultAccount, setAccount } from "../../actions/ledgering"
-import { delay, string, type } from "@xcmats/js-toolbox"
-import classNames from "classnames"
+import { delay, type } from "@xcmats/js-toolbox"
+import { Motion, presets, spring } from "react-motion"
+
 
 
 
@@ -74,13 +75,6 @@ export default compose(
 
 
         // ...
-        state = {
-            errorInput: false,
-            errorMessageInput: string.empty(),
-        }
-
-
-        // ...
         handleYes = async () => {
             try {
                 await this.props.hideSignupLedgerModal()
@@ -123,7 +117,10 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, error, errorMessage, fullScreen, open, useDefaultAccount }) =>
+            ({
+                classes, error, errorMessage, fullScreen, open,
+                useDefaultAccount,
+            }) =>
                 <Dialog
                     fullScreen={fullScreen}
                     open={open}
@@ -149,23 +146,34 @@ export default compose(
                             } label="Use Default Account"
                             />
                         </div>
-                        <div className={
-                            classNames(
-                                "flex-box-row",
-                                useDefaultAccount && "transparent"
-                            )}
+
+
+                        <Motion defaultStyle={{ opacity: 0 }}
+                            style={{
+                                opacity: spring(
+                                    useDefaultAccount ? 0 : 1,
+                                    presets.gentle
+                                ),
+                            }}
                         >
-                            <TextInput
-                                label="Account"
-                                defaultValue="0"
-                                onChange={this.handleChange()}
-                                type="number"
-                                min="0"
-                                error={error}
-                                errorMessage={errorMessage}
-                                errorClasses={ classes.inputError }
-                            />
-                        </div>
+                            {value =>
+                                <div style={{ opacity: value.opacity }}
+                                    className="flex-box-row"
+                                >
+                                    <TextInput
+                                        label="Account"
+                                        defaultValue="0"
+                                        onChange={this.handleChange()}
+                                        type="number"
+                                        min="0"
+                                        error={error}
+                                        errorMessage={errorMessage}
+                                        errorClasses={ classes.inputError }
+                                    />
+                                </div>}
+                        </Motion>
+
+
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleYes} color="green"
