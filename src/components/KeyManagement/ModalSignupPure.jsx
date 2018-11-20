@@ -27,6 +27,8 @@ export default compose(
     connect(
         (state) => ({
             open: state.Keys.ModalSignupPure.showing,
+            networkPassphrase: state.Keys.networkPassphrase,
+            accountId: state.Keys.accountId,
         }),
         (dispatch) => bindActionCreators({
             cancelAwaitingResponse: KeysActions.cancelAwaitingResponse,
@@ -72,12 +74,22 @@ export default compose(
                 "Generating signatures ..."
             )
             await this.props.generateSigningKeys()
-            
+
             await this.props.setProgressMessage(
                 "Funding account ..."
             )
 
             await this.props.fundAccount()
+
+            // const sequence = await this.props.getSequenceNumber()
+
+            // await this.props.generateSignedKeyAssocTX(
+            //     this.props.accountId,
+            //     sequence,
+            //     this.props.networkPassphrase
+            // )
+
+
             await this.props.cancelAwaitingResponse()
             await this.props.setProgressMessage("Complete.")
 

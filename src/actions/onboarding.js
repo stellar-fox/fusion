@@ -135,6 +135,13 @@ export const fundAccount = () =>
 
 
 
+
+
+
+
+
+
+
 // 2. call generateSignedKeyAssocTX
 
 // 3. broadcast it to the network
@@ -162,8 +169,9 @@ export const queryDeviceSoftwareVersion = () =>
  *  @return {Function}
  */
 export const getAccountIdFromDevice = () =>
-    async (dispatch, _getState) => {
-        const accountId = await getAccountId()
+    async (dispatch, getState) => {
+        const { useDefaultAccount, account } = getState().LedgerHQ,
+            accountId = await getAccountId(useDefaultAccount ? "0" : account)
 
         await dispatch(KeysActions.setState({ accountId }))
 

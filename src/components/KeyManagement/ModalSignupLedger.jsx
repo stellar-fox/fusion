@@ -14,6 +14,7 @@ import {
     getAccountIdFromDevice, setSigningMethod, setProgressMessage,
     queryDeviceSoftwareVersion
 } from "../../actions/onboarding"
+import { getSequenceNumber } from "../../actions/stellarAccount"
 import { setUseDefaultAccount, setAccount } from "../../actions/ledgering"
 import { delay, type } from "@xcmats/js-toolbox"
 import { Motion, presets, spring } from "react-motion"
@@ -63,6 +64,7 @@ export default compose(
             queryDeviceSoftwareVersion,
             getAccountIdFromDevice,
             setUseDefaultAccount,
+            getSequenceNumber,
         }, dispatch)
     )
 )(
@@ -84,6 +86,11 @@ export default compose(
                 await delay(2500)
                 await this.props.queryDeviceSoftwareVersion()
                 await this.props.getAccountIdFromDevice()
+
+                await delay(1500)
+                await this.props.setProgressMessage("Fetching sequence number ...")
+                await this.props.getSequenceNumber()
+
 
                 await this.props.cancelAwaitingResponse()
                 await this.props.setProgressMessage("Complete.")
@@ -162,7 +169,7 @@ export default compose(
                                 >
                                     <TextInput
                                         label="Account"
-                                        defaultValue="0"
+                                        defaultValue={this.props.account}
                                         onChange={this.handleChange()}
                                         type="number"
                                         min="0"
