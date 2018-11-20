@@ -70,7 +70,7 @@ export const generateAccountId = () =>
                     Promise.reject("NOT IMPLEMENTED YET"),
 
                 [sm.SHAMBHALA]:
-                    new Shambhala(config.shambhala.client, jwt)
+                    new Shambhala(config.shambhala.client, { token: jwt })
                         .generateAddress,
 
             }, () => Promise.reject("unknown signing method"))
@@ -92,8 +92,10 @@ export const generateSigningKeys = () =>
         let
             { accountId } = getState().Keys,
             { jwt } = getState().Auth,
-            signingKeys = await new Shambhala(config.shambhala.client, jwt)
-                .generateSigningKeys(accountId)
+            signingKeys = await new Shambhala(
+                config.shambhala.client,
+                { token: jwt }
+            ).generateSigningKeys(accountId)
 
         // TODO: remove later - leave now for debugging/testing
         await dispatch(KeysActions.setState({ signingKeys }))
@@ -146,7 +148,7 @@ export const fundAccount = () =>
 export const queryDeviceSoftwareVersion = () =>
     async (dispatch, _getState) => {
         const deviceSoftwareVersion = await getSoftwareVersion()
-        
+
         await dispatch(KeysActions.setState({ deviceSoftwareVersion }))
 
         return deviceSoftwareVersion
