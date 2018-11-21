@@ -8,8 +8,8 @@ const initState = {}
 
 
 // state const definitions
-export const ADD_ACCOUNT = "@StellarAccount/ADD_ACCOUNT"
-// export const ADD_SIGNING_METHOD = "@StellarAccount/ADD_SIGNING_METHOD"
+export const UPDATE_ACCOUNT_STATE = "@StellarAccount/UPDATE_ACCOUNT_STATE"
+export const ADD_SIGNING_METHOD = "@StellarAccount/ADD_SIGNING_METHOD"
 export const RESET_STATE = "@StellarAccount/RESET_STATE"
 export const SET_STATE = "@StellarAccount/SET_STATE"
 
@@ -18,9 +18,16 @@ export const SET_STATE = "@StellarAccount/SET_STATE"
 export const action = {
 
     // ...
-    addAccount: (account) => ({
-        type: ADD_ACCOUNT,
+    updateAccountState: (account) => ({
+        type: UPDATE_ACCOUNT_STATE,
         account,
+    }),
+
+    // ...
+    addSigningMethod: (accountId, signingMethod) => ({
+        type: ADD_SIGNING_METHOD,
+        accountId,
+        signingMethod,
     }),
 
     // ...
@@ -39,7 +46,7 @@ export const action = {
 export const reducer = createReducer(initState)({
 
     // ...
-    [ADD_ACCOUNT]: (state, action) => ({
+    [UPDATE_ACCOUNT_STATE]: (state, action) => ({
         ...state,
         [action.account.id]: {
             accountId: action.account.id,
@@ -47,23 +54,22 @@ export const reducer = createReducer(initState)({
             networkPassphrase: action.account.networkPassphrase,
             horizonUrl: action.account.horizonUrl,
             balances: action.account.balances,
-            signingMethod: action.account.signingMethod,
-            // signingMethods: [],
+            signingMethods: [],
         },
     }),
 
 
     // ...
-    // [ADD_SIGNING_METHOD]: (state, action) => ({
-    //     ...state,
-    //     [action.accountId]: {
-    //         ...state[action.accountId],
-    //         signingMethods:
-    //             state[action.accountId]
-    //                 .signingMethods
-    //                 .concat([action.signingMethod]),
-    //     },
-    // }),
+    [ADD_SIGNING_METHOD]: (state, action) => ({
+        ...state,
+        [action.accountId]: {
+            ...state[action.accountId],
+            signingMethods:
+                state[action.accountId]
+                    .signingMethods
+                    .concat([action.signingMethod]),
+        },
+    }),
 
 
     // ...

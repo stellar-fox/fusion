@@ -43,14 +43,33 @@ setEnv()
 export const getLatestAccountState = () =>
     async (dispatch, getState) => {
         let
-            { accountId, signingMethod } = getState().Keys,
+            { accountId } = getState().Keys,
             stellarAccount = await context.server.loadAccount(accountId)
 
         stellarAccount.networkPassphrase = context.network
         stellarAccount.horizonUrl = context.horizonUrl
-        stellarAccount.signingMethod = signingMethod
 
-        await dispatch(StellarAccountsActions.addAccount(stellarAccount))
+        await dispatch(
+            StellarAccountsActions.updateAccountState(stellarAccount)
+        )
 
         return stellarAccount
+    }
+
+
+
+
+/**
+ *  ...
+ *  @return {Function}
+ */
+export const addSigningMethodToAccount = () =>
+    async (dispatch, getState) => {
+        let { accountId, signingMethod } = getState().Keys
+
+        await dispatch(StellarAccountsActions.addSigningMethod(
+            accountId, signingMethod
+        ))
+
+        return signingMethod
     }

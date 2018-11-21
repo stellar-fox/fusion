@@ -13,7 +13,7 @@ import { action as KeysActions } from "../../redux/Keys"
 import {
     generateMultisig, setSigningMethod, setProgressMessage
 } from "../../actions/onboarding"
-import { getLatestAccountState } from "../../actions/stellarAccount"
+import { addSigningMethodToAccount, getLatestAccountState } from "../../actions/stellarAccount"
 import {
     getAccountIdFromDevice, setUseDefaultAccount, setAccount,
     queryForSoftwareVersion
@@ -67,6 +67,7 @@ export default compose(
             getAccountIdFromDevice,
             setUseDefaultAccount,
             getLatestAccountState,
+            addSigningMethodToAccount,
             generateMultisig,
         }, dispatch)
     )
@@ -93,6 +94,8 @@ export default compose(
                 await delay(1500)
                 await this.props.setProgressMessage("Fetching sequence number ...")
                 await this.props.getLatestAccountState()
+
+                await this.props.addSigningMethodToAccount()
 
                 await this.props.setProgressMessage("Creating multisig ...")
                 await this.props.generateMultisig()
