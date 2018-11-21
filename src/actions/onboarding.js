@@ -16,10 +16,30 @@ import { action as KeysActions, signingMethod as sm } from "../redux/Keys"
 import { config } from "../firebase/config"
 import { testNetworkPassphrase } from "../lib/constants"
 import axios from "axios"
-import { Transaction } from "stellar-sdk"
-import {
-    getAccountId, getSoftwareVersion
-} from "../lib/logic/ledgerhq"
+import { Network, Networks, Server, Transaction } from "stellar-sdk"
+
+
+
+
+const context = {}
+
+
+const setEnv = async ({
+    network = Networks.TESTNET,
+    horizonUrl = "https://horizon-testnet.stellar.org/",
+} = {}) => {
+
+    Network.use(new Network(network))
+    context.network = network
+
+    context.server = new Server(horizonUrl)
+    context.horizonUrl = horizonUrl
+
+    return context
+
+}
+
+setEnv()
 
 
 
@@ -82,6 +102,7 @@ export const generateAccountId = () =>
 
 
 
+
 /**
  * ...
  *
@@ -105,8 +126,6 @@ export const generateSigningKeys = () =>
 
 
 
-// 1. fund the account - only if there are not enough funds on the account
-// that would prevent the further operations of injecting multisignatures.
 
 /**
  *  ...
@@ -136,44 +155,26 @@ export const fundAccount = () =>
 
 
 
-
-
-
-
-
-
-// 2. call generateSignedKeyAssocTX
-
-// 3. broadcast it to the network
-
-
-
 /**
  *  ...
  *  @return {Function}
  */
-export const queryDeviceSoftwareVersion = () =>
-    async (dispatch, _getState) => {
-        const deviceSoftwareVersion = await getSoftwareVersion()
-
-        await dispatch(KeysActions.setState({ deviceSoftwareVersion }))
-
-        return deviceSoftwareVersion
-    }
-
-
-
-
-/**
- *  ...
- *  @return {Function}
- */
-export const getAccountIdFromDevice = () =>
+export const generateMultisig = () =>
     async (dispatch, getState) => {
-        const { useDefaultAccount, account } = getState().LedgerHQ,
-            accountId = await getAccountId(useDefaultAccount ? "0" : account)
+        try {
+            let
+                { jwt } = getState().Auth,
+                { accountId } = getState().Keys,
+                { networkPassphrase, sequence } = getState().StellarAccounts[accountId],
+                tx = await new Shambhala(
+                    config.shambhala.client,
+                    { token: jwt }
+                ).generateSignedKeyAssocTX(accountId, sequence, networkPassphrase),
+                serverResponse = await context.server.submitTransaction(tx)
+            await dispatch(KeysActions.setState({ serverResponse }))
+        } catch (error) {
+            await dispatch(KeysActions.setState({ serverResponse: error }))
+        }
 
-        await dispatch(KeysActions.setState({ accountId }))
-
-        return accountId
+        return true
     }

@@ -40,11 +40,14 @@ setEnv()
  *  ...
  *  @return {Function}
  */
-export const getSequenceNumber = () =>
+export const getLatestAccountState = () =>
     async (dispatch, getState) => {
         let
             { accountId } = getState().Keys,
             stellarAccount = await context.server.loadAccount(accountId)
+
+        stellarAccount.networkPassphrase = context.network
+        stellarAccount.horizonUrl = context.horizonUrl
 
         await dispatch(StellarAccountsActions.addAccount(stellarAccount))
 

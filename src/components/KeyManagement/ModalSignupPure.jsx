@@ -9,9 +9,10 @@ import {
 } from "@material-ui/core"
 import { action as KeysActions} from "../../redux/Keys"
 import {
-    fundAccount, generateAccountId, generateSigningKeys, setProgressMessage,
-    setSigningMethod
+    fundAccount, generateAccountId, generateMultisig, generateSigningKeys,
+    setProgressMessage, setSigningMethod
 } from "../../actions/onboarding"
+import { getLatestAccountState } from "../../actions/stellarAccount"
 import Button from "../../lib/mui-v1/Button"
 import { delay } from "@xcmats/js-toolbox"
 
@@ -41,6 +42,8 @@ export default compose(
             generateSigningKeys,
             setProgressMessage,
             setSigningMethod,
+            getLatestAccountState,
+            generateMultisig,
         }, dispatch)
     )
 )(
@@ -61,13 +64,13 @@ export default compose(
                 "Awaiting response ..."
             )
 
-            await delay(2500)
+            // await delay(2500)
 
             // SHAMBHALA -------- BEGIN
             await this.props.setProgressMessage(
                 "Generating account number ..."
             )
-            await delay(1500)
+            // await delay(1500)
 
             await this.props.generateAccountId()
             await this.props.setProgressMessage(
@@ -81,14 +84,10 @@ export default compose(
 
             await this.props.fundAccount()
 
-            // const sequence = await this.props.getSequenceNumber()
+            await this.props.getLatestAccountState()
 
-            // await this.props.generateSignedKeyAssocTX(
-            //     this.props.accountId,
-            //     sequence,
-            //     this.props.networkPassphrase
-            // )
-
+            await this.props.setProgressMessage("Creating multisig ...")
+            await this.props.generateMultisig()
 
             await this.props.cancelAwaitingResponse()
             await this.props.setProgressMessage("Complete.")

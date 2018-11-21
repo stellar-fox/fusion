@@ -40,7 +40,12 @@ export const reducer = createReducer(initState)({
     // ...
     [ADD_ACCOUNT]: (state, action) =>
         Object.assign(state, {
-            [action.account.id]: { sequence: action.account.sequence },
+            [action.account.id]: {
+                sequence: action.account.sequence,
+                networkPassphrase: action.account.networkPassphrase,
+                horizonUrl: action.account.horizonUrl,
+                balances: action.account.balances,
+            },
         }),
 
 
