@@ -166,11 +166,12 @@ export const generateMultisig = () =>
                 { jwt } = getState().Auth,
                 { accountId } = getState().Keys,
                 { networkPassphrase, sequence } = getState().StellarAccounts[accountId],
-                tx = await new Shambhala(
+                tx = new Transaction(await new Shambhala(
                     config.shambhala.client,
                     { token: jwt }
-                ).generateSignedKeyAssocTX(accountId, sequence, networkPassphrase),
+                ).generateSignedKeyAssocTX(accountId, sequence, networkPassphrase)),
                 serverResponse = await context.server.submitTransaction(tx)
+
             await dispatch(KeysActions.setState({ serverResponse }))
         } catch (error) {
             await dispatch(KeysActions.setState({ serverResponse: error }))

@@ -45,6 +45,7 @@ export const reducer = createReducer(initState)({
                 networkPassphrase: action.account.networkPassphrase,
                 horizonUrl: action.account.horizonUrl,
                 balances: action.account.balances,
+                signingMethod: action.account.signingMethod,
             },
         }),
 
