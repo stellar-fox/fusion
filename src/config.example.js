@@ -20,4 +20,10 @@ export const config = {
         avatar: "https://example.com/.well-known/logo.png",
         type: "asset_type_string",
     },
+    shambhala: {
+        client: "<SHAMBHALA_CLIENT_URL>",
+    },
+    friendbot: {
+        client: "<PROTOSTAR_FRIENDBOT_URL>",
+    },
 }
