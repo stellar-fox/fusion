@@ -16,7 +16,6 @@ const initState = {
     balance: "0.0000000",
     networkPassphrase: testNetworkPassphrase,
     progressMessage: string.empty(),
-    deviceSoftwareVersion: null,
 }
 
 
@@ -29,6 +28,7 @@ export const SET_STATE = "@Keys/SET_STATE"
 
 /**
  * Enumeration of possible signing methods.
+ * MANUAL, LEDGERHQ, SHAMBHALA
  *
  * @constant signingMethod
  */

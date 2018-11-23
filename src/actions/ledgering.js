@@ -1,9 +1,11 @@
 /**
  * Fusion.
  *
- * LedgerHQ-UI interaction logic.
+ * Represents an action set that manipulates _Redux_ state. The actions in this
+ * module reflect user interaction with the front-end elements pertaining to
+ * the hardware keyring device such as _Ledger Nano S_.
  *
- * @module onboarding-actions
+ * @module ledgerhq-actions
  * @license Apache-2.0
  */
 
@@ -11,16 +13,15 @@
 
 
 import { action as LedgerHQActions } from "../redux/LedgerHQ"
-import { action as KeysActions } from "../redux/Keys"
 import { string } from "@xcmats/js-toolbox"
-import {
-    getAccountId, getSoftwareVersion
-} from "../lib/logic/ledgerhq"
+
 
 
 
 /**
- *  ...
+ *  Sets _redux_ state signifying if a "default" account (0) should be used for
+ *  path derivation.
+ *  @function setUseDefaultAccount
  *  @return {Function}
  */
 export const setUseDefaultAccount = (choice) =>
@@ -34,7 +35,9 @@ export const setUseDefaultAccount = (choice) =>
 
 
 /**
- *  ...
+ * Sets _account_ part of a derivation path. Positive integers are only valid
+ * as an input.
+ *  @function setAccount
  *  @return {Function}
  */
 export const setAccount = (account) =>
@@ -55,37 +58,4 @@ export const setAccount = (account) =>
         }
 
         return account
-    }
-
-
-
-
-/**
- *  ...
- *  @return {Function}
- */
-export const queryForSoftwareVersion = () =>
-    async (dispatch, _getState) => {
-        const softwareVersion = await getSoftwareVersion()
-
-        await dispatch(LedgerHQActions.setState({ softwareVersion }))
-
-        return softwareVersion
-    }
-
-
-
-
-/**
- *  ...
- *  @return {Function}
- */
-export const getAccountIdFromDevice = () =>
-    async (dispatch, getState) => {
-        const { useDefaultAccount, account } = getState().LedgerHQ,
-            accountId = await getAccountId(useDefaultAccount ? "0" : account)
-
-        await dispatch(KeysActions.setState({ accountId }))
-
-        return accountId
     }

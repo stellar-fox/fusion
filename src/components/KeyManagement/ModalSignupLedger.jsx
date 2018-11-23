@@ -11,12 +11,13 @@ import Button from "../../lib/mui-v1/Button"
 import TextInput from "../../lib/mui-v1/TextInput"
 import { action as KeysActions } from "../../redux/Keys"
 import {
-    generateMultisig, setSigningMethod, setProgressMessage
+    obtainAccountId, generateMultisig, setSigningMethod, setProgressMessage
 } from "../../actions/onboarding"
-import { addSigningMethodToAccount, getLatestAccountState } from "../../actions/stellarAccount"
 import {
-    getAccountIdFromDevice, setUseDefaultAccount, setAccount,
-    queryForSoftwareVersion
+    addSigningMethodToAccount, getLatestAccountState
+} from "../../actions/stellarAccount"
+import {
+    setUseDefaultAccount, setAccount
 } from "../../actions/ledgering"
 import { delay, type } from "@xcmats/js-toolbox"
 import { Motion, presets, spring } from "react-motion"
@@ -63,12 +64,11 @@ export default compose(
             setAccount,
             setSigningMethod,
             setProgressMessage,
-            queryForSoftwareVersion,
-            getAccountIdFromDevice,
             setUseDefaultAccount,
             getLatestAccountState,
             addSigningMethodToAccount,
             generateMultisig,
+            obtainAccountId,
         }, dispatch)
     )
 )(
@@ -86,19 +86,21 @@ export default compose(
                 await this.props.hideSignupLedgerModal()
                 await this.props.showAwaitLedgerModal()
                 await this.props.setAwaitingResponse()
+
                 await this.props.setProgressMessage("Querying device ...")
-                await delay(2500)
-                await this.props.queryForSoftwareVersion()
-                await this.props.getAccountIdFromDevice()
+                await this.props.obtainAccountId()
 
-                await delay(1500)
-                await this.props.setProgressMessage("Fetching sequence number ...")
-                await this.props.getLatestAccountState()
+                // await this.props.setProgressMessage("Associating account ...")
+                // await this.props.getAccountId()
 
-                await this.props.addSigningMethodToAccount()
 
-                await this.props.setProgressMessage("Creating multisig ...")
-                await this.props.generateMultisig()
+
+                // await this.props.setProgressMessage("Fetching current account data ...")
+                // await this.props.getLatestAccountState()
+                // await this.props.addSigningMethodToAccount()
+
+                // await this.props.setProgressMessage("Creating multisig ...")
+                // await this.props.generateMultisig()
 
                 await this.props.cancelAwaitingResponse()
                 await this.props.setProgressMessage("Complete.")

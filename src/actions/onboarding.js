@@ -1,7 +1,9 @@
 /**
  * Fusion.
  *
- * Onboarding logic.
+ * Represents an action set that manipulates _Redux_ state. The actions in this
+ * module reflect user interaction with the front-end elements during
+ * key management.
  *
  * @module onboarding-actions
  * @license Apache-2.0
@@ -17,6 +19,8 @@ import { config } from "../firebase/config"
 import { testNetworkPassphrase } from "../lib/constants"
 import axios from "axios"
 import { Network, Networks, Server, Transaction } from "stellar-sdk"
+import { getAccountId, getSoftwareVersion } from "../lib/logic/ledgerhq"
+import { action as LedgerHQActions } from "../redux/LedgerHQ"
 
 
 
@@ -45,8 +49,9 @@ setEnv()
 
 
 /**
- * ...
+ * Sets _redux_ state signifying current chosen method of onboarding a new key.
  *
+ * @function setSigningMethod
  * @param {String} signingMethod
  * @return {Function}
  */
@@ -58,8 +63,9 @@ export const setSigningMethod = (signingMethod) =>
 
 
 /**
- * ...
+ * Updates _redux_ state holding the current progress message during onboarding.
  *
+ * @function setProgressMessage
  * @param {String} progressMessage
  * @return {Function}
  */
@@ -71,12 +77,16 @@ export const setProgressMessage = (progressMessage) =>
 
 
 /**
- * ...
+ * Depending on a method of onboarding it executes
+ * a set of actions in order to obtain an account number that will be
+ * associated with the Shambhala signing mechanism.
  *
+ * @function obtainAccountId
  * @return {Function}
  */
-export const generateAccountId = () =>
+export const obtainAccountId = () =>
     async (dispatch, getState) => {
+
         let
             { signingMethod } = getState().Keys,
             { jwt } = getState().Auth,
@@ -86,15 +96,29 @@ export const generateAccountId = () =>
                 [sm.MANUAL]: () =>
                     Promise.reject("NOT IMPLEMENTED YET"),
 
-                [sm.LEDGERHQ]: () =>
-                    Promise.reject("NOT IMPLEMENTED YET"),
 
+                // at this time it not only obtains the account number from the
+                // Ledger Nano S device but also queries for its software
+                // version and sets it within LedgerHQ redux namespace
+                [sm.LEDGERHQ]: async () => {
+                    const softwareVersion = await getSoftwareVersion()
+                    await dispatch(LedgerHQActions.setState({
+                        softwareVersion,
+                    }))
+                    return await getAccountId()
+                },
+
+
+                // generates random account number to be associated with
+                // shambhala signing mechanism
                 [sm.SHAMBHALA]:
                     new Shambhala(config.shambhala.client, { token: jwt })
                         .generateAddress,
 
             }, () => Promise.reject("unknown signing method"))
 
+
+        // sets the "onboarding - last used" accountId in Keys redux namespace
         await dispatch(KeysActions.setState({ accountId }))
 
         return accountId
@@ -104,8 +128,9 @@ export const generateAccountId = () =>
 
 
 /**
- * ...
+ * Generates a set of signing keys.
  *
+ * @function generateSigningKeys
  * @return {Function}
  */
 export const generateSigningKeys = () =>
@@ -118,7 +143,8 @@ export const generateSigningKeys = () =>
                 { token: jwt }
             ).generateSigningKeys(accountId)
 
-        // TODO: remove later - leave now for debugging/testing
+        // this redux key is not used and does not necessarily need to be
+        // set but will leave now for debugging/testing and perhaps future use
         await dispatch(KeysActions.setState({ signingKeys }))
 
         return signingKeys
@@ -128,8 +154,12 @@ export const generateSigningKeys = () =>
 
 
 /**
- *  ...
- *  @return {Function}
+ * Based on network passphrase funds the new account with just enough XLM to
+ * pay for the operations needed add additional signers on the account as well
+ * as deposit for the additional account subentries.
+ *
+ * @function fundAccount
+ * @return {Function}
  */
 export const fundAccount = () =>
     async (dispatch, getState) => {
@@ -137,7 +167,7 @@ export const fundAccount = () =>
             { accountId, networkPassphrase } = getState().Keys,
 
             fundReponse = networkPassphrase === testNetworkPassphrase ?
-                await axios.get("https://friendbot.stellar.org/", {
+                await axios.get(config.friendbot.client, {
                     params: { addr: accountId },
                 }) : null, /* to be defined */
 
@@ -156,7 +186,7 @@ export const fundAccount = () =>
 
 
 /**
- *  ...
+ *  @function
  *  @return {Function}
  */
 export const generateMultisig = () =>

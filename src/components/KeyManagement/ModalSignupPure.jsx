@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core"
 import { action as KeysActions} from "../../redux/Keys"
 import {
-    fundAccount, getAccountId, generateMultisig, generateSigningKeys,
+    fundAccount, obtainAccountId, generateMultisig, generateSigningKeys,
     setProgressMessage, setSigningMethod
 } from "../../actions/onboarding"
 import { addSigningMethodToAccount, getLatestAccountState } from "../../actions/stellarAccount"
@@ -38,7 +38,7 @@ export default compose(
             showAwaitPureModal: KeysActions.showAwaitPureModal,
             hideAwaitPureModal: KeysActions.hideAwaitPureModal,
             fundAccount,
-            getAccountId,
+            obtainAccountId,
             generateSigningKeys,
             setProgressMessage,
             setSigningMethod,
@@ -71,7 +71,7 @@ export default compose(
                 await this.props.setProgressMessage(
                     "Generating account number ..."
                 )
-                await this.props.getAccountId()
+                await this.props.obtainAccountId()
                 await this.props.setProgressMessage(
                     "Generating signatures ..."
                 )
