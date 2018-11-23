@@ -9,8 +9,8 @@ import {
 } from "@material-ui/core"
 import { action as KeysActions} from "../../redux/Keys"
 import {
-    fundAccount, obtainAccountId, generateMultisig, generateSigningKeys,
-    setProgressMessage, setSigningMethod
+    fundAccount, obtainAccountId, generateSignedMultisigTx, generateSigningKeys,
+    setProgressMessage, setSigningMethod, submitTransaction
 } from "../../actions/onboarding"
 import { addSigningMethodToAccount, getLatestAccountState } from "../../actions/stellarAccount"
 import Button from "../../lib/mui-v1/Button"
@@ -44,7 +44,8 @@ export default compose(
             setSigningMethod,
             getLatestAccountState,
             addSigningMethodToAccount,
-            generateMultisig,
+            generateSignedMultisigTx,
+            submitTransaction,
         }, dispatch)
     )
 )(
@@ -66,8 +67,6 @@ export default compose(
                 await this.props.setProgressMessage(
                     "Awaiting response ..."
                 )
-
-                // SHAMBHALA -------- BEGIN
                 await this.props.setProgressMessage(
                     "Generating account number ..."
                 )
@@ -82,12 +81,17 @@ export default compose(
                 await this.props.fundAccount()
                 await this.props.getLatestAccountState()
                 await this.props.addSigningMethodToAccount()
-                await this.props.setProgressMessage("Creating multisig ...")
-                await this.props.generateMultisig()
-                // SHAMBHALA -------- END
+                await this.props.setProgressMessage(
+                    "Creating additional signatures ..."
+                )
+
+                const signedTx = await this.props.generateSignedMultisigTx()
+                await this.props.submitTransaction(signedTx)
 
                 await this.props.cancelAwaitingResponse()
-                await this.props.setProgressMessage("Complete.")
+                await this.props.setProgressMessage(
+                    "Complete."
+                )
                 await delay(1500)
                 await this.props.hideAwaitPureModal()
 

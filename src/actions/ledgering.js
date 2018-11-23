@@ -14,6 +14,7 @@
 
 import { action as LedgerHQActions } from "../redux/LedgerHQ"
 import { string } from "@xcmats/js-toolbox"
+import { signTransaction } from "../lib/logic/ledgerhq"
 
 
 
@@ -58,4 +59,27 @@ export const setAccount = (account) =>
         }
 
         return account
+    }
+
+
+
+
+/**
+ * @function signTx
+ * @param {Transaction} tx
+ * @return {Function}
+ */
+export const signTx = (tx) =>
+    async (_dispatch, getState) => {
+        try {
+            let
+                { accountId } = getState().Keys,
+                { useDefaultAccount, account } = getState().LedgerHQ,
+                signedTx = await signTransaction(
+                    tx, accountId, useDefaultAccount ? "0" : account
+                )
+            return signedTx
+        } catch (error) {
+            throw new Error(error.message)
+        }
     }

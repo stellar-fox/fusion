@@ -70,8 +70,7 @@ export default compose(
                     <DialogContent>
                         <div className="flex-box-col items-centered content-centered">
                             <Typography variant="body2">
-                                Shambhala is associating your device's public key
-                                with secure multisignature pool.
+                                Processing selected account.
                             </Typography>
                             <Motion defaultStyle={{ opacity: 0 }}
                                 style={{

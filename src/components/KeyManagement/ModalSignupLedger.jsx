@@ -11,13 +11,14 @@ import Button from "../../lib/mui-v1/Button"
 import TextInput from "../../lib/mui-v1/TextInput"
 import { action as KeysActions } from "../../redux/Keys"
 import {
-    obtainAccountId, generateMultisig, setSigningMethod, setProgressMessage
+    obtainAccountId, generateMultisigTx, generateSigningKeys, setSigningMethod,
+    setProgressMessage, submitTransaction
 } from "../../actions/onboarding"
 import {
     addSigningMethodToAccount, getLatestAccountState
 } from "../../actions/stellarAccount"
 import {
-    setUseDefaultAccount, setAccount
+    setUseDefaultAccount, setAccount, signTx
 } from "../../actions/ledgering"
 import { delay, type } from "@xcmats/js-toolbox"
 import { Motion, presets, spring } from "react-motion"
@@ -67,8 +68,11 @@ export default compose(
             setUseDefaultAccount,
             getLatestAccountState,
             addSigningMethodToAccount,
-            generateMultisig,
+            generateMultisigTx,
             obtainAccountId,
+            generateSigningKeys,
+            signTx,
+            submitTransaction,
         }, dispatch)
     )
 )(
@@ -86,21 +90,28 @@ export default compose(
                 await this.props.hideSignupLedgerModal()
                 await this.props.showAwaitLedgerModal()
                 await this.props.setAwaitingResponse()
-
-                await this.props.setProgressMessage("Querying device ...")
+                await this.props.setProgressMessage(
+                    "Querying device ..."
+                )
                 await this.props.obtainAccountId()
 
-                // await this.props.setProgressMessage("Associating account ...")
-                // await this.props.getAccountId()
+                await this.props.setAwaitingResponse()
+                await this.props.setProgressMessage(
+                    "Awaiting response ..."
+                )
+
+                await this.props.generateSigningKeys()
 
 
+                await this.props.setProgressMessage(
+                    "Fetching current account data ..."
+                )
+                await this.props.getLatestAccountState()
+                await this.props.addSigningMethodToAccount()
 
-                // await this.props.setProgressMessage("Fetching current account data ...")
-                // await this.props.getLatestAccountState()
-                // await this.props.addSigningMethodToAccount()
-
-                // await this.props.setProgressMessage("Creating multisig ...")
-                // await this.props.generateMultisig()
+                const tx = await this.props.generateMultisigTx()
+                const signedTx = await this.props.signTx(tx)
+                await this.props.submitTransaction(signedTx)
 
                 await this.props.cancelAwaitingResponse()
                 await this.props.setProgressMessage("Complete.")

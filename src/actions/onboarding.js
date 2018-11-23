@@ -89,6 +89,7 @@ export const obtainAccountId = () =>
 
         let
             { signingMethod } = getState().Keys,
+            { useDefaultAccount, account } = getState().LedgerHQ,
             { jwt } = getState().Auth,
 
             accountId = await func.choose(signingMethod, {
@@ -105,7 +106,18 @@ export const obtainAccountId = () =>
                     await dispatch(LedgerHQActions.setState({
                         softwareVersion,
                     }))
-                    return await getAccountId()
+
+                    // testing
+                    return useDefaultAccount ? await getAccountId() :
+                        await getAccountId(account)
+
+                    // return new Shambhala(
+                    //     config.shambhala.client, { token: jwt }
+                    // ).associateAddress(
+                    //     useDefaultAccount ? await getAccountId() :
+                    //         await getAccountId(account)
+                    // )
+
                 },
 
 
@@ -186,26 +198,58 @@ export const fundAccount = () =>
 
 
 /**
- *  @function
- *  @return {Function}
+ *
+ * @function generateSignedMultisigTx
+ * @return {Function}
  */
-export const generateMultisig = () =>
-    async (dispatch, getState) => {
-        try {
-            let
-                { jwt } = getState().Auth,
-                { accountId } = getState().Keys,
-                { networkPassphrase, sequence } = getState().StellarAccounts[accountId],
-                tx = new Transaction(await new Shambhala(
-                    config.shambhala.client,
-                    { token: jwt }
-                ).generateSignedKeyAssocTX(accountId, sequence, networkPassphrase)),
-                serverResponse = await context.server.submitTransaction(tx)
+export const generateSignedMultisigTx = () =>
+    async (_dispatch, getState) => {
 
-            await dispatch(KeysActions.setState({ serverResponse }))
-        } catch (error) {
-            await dispatch(KeysActions.setState({ serverResponse: error }))
-        }
+        let
+            { jwt } = getState().Auth,
+            { accountId } = getState().Keys,
+            { networkPassphrase, sequence } = getState().StellarAccounts[accountId],
 
-        return true
+            tx = new Transaction(await new Shambhala(
+                config.shambhala.client,
+                { token: jwt }
+            ).generateSignedKeyAssocTX(accountId, sequence, networkPassphrase))
+
+        return tx
     }
+
+
+
+
+/**
+ *
+ * @function generateMultisigTx
+ * @return {Function}
+ */
+export const generateMultisigTx = () =>
+    async (_dispatch, getState) => {
+
+        let
+            { jwt } = getState().Auth,
+            { accountId } = getState().Keys,
+            { networkPassphrase, sequence } = getState().StellarAccounts[accountId],
+
+            tx = new Transaction(await new Shambhala(
+                config.shambhala.client,
+                { token: jwt }
+            ).generateKeyAssocTX(accountId, sequence, networkPassphrase))
+
+        return tx
+    }
+
+
+
+
+/**
+ *
+ * @function submitTransaction
+ * @param {Transaction} tx
+ * @return {Function}
+ */
+export const submitTransaction = (tx) =>
+    async (_dispatch, _getState) => await context.server.submitTransaction(tx)
