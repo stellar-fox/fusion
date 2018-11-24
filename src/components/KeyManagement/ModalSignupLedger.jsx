@@ -12,13 +12,13 @@ import TextInput from "../../lib/mui-v1/TextInput"
 import { action as KeysActions } from "../../redux/Keys"
 import {
     obtainAccountId, generateMultisigTx, generateSigningKeys, setSigningMethod,
-    setProgressMessage, submitTransaction
+    setProgressMessage
 } from "../../actions/onboarding"
 import {
-    addSigningMethodToAccount, getLatestAccountState
+    addSigningMethodToAccount, getLatestAccountState, submitTransaction
 } from "../../actions/stellarAccount"
 import {
-    setUseDefaultAccount, setAccount, signTx
+    setUseDefaultAccount, setAccount, signTxWithLedgerHQ
 } from "../../actions/ledgering"
 import { delay, type } from "@xcmats/js-toolbox"
 import { Motion, presets, spring } from "react-motion"
@@ -71,7 +71,7 @@ export default compose(
             generateMultisigTx,
             obtainAccountId,
             generateSigningKeys,
-            signTx,
+            signTxWithLedgerHQ,
             submitTransaction,
         }, dispatch)
     )
@@ -110,7 +110,7 @@ export default compose(
                 await this.props.addSigningMethodToAccount()
 
                 const tx = await this.props.generateMultisigTx()
-                const signedTx = await this.props.signTx(tx)
+                const signedTx = await this.props.signTxWithLedgerHQ(tx)
                 await this.props.submitTransaction(signedTx)
 
                 await this.props.cancelAwaitingResponse()

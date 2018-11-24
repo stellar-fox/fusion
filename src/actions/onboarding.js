@@ -16,8 +16,6 @@ import { func } from "@xcmats/js-toolbox"
 import { Shambhala } from "../lib/shambhala.client"
 import { action as KeysActions, signingMethod as sm } from "../redux/Keys"
 import { config } from "../firebase/config"
-import { testNetworkPassphrase } from "../lib/constants"
-import axios from "axios"
 import { Network, Networks, Server, Transaction } from "stellar-sdk"
 import { getAccountId, getSoftwareVersion } from "../lib/logic/ledgerhq"
 import { action as LedgerHQActions } from "../redux/LedgerHQ"
@@ -166,38 +164,6 @@ export const generateSigningKeys = () =>
 
 
 /**
- * Based on network passphrase funds the new account with just enough XLM to
- * pay for the operations needed add additional signers on the account as well
- * as deposit for the additional account subentries.
- *
- * @function fundAccount
- * @return {Function}
- */
-export const fundAccount = () =>
-    async (dispatch, getState) => {
-        let
-            { accountId, networkPassphrase } = getState().Keys,
-
-            fundReponse = networkPassphrase === testNetworkPassphrase ?
-                await axios.get(config.friendbot.client, {
-                    params: { addr: accountId },
-                }) : null, /* to be defined */
-
-            balance = func.pipe(fundReponse.data.envelope_xdr)(
-                (xdr64) => new Transaction(xdr64),
-                (tx) => tx.operations[0],
-                (op) => op.startingBalance
-            )
-
-        await dispatch(KeysActions.setState({ balance }))
-
-        return balance
-    }
-
-
-
-
-/**
  *
  * @function generateSignedMultisigTx
  * @return {Function}
@@ -241,15 +207,3 @@ export const generateMultisigTx = () =>
 
         return tx
     }
-
-
-
-
-/**
- *
- * @function submitTransaction
- * @param {Transaction} tx
- * @return {Function}
- */
-export const submitTransaction = (tx) =>
-    async (_dispatch, _getState) => await context.server.submitTransaction(tx)

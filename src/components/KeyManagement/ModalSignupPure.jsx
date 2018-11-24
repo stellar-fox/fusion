@@ -9,12 +9,17 @@ import {
 } from "@material-ui/core"
 import { action as KeysActions} from "../../redux/Keys"
 import {
-    fundAccount, obtainAccountId, generateSignedMultisigTx, generateSigningKeys,
-    setProgressMessage, setSigningMethod, submitTransaction
+    obtainAccountId, generateSignedMultisigTx, generateSigningKeys,
+    setProgressMessage, setSigningMethod
 } from "../../actions/onboarding"
-import { addSigningMethodToAccount, getLatestAccountState } from "../../actions/stellarAccount"
+import {
+    addSigningMethodToAccount, fundAccount, getLatestAccountState,
+    submitTransaction
+} from "../../actions/stellarAccount"
 import Button from "../../lib/mui-v1/Button"
 import { delay } from "@xcmats/js-toolbox"
+
+
 
 
 // <ModalSignupPure> component

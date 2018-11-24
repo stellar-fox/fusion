@@ -65,11 +65,12 @@ export const setAccount = (account) =>
 
 
 /**
- * @function signTx
- * @param {Transaction} tx
+ * Sign transaction using LedgerHQ device.
+ * @function signTxWithLedgerHQ
+ * @param {Transaction} tx Transaction to be signed with the device.
  * @return {Function}
  */
-export const signTx = (tx) =>
+export const signTxWithLedgerHQ = (tx) =>
     async (_dispatch, getState) => {
         try {
             let
