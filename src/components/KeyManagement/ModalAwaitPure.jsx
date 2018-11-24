@@ -33,6 +33,7 @@ export default compose(
             open: state.Keys.ModalAwaitPure.showing,
             awaiting: state.Keys.awaitingShambhalaResponse,
             progressMessage: state.Keys.progressMessage,
+            errorMessage: state.Keys.errorMessage,
         }),
         (dispatch) => bindActionCreators({
             cancelAwaitingResponse: KeysActions.cancelAwaitingResponse,
@@ -93,9 +94,43 @@ export default compose(
                                     </div>
                                 }
                             </Motion>
-                            <Typography variant="body2">
-                                {this.props.progressMessage}
-                            </Typography>
+
+                            <Motion defaultStyle={{ opacity: 0 }}
+                                style={{
+                                    opacity: spring(this.props.progressMessage ? 1 : 0, presets.gentle),
+                                }}
+                            >
+                                {value =>
+                                    <div style={{
+                                        opacity: value.opacity,
+                                    }} className="m-t m-b flex-box-row items-centered"
+                                    >
+                                        <Typography variant="body2">
+                                            {this.props.progressMessage}
+                                        </Typography>
+                                    </div>
+                                }
+                            </Motion>
+
+                            <Motion defaultStyle={{ opacity: 0 }}
+                                style={{
+                                    opacity: spring(this.props.errorMessage ? 1 : 0, presets.gentle),
+                                }}
+                            >
+                                {value =>
+                                    <div style={{
+                                        opacity: value.opacity,
+                                    }} className="m-t m-b flex-box-row items-centered"
+                                    >
+                                        <Typography variant="body2">
+                                            <span className="orange-light">
+                                                {this.props.errorMessage}
+                                            </span>
+                                        </Typography>
+                                    </div>
+                                }
+                            </Motion>
+
                         </div>
                     </DialogContent>
                     <DialogActions>

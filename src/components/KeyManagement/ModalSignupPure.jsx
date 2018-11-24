@@ -10,14 +10,14 @@ import {
 import { action as KeysActions} from "../../redux/Keys"
 import {
     obtainAccountId, generateSignedMultisigTx, generateSigningKeys,
-    setProgressMessage, setSigningMethod
+    setErrorMessage, setProgressMessage, setSigningMethod
 } from "../../actions/onboarding"
 import {
     addSigningMethodToAccount, fundAccount, getLatestAccountState,
     submitTransaction
 } from "../../actions/stellarAccount"
 import Button from "../../lib/mui-v1/Button"
-import { delay } from "@xcmats/js-toolbox"
+import { delay, string } from "@xcmats/js-toolbox"
 
 
 
@@ -45,6 +45,7 @@ export default compose(
             fundAccount,
             obtainAccountId,
             generateSigningKeys,
+            setErrorMessage,
             setProgressMessage,
             setSigningMethod,
             getLatestAccountState,
@@ -66,32 +67,43 @@ export default compose(
         handleYes = async () => {
             try {
 
+                await this.props.setProgressMessage(string.empty())
+                await this.props.setErrorMessage(string.empty())
+
+
                 await this.props.hideSignupPureModal()
                 await this.props.showAwaitPureModal()
+
+
                 await this.props.setAwaitingResponse()
                 await this.props.setProgressMessage(
-                    "Awaiting response ..."
-                )
-                await this.props.setProgressMessage(
-                    "Generating account number ..."
+                    "ACTION REQUIRED. Check pop-up window."
                 )
                 await this.props.obtainAccountId()
+
+
                 await this.props.setProgressMessage(
                     "Generating signatures ..."
                 )
                 await this.props.generateSigningKeys()
+
+
                 await this.props.setProgressMessage(
                     "Funding account ..."
                 )
                 await this.props.fundAccount()
+
+
                 await this.props.getLatestAccountState()
                 await this.props.addSigningMethodToAccount()
+
+
                 await this.props.setProgressMessage(
                     "Creating additional signatures ..."
                 )
-
                 const signedTx = await this.props.generateSignedMultisigTx()
                 await this.props.submitTransaction(signedTx)
+
 
                 await this.props.cancelAwaitingResponse()
                 await this.props.setProgressMessage(
@@ -101,10 +113,9 @@ export default compose(
                 await this.props.hideAwaitPureModal()
 
             } catch (error) {
-
                 await this.props.cancelAwaitingResponse()
-                await this.props.setProgressMessage(error.message)
-
+                await this.props.setProgressMessage(string.empty())
+                await this.props.setErrorMessage(error.message)
             }
         }
 

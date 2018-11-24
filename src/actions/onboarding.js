@@ -64,12 +64,26 @@ export const setSigningMethod = (signingMethod) =>
  * Updates _redux_ state holding the current progress message during onboarding.
  *
  * @function setProgressMessage
- * @param {String} progressMessage
+ * @param {String} progressMessage Current progress message to be set.
  * @return {Function}
  */
 export const setProgressMessage = (progressMessage) =>
     async (dispatch, _getState) =>
         await dispatch(KeysActions.setState({ progressMessage }))
+
+
+
+
+/**
+ * Updates _redux_ state holding the possible error message during onboarding.
+ *
+ * @function setErrorMessage
+ * @param {String} errorMessage Error message to be set.
+ * @return {Function}
+ */
+export const setErrorMessage = (errorMessage) =>
+    async (dispatch, _getState) =>
+        await dispatch(KeysActions.setState({ errorMessage }))
 
 
 
@@ -105,16 +119,12 @@ export const obtainAccountId = () =>
                         softwareVersion,
                     }))
 
-                    // testing
-                    return useDefaultAccount ? await getAccountId() :
-                        await getAccountId(account)
-
-                    // return new Shambhala(
-                    //     config.shambhala.client, { token: jwt }
-                    // ).associateAddress(
-                    //     useDefaultAccount ? await getAccountId() :
-                    //         await getAccountId(account)
-                    // )
+                    return new Shambhala(
+                        config.shambhala.client, { token: jwt }
+                    ).associateAddress(
+                        useDefaultAccount ? await getAccountId() :
+                            await getAccountId(account)
+                    )
 
                 },
 

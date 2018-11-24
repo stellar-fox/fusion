@@ -16,6 +16,7 @@ const initState = {
     balance: "0.0000000",
     networkPassphrase: testNetworkPassphrase,
     progressMessage: string.empty(),
+    errorMessage: string.empty(),
 }
 
 

@@ -12,7 +12,7 @@ import TextInput from "../../lib/mui-v1/TextInput"
 import { action as KeysActions } from "../../redux/Keys"
 import {
     obtainAccountId, generateMultisigTx, generateSigningKeys, setSigningMethod,
-    setProgressMessage
+    setErrorMessage, setProgressMessage
 } from "../../actions/onboarding"
 import {
     addSigningMethodToAccount, getLatestAccountState, submitTransaction
@@ -20,7 +20,7 @@ import {
 import {
     setUseDefaultAccount, setAccount, signTxWithLedgerHQ
 } from "../../actions/ledgering"
-import { delay, type } from "@xcmats/js-toolbox"
+import { delay, string, type } from "@xcmats/js-toolbox"
 import { Motion, presets, spring } from "react-motion"
 
 
@@ -64,6 +64,7 @@ export default compose(
             cancelAwaitingResponse: KeysActions.cancelAwaitingResponse,
             setAccount,
             setSigningMethod,
+            setErrorMessage,
             setProgressMessage,
             setUseDefaultAccount,
             getLatestAccountState,
@@ -87,17 +88,21 @@ export default compose(
         // ...
         handleYes = async () => {
             try {
+                await this.props.setProgressMessage(string.empty())
+                await this.props.setErrorMessage(string.empty())
+
                 await this.props.hideSignupLedgerModal()
                 await this.props.showAwaitLedgerModal()
+
                 await this.props.setAwaitingResponse()
                 await this.props.setProgressMessage(
-                    "Querying device ..."
+                    "Querying signing service ..."
                 )
                 await this.props.obtainAccountId()
 
                 await this.props.setAwaitingResponse()
                 await this.props.setProgressMessage(
-                    "Awaiting response ..."
+                    "ACTION REQUIRED. Check pop-up window."
                 )
 
                 await this.props.generateSigningKeys()
@@ -109,8 +114,15 @@ export default compose(
                 await this.props.getLatestAccountState()
                 await this.props.addSigningMethodToAccount()
 
+                await this.props.setProgressMessage(
+                    "ACTION REQUIRED. Check your signing device."
+                )
                 const tx = await this.props.generateMultisigTx()
                 const signedTx = await this.props.signTxWithLedgerHQ(tx)
+
+                await this.props.setProgressMessage(
+                    "Submitting ..."
+                )
                 await this.props.submitTransaction(signedTx)
 
                 await this.props.cancelAwaitingResponse()
@@ -120,7 +132,8 @@ export default compose(
                 await this.props.hideAwaitLedgerModal()
             } catch (error) {
                 await this.props.cancelAwaitingResponse()
-                await this.props.setProgressMessage(error.message)
+                await this.props.setProgressMessage(string.empty())
+                await this.props.setErrorMessage(error.message)
             }
 
         }
