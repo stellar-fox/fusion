@@ -7,6 +7,7 @@ import {
     CircularProgress, Dialog, DialogActions, DialogContent,
     DialogTitle, Typography, withMobileDialog
 } from "@material-ui/core"
+import TextField from "@material-ui/core/TextField"
 import { action as KeysActions } from "../../redux/Keys"
 import Button from "../../lib/mui-v1/Button"
 import { Motion, presets, spring } from "react-motion"
@@ -34,6 +35,7 @@ export default compose(
             awaiting: state.Keys.awaitingShambhalaResponse,
             progressMessage: state.Keys.progressMessage,
             errorMessage: state.Keys.errorMessage,
+            txBody: state.Keys.txBody,
         }),
         (dispatch) => bindActionCreators({
             cancelAwaitingResponse: KeysActions.cancelAwaitingResponse,
@@ -109,6 +111,31 @@ export default compose(
                                     </div>
                                 }
                             </Motion>
+
+                            <Motion defaultStyle={{ opacity: 0 }}
+                                style={{
+                                    opacity: spring(this.props.txBody ? 1 : 0, presets.gentle),
+                                }}
+                            >
+                                {value =>
+                                    <div style={{
+                                        opacity: value.opacity,
+                                    }} className="m-t m-b flex-box-row items-centered"
+                                    >
+                                        <TextField
+                                            InputProps={{ readOnly: true }}
+                                            InputLabelProps={{ shrink: true }}
+                                            label="Transaction Body"
+                                            multiline
+                                            margin="normal"
+                                            variant="outlined"
+                                            value="fa32f3afafaf"
+                                            value={this.props.txBody}
+                                        />
+                                    </div>
+                                }
+                            </Motion>
+
 
                             <Motion defaultStyle={{ opacity: 0 }}
                                 style={{

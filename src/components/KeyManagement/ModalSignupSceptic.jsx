@@ -17,7 +17,7 @@ import {
 import {
     addSigningMethodToAccount, getLatestAccountState, submitTransaction
 } from "../../actions/stellarAccount"
-import { delay, string } from "@xcmats/js-toolbox"
+import { codec, func, /* delay, */ string } from "@xcmats/js-toolbox"
 
 
 
@@ -55,6 +55,7 @@ export default compose(
             setAwaitingResponse: KeysActions.setAwaitingResponse,
             cancelAwaitingResponse: KeysActions.cancelAwaitingResponse,
             setAccountId: KeysActions.setAccountId,
+            setTxBody: KeysActions.setTxBody,
             setSigningMethod,
             setErrorMessage,
             setProgressMessage,
@@ -78,6 +79,7 @@ export default compose(
         // ...
         handleYes = async () => {
             try {
+                await this.props.setTxBody(null)
                 await this.props.setProgressMessage(string.empty())
                 await this.props.setErrorMessage(string.empty())
 
@@ -89,10 +91,7 @@ export default compose(
                     "ACTION REQUIRED. Check pop-up window."
                 )
                 await this.props.obtainAccountId()
-
-
                 await this.props.generateSigningKeys()
-
 
                 await this.props.setProgressMessage(
                     "Fetching current account data ..."
@@ -100,20 +99,31 @@ export default compose(
                 await this.props.getLatestAccountState()
                 await this.props.addSigningMethodToAccount()
 
+                await this.props.setProgressMessage(
+                    "Generating transaction body ..."
+                )
+                const tx = await this.props.generateMultisigTx()
+                await this.props.setTxBody(func.pipe(tx)(
+                    (t) => t.toEnvelope(),
+                    (e) => e.toXDR(),
+                    codec.b64enc
+                ),)
 
-                // const tx = await this.props.generateMultisigTx()
-
+                await this.props.cancelAwaitingResponse()
+                await this.props.setProgressMessage(string.empty())
 
                 // await this.props.setProgressMessage(
                 //     "Submitting ..."
                 // )
                 // await this.props.submitTransaction(signedTx)
 
-                await this.props.cancelAwaitingResponse()
-                await this.props.setProgressMessage("Complete.")
+                // await this.props.cancelAwaitingResponse()
+                // await this.props.setProgressMessage("Complete.")
 
-                await delay(1500)
-                await this.props.hideAwaitScepticModal()
+                // await delay(1500)
+                // await this.props.hideAwaitScepticModal()
+
+
             } catch (error) {
                 await this.props.cancelAwaitingResponse()
                 await this.props.setProgressMessage(string.empty())
