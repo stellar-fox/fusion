@@ -106,8 +106,9 @@ export const obtainAccountId = () =>
 
             accountId = await func.choose(signingMethod, {
 
-                [sm.MANUAL]: () =>
-                    Promise.reject("NOT IMPLEMENTED YET"),
+                [sm.MANUAL]: new Shambhala(
+                    config.shambhala.client, { token: jwt }
+                ).associateAddress(getState().Keys.accountId),
 
 
                 // at this time it not only obtains the account number from the

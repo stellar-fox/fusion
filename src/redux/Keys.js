@@ -84,6 +84,28 @@ export const action = {
     })),
 
     // ...
+    showSignupScepticModal: () => (dispatch) => dispatch(action.setState({
+        ModalSignupSceptic: { showing: true },
+    })),
+
+    // ...
+    hideSignupScepticModal: () => (dispatch) => dispatch(action.setState({
+        ModalSignupSceptic: { showing: false },
+    })),
+
+    // ...
+    showAwaitScepticModal: () => (dispatch) => dispatch(action.setState({
+        ModalAwaitSceptic: { showing: true },
+    })),
+
+    // ...
+    hideAwaitScepticModal: () => (dispatch) => dispatch(action.setState({
+        ModalAwaitSceptic: { showing: false },
+    })),
+
+
+
+    // ...
     setAwaitingResponse: () => (dispatch) => dispatch(action.setState({
         awaitingShambhalaResponse: true,
     })),
@@ -96,6 +118,11 @@ export const action = {
     // ...
     setAccount: (account) => (dispatch) => dispatch(action.setState({
         account,
+    })),
+
+    // ...
+    setAccountId: (accountId) => (dispatch) => dispatch(action.setState({
+        accountId,
     })),
 
     // ...

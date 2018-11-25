@@ -14,30 +14,30 @@ import { Motion, presets, spring } from "react-motion"
 
 
 
-// <ModalAwaitLedger> component
+// <ModalAwaitSceptic> component
 export default compose(
     withMobileDialog(),
     withStyles((theme) => ({
         circle: {
-            color: theme.palette.custom.greenLight,
+            color: theme.palette.custom.purpleLight,
         },
         circularProgress: {
             marginRight: "1rem",
         },
         paper: {
-            backgroundColor: theme.palette.custom.greenDark,
+            backgroundColor: theme.palette.custom.purpleDark,
         },
     })),
     connect(
         (state) => ({
-            open: state.Keys.ModalAwaitLedger.showing,
+            open: state.Keys.ModalAwaitSceptic.showing,
             awaiting: state.Keys.awaitingShambhalaResponse,
             progressMessage: state.Keys.progressMessage,
             errorMessage: state.Keys.errorMessage,
         }),
         (dispatch) => bindActionCreators({
             cancelAwaitingResponse: KeysActions.cancelAwaitingResponse,
-            hideAwaitLedgerModal: KeysActions.hideAwaitLedgerModal,
+            hideAwaitScepticModal: KeysActions.hideAwaitScepticModal,
         }, dispatch)
     )
 )(
@@ -52,7 +52,7 @@ export default compose(
         // ...
         handleNo = () => {
             this.props.cancelAwaitingResponse()
-            this.props.hideAwaitLedgerModal()
+            this.props.hideAwaitScepticModal()
         }
 
 
@@ -66,7 +66,7 @@ export default compose(
                     classes={{ paper: classes.paper }}
                 >
                     <DialogTitle id="responsive-dialog-title">
-                        Shambhala Ledger - Progress Report
+                        Shambhala Sceptic - Progress Report
                     </DialogTitle>
                     <DialogContent>
                         <div className="flex-box-col items-centered content-centered">

@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { Component, Fragment } from "react"
 import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
@@ -12,6 +12,12 @@ import CardMedia from "@material-ui/core/CardMedia"
 import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography"
 import background from "../Fusion/static/bg.png"
+import { action as KeysActions, signingMethod as sm } from "../../redux/Keys"
+import { setSigningMethod } from "../../actions/onboarding"
+import ModalSignupSceptic from "./ModalSignupSceptic"
+import ModalAwaitSceptic from "./ModalAwaitSceptic"
+
+
 
 
 // <ShambhalaScepticCard> component
@@ -35,7 +41,10 @@ export default compose(
     })),
     connect(
         (_state) => ({}),
-        (dispatch) => bindActionCreators({}, dispatch)
+        (dispatch) => bindActionCreators({
+            showSignupScepticModal: KeysActions.showSignupScepticModal,
+            setSigningMethod,
+        }, dispatch)
     ),
     withWidth(),
 )(
@@ -48,12 +57,18 @@ export default compose(
 
 
         // ...
-        state = {}
+        handleSelection = () => {
+            this.props.showSignupScepticModal()
+            this.props.setSigningMethod(sm.MANUAL)
+        }
 
 
         // ...
         render = () => (
-            ({ classes, width }) =>
+            ({ classes, width }) => <Fragment>
+                <ModalSignupSceptic />
+                <ModalAwaitSceptic />
+
                 <Card raised className={classes.card}>
                     <CardActionArea>
                         {isWidthUp("md", width) &&
@@ -78,10 +93,12 @@ export default compose(
                         </CardContent>
                     </CardActionArea>
                     <CardActions>
-                        <Button classes={{
-                            root: classes.button,
-                            label: classes.purpleLight,
-                        }} variant="outlined" size="small"
+                        <Button
+                            classes={{
+                                root: classes.button,
+                                label: classes.purpleLight,
+                            }} variant="outlined" size="small"
+                            onClick={this.handleSelection}
                         >Select</Button>
                         <Button classes={{
                             root: classes.button,
@@ -89,6 +106,7 @@ export default compose(
                         >Learn More</Button>
                     </CardActions>
                 </Card>
+            </Fragment>
         )(this.props)
 
     }
