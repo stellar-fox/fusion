@@ -6,6 +6,7 @@ import { string } from "@xcmats/js-toolbox"
 const initState = {
     ModalAwaitLedger: { showing: false },
     ModalAwaitPure: { showing: false },
+    ModalAwaitSceptic: { showing: false },
     ModalSignupLedger: { showing: false },
     ModalSignupPure: { showing: false },
     ModalSignupSceptic: { showing: false },
@@ -102,8 +103,6 @@ export const action = {
     hideAwaitScepticModal: () => (dispatch) => dispatch(action.setState({
         ModalAwaitSceptic: { showing: false },
     })),
-
-
 
     // ...
     setAwaitingResponse: () => (dispatch) => dispatch(action.setState({
