@@ -129,7 +129,6 @@ export default compose(
                                             multiline
                                             margin="normal"
                                             variant="outlined"
-                                            value="fa32f3afafaf"
                                             value={this.props.txBody}
                                         />
                                     </div>
