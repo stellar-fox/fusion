@@ -45,7 +45,6 @@
         "fuse.js": "^3.3.0",
         "history": "^4.7.2",
         "hoist-non-react-statics": "^3.2.0",
-        "js-base64": "^2.4.9",
         "jsdoc": "^3.5.5",
         "jss": "^9.8.7",
         "lodash": "^4.17.11",

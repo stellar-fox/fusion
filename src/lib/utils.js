@@ -31,7 +31,7 @@ export const isReader = (role) => role === "ROLE_RO"
 export const dynamicImportLibs = async () => {
     let [
 
-        axios, base64, jss, lodash, mui, cryptops,
+        axios, jss, lodash, mui, cryptops,
         redshift, redux, stellar, toolbox, utils,
 
         // actions
@@ -43,7 +43,6 @@ export const dynamicImportLibs = async () => {
 
     ] = await Promise.all([
         import("axios"),
-        import("js-base64"),
         import("jss"),
         import("lodash"),
         import("@material-ui/core"),
@@ -62,7 +61,7 @@ export const dynamicImportLibs = async () => {
         import("../lib/logic/transaction"),
     ])
     return {
-        axios, Base64: base64.Base64,
+        axios,
         jss, lodash, mui, cryptops, redshift,
         redux, stellar, toolbox, utils,
 
