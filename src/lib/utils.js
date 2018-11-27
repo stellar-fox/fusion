@@ -39,6 +39,7 @@ export const dynamicImportLibs = async () => {
 
         // logic
         ledgerhq,
+        transaction,
 
     ] = await Promise.all([
         import("axios"),
@@ -58,6 +59,7 @@ export const dynamicImportLibs = async () => {
 
         // logic
         import("../lib/logic/ledgerhq"),
+        import("../lib/logic/transaction"),
     ])
     return {
         axios, Base64: base64.Base64,
@@ -72,6 +74,7 @@ export const dynamicImportLibs = async () => {
         // logic
         logic: {
             ledgerhq,
+            transaction,
         },
     }
 }
