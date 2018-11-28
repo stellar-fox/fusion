@@ -38,7 +38,7 @@
         "@types/react-router-dom": "^4.3.1",
         "@types/react-router-redux": "^5.0.16",
         "@types/stellar-sdk": "^0.10.4",
-        "@xcmats/js-toolbox": "^0.6.16",
+        "@xcmats/js-toolbox": "^0.6.17",
         "axios": "^0.18.0",
         "classnames": "^2.2.6",
         "firebase": "^5.5.9",
