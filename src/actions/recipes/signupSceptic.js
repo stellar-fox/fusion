@@ -102,38 +102,32 @@ export const execute = () =>
                 progressMessage: string.empty(),
             }))
 
+            dispatch(KeysActions.hideSpinner())
+
 
             let repeat = true
             await async.repeat(async () => {
-
-                // 0. jump back to here on error
-                dispatch(KeysActions.hideSpinner())
 
                 // 1. wait for user input
                 context.signatureInput = async.createMutex()
                 let userInput = await context.signatureInput.lock()
 
-                // 2. user provided input - so handle it
-                dispatch(KeysActions.showSpinner())
-
-                // 3. biore te sygnature i podpinam do mojej transakcji
+                // 2. user provided input - so handle it ...
                 let
-                    response = null,
+                    validity = { ok: true },
                     transactionToSubmit = new Transaction(
                         generatedTransaction.toEnvelope()
                     )
 
-                // 3a. user pasted a "valid signed transaction"
+                // 2a. user pasted a "valid signed transaction"
                 if (validSignedTransaction(userInput)) {
                     let pastedTransaction = new Transaction(userInput)
                     pastedTransaction.signatures.forEach(
                         (sig) => transactionToSubmit.signatures.push(sig)
                     )
-                    // ... submit to horizon
-                    response = { ok: true }
                 }
 
-                // 3b. user pasted a "valid signature"
+                // 2b. user pasted a "valid signature"
                 else if (validSignature(userInput)) {
 
                     func.pipe(
@@ -144,11 +138,9 @@ export const execute = () =>
                         (dsXdr) => xdr.DecoratedSignature.fromXDR(dsXdr),
                         (ds) => transactionToSubmit.signatures.push(ds)
                     )
-                    // ... submit to horizon
-                    response = { ok: true }
                 }
 
-                // 3c. user pasted a "valid decorated signature"
+                // 2c. user pasted a "valid decorated signature"
                 else if (validDecoratedSignature(userInput)) {
 
                     func.pipe(userInput)(
@@ -156,24 +148,32 @@ export const execute = () =>
                         (dsXdr) => xdr.DecoratedSignature.fromXDR(dsXdr),
                         (ds) => transactionToSubmit.signatures.push(ds)
                     )
-                    // ... submit to horizon
-                    response = { ok: true }
                 }
                 else {
-                    response = { error: "Invalid signature input." }
+                    validity = { error: "Invalid signature input." }
                 }
 
 
-                // 4. inspect horizon response
-                if (!response.ok) {
-                    //  jump back to "0"
+                // 3. inspect horizon validity
+                if (!validity.ok) {
+                    //  return to beginning
+                    dispatch(setErrorMessage("Invalid input."))
+
                 } else {
-                    repeat = false
                     //  all good - end this loop
-                    dispatch(KeysActions.hideSpinner())
+                    repeat = false
+                    dispatch(setErrorMessage(string.empty()))
+                    dispatch(KeysActions.setTxBody(transactionToSubmit))
                 }
 
             }, () => repeat)
+
+            // 4. display transaction details
+            await dispatch(KeysActions.hideAwaitScepticModal())
+            await dispatch(KeysActions.showTransactionDetailsModal())
+
+
+            // ... submit to horizon here
 
         } catch (error) {
             dispatch(KeysActions.hideSpinner())

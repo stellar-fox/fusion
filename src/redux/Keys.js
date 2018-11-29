@@ -10,10 +10,19 @@ const initState = {
     ModalSignupLedger: { showing: false },
     ModalSignupPure: { showing: false },
     ModalSignupSceptic: { showing: false },
+    ModalTransactionDetails: { showing: false },
     spinnerVisible: false,
     signingMethod: null,
     accountId: null,
+
     txBody: null,
+    txHash: null,
+    txSourceAccount: null,
+    txSequenceNumber: null,
+    txFee: null,
+    txOpsNum: null,
+    txSignature: null,
+
     signingKeys: {},
     networkPassphrase: testNetworkPassphrase,
     progressMessage: string.empty(),
@@ -43,6 +52,16 @@ export const signingMethod = Object.freeze({
 
 // ...
 export const action = {
+
+    // ...
+    showTransactionDetailsModal: () => (dispatch) => dispatch(action.setState({
+        ModalTransactionDetails: { showing: true },
+    })),
+
+    // ...
+    hideTransactionDetailsModal: () => (dispatch) => dispatch(action.setState({
+        ModalTransactionDetails: { showing: false },
+    })),
 
     // ...
     showSignupPureModal: () => (dispatch) => dispatch(action.setState({

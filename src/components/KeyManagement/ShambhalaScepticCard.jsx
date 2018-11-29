@@ -16,6 +16,7 @@ import { action as KeysActions, signingMethod as sm } from "../../redux/Keys"
 import { setSigningMethod } from "../../actions/onboarding"
 import ModalSignupSceptic from "./ModalSignupSceptic"
 import ModalAwaitSceptic from "./ModalAwaitSceptic"
+import ModalTransactionDetails from "./ModalTransactionDetails"
 
 
 
@@ -68,6 +69,7 @@ export default compose(
             ({ classes, width }) => <Fragment>
                 <ModalSignupSceptic />
                 <ModalAwaitSceptic />
+                <ModalTransactionDetails />
 
                 <Card raised className={classes.card}>
                     <CardActionArea>
