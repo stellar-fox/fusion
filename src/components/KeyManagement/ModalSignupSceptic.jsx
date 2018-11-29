@@ -9,20 +9,15 @@ import {
 } from "@material-ui/core"
 import Button from "../../lib/mui-v1/Button"
 import TextInput from "../../lib/mui-v1/TextInput"
-import { action as KeysActions } from "../../redux/Keys"
 import {
-    obtainAccountId, generateMultisigTx, generateSigningKeys, setSigningMethod,
-    setErrorMessage, setProgressMessage
-} from "../../actions/onboarding"
-import {
-    addSigningMethodToAccount, getLatestAccountState, submitTransaction
-} from "../../actions/stellarAccount"
-import { codec, func, /* delay, */ string } from "@xcmats/js-toolbox"
+    execute,
+    cancel,
+    setAccountId,
+} from "../../actions/recipes/signupSceptic"
 
 
 
-
-// <ModalSignupPure> component
+// <ModalSignupSceptic> component
 export default compose(
     withMobileDialog(),
     withStyles((theme) => ({
@@ -49,22 +44,9 @@ export default compose(
             open: state.Keys.ModalSignupSceptic.showing,
         }),
         (dispatch) => bindActionCreators({
-            hideSignupScepticModal: KeysActions.hideSignupScepticModal,
-            showAwaitScepticModal: KeysActions.showAwaitScepticModal,
-            hideAwaitScepticModal: KeysActions.hideAwaitScepticModal,
-            setAwaitingResponse: KeysActions.setAwaitingResponse,
-            cancelAwaitingResponse: KeysActions.cancelAwaitingResponse,
-            setAccountId: KeysActions.setAccountId,
-            setTxBody: KeysActions.setTxBody,
-            setSigningMethod,
-            setErrorMessage,
-            setProgressMessage,
-            getLatestAccountState,
-            addSigningMethodToAccount,
-            generateMultisigTx,
-            obtainAccountId,
-            generateSigningKeys,
-            submitTransaction,
+            cancel,
+            execute,
+            setAccountId,
         }, dispatch)
     )
 )(
@@ -77,67 +59,11 @@ export default compose(
 
 
         // ...
-        handleYes = async () => {
-            try {
-                await this.props.setTxBody(null)
-                await this.props.setProgressMessage(string.empty())
-                await this.props.setErrorMessage(string.empty())
-
-                await this.props.hideSignupScepticModal()
-                await this.props.showAwaitScepticModal()
-
-                await this.props.setAwaitingResponse()
-                await this.props.setProgressMessage(
-                    "ACTION REQUIRED. Check pop-up window."
-                )
-                await this.props.obtainAccountId()
-                await this.props.generateSigningKeys()
-
-                await this.props.setProgressMessage(
-                    "Fetching current account data ..."
-                )
-                await this.props.getLatestAccountState()
-                await this.props.addSigningMethodToAccount()
-
-                await this.props.setProgressMessage(
-                    "Generating transaction body ..."
-                )
-                const tx = await this.props.generateMultisigTx()
-                await this.props.setTxBody(func.pipe(tx)(
-                    (t) => t.toEnvelope(),
-                    (e) => e.toXDR(),
-                    codec.b64enc
-                ),)
-
-                await this.props.cancelAwaitingResponse()
-                await this.props.setProgressMessage(string.empty())
-
-                // await this.props.setProgressMessage(
-                //     "Submitting ..."
-                // )
-                // await this.props.submitTransaction(signedTx)
-
-                // await this.props.cancelAwaitingResponse()
-                // await this.props.setProgressMessage("Complete.")
-
-                // await delay(1500)
-                // await this.props.hideAwaitScepticModal()
-
-
-            } catch (error) {
-                await this.props.cancelAwaitingResponse()
-                await this.props.setProgressMessage(string.empty())
-                await this.props.setErrorMessage(error.message)
-            }
-
-        }
+        handleYes = () => this.props.execute()
 
 
         // ...
-        handleNo = () => {
-            this.props.hideSignupScepticModal()
-            this.props.setSigningMethod(null)
-        }
+        handleNo = () => this.props.cancel()
 
 
         // ...

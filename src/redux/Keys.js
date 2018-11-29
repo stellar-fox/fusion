@@ -10,12 +10,11 @@ const initState = {
     ModalSignupLedger: { showing: false },
     ModalSignupPure: { showing: false },
     ModalSignupSceptic: { showing: false },
-    awaitingShambhalaResponse: false,
+    spinnerVisible: false,
     signingMethod: null,
     accountId: null,
     txBody: null,
     signingKeys: {},
-    balance: "0.0000000",
     networkPassphrase: testNetworkPassphrase,
     progressMessage: string.empty(),
     errorMessage: string.empty(),
@@ -106,18 +105,18 @@ export const action = {
     })),
 
     // ...
-    setAwaitingResponse: () => (dispatch) => dispatch(action.setState({
-        awaitingShambhalaResponse: true,
+    showSpinner: () => (dispatch) => dispatch(action.setState({
+        spinnerVisible: true,
+    })),
+
+    // ...
+    hideSpinner: () => (dispatch) => dispatch(action.setState({
+        spinnerVisible: false,
     })),
 
     // ...
     setTxBody: (txBody) => (dispatch) => dispatch(action.setState({
         txBody,
-    })),
-
-    // ...
-    cancelAwaitingResponse: () => (dispatch) => dispatch(action.setState({
-        awaitingShambhalaResponse: false,
     })),
 
     // ...

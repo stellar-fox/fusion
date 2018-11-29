@@ -37,8 +37,8 @@ export default compose(
             accountId: state.Keys.accountId,
         }),
         (dispatch) => bindActionCreators({
-            cancelAwaitingResponse: KeysActions.cancelAwaitingResponse,
-            setAwaitingResponse: KeysActions.setAwaitingResponse,
+            hideSpinner: KeysActions.hideSpinner,
+            showSpinner: KeysActions.showSpinner,
             hideSignupPureModal: KeysActions.hideSignupPureModal,
             showAwaitPureModal: KeysActions.showAwaitPureModal,
             hideAwaitPureModal: KeysActions.hideAwaitPureModal,
@@ -75,7 +75,7 @@ export default compose(
                 await this.props.showAwaitPureModal()
 
 
-                await this.props.setAwaitingResponse()
+                await this.props.showSpinner()
                 await this.props.setProgressMessage(
                     "ACTION REQUIRED. Check pop-up window."
                 )
@@ -105,7 +105,7 @@ export default compose(
                 await this.props.submitTransaction(signedTx)
 
 
-                await this.props.cancelAwaitingResponse()
+                await this.props.hideSpinner()
                 await this.props.setProgressMessage(
                     "Complete."
                 )
@@ -113,7 +113,7 @@ export default compose(
                 await this.props.hideAwaitPureModal()
 
             } catch (error) {
-                await this.props.cancelAwaitingResponse()
+                await this.props.hideSpinner()
                 await this.props.setProgressMessage(string.empty())
                 await this.props.setErrorMessage(error.message)
             }

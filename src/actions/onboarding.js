@@ -219,3 +219,20 @@ export const generateMultisigTx = () =>
 
         return tx
     }
+
+
+
+
+/**
+ * Cancels any pending awaits with Shambhala
+ *
+ * @function cancelShambhala
+ * @return {Function}
+ */
+export const cancelShambhala = () =>
+    async (_dispatch, getState) => {
+        new Shambhala(
+            config.shambhala.client,
+            { token: getState().Auth.jwt }
+        ).cancel()
+    }

@@ -10,6 +10,7 @@ import ShambhalaPureCard from "./ShambhalaPureCard"
 import ShambhalaLedgerCard from "./ShambhalaLedgerCard"
 import ShambhalaScepticCard from "./ShambhalaScepticCard"
 import withWidth, { isWidthDown } from "@material-ui/core/withWidth"
+import Snacky from "../../lib/mui-v1/Snacky"
 
 
 
@@ -48,7 +49,7 @@ export default compose(
                     <Route exact path={this.rr(".")}>
 
                         <Paper className={classes.paperCanvas}>
-
+                            <Snacky />
                             <Motion defaultStyle={{ x: -10, opacity: 0 }}
                                 style={{
                                     x: spring(0, presets.gentle),
@@ -76,12 +77,12 @@ export default compose(
 
                                 {isWidthDown("sm", width) &&
                                     <div className="m-b"></div>}
-                                
+
                                 <ShambhalaLedgerCard />
-                                
+
                                 {isWidthDown("sm", width) &&
                                     <div className="m-b"></div>}
-                                
+
                                 <ShambhalaScepticCard />
                             </div>
 

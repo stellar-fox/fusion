@@ -60,8 +60,8 @@ export default compose(
             hideSignupLedgerModal: KeysActions.hideSignupLedgerModal,
             showAwaitLedgerModal: KeysActions.showAwaitLedgerModal,
             hideAwaitLedgerModal: KeysActions.hideAwaitLedgerModal,
-            setAwaitingResponse: KeysActions.setAwaitingResponse,
-            cancelAwaitingResponse: KeysActions.cancelAwaitingResponse,
+            showSpinner: KeysActions.showSpinner,
+            hideSpinner: KeysActions.hideSpinner,
             setAccount,
             setSigningMethod,
             setErrorMessage,
@@ -94,13 +94,13 @@ export default compose(
                 await this.props.hideSignupLedgerModal()
                 await this.props.showAwaitLedgerModal()
 
-                await this.props.setAwaitingResponse()
+                await this.props.showSpinner()
+
                 await this.props.setProgressMessage(
                     "Querying signing service ..."
                 )
                 await this.props.obtainAccountId()
 
-                await this.props.setAwaitingResponse()
                 await this.props.setProgressMessage(
                     "ACTION REQUIRED. Check pop-up window."
                 )
@@ -125,13 +125,14 @@ export default compose(
                 )
                 await this.props.submitTransaction(signedTx)
 
-                await this.props.cancelAwaitingResponse()
+                await this.props.hideSpinner()
+
                 await this.props.setProgressMessage("Complete.")
 
                 await delay(1500)
                 await this.props.hideAwaitLedgerModal()
             } catch (error) {
-                await this.props.cancelAwaitingResponse()
+                await this.props.hideSpinner()
                 await this.props.setProgressMessage(string.empty())
                 await this.props.setErrorMessage(error.message)
             }
