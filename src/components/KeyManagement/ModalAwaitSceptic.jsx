@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core"
 import TextField from "@material-ui/core/TextField"
 import Button from "../../lib/mui-v1/Button"
-
+import { action as KeysActions } from "../../redux/Keys"
 import { action as SnackyActions } from "../../redux/Snacky"
 import { Motion, presets, spring } from "react-motion"
 import {
@@ -49,6 +49,7 @@ export default compose(
         (dispatch) => bindActionCreators({
             cancel,
             passSignature,
+            resetState: KeysActions.resetState,
             showSnacky: SnackyActions.showSnacky,
             setSnackyMessage: SnackyActions.setMessage,
             setSnackyColor: SnackyActions.setColor,
@@ -70,7 +71,10 @@ export default compose(
 
 
         // ...
-        handleNo = () => this.props.cancel()
+        handleNo = async () => {
+            await this.props.cancel()
+            this.props.resetState()
+        }
 
 
         // ...

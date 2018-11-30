@@ -15,13 +15,14 @@ const initState = {
     signingMethod: null,
     accountId: null,
 
-    txBody: null,
-    txHash: null,
-    txSourceAccount: null,
-    txSequenceNumber: null,
-    txFee: null,
-    txOpsNum: null,
-    txSignature: null,
+    txBody: string.empty(),
+    txSignedBody: string.empty(),
+    txHash: string.empty(),
+    txSourceAccount: string.empty(),
+    txSequenceNumber: string.empty(),
+    txFee: string.empty(),
+    txOpsNum: string.empty(),
+    txSignature: string.empty(),
 
     signingKeys: {},
     networkPassphrase: testNetworkPassphrase,
@@ -136,6 +137,11 @@ export const action = {
     // ...
     setTxBody: (txBody) => (dispatch) => dispatch(action.setState({
         txBody,
+    })),
+
+    // ...
+    setTxSignedBody: (txSignedBody) => (dispatch) => dispatch(action.setState({
+        txSignedBody,
     })),
 
     // ...

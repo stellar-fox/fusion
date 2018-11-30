@@ -13,6 +13,7 @@
 import {
     async,
     codec,
+    delay,
     func,
     string,
     type,
@@ -23,11 +24,18 @@ import {
 } from "stellar-sdk"
 import { action as KeysActions } from "../../redux/Keys"
 import {
-    cancelShambhala, generateSigningKeys, generateMultisigTx, obtainAccountId,
-    setErrorMessage
+    cancelShambhala,
+    generateMultisigTx,
+    generateSigningKeys,
+    obtainAccountId,
+    setErrorMessage,
+    setProgressMessage,
+    setTransactionDetails,
 } from "../../actions/onboarding"
 import {
-    addSigningMethodToAccount, getLatestAccountState
+    addSigningMethodToAccount,
+    getLatestAccountState,
+    submitTransaction,
 } from "../../actions/stellarAccount"
 import {
     decorateSignature,
@@ -163,7 +171,13 @@ export const execute = () =>
                     //  all good - end this loop
                     repeat = false
                     dispatch(setErrorMessage(string.empty()))
-                    dispatch(KeysActions.setTxBody(transactionToSubmit))
+                    await dispatch(KeysActions.setTxSignedBody(
+                        func.pipe(transactionToSubmit)(
+                            (t) => t.toEnvelope(),
+                            (e) => e.toXDR(),
+                            codec.b64enc
+                        )))
+                    await dispatch(setTransactionDetails(transactionToSubmit))
                 }
 
             }, () => repeat)
@@ -173,7 +187,13 @@ export const execute = () =>
             await dispatch(KeysActions.showTransactionDetailsModal())
 
 
-            // ... submit to horizon here
+            // 5. submit to horizon
+            context.submitTx = async.createMutex()
+            let horizonResponse = await context.submitTx.lock()
+            dispatch(KeysActions.setState({ horizonResponse }))
+            await dispatch(KeysActions.progressMessage("Complete."))
+            await delay(1500)
+            dispatch(KeysActions.hideTransactionDetailsModal())
 
         } catch (error) {
             dispatch(KeysActions.hideSpinner())
@@ -201,6 +221,42 @@ export const passSignature = (signature) =>
             context.signatureInput.resolve(signature)
             delete context.signatureInput
         }
+    }
+
+
+
+
+/**
+ * Submits pasted signed transaction to the _horizon_.
+ *
+ * @function submitTx
+ * @returns {Function}
+ */
+export const submitTx = () =>
+    async (dispatch, getState) => {
+
+        if (type.isObject(context.submitTx)) {
+
+            let horizonResponse = null
+            try {
+                await dispatch(KeysActions.showSpinner())
+                await dispatch(setProgressMessage("Submitting transaction ..."))
+                horizonResponse = await dispatch(
+                    submitTransaction(new Transaction(getState().Keys.txSignedBody))
+                )
+                await dispatch(KeysActions.hideSpinner())
+                await dispatch(setProgressMessage(string.empty()))
+            } catch (error) {
+                await dispatch(setErrorMessage(error.message))
+                await dispatch(KeysActions.hideSpinner())
+                await dispatch(setProgressMessage(string.empty()))
+            } finally {
+                context.submitTx.resolve(horizonResponse)
+                delete context.submitTx
+            }
+
+        }
+
     }
 
 

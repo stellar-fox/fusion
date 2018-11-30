@@ -12,7 +12,7 @@
 
 
 
-import { func } from "@xcmats/js-toolbox"
+import { codec, func } from "@xcmats/js-toolbox"
 import { Shambhala } from "../lib/shambhala.client"
 import { action as KeysActions, signingMethod as sm } from "../redux/Keys"
 import { config } from "../firebase/config"
@@ -23,9 +23,21 @@ import { action as LedgerHQActions } from "../redux/LedgerHQ"
 
 
 
+/**
+ * @private
+ * @constant {Object} context Private "onboarding" memory space
+ */
 const context = {}
 
 
+
+
+/**
+ * Sets private memory variables.
+ *
+ * @private
+ * @function setEnv
+ */
 const setEnv = async ({
     network = Networks.TESTNET,
     horizonUrl = "https://horizon-testnet.stellar.org/",
@@ -51,7 +63,7 @@ setEnv()
  *
  * @function setSigningMethod
  * @param {String} signingMethod
- * @return {Function}
+ * @returns {Function}
  */
 export const setSigningMethod = (signingMethod) =>
     async (dispatch, _getState) =>
@@ -65,7 +77,7 @@ export const setSigningMethod = (signingMethod) =>
  *
  * @function setProgressMessage
  * @param {String} progressMessage Current progress message to be set.
- * @return {Function}
+ * @returns {Function}
  */
 export const setProgressMessage = (progressMessage) =>
     async (dispatch, _getState) =>
@@ -79,7 +91,7 @@ export const setProgressMessage = (progressMessage) =>
  *
  * @function setErrorMessage
  * @param {String} errorMessage Error message to be set.
- * @return {Function}
+ * @returns {Function}
  */
 export const setErrorMessage = (errorMessage) =>
     async (dispatch, _getState) =>
@@ -94,7 +106,7 @@ export const setErrorMessage = (errorMessage) =>
  * associated with the Shambhala signing mechanism.
  *
  * @function obtainAccountId
- * @return {Function}
+ * @returns {Function}
  */
 export const obtainAccountId = () =>
     async (dispatch, getState) => {
@@ -153,7 +165,7 @@ export const obtainAccountId = () =>
  * Generates a set of signing keys.
  *
  * @function generateSigningKeys
- * @return {Function}
+ * @returns {Function}
  */
 export const generateSigningKeys = () =>
     async (dispatch, getState) => {
@@ -178,7 +190,7 @@ export const generateSigningKeys = () =>
 /**
  *
  * @function generateSignedMultisigTx
- * @return {Function}
+ * @returns {Function}
  */
 export const generateSignedMultisigTx = () =>
     async (_dispatch, getState) => {
@@ -202,7 +214,7 @@ export const generateSignedMultisigTx = () =>
 /**
  *
  * @function generateMultisigTx
- * @return {Function}
+ * @returns {Function}
  */
 export const generateMultisigTx = () =>
     async (_dispatch, getState) => {
@@ -224,15 +236,38 @@ export const generateMultisigTx = () =>
 
 
 /**
- * Cancels any pending awaits with Shambhala
+ * Sets needed transaction details in Redux tree to display in summary modal.
+ *
+ * @function setTransactionDetails
+ * @param {Transaction} txObject _stellar_ `Transaction` object.
+ * @returns {Function}
+ */
+export const setTransactionDetails = (txObject) =>
+    async (dispatch, _getState) =>
+        dispatch (KeysActions.setState({
+            txHash: codec.bytesToHex(txObject.hash()),
+            txSourceAccount: txObject.source,
+            txSequenceNumber: txObject.sequence,
+            txFee: txObject.fee,
+            txOpsNum: txObject.operations.length,
+            txSignature: codec.bytesToHex(txObject.signatures[0].signature()),
+        }))
+
+
+
+
+/**
+ * Cancels any pending awaits with Shambhala and closes the pop-up window/tab.
  *
  * @function cancelShambhala
- * @return {Function}
+ * @returns {Function}
  */
 export const cancelShambhala = () =>
     async (_dispatch, getState) => {
-        new Shambhala(
+        let shambhala = new Shambhala(
             config.shambhala.client,
             { token: getState().Auth.jwt }
-        ).cancel()
+        )
+        await shambhala.cancel()
+        await shambhala.close()
     }

@@ -132,4 +132,5 @@ export const fundAccount = () =>
  * @return {Function}
  */
 export const submitTransaction = (tx) =>
-    async (_dispatch, _getState) => await context.server.submitTransaction(tx)
+    async (_dispatch, _getState) =>
+        await context.server.submitTransaction(tx)
