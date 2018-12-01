@@ -56,6 +56,8 @@ export default compose(
             txFee: state.Keys.txFee,
             txOpsNum: state.Keys.txOpsNum,
             txSignature: state.Keys.txSignature,
+            yesButtonDisabled: state.Keys.yesButtonDisabled,
+            noButtonDisabled: state.Keys.noButtonDisabled,
         }),
         (dispatch) => bindActionCreators({
             hideTransactionDetailsModal: KeysActions.hideTransactionDetailsModal,
@@ -87,7 +89,7 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, fullScreen, open }) =>
+            ({ classes, fullScreen, open, noButtonDisabled, yesButtonDisabled }) =>
                 <Dialog
                     fullScreen={fullScreen}
                     open={open}
@@ -167,11 +169,13 @@ export default compose(
                     <DialogActions>
                         <Button
                             onClick={this.handleYes} color="green"
+                            disabled={yesButtonDisabled}
                         >
                             Submit
                         </Button>
                         <Button style={{margin: "0 3px 0 10px"}}
                             onClick={this.handleNo} color="yellow"
+                            disabled={noButtonDisabled}
                         >
                             Cancel
                         </Button>

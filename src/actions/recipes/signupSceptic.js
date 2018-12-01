@@ -185,12 +185,17 @@ export const execute = () =>
 
 
             // 5. submit to horizon
-            context.submitTx = async.createMutex()
-            let horizonResponse = await context.submitTx.lock()
-            dispatch(KeysActions.setState({ horizonResponse }))
+            repeat = true
+            await async.repeat(async () => {
+                await submitTx()
+                repeat = false
+            }, () => repeat)
+
+            // 6. complete onboarding process UX flow
             await dispatch(setProgressMessage("Complete."))
             await delay(1500)
             dispatch(KeysActions.hideTransactionDetailsModal())
+            dispatch(KeysActions.resetState())
 
         } catch (error) {
             dispatch(KeysActions.hideSpinner())
@@ -229,30 +234,35 @@ export const passSignature = (signature) =>
  */
 export const submitTx = () =>
     async (dispatch, getState) => {
-
-        if (type.isObject(context.submitTx)) {
-
-            let horizonResponse = null
-            try {
-                await dispatch(KeysActions.showSpinner())
-                await dispatch(setProgressMessage("Submitting transaction ..."))
-                horizonResponse = await dispatch(
-                    submitTransaction(new Transaction(getState().Keys.txSignedBody))
-                )
-                await dispatch(KeysActions.hideSpinner())
-                await dispatch(setProgressMessage(string.empty()))
-            } catch (error) {
-                await dispatch(setErrorMessage(error.message))
-                await dispatch(KeysActions.hideSpinner())
-                await dispatch(setProgressMessage(string.empty()))
-            } finally {
-                context.submitTx.resolve(horizonResponse)
-                delete context.submitTx
-            }
-
+        try {
+            dispatch(setErrorMessage(string.empty()))
+            dispatch(KeysActions.showSpinner())
+            dispatch(setProgressMessage("Submitting transaction ..."))
+            dispatch(KeysActions.setState({
+                yesButtonDisabled: true,
+                noButtonDisabled: true,
+            }))
+            await dispatch(submitTransaction(
+                new Transaction(getState().Keys.txSignedBody)
+            ))
+            dispatch(KeysActions.setState({
+                yesButtonDisabled: false,
+                noButtonDisabled: false,
+            }))
+            dispatch(KeysActions.hideSpinner())
+            dispatch(setProgressMessage(string.empty()))
+        } catch (error) {
+            dispatch(KeysActions.setState({
+                yesButtonDisabled: false,
+                noButtonDisabled: false,
+            }))
+            dispatch(setErrorMessage(error.message))
+            dispatch(KeysActions.hideSpinner())
+            dispatch(setProgressMessage(string.empty()))
+            throw new Error(error)
         }
-
     }
+
 
 
 
