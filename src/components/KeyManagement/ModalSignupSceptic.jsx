@@ -12,7 +12,7 @@ import TextInput from "../../lib/mui-v1/TextInput"
 import {
     execute,
     cancel,
-    setAccountId,
+    handleAccountIdInput,
 } from "../../actions/recipes/signupSceptic"
 
 
@@ -41,12 +41,16 @@ export default compose(
     })),
     connect(
         (state) => ({
+            error: !!state.Keys.errorMessage,
+            errorMessage: state.Keys.errorMessage,
+            noButtonDisabled: state.Keys.noButtonDisabled,
             open: state.Keys.ModalSignupSceptic.showing,
+            yesButtonDisabled: state.Keys.yesButtonDisabled,
         }),
         (dispatch) => bindActionCreators({
             cancel,
             execute,
-            setAccountId,
+            handleAccountIdInput,
         }, dispatch)
     )
 )(
@@ -67,13 +71,14 @@ export default compose(
 
 
         // ...
-        handleChange = () => (event) =>
-            this.props.setAccountId(event.target.value)
+        handleChange = () =>
+            (event) => this.props.handleAccountIdInput(event.target.value)
 
 
         // ...
         render = () => (
-            ({ classes, error, errorMessage, fullScreen, open }) =>
+            ({ classes, error, errorMessage, fullScreen, open,
+                noButtonDisabled, yesButtonDisabled }) =>
                 <Dialog
                     fullScreen={fullScreen}
                     open={open}
@@ -107,12 +112,13 @@ export default compose(
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleYes} color="green"
-                            autoFocus
+                            autoFocus disabled={yesButtonDisabled}
                         >
                             Proceed
                         </Button>
                         <Button style={{ margin: "0 3px 0 10px" }}
                             onClick={this.handleNo} color="yellow"
+                            disabled={noButtonDisabled}
                         >
                             Cancel
                         </Button>

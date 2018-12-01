@@ -1,11 +1,14 @@
-import React, { Component } from "react"
+import React, { Component, Fragment } from "react"
 import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
 import {
-    CircularProgress, Dialog, DialogActions, DialogContent,
-    DialogTitle, Typography, withMobileDialog
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    withMobileDialog
 } from "@material-ui/core"
 import TextField from "@material-ui/core/TextField"
 import Button from "../../lib/mui-v1/Button"
@@ -16,7 +19,7 @@ import {
     cancel,
     passSignature,
 } from "../../actions/recipes/signupSceptic"
-import { ErrorOutline } from "@material-ui/icons"
+import Awaiter from "../Awaiter"
 
 
 
@@ -121,181 +124,83 @@ export default compose(
                     classes={{ paper: classes.paper }}
                 >
                     <DialogTitle id="responsive-dialog-title">
-                        Shambhala Sceptic - Onboarding Progress
+                        Shambhala Sceptic: Onboarding
                     </DialogTitle>
                     <DialogContent>
                         <div className="flex-box-col items-centered content-centered">
 
-                            {/* ============ PROGRESS SPINNER ============= */}
-                            {this.props.spinnerVisible &&
-                            <Motion defaultStyle={{ opacity: 0 }}
-                                style={{
-                                    opacity: spring(this.props.spinnerVisible ? 1 : 0, presets.gentle),
-                                }}
-                            >
-                                {value =>
-                                    <div style={{
-                                        opacity: value.opacity,
-                                    }} className="flex-box-row items-centered"
-                                    >
-                                        <CircularProgress disableShrink size={60}
-                                            classes={{
-                                                circle: classes.circle,
-                                                root: classes.circularProgress,
-                                            }}
-                                        />
-                                    </div>
-                                }
-                            </Motion>
-                            }
+                            <Awaiter />
 
-                            {/* ============ ERROR BADGE ============= */}
-                            {this.props.errorMessage &&
-                            <Motion defaultStyle={{ opacity: 0 }}
-                                style={{
-                                    opacity: spring(this.props.errorMessage ? 1 : 0, presets.gentle),
-                                }}
-                            >
-                                {value =>
-                                    <div style={{
-                                        opacity: value.opacity,
-                                    }} className="flex-box-row items-centered"
-                                    >
-                                        <span className="orange-light">
-                                            <ErrorOutline classes={{ root: classes.errorIcon }} />
-                                        </span>
-
-                                    </div>
-                                }
-                            </Motion>
-                            }
-
-
-                            {/* ============ PROGRESS MESSAGE ============= */}
-                            {this.props.progressMessage &&
-                            <Motion defaultStyle={{ opacity: 0 }}
-                                style={{
-                                    opacity: spring(
-                                        this.props.progressMessage ? 1 : 0,
-                                        presets.gentle
-                                    ),
-                                }}
-                            >
-                                {value =>
-                                    <div
-                                        style={{ opacity: value.opacity }}
-                                        className="m-t flex-box-row items-centered"
-                                    >
-                                        <Typography variant="body2">
-                                            {this.props.progressMessage}
-                                        </Typography>
-                                    </div>
-                                }
-                            </Motion>
-                            }
-
-
-                            {/* ============ TRANSACTION BODY ============= */}
                             {this.props.txBody &&
-                            <Motion defaultStyle={{ opacity: 0 }}
-                                style={{
-                                    opacity: spring(
-                                        this.props.txBody ? 1 : 0,
-                                        presets.gentle
-                                    ),
-                                }}
-                            >
-                                {value =>
-                                    <div
-                                        style={{ opacity: value.opacity }}
-                                        className="m-b flex-box-col items-centered"
-                                    >
-                                        <TextField
-                                            InputProps={{
-                                                readOnly: true,
-                                                fullWidth: true,
-                                            }}
-                                            inputRef={this.textInput}
-                                            InputLabelProps={{ shrink: true }}
-                                            label="Transaction Body"
-                                            multiline
-                                            rowsMax="10"
-                                            margin="normal"
-                                            variant="outlined"
-                                            value={this.props.txBody}
-                                            fullWidth
-                                            onClick={this.selectTextInput}
-                                        />
-
-                                        <Button
-                                            onClick={this.copyToClipboard}
-                                            color="green"
+                            <Fragment>
+                                <Motion defaultStyle={{ opacity: 0 }}
+                                    style={{
+                                        opacity: spring(
+                                            this.props.txBody ? 1 : 0,
+                                            presets.gentle
+                                        ),
+                                    }}
+                                >
+                                    {value =>
+                                        <div
+                                            style={{ opacity: value.opacity }}
+                                            className="m-b flex-box-col items-centered"
                                         >
-                                            Copy To Clipboard
-                                        </Button>
-                                    </div>
-                                }
-                            </Motion>
+                                            <TextField
+                                                InputProps={{
+                                                    readOnly: true,
+                                                    fullWidth: true,
+                                                }}
+                                                inputRef={this.textInput}
+                                                InputLabelProps={{ shrink: true }}
+                                                label="Transaction Body"
+                                                multiline
+                                                rowsMax="10"
+                                                margin="normal"
+                                                variant="outlined"
+                                                value={this.props.txBody}
+                                                fullWidth
+                                                onClick={this.selectTextInput}
+                                            />
+
+                                            <Button
+                                                onClick={this.copyToClipboard}
+                                                color="green"
+                                            >
+                                                Copy To Clipboard
+                                            </Button>
+                                        </div>
+                                    }
+                                </Motion>
+                                <Motion defaultStyle={{ opacity: 0 }}
+                                    style={{
+                                        opacity: spring(
+                                            this.props.txBody ? 1 : 0,
+                                            presets.gentle
+                                        ),
+                                    }}
+                                >
+                                    {value =>
+                                        <div
+                                            style={{ opacity: value.opacity }}
+                                            className="m-b flex-box-col items-centered"
+                                        >
+                                            <TextField
+                                                InputLabelProps={{ shrink: true }}
+                                                label="Signature"
+                                                multiline
+                                                rowsMax="5"
+                                                margin="normal"
+                                                variant="outlined"
+                                                placeholder="Paste signed transaction here."
+                                                fullWidth
+                                                onChange={this.handleUserInputChange()}
+                                            />
+                                        </div>
+                                    }
+                                </Motion>
+                            </Fragment>
                             }
-
-
-                            {/* =========== SIGNED TRANSACTION ============ */}
-                            {this.props.txBody &&
-                            <Motion defaultStyle={{ opacity: 0 }}
-                                style={{
-                                    opacity: spring(
-                                        this.props.txBody ? 1 : 0,
-                                        presets.gentle
-                                    ),
-                                }}
-                            >
-                                {value =>
-                                    <div
-                                        style={{ opacity: value.opacity }}
-                                        className="m-b flex-box-col items-centered"
-                                    >
-                                        <TextField
-                                            InputLabelProps={{ shrink: true }}
-                                            label="Signature"
-                                            multiline
-                                            rowsMax="5"
-                                            margin="normal"
-                                            variant="outlined"
-                                            placeholder="Paste signed transaction here."
-                                            fullWidth
-                                            onChange={this.handleUserInputChange()}
-                                        />
-                                    </div>
-                                }
-                            </Motion>
-                            }
-
-
-                            {/* ============= ERROR MESSAGE =============== */}
-                            {this.props.errorMessage &&
-                            <Motion defaultStyle={{ opacity: 0 }}
-                                style={{
-                                    opacity: spring(
-                                        this.props.errorMessage ? 1 : 0,
-                                        presets.gentle
-                                    ),
-                                }}
-                            >
-                                {value =>
-                                    <div
-                                        style={{ opacity: value.opacity }}
-                                        className="m-t flex-box-row items-centered"
-                                    >
-                                        <Typography variant="body2">
-                                            <span className="orange-light">
-                                                {this.props.errorMessage}
-                                            </span>
-                                        </Typography>
-                                    </div>
-                                }
-                            </Motion>
-                            }
-
 
                         </div>
                     </DialogContent>

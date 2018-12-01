@@ -19,6 +19,7 @@ import {
     type,
 } from "@xcmats/js-toolbox"
 import {
+    StrKey,
     Transaction,
     xdr,
 } from "stellar-sdk"
@@ -285,3 +286,30 @@ export const cancel = () =>
  */
 export const setAccountId = (accountId) =>
     (dispatch, _getState) => dispatch(KeysActions.setState({accountId}))
+
+
+
+
+/**
+ * Detects validity of _stellar_ `accountId` upon user input and handles UX
+ * flow pertaining to the input element as well as ability to proceed further.
+ *
+ * @function handleAccountIdInput
+ * @param {accountId} accountId
+ */
+export const handleAccountIdInput = (accountId) =>
+    async (dispatch, _getState) => {
+        if (StrKey.isValidEd25519PublicKey(accountId)) {
+            dispatch(setAccountId(accountId))
+            dispatch(KeysActions.setState({
+                yesButtonDisabled: false,
+            }))
+            dispatch(setErrorMessage(string.empty()))
+
+        } else {
+            dispatch(setErrorMessage("Invalid account id."))
+            dispatch(KeysActions.setState({
+                yesButtonDisabled: true,
+            }))
+        }
+    }

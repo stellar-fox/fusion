@@ -6,12 +6,18 @@ import { rgb, rgba } from "./utils"
 
 // Named color definitions.
 const
-    onyx                = rgb(49, 55, 65),
-    davysGray           = rgb(86,87,91),
-    outerSpace          = rgb(67, 73, 82),
+    // --------------- GRAYS ---------------
     darkGunmetal        = rgb(29, 36, 46),
-    arsenic             = rgb(56, 60, 69),
     eerieBlack          = rgb(15, 22, 33),
+    arsenic             = rgb(56, 60, 69),
+    onyx                = rgb(49, 55, 65),
+    outerSpace          = rgb(67, 73, 82),
+    davysGray           = rgb(86,87,91),
+
+    orange              = rgb(255,104,89),
+    orangeLight         = rgb(249,165,161),
+
+
     silverChalice       = rgb(171, 173, 181),
     spanishGray         = rgb(152,155,160),
     antiFlashWhite      = rgb(237, 242, 244),
@@ -40,6 +46,17 @@ export default createMuiTheme({
         // These custom colors are defined here for convenience
         // but they are not part of a default theme.
         custom: {
+
+            darkGunmetal,
+            eerieBlack,
+            arsenic,
+            onyx,
+            outerSpace,
+            davysGray,
+
+            orange,
+            orangeLight,
+
             yellowDark,
             yellowDarkHighlight,
             yellow,
@@ -54,10 +71,10 @@ export default createMuiTheme({
             blue,
             blueLight,
 
-            arsenic,
-            outerSpace,
-            davysGray,
+
+
             spanishGray,
+            antiFlashWhite,
 
             purpleDark,
             purple,

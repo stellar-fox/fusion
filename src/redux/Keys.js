@@ -4,6 +4,8 @@ import { string } from "@xcmats/js-toolbox"
 
 // <Keys> initial state
 const initState = {
+    accountId: null,
+    errorMessage: string.empty(),
     ModalAwaitLedger: { showing: false },
     ModalAwaitPure: { showing: false },
     ModalAwaitSceptic: { showing: false },
@@ -11,23 +13,21 @@ const initState = {
     ModalSignupPure: { showing: false },
     ModalSignupSceptic: { showing: false },
     ModalTransactionDetails: { showing: false },
-    spinnerVisible: false,
-    signingMethod: null,
-    accountId: null,
-
-    txBody: string.empty(),
-    txSignedBody: string.empty(),
-    txHash: string.empty(),
-    txSourceAccount: string.empty(),
-    txSequenceNumber: string.empty(),
-    txFee: string.empty(),
-    txOpsNum: string.empty(),
-    txSignature: string.empty(),
-
-    signingKeys: {},
     networkPassphrase: testNetworkPassphrase,
+    noButtonDisabled: false,
     progressMessage: string.empty(),
-    errorMessage: string.empty(),
+    signingKeys: {},
+    signingMethod: null,
+    spinnerVisible: false,
+    txBody: string.empty(),
+    txFee: string.empty(),
+    txHash: string.empty(),
+    txOpsNum: string.empty(),
+    txSequenceNumber: string.empty(),
+    txSignature: string.empty(),
+    txSignedBody: string.empty(),
+    txSourceAccount: string.empty(),
+    yesButtonDisabled: true,
 }
 
 
