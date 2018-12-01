@@ -74,29 +74,28 @@ export const execute = () =>
 
             dispatch(KeysActions.showSpinner())
 
-
-            dispatch(KeysActions.setState({
-                progressMessage: "ACTION REQUIRED - Check pop-up window.",
-            }))
+            dispatch(setProgressMessage(
+                "ACTION REQUIRED - Check pop-up window."
+            ))
             await dispatch(obtainAccountId())
 
 
-            dispatch(KeysActions.setState({
-                progressMessage: "Generating signing keys ...",
-            }))
+            dispatch(setProgressMessage(
+                "Generating signing keys ..."
+            ))
             await dispatch(generateSigningKeys())
 
 
-            dispatch(KeysActions.setState({
-                progressMessage: "Fetching account data ...",
-            }))
+            dispatch(setProgressMessage(
+                "Fetching account data ..."
+            ))
             await dispatch(getLatestAccountState())
             await dispatch(addSigningMethodToAccount())
 
 
-            dispatch(KeysActions.setState({
-                progressMessage: "Generating transaction body ...",
-            }))
+            dispatch(setProgressMessage(
+                "Generating transaction body ..."
+            ))
 
             let generatedTransaction = await dispatch(generateMultisigTx())
 
@@ -107,10 +106,7 @@ export const execute = () =>
                     codec.b64enc
                 )))
 
-            dispatch(KeysActions.setState({
-                progressMessage: string.empty(),
-            }))
-
+            dispatch(setProgressMessage(string.empty()))
             dispatch(KeysActions.hideSpinner())
 
 
@@ -192,15 +188,13 @@ export const execute = () =>
             context.submitTx = async.createMutex()
             let horizonResponse = await context.submitTx.lock()
             dispatch(KeysActions.setState({ horizonResponse }))
-            await dispatch(KeysActions.progressMessage("Complete."))
+            await dispatch(setProgressMessage("Complete."))
             await delay(1500)
             dispatch(KeysActions.hideTransactionDetailsModal())
 
         } catch (error) {
             dispatch(KeysActions.hideSpinner())
-            dispatch(KeysActions.setState({
-                progressMessage: string.empty(),
-            }))
+            dispatch(setProgressMessage(string.empty()))
             dispatch(setErrorMessage(error.message))
         }
 

@@ -4,7 +4,6 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
 import {
-    CircularProgress,
     Dialog,
     DialogActions,
     DialogContent,
@@ -13,16 +12,13 @@ import {
     TableBody,
     TableCell,
     TableRow,
-    Typography,
     withMobileDialog
 } from "@material-ui/core"
 import { string } from "@xcmats/js-toolbox"
 import { action as KeysActions} from "../../redux/Keys"
-
 import { submitTx } from "../../actions/recipes/signupSceptic"
-
-import { Motion, presets, spring } from "react-motion"
 import Button from "../../lib/mui-v1/Button"
+import Awaiter from "../Awaiter"
 
 
 
@@ -31,15 +27,6 @@ import Button from "../../lib/mui-v1/Button"
 export default compose(
     withMobileDialog(),
     withStyles((theme) => ({
-        circle: {
-            color: theme.palette.custom.purpleLight,
-        },
-        circularProgress: {
-            marginRight: "1rem",
-        },
-        errorIcon: {
-            fontSize: "5rem",
-        },
         paper: {
             backgroundColor: theme.palette.custom.purpleDark,
         },
@@ -63,7 +50,6 @@ export default compose(
         (state) => ({
             networkPassphrase: state.Keys.networkPassphrase,
             open: state.Keys.ModalTransactionDetails.showing,
-            spinnerVisible: state.Keys.spinnerVisible,
             txHash: state.Keys.txHash,
             txSourceAccount: state.Keys.txSourceAccount,
             txSequenceNumber: state.Keys.txSequenceNumber,
@@ -72,7 +58,6 @@ export default compose(
             txSignature: state.Keys.txSignature,
         }),
         (dispatch) => bindActionCreators({
-            hideAwaitPureModal: KeysActions.hideAwaitPureModal,
             hideTransactionDetailsModal: KeysActions.hideTransactionDetailsModal,
             resetState: KeysActions.resetState,
             submitTx,
@@ -110,66 +95,11 @@ export default compose(
                     classes={{ paper: classes.paper }}
                 >
                     <DialogTitle id="responsive-dialog-title">
-                        Shambhala Scaptic - Transaction Details
+                        Shambhala Scaptic: Transaction Details
                     </DialogTitle>
                     <DialogContent>
                         <div className="flex-box-col items-centered content-centered">
-
-                            <Motion defaultStyle={{ opacity: 0 }}
-                                style={{
-                                    opacity: spring(this.props.spinnerVisible ? 1 : 0, presets.gentle),
-                                }}
-                            >
-                                {value =>
-                                    <div style={{
-                                        opacity: value.opacity,
-                                    }} className="m-t m-b flex-box-row items-centered"
-                                    >
-                                        <CircularProgress disableShrink size={60}
-                                            classes={{
-                                                circle: classes.circle,
-                                                root: classes.circularProgress,
-                                            }}
-                                        />
-                                    </div>
-                                }
-                            </Motion>
-
-                            <Motion defaultStyle={{ opacity: 0 }}
-                                style={{
-                                    opacity: spring(this.props.progressMessage ? 1 : 0, presets.gentle),
-                                }}
-                            >
-                                {value =>
-                                    <div style={{
-                                        opacity: value.opacity,
-                                    }} className="m-t m-b flex-box-row items-centered"
-                                    >
-                                        <Typography variant="body2">
-                                            {this.props.progressMessage}
-                                        </Typography>
-                                    </div>
-                                }
-                            </Motion>
-
-                            <Motion defaultStyle={{ opacity: 0 }}
-                                style={{
-                                    opacity: spring(this.props.errorMessage ? 1 : 0, presets.gentle),
-                                }}
-                            >
-                                {value =>
-                                    <div style={{
-                                        opacity: value.opacity,
-                                    }} className="m-t m-b flex-box-row items-centered"
-                                    >
-                                        <Typography variant="body2">
-                                            <span className="orange-light">
-                                                {this.props.errorMessage}
-                                            </span>
-                                        </Typography>
-                                    </div>
-                                }
-                            </Motion>
+                            <Awaiter />
 
                             <Table classes={{ root: classes.table }}>
                                 <TableBody>

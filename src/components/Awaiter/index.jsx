@@ -13,7 +13,8 @@ import { ErrorOutline } from "@material-ui/icons"
 
 
 
-// <ModalTransactionDetails> component
+
+// <Awaiter> component
 export default compose(
     withMobileDialog(),
     withStyles((theme) => ({
