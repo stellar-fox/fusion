@@ -183,20 +183,6 @@ export const execute = () =>
             await dispatch(KeysActions.hideAwaitScepticModal())
             await dispatch(KeysActions.showTransactionDetailsModal())
 
-
-            // 5. submit to horizon
-            repeat = true
-            await async.repeat(async () => {
-                await submitTx()
-                repeat = false
-            }, () => repeat)
-
-            // 6. complete onboarding process UX flow
-            await dispatch(setProgressMessage("Complete."))
-            await delay(1500)
-            dispatch(KeysActions.hideTransactionDetailsModal())
-            dispatch(KeysActions.resetState())
-
         } catch (error) {
             dispatch(KeysActions.hideSpinner())
             dispatch(setProgressMessage(string.empty()))
@@ -250,7 +236,11 @@ export const submitTx = () =>
                 noButtonDisabled: false,
             }))
             dispatch(KeysActions.hideSpinner())
-            dispatch(setProgressMessage(string.empty()))
+            dispatch(setProgressMessage("Complete."))
+            await delay(1500)
+            dispatch(KeysActions.hideTransactionDetailsModal())
+            dispatch(KeysActions.resetState())
+
         } catch (error) {
             dispatch(KeysActions.setState({
                 yesButtonDisabled: false,
