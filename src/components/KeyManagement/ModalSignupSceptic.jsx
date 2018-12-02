@@ -11,9 +11,9 @@ import Button from "../../lib/mui-v1/Button"
 import TextInput from "../../lib/mui-v1/TextInput"
 import {
     execute,
-    cancel,
     handleAccountIdInput,
 } from "../../actions/recipes/signupSceptic"
+import { cancel } from "../../actions/onboarding"
 
 
 
@@ -91,10 +91,10 @@ export default compose(
                         Shambhala Sceptic - Welcome!
                     </DialogTitle>
                     <DialogContent>
-                        <Typography variant="h6">
-                            We will add two additional signers to
-                            your <span className="cursive">Stellar Account
-                            </span>.
+                        <Typography variant="subtitle1">
+                            You are about to add two additional signers to
+                            your bank. Provide <span className="cursive">
+                            Account ID</span> where singers should be added.
                         </Typography>
                         <div className="m-t flex-box-row">
                             <TextInput

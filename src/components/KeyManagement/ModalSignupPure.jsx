@@ -9,12 +9,19 @@ import {
 } from "@material-ui/core"
 import { action as KeysActions} from "../../redux/Keys"
 import {
-    obtainAccountId, generateSignedMultisigTx, generateSigningKeys,
-    setErrorMessage, setProgressMessage, setSigningMethod
+    cancel,
+    obtainAccountId,
+    generateSignedMultisigTx,
+    generateSigningKeys,
+    setErrorMessage,
+    setProgressMessage,
+    setSigningMethod,
 } from "../../actions/onboarding"
 import {
-    addSigningMethodToAccount, fundAccount, getLatestAccountState,
-    submitTransaction
+    addSigningMethodToAccount,
+    fundAccount,
+    getLatestAccountState,
+    submitTransaction,
 } from "../../actions/stellarAccount"
 import Button from "../../lib/mui-v1/Button"
 import { delay, string } from "@xcmats/js-toolbox"
@@ -37,6 +44,7 @@ export default compose(
             accountId: state.Keys.accountId,
         }),
         (dispatch) => bindActionCreators({
+            cancel,
             hideSpinner: KeysActions.hideSpinner,
             showSpinner: KeysActions.showSpinner,
             hideSignupPureModal: KeysActions.hideSignupPureModal,
@@ -121,10 +129,7 @@ export default compose(
 
 
         // ...
-        handleNo = () => {
-            this.props.hideSignupPureModal()
-            this.props.setSigningMethod(null)
-        }
+        handleNo = () => this.props.cancel()
 
 
         // ...
@@ -140,10 +145,11 @@ export default compose(
                         Shambhala Pure - Welcome!
                     </DialogTitle>
                     <DialogContent>
-                        <Typography variant="h6">
-                            In a moment we will generate your digital signature key.
-                            Please follow the instructions in separate tab that
-                            will open momentarily.
+                        <Typography variant="subtitle1">
+                            You will associate this device with your bank.
+                            It will provide a convenice to manage your funds
+                            and sign transactions with a PIN. Suitable
+                            for novice users.
                         </Typography>
                     </DialogContent>
                     <DialogActions>

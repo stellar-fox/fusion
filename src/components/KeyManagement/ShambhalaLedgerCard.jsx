@@ -19,6 +19,7 @@ import ModalAwaitLedger from "./ModalAwaitLedger"
 
 
 
+
 // <ShambhalaLedgerCard> component
 export default compose(
     withStyles((theme) => ({
@@ -67,7 +68,7 @@ export default compose(
             ({ classes, width }) => <Fragment>
                 <ModalSignupLedger />
                 <ModalAwaitLedger />
-            
+
                 <Card raised className={classes.card}>
                     <CardActionArea>
                         {isWidthUp("md", width) &&
@@ -85,10 +86,11 @@ export default compose(
                                 Shambhala Ledger
                             </Typography>
                             <Typography component="p">
-                                Associate <span className="cursive">Ledger Nano S
-                                </span> device with Shambhala to increase
-                                usability. Transactions are simply signed with
-                                a PIN of your choice.
+                                Pair your <span className="cursive">
+                                Ledger Nano S</span> securely with Shambhala to
+                                increase usability. Sign transaction with a PIN
+                                of your choice without having a physical device
+                                present.
                             </Typography>
                         </CardContent>
                     </CardActionArea>

@@ -88,9 +88,9 @@ export default compose(
                                 Shambhala Sceptic
                             </Typography>
                             <Typography component="p">
-                                Trust no one. Sign your own transactions
-                                elsewhere. Paste them back here when you're done.
-                                This one is for geeks.
+                                Trust no one. Sign your transactions
+                                offline. Gives you a super secure way of
+                                managing your funds. This one is for geeks.
                             </Typography>
                         </CardContent>
                     </CardActionArea>

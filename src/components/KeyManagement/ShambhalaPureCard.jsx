@@ -12,10 +12,12 @@ import CardMedia from "@material-ui/core/CardMedia"
 import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography"
 import background from "../Fusion/static/bg.png"
-import ModalSignupPure from "./ModalSignupPure"
-import ModalAwaitPure from "./ModalAwaitPure"
 import { action as KeysActions, signingMethod as sm } from "../../redux/Keys"
 import { setSigningMethod } from "../../actions/onboarding"
+import ModalSignupPure from "./ModalSignupPure"
+import ModalAwaitPure from "./ModalAwaitPure"
+
+
 
 
 // <ShambhalaPureCard> component
@@ -83,9 +85,9 @@ export default compose(
                                 Shambhala Pure
                             </Typography>
                             <Typography component="p">
-                                The most convinient way of managing your bank.
-                                Authorize this device to sign small transactions
-                                on your behalf.
+                                The most convinient and secure way of accessing
+                                your bank. Manage your funds and sign
+                                transactions with a simple PIN.
                             </Typography>
                         </CardContent>
                     </CardActionArea>

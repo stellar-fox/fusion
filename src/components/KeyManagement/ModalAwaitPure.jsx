@@ -4,12 +4,15 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
 import {
-    CircularProgress, Dialog, DialogActions, DialogContent,
-    DialogTitle, Typography, withMobileDialog
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    withMobileDialog
 } from "@material-ui/core"
-import { action as KeysActions} from "../../redux/Keys"
 import Button from "../../lib/mui-v1/Button"
-import { Motion, presets, spring } from "react-motion"
+import { cancel } from "../../actions/onboarding"
+import Awaiter from "../Awaiter"
 
 
 
@@ -18,12 +21,6 @@ import { Motion, presets, spring } from "react-motion"
 export default compose(
     withMobileDialog(),
     withStyles((theme) => ({
-        circle: {
-            color: theme.palette.custom.blueLight,
-        },
-        circularProgress: {
-            marginRight: "1rem",
-        },
         paper: {
             backgroundColor: theme.palette.custom.blueDark,
         },
@@ -31,13 +28,9 @@ export default compose(
     connect(
         (state) => ({
             open: state.Keys.ModalAwaitPure.showing,
-            awaiting: state.Keys.awaitingShambhalaResponse,
-            progressMessage: state.Keys.progressMessage,
-            errorMessage: state.Keys.errorMessage,
         }),
         (dispatch) => bindActionCreators({
-            cancelAwaitingResponse: KeysActions.cancelAwaitingResponse,
-            hideAwaitPureModal: KeysActions.hideAwaitPureModal,
+            cancel,
         }, dispatch)
     )
 )(
@@ -50,10 +43,7 @@ export default compose(
 
 
         // ...
-        handleNo = () => {
-            this.props.cancelAwaitingResponse()
-            this.props.hideAwaitPureModal()
-        }
+        handleNo = () => this.props.cancel()
 
 
         // ...
@@ -66,71 +56,11 @@ export default compose(
                     classes={{ paper: classes.paper }}
                 >
                     <DialogTitle id="responsive-dialog-title">
-                        Shambhala Pure - Progress Report
+                        Shambhala Pure: Onboarding
                     </DialogTitle>
                     <DialogContent>
                         <div className="flex-box-col items-centered content-centered">
-                            <Typography variant="body2">
-                                Please switch to Shambhala tab and follow
-                                the procedure there first. Leave this tab
-                                open.
-                            </Typography>
-                            <Motion defaultStyle={{ opacity: 0 }}
-                                style={{
-                                    opacity: spring(this.props.awaiting ? 1 : 0, presets.gentle),
-                                }}
-                            >
-                                {value =>
-                                    <div style={{
-                                        opacity: value.opacity,
-                                    }} className="m-t m-b flex-box-row items-centered"
-                                    >
-                                        <CircularProgress disableShrink size={20}
-                                            classes={{
-                                                circle: classes.circle,
-                                                root: classes.circularProgress,
-                                            }}
-                                        />
-                                    </div>
-                                }
-                            </Motion>
-
-                            <Motion defaultStyle={{ opacity: 0 }}
-                                style={{
-                                    opacity: spring(this.props.progressMessage ? 1 : 0, presets.gentle),
-                                }}
-                            >
-                                {value =>
-                                    <div style={{
-                                        opacity: value.opacity,
-                                    }} className="m-t m-b flex-box-row items-centered"
-                                    >
-                                        <Typography variant="body2">
-                                            {this.props.progressMessage}
-                                        </Typography>
-                                    </div>
-                                }
-                            </Motion>
-
-                            <Motion defaultStyle={{ opacity: 0 }}
-                                style={{
-                                    opacity: spring(this.props.errorMessage ? 1 : 0, presets.gentle),
-                                }}
-                            >
-                                {value =>
-                                    <div style={{
-                                        opacity: value.opacity,
-                                    }} className="m-t m-b flex-box-row items-centered"
-                                    >
-                                        <Typography variant="body2">
-                                            <span className="orange-light">
-                                                {this.props.errorMessage}
-                                            </span>
-                                        </Typography>
-                                    </div>
-                                }
-                            </Motion>
-
+                            <Awaiter />
                         </div>
                     </DialogContent>
                     <DialogActions>

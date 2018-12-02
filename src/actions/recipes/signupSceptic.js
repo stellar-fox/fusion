@@ -25,7 +25,6 @@ import {
 } from "stellar-sdk"
 import { action as KeysActions } from "../../redux/Keys"
 import {
-    cancelShambhala,
     generateMultisigTx,
     generateSigningKeys,
     obtainAccountId,
@@ -181,7 +180,7 @@ export const execute = () =>
 
             // 4. display transaction details
             await dispatch(KeysActions.hideAwaitScepticModal())
-            await dispatch(KeysActions.showTransactionDetailsModal())
+            dispatch(KeysActions.showTransactionDetailsModal())
 
         } catch (error) {
             dispatch(KeysActions.hideSpinner())
@@ -251,22 +250,6 @@ export const submitTx = () =>
             dispatch(setProgressMessage(string.empty()))
             throw new Error(error)
         }
-    }
-
-
-
-
-
-/**
- * Handle user cancel decision.
- *
- * @function cancel
- * @returns {Function} Resets component's state when _Cancel_ is selected.
- */
-export const cancel = () =>
-    (dispatch, _getState) => {
-        dispatch(KeysActions.resetState())
-        dispatch(cancelShambhala())
     }
 
 

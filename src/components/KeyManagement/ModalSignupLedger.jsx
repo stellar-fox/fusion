@@ -173,11 +173,11 @@ export default compose(
                         Shambhala Ledger - Welcome!
                     </DialogTitle>
                     <DialogContent>
-                        <Typography variant="h6">
-                            We will assiciate your <span className="cursive">
-                            Ledger Nano S</span> device's public key.
-                            Make sure your device is connected and Stellar
-                            application selected.
+                        <Typography variant="subtitle1">
+                            Associate your <span className="cursive">
+                            Ledger Nano S</span> device with your bank.
+                            Gives you convenience of signing transactions
+                            with a PIN with no physical device present.
                         </Typography>
                         <div className="m-t flex-box-row">
                             <FormControlLabel control={
@@ -189,7 +189,7 @@ export default compose(
                             />
                         </div>
 
-
+                        {!useDefaultAccount &&
                         <Motion defaultStyle={{ opacity: 0 }}
                             style={{
                                 opacity: spring(
@@ -214,7 +214,7 @@ export default compose(
                                     />
                                 </div>}
                         </Motion>
-
+                        }
 
                     </DialogContent>
                     <DialogActions>

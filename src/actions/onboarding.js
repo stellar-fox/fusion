@@ -255,19 +255,20 @@ export const setTransactionDetails = (txObject) =>
 
 
 
-
 /**
- * Cancels any pending awaits with Shambhala and closes the pop-up window/tab.
+ * Handle user cancel decision. Cancels any pending awaits with Shambhala and
+ * closes Shambhala pop-up window/tab.
  *
- * @function cancelShambhala
- * @returns {Function}
+ * @function cancel
+ * @returns {Function} Resets component's state when _Cancel_ is selected.
  */
-export const cancelShambhala = () =>
-    async (_dispatch, getState) => {
+export const cancel = () =>
+    async (dispatch, getState) => {
         let shambhala = new Shambhala(
             config.shambhala.client,
             { token: getState().Auth.jwt }
         )
         await shambhala.cancel()
         await shambhala.close()
+        dispatch(KeysActions.resetState())
     }

@@ -15,10 +15,8 @@ import Button from "../../lib/mui-v1/Button"
 import { action as KeysActions } from "../../redux/Keys"
 import { action as SnackyActions } from "../../redux/Snacky"
 import { Motion, presets, spring } from "react-motion"
-import {
-    cancel,
-    passSignature,
-} from "../../actions/recipes/signupSceptic"
+import { passSignature } from "../../actions/recipes/signupSceptic"
+import { cancel } from "../../actions/onboarding"
 import Awaiter from "../Awaiter"
 
 
@@ -28,15 +26,6 @@ import Awaiter from "../Awaiter"
 export default compose(
     withMobileDialog(),
     withStyles((theme) => ({
-        circle: {
-            color: theme.palette.custom.purpleLight,
-        },
-        circularProgress: {
-            marginRight: "1rem",
-        },
-        errorIcon: {
-            fontSize: "5rem",
-        },
         paper: {
             backgroundColor: theme.palette.custom.purpleDark,
         },
@@ -44,9 +33,6 @@ export default compose(
     connect(
         (state) => ({
             open: state.Keys.ModalAwaitSceptic.showing,
-            spinnerVisible: state.Keys.spinnerVisible,
-            progressMessage: state.Keys.progressMessage,
-            errorMessage: state.Keys.errorMessage,
             txBody: state.Keys.txBody,
         }),
         (dispatch) => bindActionCreators({
