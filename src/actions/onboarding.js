@@ -19,7 +19,7 @@ import { config } from "../firebase/config"
 import { Network, Networks, Server, Transaction } from "stellar-sdk"
 import { getAccountId, getSoftwareVersion } from "../lib/logic/ledgerhq"
 import { action as LedgerHQActions } from "../redux/LedgerHQ"
-import { write } from "../firebase"
+import { update } from "../firebase"
 
 
 
@@ -284,8 +284,11 @@ export const cancel = () =>
  */
 export const saveAccountData = () =>
     async (_dispatch, getState) => {
-        let { accountId, signingMethod } = getState().Keys
-        await write(`user/${getState().Auth.uid}/accounts`, {
-            [accountId]: { signingMethod },
+        let { accountId, networkPassphrase, signingMethod } = getState().Keys
+        await update(`user/${getState().Auth.uid}/accounts`, {
+            [accountId]: {
+                networkPassphrase,
+                signingMethod,
+            },
         })
     }

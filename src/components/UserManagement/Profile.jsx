@@ -17,7 +17,7 @@ import { action as AuthActions } from "../../redux/Auth"
 import { reauthenticate, verifyEmail } from "../../firebase"
 import Gravatar from "../Gravatar"
 import PhotoAvatar from "../PhotoAvatar"
-import { read } from "../../firebase"
+import { readOnce } from "../../firebase"
 import ImageCropper from "../ImageCropper"
 import { action as SnackyActions } from "../../redux/Snacky"
 
@@ -87,7 +87,7 @@ export default compose(
                 emailVerified: this.props.emailVerified,
                 displayName: this.props.displayName,
             })
-            read(this.props.uid).then((userData) => {
+            readOnce(`user/${this.props.uid}`).then((userData) => {
                 this.setState({
                     numberOfAccounts: userData.user.accounts ?
                         Object.entries(

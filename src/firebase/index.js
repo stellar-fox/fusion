@@ -81,9 +81,9 @@ const verifyPasswordResetCode = async (actionCode) =>
 
 
 // ...
-const read = async (uid) => {
+const readOnce = async (path) => {
     try {
-        let snapshot = await firebase.database().ref(`user/${uid}`)
+        let snapshot = await firebase.database().ref(path)
             .once("value")
         return { user: snapshot.val() }
     } catch (error) {
@@ -95,9 +95,22 @@ const read = async (uid) => {
 
 
 // ...
-const write = async (path, userData) => {
+const write = async (path, data) => {
     try {
-        await firebase.database().ref(path).set(userData)
+        await firebase.database().ref(path).set(data)
+        return { ok: true }
+    } catch (error) {
+        return { error: error.message }
+    }
+}
+
+
+
+
+// ...
+const update = async (path, data) => {
+    try {
+        await firebase.database().ref(path).update(data)
         return { ok: true }
     } catch (error) {
         return { error: error.message }
@@ -161,7 +174,7 @@ const storageRef = () => firebase.storage().ref()
 
 // ...
 export {
-    applyVerificationCode, authenticate, read, resetPassword, signout, signup,
+    applyVerificationCode, authenticate, readOnce, resetPassword, signout, signup,
     updateEmail, updatePassword, updateUserProfile, verifyEmail,
-    verifyPasswordResetCode, write, reauthenticate, storageRef,
+    verifyPasswordResetCode, write, reauthenticate, storageRef, update,
 }
