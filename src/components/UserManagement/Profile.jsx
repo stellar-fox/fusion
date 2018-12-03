@@ -20,7 +20,7 @@ import PhotoAvatar from "../PhotoAvatar"
 import { readOnce } from "../../firebase"
 import ImageCropper from "../ImageCropper"
 import { action as SnackyActions } from "../../redux/Snacky"
-
+import AnimatedValue from "../AnimatedValue"
 
 
 // <Profile> component
@@ -411,10 +411,14 @@ export default compose(
                             Bank Summary
                         </Typography>
 
-                        <div className="m-t m-b">
+                        <div className="m-t m-b flex-box-col">
                             <Typography variant="h4">
-                                Number of Accounts: {this.state.numberOfAccounts}
+                                Number of Accounts:
                             </Typography>
+                            <AnimatedValue
+                                valueToAnimate={this.state.numberOfAccounts}
+                                variant="h4"
+                            />
                         </div>
 
 
