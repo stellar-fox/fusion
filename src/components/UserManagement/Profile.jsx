@@ -76,7 +76,7 @@ export default compose(
             password: string.empty(),
             errorPassword: false,
             errorMessagePassword: string.empty(),
-            foo: string.empty(),
+            numberOfAccounts: string.empty(),
         }
 
 
@@ -88,7 +88,12 @@ export default compose(
                 displayName: this.props.displayName,
             })
             read(this.props.uid).then((userData) => {
-                this.setState({ foo: userData.user.foo })
+                this.setState({
+                    numberOfAccounts: userData.user.accounts ?
+                        Object.entries(
+                            userData.user.accounts
+                        ).length : "0",
+                })
             })
         }
 
@@ -403,12 +408,12 @@ export default compose(
                     </div>
                     <div >
                         <Typography variant="subtitle1">
-                            User Custom Data
+                            Bank Summary
                         </Typography>
 
                         <div className="m-t m-b">
                             <Typography variant="h4">
-                                FOO: {this.state.foo}
+                                Number of Accounts: {this.state.numberOfAccounts}
                             </Typography>
                         </div>
 

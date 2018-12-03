@@ -49,16 +49,26 @@ export default compose(
         // Parsed query-string from URI.
         qs = queryString.parse(
             this.props.location.search,
-            { ignoreQueryPrefix: true, }
+            { ignoreQueryPrefix: true }
         )
 
 
         // ...
         render = () =>
             <Fragment>
-                {this.qs.mode === "verifyEmail" && <VerifyEmail continueUrl={this.qs.continueUrl} />}
-                {this.qs.mode === "resetPassword" && <ResetPassword oobCode={this.qs.oobCode} continueUrl={this.qs.continueUrl} />}
-                {this.qs.mode === "recoverEmail" && <RecoverEmail oobCode={this.qs.oobCode} continueUrl={this.qs.continueUrl} />}
+                {this.qs.mode === "verifyEmail" &&
+                    <VerifyEmail continueUrl={this.qs.continueUrl} />
+                }
+                {this.qs.mode === "resetPassword" &&
+                    <ResetPassword oobCode={this.qs.oobCode}
+                        continueUrl={this.qs.continueUrl}
+                    />
+                }
+                {this.qs.mode === "recoverEmail" &&
+                    <RecoverEmail oobCode={this.qs.oobCode}
+                        continueUrl={this.qs.continueUrl}
+                    />
+                }
             </Fragment>
     }
 )
