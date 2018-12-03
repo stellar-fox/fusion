@@ -72,16 +72,17 @@ export const execute = () =>
 
             await dispatch(saveAccountData())
 
-            dispatch(KeysActions.hideSpinner())
-            dispatch(setProgressMessage(
-                "Complete."
-            ))
+            await dispatch(KeysActions.hideSpinner())
+            dispatch(KeysActions.setSucceded())
+            dispatch(setProgressMessage("Complete."))
+
             await delay(1500)
             dispatch(KeysActions.hideAwaitPureModal())
 
         } catch (error) {
             dispatch(KeysActions.hideSpinner())
             dispatch(setProgressMessage(string.empty()))
+            dispatch(KeysActions.setFailed())
             dispatch(setErrorMessage(error.message))
         }
 

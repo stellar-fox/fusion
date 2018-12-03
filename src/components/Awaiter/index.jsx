@@ -8,8 +8,15 @@ import {
     Typography,
     withMobileDialog
 } from "@material-ui/core"
-import { Motion, presets, spring } from "react-motion"
-import { ErrorOutline } from "@material-ui/icons"
+import {
+    Motion,
+    presets,
+    spring,
+} from "react-motion"
+import {
+    CheckCircleOutlineRounded,
+    ErrorOutlineRounded,
+} from "@material-ui/icons"
 
 
 
@@ -31,6 +38,11 @@ export default compose(
         colorTextPrimary: {
             color: theme.palette.custom.antiFlashWhite,
         },
+        checkIcon: {
+            fontSize: "5rem",
+            color: theme.palette.custom.greenLight,
+            opacity: "0.5",
+        },
         errorIcon: {
             fontSize: "5rem",
             color: theme.palette.error.light,
@@ -42,6 +54,7 @@ export default compose(
             errorMessage: state.Keys.errorMessage,
             progressMessage: state.Keys.progressMessage,
             spinnerVisible: state.Keys.spinnerVisible,
+            success: state.Keys.success,
         }),
         (dispatch) => bindActionCreators({}, dispatch)
     )
@@ -56,10 +69,12 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, errorMessage, progressMessage, spinnerVisible }) =>
+            ({ classes, errorMessage, progressMessage, spinnerVisible,
+                success }) =>
                 <div className="flex-box-col items-centered content-centered">
                     {progressMessage &&
                     <Fragment>
+                        {spinnerVisible &&
                         <Motion defaultStyle={{ opacity: 0 }}
                             style={{ opacity: spring(
                                 spinnerVisible ? 1 : 0, presets.gentle
@@ -70,7 +85,8 @@ export default compose(
                                     opacity: value.opacity,
                                 }}
                                 >
-                                    <CircularProgress disableShrink size={60}
+                                    <CircularProgress disableShrink
+                                        size={60}
                                         thickness={0.7}
                                         classes={{
                                             circle: classes.circle,
@@ -80,7 +96,26 @@ export default compose(
                                 </div>
                             }
                         </Motion>
-
+                        }
+                        {success &&
+                        <Motion defaultStyle={{ opacity: 0 }}
+                            style={{ opacity: spring(
+                                success ? 1 : 0, presets.gentle
+                            ) }}
+                        >
+                            {value =>
+                                <div style={{
+                                    opacity: value.opacity,
+                                }}
+                                >
+                                    <CheckCircleOutlineRounded classes={{
+                                        root: classes.checkIcon,
+                                    }}
+                                    />
+                                </div>
+                            }
+                        </Motion>
+                        }
                         <Motion defaultStyle={{ opacity: 0 }}
                             style={{ opacity: spring(
                                 progressMessage ? 1 : 0, presets.gentle
@@ -118,7 +153,7 @@ export default compose(
                                 }} className="flex-box-row items-centered"
                                 >
 
-                                    <ErrorOutline classes={{
+                                    <ErrorOutlineRounded classes={{
                                         root: classes.errorIcon,
                                     }}
                                     />

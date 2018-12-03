@@ -19,6 +19,7 @@ const initState = {
     signingKeys: {},
     signingMethod: null,
     spinnerVisible: false,
+    success: false,
     txBody: string.empty(),
     txFee: string.empty(),
     txHash: string.empty(),
@@ -132,6 +133,16 @@ export const action = {
     // ...
     hideSpinner: () => (dispatch) => dispatch(action.setState({
         spinnerVisible: false,
+    })),
+
+    // ...
+    setSucceded: () => (dispatch) => dispatch(action.setState({
+        success: true,
+    })),
+
+    // ...
+    setFailed: () => (dispatch) => dispatch(action.setState({
+        success: false,
     })),
 
     // ...

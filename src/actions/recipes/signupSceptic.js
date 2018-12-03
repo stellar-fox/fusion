@@ -234,8 +234,10 @@ export const submitTx = () =>
                 yesButtonDisabled: false,
                 noButtonDisabled: false,
             }))
-            dispatch(KeysActions.hideSpinner())
+            await dispatch(KeysActions.hideSpinner())
+            dispatch(KeysActions.setSucceded())
             dispatch(setProgressMessage("Complete."))
+
             await delay(1500)
             dispatch(KeysActions.hideTransactionDetailsModal())
             dispatch(KeysActions.resetState())
@@ -245,9 +247,10 @@ export const submitTx = () =>
                 yesButtonDisabled: false,
                 noButtonDisabled: false,
             }))
-            dispatch(setErrorMessage(error.message))
             dispatch(KeysActions.hideSpinner())
             dispatch(setProgressMessage(string.empty()))
+            dispatch(KeysActions.setFailed())
+            dispatch(setErrorMessage(error.message))
             throw new Error(error)
         }
     }
