@@ -285,7 +285,7 @@ export const cancel = () =>
 export const saveAccountData = () =>
     async (_dispatch, getState) => {
         let { accountId, signingMethod } = getState().Keys
-        await write(getState().Auth.uid, { accounts: {
+        await write(`user/${getState().Auth.uid}/accounts`, {
             [accountId]: { signingMethod },
-        } })
+        })
     }

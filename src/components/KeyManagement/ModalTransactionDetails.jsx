@@ -17,6 +17,7 @@ import {
 import { string } from "@xcmats/js-toolbox"
 import { action as KeysActions} from "../../redux/Keys"
 import { submitTx } from "../../actions/recipes/signupSceptic"
+import { cancel, saveAccountData } from "../../actions/onboarding"
 import Button from "../../lib/mui-v1/Button"
 import Awaiter from "../Awaiter"
 
@@ -60,8 +61,10 @@ export default compose(
             noButtonDisabled: state.Keys.noButtonDisabled,
         }),
         (dispatch) => bindActionCreators({
+            cancel,
             hideTransactionDetailsModal: KeysActions.hideTransactionDetailsModal,
             resetState: KeysActions.resetState,
+            saveAccountData,
             submitTx,
         }, dispatch)
     )
@@ -74,16 +77,13 @@ export default compose(
         }
 
         // ...
-        handleNo = () => {
-            this.props.hideTransactionDetailsModal()
-            this.props.resetState()
-        }
+        handleNo = () => this.props.cancel()
 
 
         // ...
-        handleYes = () => {
-
-            this.props.submitTx()
+        handleYes = async () => {
+            await this.props.saveAccountData()
+            await this.props.submitTx()
         }
 
 

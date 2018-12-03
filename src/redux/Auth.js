@@ -78,7 +78,7 @@ export const action = {
     signup: (...args) =>
         async (dispatch, _getState) => {
             const auth = await signup(...args)
-            await write(auth.user.uid, { foo: "bar" })
+            await write(`user/${auth.user.uid}`, { createdAt: Date.now() })
             dispatch(action.sendEmailVerification())
             dispatch(action.setState({
                 uid: auth.user.uid,

@@ -95,9 +95,9 @@ const read = async (uid) => {
 
 
 // ...
-const write = async (uid, userData) => {
+const write = async (path, userData) => {
     try {
-        await firebase.database().ref(`user/${uid}`).set(userData)
+        await firebase.database().ref(path).set(userData)
         return { ok: true }
     } catch (error) {
         return { error: error.message }

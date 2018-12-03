@@ -19,6 +19,7 @@ import {
     generateMultisigTx,
     generateSigningKeys,
     obtainAccountId,
+    saveAccountData,
     setErrorMessage,
     setProgressMessage,
 } from "../../actions/onboarding"
@@ -73,6 +74,8 @@ export const execute = () =>
                 "Submitting ..."
             ))
             await dispatch(submitTransaction(signedTx))
+
+            await dispatch(saveAccountData())
 
             await dispatch(KeysActions.hideSpinner())
 
