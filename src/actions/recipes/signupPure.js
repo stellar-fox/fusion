@@ -16,6 +16,7 @@ import { action as KeysActions } from "../../redux/Keys"
 import {
     generateSigningKeys,
     obtainAccountId,
+    saveAccountData,
     setErrorMessage,
     setProgressMessage,
     generateSignedMultisigTx,
@@ -68,6 +69,8 @@ export const execute = () =>
             ))
             const signedTx = await dispatch(generateSignedMultisigTx())
             await dispatch(submitTransaction(signedTx))
+
+            await dispatch(saveAccountData())
 
             dispatch(KeysActions.hideSpinner())
             dispatch(setProgressMessage(
