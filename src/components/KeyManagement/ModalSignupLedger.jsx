@@ -4,24 +4,29 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
 import {
-    Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel,
-    Switch, Typography, withMobileDialog
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    FormControlLabel,
+    Switch,
+    Typography,
+    withMobileDialog,
 } from "@material-ui/core"
 import Button from "../../lib/mui-v1/Button"
 import TextInput from "../../lib/mui-v1/TextInput"
-import { action as KeysActions } from "../../redux/Keys"
+import { cancel } from "../../actions/onboarding"
+import { execute } from "../../actions/recipes/signupLedger"
 import {
-    obtainAccountId, generateMultisigTx, generateSigningKeys, setSigningMethod,
-    setErrorMessage, setProgressMessage
-} from "../../actions/onboarding"
-import {
-    addSigningMethodToAccount, getLatestAccountState, submitTransaction
-} from "../../actions/stellarAccount"
-import {
-    setUseDefaultAccount, setAccount, signTxWithLedgerHQ
+    setAccount,
+    setUseDefaultAccount,
 } from "../../actions/ledgering"
-import { delay, string, type } from "@xcmats/js-toolbox"
-import { Motion, presets, spring } from "react-motion"
+import { type } from "@xcmats/js-toolbox"
+import {
+    Motion,
+    presets,
+    spring,
+} from "react-motion"
 
 
 
@@ -57,23 +62,10 @@ export default compose(
             errorMessage: state.LedgerHQ.errorMessage,
         }),
         (dispatch) => bindActionCreators({
-            hideSignupLedgerModal: KeysActions.hideSignupLedgerModal,
-            showAwaitLedgerModal: KeysActions.showAwaitLedgerModal,
-            hideAwaitLedgerModal: KeysActions.hideAwaitLedgerModal,
-            showSpinner: KeysActions.showSpinner,
-            hideSpinner: KeysActions.hideSpinner,
+            cancel,
+            execute,
             setAccount,
-            setSigningMethod,
-            setErrorMessage,
-            setProgressMessage,
             setUseDefaultAccount,
-            getLatestAccountState,
-            addSigningMethodToAccount,
-            generateMultisigTx,
-            obtainAccountId,
-            generateSigningKeys,
-            signTxWithLedgerHQ,
-            submitTransaction,
         }, dispatch)
     )
 )(
@@ -86,65 +78,11 @@ export default compose(
 
 
         // ...
-        handleYes = async () => {
-            try {
-                await this.props.setProgressMessage(string.empty())
-                await this.props.setErrorMessage(string.empty())
-
-                await this.props.hideSignupLedgerModal()
-                await this.props.showAwaitLedgerModal()
-
-                await this.props.showSpinner()
-
-                await this.props.setProgressMessage(
-                    "Querying signing service ..."
-                )
-                await this.props.obtainAccountId()
-
-                await this.props.setProgressMessage(
-                    "ACTION REQUIRED. Check pop-up window."
-                )
-
-                await this.props.generateSigningKeys()
-
-
-                await this.props.setProgressMessage(
-                    "Fetching current account data ..."
-                )
-                await this.props.getLatestAccountState()
-                await this.props.addSigningMethodToAccount()
-
-                await this.props.setProgressMessage(
-                    "ACTION REQUIRED. Check your signing device."
-                )
-                const tx = await this.props.generateMultisigTx()
-                const signedTx = await this.props.signTxWithLedgerHQ(tx)
-
-                await this.props.setProgressMessage(
-                    "Submitting ..."
-                )
-                await this.props.submitTransaction(signedTx)
-
-                await this.props.hideSpinner()
-
-                await this.props.setProgressMessage("Complete.")
-
-                await delay(1500)
-                await this.props.hideAwaitLedgerModal()
-            } catch (error) {
-                await this.props.hideSpinner()
-                await this.props.setProgressMessage(string.empty())
-                await this.props.setErrorMessage(error.message)
-            }
-
-        }
+        handleYes = () => this.props.execute()
 
 
         // ...
-        handleNo = () => {
-            this.props.hideSignupLedgerModal()
-            this.props.setSigningMethod(null)
-        }
+        handleNo = () => this.props.cancel()
 
 
         // ...
