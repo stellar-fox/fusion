@@ -4,27 +4,16 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
 import {
-    Dialog, DialogActions, DialogContent, DialogTitle,
-    Typography, withMobileDialog
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    Typography,
+    withMobileDialog
 } from "@material-ui/core"
-import { action as KeysActions} from "../../redux/Keys"
-import {
-    cancel,
-    obtainAccountId,
-    generateSignedMultisigTx,
-    generateSigningKeys,
-    setErrorMessage,
-    setProgressMessage,
-    setSigningMethod,
-} from "../../actions/onboarding"
-import {
-    addSigningMethodToAccount,
-    fundAccount,
-    getLatestAccountState,
-    submitTransaction,
-} from "../../actions/stellarAccount"
+import { cancel } from "../../actions/onboarding"
+import { execute } from "../../actions/recipes/signupPure"
 import Button from "../../lib/mui-v1/Button"
-import { delay, string } from "@xcmats/js-toolbox"
 
 
 
@@ -40,26 +29,10 @@ export default compose(
     connect(
         (state) => ({
             open: state.Keys.ModalSignupPure.showing,
-            networkPassphrase: state.Keys.networkPassphrase,
-            accountId: state.Keys.accountId,
         }),
         (dispatch) => bindActionCreators({
             cancel,
-            hideSpinner: KeysActions.hideSpinner,
-            showSpinner: KeysActions.showSpinner,
-            hideSignupPureModal: KeysActions.hideSignupPureModal,
-            showAwaitPureModal: KeysActions.showAwaitPureModal,
-            hideAwaitPureModal: KeysActions.hideAwaitPureModal,
-            fundAccount,
-            obtainAccountId,
-            generateSigningKeys,
-            setErrorMessage,
-            setProgressMessage,
-            setSigningMethod,
-            getLatestAccountState,
-            addSigningMethodToAccount,
-            generateSignedMultisigTx,
-            submitTransaction,
+            execute,
         }, dispatch)
     )
 )(
@@ -72,60 +45,7 @@ export default compose(
 
 
         // ...
-        handleYes = async () => {
-            try {
-
-                await this.props.setProgressMessage(string.empty())
-                await this.props.setErrorMessage(string.empty())
-
-
-                await this.props.hideSignupPureModal()
-                await this.props.showAwaitPureModal()
-
-
-                await this.props.showSpinner()
-                await this.props.setProgressMessage(
-                    "ACTION REQUIRED. Check pop-up window."
-                )
-                await this.props.obtainAccountId()
-
-
-                await this.props.setProgressMessage(
-                    "Generating signatures ..."
-                )
-                await this.props.generateSigningKeys()
-
-
-                await this.props.setProgressMessage(
-                    "Funding account ..."
-                )
-                await this.props.fundAccount()
-
-
-                await this.props.getLatestAccountState()
-                await this.props.addSigningMethodToAccount()
-
-
-                await this.props.setProgressMessage(
-                    "Creating additional signatures ..."
-                )
-                const signedTx = await this.props.generateSignedMultisigTx()
-                await this.props.submitTransaction(signedTx)
-
-
-                await this.props.hideSpinner()
-                await this.props.setProgressMessage(
-                    "Complete."
-                )
-                await delay(1500)
-                await this.props.hideAwaitPureModal()
-
-            } catch (error) {
-                await this.props.hideSpinner()
-                await this.props.setProgressMessage(string.empty())
-                await this.props.setErrorMessage(error.message)
-            }
-        }
+        handleYes = () => this.props.execute()
 
 
         // ...
