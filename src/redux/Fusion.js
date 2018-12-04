@@ -1,10 +1,19 @@
-import { createReducer } from "@xcmats/js-toolbox"
+import {
+    createReducer,
+    string
+} from "@xcmats/js-toolbox"
 
 
 
 
 // <Application> state
-const initState = {}
+const initState = {
+    backupError: string.empty(),
+    backupInProgress: false,
+    restoreError: string.empty(),
+    restoreInProgress: false,
+    restoredBackup: null,
+}
 
 
 

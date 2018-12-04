@@ -38,6 +38,7 @@ export const dynamicImportLibs = async () => {
         onboarding,
 
         // logic
+        backupRestore,
         ledgerhq,
         transaction,
 
@@ -57,6 +58,7 @@ export const dynamicImportLibs = async () => {
         import("../actions/onboarding"),
 
         // logic
+        import("../lib/logic/backupRestore"),
         import("../lib/logic/ledgerhq"),
         import("../lib/logic/transaction"),
     ])
@@ -72,6 +74,7 @@ export const dynamicImportLibs = async () => {
 
         // logic
         logic: {
+            backupRestore,
             ledgerhq,
             transaction,
         },
