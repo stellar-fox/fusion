@@ -8,6 +8,7 @@ import {
     presets,
     spring,
 } from "react-motion"
+import NumberFormat from "react-number-format"
 
 
 
@@ -32,7 +33,12 @@ export default compose(
                 >
                     {value =>
                         <Typography variant={variant || "h6"}>
-                            {value.x}
+                            <NumberFormat
+                                value={value.x}
+                                displayType={"text"}
+                                decimalScale={4}
+                                isNumericString
+                            />
                         </Typography>
                     }
                 </Motion>

@@ -411,8 +411,8 @@ export default compose(
                             Bank Summary
                         </Typography>
 
-                        <div className="m-t m-b flex-box-col">
-                            <Typography variant="h4">
+                        <div className="m-t m-b flex-box-row">
+                            <Typography className="p-r" variant="h4">
                                 Number of Accounts:
                             </Typography>
                             <AnimatedValue
