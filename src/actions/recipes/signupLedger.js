@@ -82,7 +82,7 @@ export const execute = () =>
             dispatch(setProgressMessage("Complete."))
 
             await delay(1500)
-            dispatch(KeysActions.hideAwaitLedgerModal())
+            dispatch(KeysActions.resetState())
 
         } catch (error) {
             dispatch(KeysActions.hideSpinner())

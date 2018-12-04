@@ -239,7 +239,6 @@ export const submitTx = () =>
             dispatch(setProgressMessage("Complete."))
 
             await delay(1500)
-            dispatch(KeysActions.hideTransactionDetailsModal())
             dispatch(KeysActions.resetState())
 
         } catch (error) {
