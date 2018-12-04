@@ -35,10 +35,10 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, email, size, variant, }) =>
+            ({ classes, email, size, variant }) =>
                 <Avatar
                     style={{ margin: "10", width: size || 40,
-                        height: size || 40, }}
+                        height: size || 40 }}
                     alt="Avatar"
                     className={classNames(classes.avatar, classes[variant])}
                     src={`${gravatarBase}${md5(email)}${size ?
