@@ -287,6 +287,7 @@ export const saveAccountData = () =>
         let { accountId, networkPassphrase, signingMethod } = getState().Keys
         await update(`user/${getState().Auth.uid}/accounts`, {
             [accountId]: {
+                id: accountId,
                 networkPassphrase,
                 signingMethod,
             },

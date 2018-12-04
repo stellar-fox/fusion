@@ -3,10 +3,21 @@ import {
     string,
 } from "@xcmats/js-toolbox"
 import {
-    applyVerificationCode, authenticate, resetPassword, signout, signup,
-    updateEmail, updateUserProfile, updatePassword, verifyEmail,
-    verifyPasswordResetCode, write, storageRef,
+    applyVerificationCode,
+    authenticate,
+    readOnce,
+    resetPassword,
+    signout,
+    signup,
+    storageRef,
+    updateEmail,
+    updateUserProfile,
+    updatePassword,
+    verifyEmail,
+    verifyPasswordResetCode,
+    write,
 } from "../firebase"
+import { action as StellarAccountsActions } from "../redux/StellarAccounts"
 
 
 
@@ -50,6 +61,27 @@ export const action = {
 
             !auth.user.photoURL &&
                 await dispatch(action.getStorageAvatar(auth.user))
+
+            // fetch user accounts
+            await dispatch(action.fetchUserAccounts(auth.user))
+        },
+
+
+    // ...
+    fetchUserAccounts: (user) =>
+        async (dispatch, _getState) => {
+            readOnce(`user/${user.uid}/accounts`).then((accounts) => {
+                Object.keys(accounts.user).forEach((accountId) => {
+                    dispatch(StellarAccountsActions.updateAccountState(
+                        accounts.user[accountId]
+                    ))
+                    dispatch(StellarAccountsActions.addSigningMethod(
+                        accountId, accounts.user[accountId].signingMethod
+                    ))
+                })
+
+
+            })
         },
 
 
@@ -67,6 +99,7 @@ export const action = {
         async (dispatch, _getState) => {
             await signout()
             dispatch(action.resetState())
+            dispatch(StellarAccountsActions.resetState())
         },
 
 

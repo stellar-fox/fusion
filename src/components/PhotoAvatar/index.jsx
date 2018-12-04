@@ -33,13 +33,13 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, src, size, variant, }) =>
+            ({ classes, src, size, variant }) =>
                 <Avatar
                     style={{
                         margin: "10", width: size || 40,
                         height: size || 40,
                     }}
-                    alt="Avatar"
+                    alt=""
                     className={classNames(classes.avatar, classes[variant])}
                     src={src}
                 />
