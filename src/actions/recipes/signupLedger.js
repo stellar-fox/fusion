@@ -16,6 +16,7 @@ import {
 } from "@xcmats/js-toolbox"
 import { action as KeysActions } from "../../redux/Keys"
 import {
+    cancel,
     generateMultisigTx,
     generateSigningKeys,
     obtainAccountId,
@@ -82,7 +83,7 @@ export const execute = () =>
             dispatch(setProgressMessage("Complete."))
 
             await delay(1500)
-            dispatch(KeysActions.resetState())
+            dispatch(cancel())
 
         } catch (error) {
             dispatch(KeysActions.hideSpinner())

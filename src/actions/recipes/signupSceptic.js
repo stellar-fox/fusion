@@ -25,6 +25,7 @@ import {
 } from "stellar-sdk"
 import { action as KeysActions } from "../../redux/Keys"
 import {
+    cancel,
     generateMultisigTx,
     generateSigningKeys,
     obtainAccountId,
@@ -239,7 +240,7 @@ export const submitTx = () =>
             dispatch(setProgressMessage("Complete."))
 
             await delay(1500)
-            dispatch(KeysActions.resetState())
+            dispatch(cancel())
 
         } catch (error) {
             dispatch(KeysActions.setState({

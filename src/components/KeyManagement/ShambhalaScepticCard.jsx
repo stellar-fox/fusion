@@ -108,7 +108,7 @@ export default compose(
                                     Keys:
                                 </Typography>
                                 <AnimatedValue
-                                    valueToAnimate={parseInt(count)}
+                                    valueToAnimate={count}
                                     variant="subtitle1"
                                 />
                             </div>

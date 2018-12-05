@@ -407,7 +407,7 @@ export default compose(
                                 Number of Accounts:
                             </Typography>
                             <AnimatedValue
-                                valueToAnimate={parseInt(count)}
+                                valueToAnimate={count}
                                 variant="h4"
                             />
                         </div>

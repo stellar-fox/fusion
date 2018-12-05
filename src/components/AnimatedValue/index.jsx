@@ -36,8 +36,7 @@ export default compose(
                             <NumberFormat
                                 value={value.x}
                                 displayType={"text"}
-                                decimalScale={4}
-                                isNumericString
+                                decimalScale={0}
                             />
                         </Typography>
                     }
