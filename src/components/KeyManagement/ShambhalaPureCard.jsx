@@ -4,13 +4,18 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
 import withWidth, { isWidthUp } from "@material-ui/core/withWidth"
-import Card from "@material-ui/core/Card"
-import CardActionArea from "@material-ui/core/CardActionArea"
-import CardActions from "@material-ui/core/CardActions"
-import CardContent from "@material-ui/core/CardContent"
-import CardMedia from "@material-ui/core/CardMedia"
-import Button from "@material-ui/core/Button"
-import Typography from "@material-ui/core/Typography"
+
+import {
+    Card,
+    CardActionArea,
+    CardActions,
+    CardContent,
+    CardMedia,
+    Button,
+    Typography,
+} from "@material-ui/core"
+
+import AnimatedValue from "../AnimatedValue"
 import background from "../Fusion/static/bg.png"
 import { action as KeysActions, signingMethod as sm } from "../../redux/Keys"
 import { setSigningMethod } from "../../actions/onboarding"
@@ -23,6 +28,13 @@ import ModalAwaitPure from "./ModalAwaitPure"
 // <ShambhalaPureCard> component
 export default compose(
     withStyles((theme) => ({
+        blue: {
+            color: theme.palette.custom.blue,
+        },
+        button: {
+            fontSize: "12px",
+            borderRadius: "3px",
+        },
         card: {
             maxWidth: 345,
             backgroundColor: theme.palette.custom.blueDark,
@@ -31,16 +43,16 @@ export default compose(
             // ⚠️ object-fit is not supported by IE11.
             objectFit: "cover",
         },
-        button: {
-            fontSize: "12px",
-            borderRadius: "3px",
-        },
-        blue: {
-            color: theme.palette.custom.blue,
-        },
+
     })),
     connect(
-        (_state) => ({}),
+        (state) => ({
+            count: Object.keys(state.StellarAccounts).filter((account) =>
+                state.StellarAccounts[account].signingMethods.includes(
+                    sm.SHAMBHALA
+                )
+            ).length,
+        }),
         (dispatch) => bindActionCreators({
             showSignupPureModal: KeysActions.showSignupPureModal,
             setSigningMethod,
@@ -65,7 +77,7 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, width }) => <Fragment>
+            ({ classes, count, width }) => <Fragment>
                 <ModalSignupPure />
                 <ModalAwaitPure />
                 <Card raised className={classes.card}>
@@ -89,6 +101,15 @@ export default compose(
                                 your bank. Manage your funds and sign
                                 transactions with a simple PIN.
                             </Typography>
+                            <div className="m-t flex-box-row space-between">
+                                <Typography variant="subtitle1">
+                                    Keys:
+                                </Typography>
+                                <AnimatedValue
+                                    valueToAnimate={parseInt(count)}
+                                    variant="subtitle1"
+                                />
+                            </div>
                         </CardContent>
                     </CardActionArea>
                     <CardActions>
@@ -99,7 +120,7 @@ export default compose(
                             }}
                             variant="outlined" size="small"
                             onClick={this.handleSelection}
-                        >Select</Button>
+                        >Add</Button>
                         <Button classes={{
                             root: classes.button,
                         }} variant="outlined" size="small"

@@ -13,7 +13,7 @@ import NumberFormat from "react-number-format"
 
 
 
-// <COMPONENT_NAME> component
+// <AnimatedValue> component
 export default compose(
     withStyles((_theme) => ({
 

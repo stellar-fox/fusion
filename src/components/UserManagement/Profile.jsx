@@ -17,7 +17,6 @@ import { action as AuthActions } from "../../redux/Auth"
 import { reauthenticate, verifyEmail } from "../../firebase"
 import Gravatar from "../Gravatar"
 import PhotoAvatar from "../PhotoAvatar"
-import { readOnce } from "../../firebase"
 import ImageCropper from "../ImageCropper"
 import { action as SnackyActions } from "../../redux/Snacky"
 import AnimatedValue from "../AnimatedValue"
@@ -40,6 +39,7 @@ export default compose(
             uid: state.Auth.uid,
             displayName: state.Auth.displayName,
             photoUrl: state.Auth.photoUrl,
+            count: Object.keys(state.StellarAccounts).length,
         }),
         (dispatch) => bindActionCreators({
             sendEmailVerification: AuthActions.sendEmailVerification,
@@ -76,7 +76,6 @@ export default compose(
             password: string.empty(),
             errorPassword: false,
             errorMessagePassword: string.empty(),
-            numberOfAccounts: string.empty(),
         }
 
 
@@ -86,14 +85,6 @@ export default compose(
                 email: this.props.email,
                 emailVerified: this.props.emailVerified,
                 displayName: this.props.displayName,
-            })
-            readOnce(`user/${this.props.uid}`).then((userData) => {
-                this.setState({
-                    numberOfAccounts: userData.user.accounts ?
-                        Object.entries(
-                            userData.user.accounts
-                        ).length : "0",
-                })
             })
         }
 
@@ -277,7 +268,7 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, email, photoUrl, uid, width }) => <Fragment>
+            ({ classes, count, email, photoUrl, uid, width }) => <Fragment>
                 <ConfirmDialog
                     dialogVisible={this.state.dialogReAuthVisible}
                     onOk={this.reAuthenticate}
@@ -416,7 +407,7 @@ export default compose(
                                 Number of Accounts:
                             </Typography>
                             <AnimatedValue
-                                valueToAnimate={this.state.numberOfAccounts}
+                                valueToAnimate={parseInt(count)}
                                 variant="h4"
                             />
                         </div>
