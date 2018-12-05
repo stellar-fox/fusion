@@ -27,7 +27,7 @@ import {
     signTxWithLedgerHQ
 } from "../../actions/ledgering"
 import {
-    addSigningMethodToAccount,
+    tagSigningMethod,
     getLatestAccountState,
     submitTransaction,
 } from "../../actions/stellarAccount"
@@ -62,7 +62,7 @@ export const execute = () =>
                 "Fetching current account data ..."
             ))
             await dispatch(getLatestAccountState())
-            await dispatch(addSigningMethodToAccount())
+            await dispatch(tagSigningMethod())
 
             dispatch(setProgressMessage(
                 "ACTION REQUIRED. Check your signing device."

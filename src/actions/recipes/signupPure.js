@@ -22,7 +22,7 @@ import {
     generateSignedMultisigTx,
 } from "../../actions/onboarding"
 import {
-    addSigningMethodToAccount,
+    tagSigningMethod,
     getLatestAccountState,
     submitTransaction,
 } from "../../actions/stellarAccount"
@@ -62,7 +62,7 @@ export const execute = () =>
             await dispatch(fundAccount())
 
             await dispatch(getLatestAccountState())
-            await dispatch(addSigningMethodToAccount())
+            await dispatch(tagSigningMethod())
 
             dispatch(setProgressMessage(
                 "Creating additional signatures ..."

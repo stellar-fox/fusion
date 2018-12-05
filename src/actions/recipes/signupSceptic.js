@@ -33,7 +33,7 @@ import {
     setTransactionDetails,
 } from "../../actions/onboarding"
 import {
-    addSigningMethodToAccount,
+    tagSigningMethod,
     getLatestAccountState,
     submitTransaction,
 } from "../../actions/stellarAccount"
@@ -89,7 +89,7 @@ export const execute = () =>
                 "Fetching account data ..."
             ))
             await dispatch(getLatestAccountState())
-            await dispatch(addSigningMethodToAccount())
+            await dispatch(tagSigningMethod())
 
 
             dispatch(setProgressMessage(

@@ -75,10 +75,10 @@ export const getLatestAccountState = () =>
 /**
  * Adds chosen signing method to the proper account key under StellarAccounts.
  *
- * @function addSigningMethodToAccount
+ * @function tagSigningMethod
  * @return {Function}
  */
-export const addSigningMethodToAccount = () =>
+export const tagSigningMethod = () =>
     async (dispatch, getState) => {
         let { accountId, signingMethod } = getState().Keys
 
