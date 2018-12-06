@@ -15,7 +15,7 @@ import Button from "../../lib/mui-v1/Button"
 import { action as KeysActions } from "../../redux/Keys"
 import { action as SnackyActions } from "../../redux/Snacky"
 import { Motion, presets, spring } from "react-motion"
-import { passSignature } from "../../actions/recipes/signupSceptic"
+import { passSignature } from "../../actions/recipes/sign"
 import { cancel } from "../../actions/onboarding"
 import Awaiter from "../Awaiter"
 

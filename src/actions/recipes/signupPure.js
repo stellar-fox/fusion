@@ -12,7 +12,10 @@ import {
     delay,
     string,
 } from "@xcmats/js-toolbox"
-import { action as KeysActions } from "../../redux/Keys"
+import {
+    action as KeysActions,
+    signingMethod as sm,
+} from "../../redux/Keys"
 import {
     cancel,
     generateSigningKeys,
@@ -20,7 +23,6 @@ import {
     saveAccountData,
     setErrorMessage,
     setProgressMessage,
-    generateSignedMultisigTx,
 } from "../../actions/onboarding"
 import {
     tagSigningMethod,
@@ -28,6 +30,7 @@ import {
     submitTransaction,
 } from "../../actions/stellarAccount"
 import { fundAccount } from "../../actions/stellarAccount"
+import { sign } from "../recipes/sign"
 
 
 
@@ -68,7 +71,9 @@ export const execute = () =>
             dispatch(setProgressMessage(
                 "Creating additional signatures ..."
             ))
-            const signedTx = await dispatch(generateSignedMultisigTx())
+
+            const signedTx = await dispatch(sign(sm.SHAMBHALA, null))
+
             await dispatch(submitTransaction(signedTx))
 
             await dispatch(saveAccountData())

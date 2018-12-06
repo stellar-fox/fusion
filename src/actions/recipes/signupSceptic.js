@@ -11,19 +11,19 @@
 
 
 import {
-    async,
     codec,
     delay,
     func,
     string,
-    type,
 } from "@xcmats/js-toolbox"
 import {
     StrKey,
     Transaction,
-    xdr,
 } from "stellar-sdk"
-import { action as KeysActions } from "../../redux/Keys"
+import {
+    action as KeysActions,
+    signingMethod as sm,
+} from "../../redux/Keys"
 import {
     cancel,
     generateMultisigTx,
@@ -31,30 +31,13 @@ import {
     obtainAccountId,
     setErrorMessage,
     setProgressMessage,
-    setTransactionDetails,
 } from "../../actions/onboarding"
 import {
     tagSigningMethod,
     getLatestAccountState,
     submitTransaction,
 } from "../../actions/stellarAccount"
-import {
-    decorateSignature,
-    validDecoratedSignature,
-    validSignedTransaction,
-    validSignature,
-} from "../../lib/logic/transaction"
-
-
-
-
-/**
- * @private
- * @constant {Object} context Private "signup sceptic" memory space
- */
-const context = {}
-
-
+import { sign } from "../recipes/sign"
 
 
 
@@ -109,77 +92,10 @@ export const execute = () =>
             dispatch(setProgressMessage(string.empty()))
             dispatch(KeysActions.hideSpinner())
 
+            // sign transaction
+            await dispatch(sign(sm.MANUAL, generatedTransaction))
 
-            let repeat = true
-            await async.repeat(async () => {
-
-                // 1. wait for user input
-                context.signatureInput = async.createMutex()
-                let userInput = await context.signatureInput.lock()
-
-                // 2. user provided input - so handle it ...
-                let
-                    validity = { ok: true },
-                    transactionToSubmit = new Transaction(
-                        generatedTransaction.toEnvelope()
-                    )
-
-                // 2a. user pasted a "valid signed transaction"
-                if (validSignedTransaction(userInput)) {
-                    let pastedTransaction = new Transaction(userInput)
-                    pastedTransaction.signatures.forEach(
-                        (sig) => transactionToSubmit.signatures.push(sig)
-                    )
-                }
-
-                // 2b. user pasted a "valid signature"
-                else if (validSignature(userInput)) {
-
-                    func.pipe(
-                        transactionToSubmit.source,
-                        codec.b64dec(userInput)
-                    )(
-                        decorateSignature,
-                        (dsXdr) => xdr.DecoratedSignature.fromXDR(dsXdr),
-                        (ds) => transactionToSubmit.signatures.push(ds)
-                    )
-                }
-
-                // 2c. user pasted a "valid decorated signature"
-                else if (validDecoratedSignature(userInput)) {
-
-                    func.pipe(userInput)(
-                        codec.b64dec,
-                        (dsXdr) => xdr.DecoratedSignature.fromXDR(dsXdr),
-                        (ds) => transactionToSubmit.signatures.push(ds)
-                    )
-                }
-                else {
-                    validity = { error: "Invalid signature input." }
-                }
-
-
-                // 3. inspect horizon validity
-                if (!validity.ok) {
-                    //  return to beginning
-                    dispatch(setErrorMessage("Invalid input."))
-
-                } else {
-                    //  all good - end this loop
-                    repeat = false
-                    dispatch(setErrorMessage(string.empty()))
-                    await dispatch(KeysActions.setTxSignedBody(
-                        func.pipe(transactionToSubmit)(
-                            (t) => t.toEnvelope(),
-                            (e) => e.toXDR(),
-                            codec.b64enc
-                        )))
-                    await dispatch(setTransactionDetails(transactionToSubmit))
-                }
-
-            }, () => repeat)
-
-            // 4. display transaction details
+            // go on to next modal to display transaction details
             await dispatch(KeysActions.hideAwaitScepticModal())
             dispatch(KeysActions.showTransactionDetailsModal())
 
@@ -190,23 +106,6 @@ export const execute = () =>
         }
 
 
-    }
-
-
-
-
-/**
- * Pass signature to 'execute' recipe.
- *
- * @function passSignature
- * @param {String} signature
- */
-export const passSignature = (signature) =>
-    (_dispatch, _getState) => {
-        if (type.isObject(context.signatureInput)) {
-            context.signatureInput.resolve(signature)
-            delete context.signatureInput
-        }
     }
 
 

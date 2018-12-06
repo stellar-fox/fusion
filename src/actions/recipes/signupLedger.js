@@ -14,7 +14,10 @@ import {
     delay,
     string,
 } from "@xcmats/js-toolbox"
-import { action as KeysActions } from "../../redux/Keys"
+import {
+    action as KeysActions,
+    signingMethod as sm,
+} from "../../redux/Keys"
 import {
     cancel,
     generateMultisigTx,
@@ -25,13 +28,11 @@ import {
     setProgressMessage,
 } from "../../actions/onboarding"
 import {
-    signTxWithLedgerHQ
-} from "../../actions/ledgering"
-import {
     tagSigningMethod,
     getLatestAccountState,
     submitTransaction,
 } from "../../actions/stellarAccount"
+import { sign } from "../recipes/sign"
 
 
 
@@ -69,7 +70,7 @@ export const execute = () =>
                 "ACTION REQUIRED. Check your signing device."
             ))
             const tx = await dispatch(generateMultisigTx())
-            const signedTx = await dispatch(signTxWithLedgerHQ(tx))
+            const signedTx = await dispatch(sign(sm.LEDGERHQ, tx))
 
             await dispatch(setProgressMessage(
                 "Submitting ..."
