@@ -71,16 +71,14 @@ export const action = {
     fetchUserAccounts: (user) =>
         async (dispatch, _getState) => {
             readOnce(`user/${user.uid}/accounts`).then((accounts) => {
-                Object.keys(accounts.user).forEach((accountId) => {
+                Object.keys(accounts).forEach((accountId) => {
                     dispatch(StellarAccountsActions.updateAccountState(
-                        accounts.user[accountId]
+                        accounts[accountId]
                     ))
                     dispatch(StellarAccountsActions.addSigningMethod(
-                        accountId, accounts.user[accountId].signingMethod
+                        accountId, accounts[accountId].signingMethod
                     ))
                 })
-
-
             })
         },
 
