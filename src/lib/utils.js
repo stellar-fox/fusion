@@ -32,7 +32,7 @@ export const dynamicImportLibs = async () => {
     let [
 
         axios, jss, lodash, mui, cryptops,
-        redshift, redux, stellar, toolbox, utils,
+        redshift, redux, stellar, theme, toolbox, utils,
 
         // actions
         onboarding,
@@ -51,6 +51,7 @@ export const dynamicImportLibs = async () => {
         import("@stellar-fox/redshift"),
         import("redux"),
         import("stellar-sdk"),
+        import("./default-mui-theme"),
         import("@xcmats/js-toolbox"),
         import("./utils"),
 
@@ -65,7 +66,9 @@ export const dynamicImportLibs = async () => {
     return {
         axios,
         jss, lodash, mui, cryptops, redshift,
-        redux, stellar, toolbox, utils,
+        redux, stellar,
+        theme: theme.default,
+        toolbox, utils,
 
         // actions
         actions: {
