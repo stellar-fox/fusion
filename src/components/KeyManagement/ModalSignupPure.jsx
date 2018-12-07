@@ -12,9 +12,9 @@ import {
     withMobileDialog
 } from "@material-ui/core"
 import { cancel } from "../../actions/onboarding"
-import { execute } from "../../actions/recipes/signupPure"
+import { signup } from "../../actions/recipes/signup"
 import Button from "../../lib/mui-v1/Button"
-
+import { signingMethod as sm } from "../../redux/Keys"
 
 
 
@@ -32,7 +32,7 @@ export default compose(
         }),
         (dispatch) => bindActionCreators({
             cancel,
-            execute,
+            signup,
         }, dispatch)
     )
 )(
@@ -45,7 +45,7 @@ export default compose(
 
 
         // ...
-        handleYes = () => this.props.execute()
+        handleYes = () => this.props.signup(sm.SHAMBHALA)
 
 
         // ...

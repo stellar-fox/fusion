@@ -16,7 +16,7 @@ import {
 } from "@material-ui/core"
 import { string } from "@xcmats/js-toolbox"
 import { action as KeysActions} from "../../redux/Keys"
-import { submitTx } from "../../actions/recipes/signupSceptic"
+import { submitTx } from "../../actions/recipes/signup"
 import { cancel, saveAccountData } from "../../actions/onboarding"
 import Button from "../../lib/mui-v1/Button"
 import Awaiter from "../Awaiter"
@@ -82,8 +82,8 @@ export default compose(
 
         // ...
         handleYes = async () => {
-            await this.props.saveAccountData()
             await this.props.submitTx()
+            await this.props.saveAccountData()
         }
 
 

@@ -16,7 +16,7 @@ import {
 import Button from "../../lib/mui-v1/Button"
 import TextInput from "../../lib/mui-v1/TextInput"
 import { cancel } from "../../actions/onboarding"
-import { execute } from "../../actions/recipes/signupLedger"
+import { signup } from "../../actions/recipes/signup"
 import {
     setAccount,
     setUseDefaultAccount,
@@ -27,6 +27,7 @@ import {
     presets,
     spring,
 } from "react-motion"
+import { signingMethod as sm } from "../../redux/Keys"
 
 
 
@@ -63,7 +64,7 @@ export default compose(
         }),
         (dispatch) => bindActionCreators({
             cancel,
-            execute,
+            signup,
             setAccount,
             setUseDefaultAccount,
         }, dispatch)
@@ -78,7 +79,7 @@ export default compose(
 
 
         // ...
-        handleYes = () => this.props.execute()
+        handleYes = () => this.props.signup(sm.LEDGERHQ)
 
 
         // ...

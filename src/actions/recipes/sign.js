@@ -1,7 +1,7 @@
 /**
  * Fusion.
  *
- * Transaction signing recipes based on the _signing method_. There are many
+ * Transaction signing recipe based on the _signing method_. There are many
  * ways of signing the transaction so we want to parametrize and abstract the
  * recipe of _signing_ something.
  *
@@ -52,6 +52,14 @@ const context = {}
 
 
 
+/**
+ * Sign transaction based on the signing method.
+ *
+ * @function sign
+ * @param {String} signingMethod Signing vector used for delivering signature.
+ * @param {String} transaction Base64 encoded stellar `Transaction`
+ * @returns {Function}
+ */
 export const sign = (signingMethod, transaction) =>
     async (dispatch, _getState) => {
 
@@ -143,10 +151,11 @@ export const sign = (signingMethod, transaction) =>
 
 
 /**
- * Pass signature to 'execute' recipe.
+ * Pass signature to 'signup' recipe.
  *
  * @function passSignature
  * @param {String} signature
+ * @returns {Function}
  */
 export const passSignature = (signature) =>
     (_dispatch, _getState) => {

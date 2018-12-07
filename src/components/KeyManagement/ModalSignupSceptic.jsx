@@ -10,10 +10,11 @@ import {
 import Button from "../../lib/mui-v1/Button"
 import TextInput from "../../lib/mui-v1/TextInput"
 import {
-    execute,
+    signup,
     handleAccountIdInput,
-} from "../../actions/recipes/signupSceptic"
+} from "../../actions/recipes/signup"
 import { cancel } from "../../actions/onboarding"
+import { signingMethod as sm } from "../../redux/Keys"
 
 
 
@@ -49,7 +50,7 @@ export default compose(
         }),
         (dispatch) => bindActionCreators({
             cancel,
-            execute,
+            signup,
             handleAccountIdInput,
         }, dispatch)
     )
@@ -63,7 +64,7 @@ export default compose(
 
 
         // ...
-        handleYes = () => this.props.execute()
+        handleYes = () => this.props.signup(sm.MANUAL)
 
 
         // ...
