@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { Component, Fragment } from "react"
 import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
@@ -57,35 +57,40 @@ export default compose(
                                 }}
                             >
                                 {value =>
-                                    <Typography style={{
-                                        position: "relative",
-                                        WebkitTransform: `translate(${value.x}px, 0)`,
-                                        transform: `translate(${value.x}px, 0)`,
-                                        opacity: value.opacity,
-                                    }} variant="h6"
-                                    >
-                                        Key Management
-                                    </Typography>
+                                    <Fragment>
+                                        <Typography style={{
+                                            position: "relative",
+                                            WebkitTransform: `translate(${value.x}px, 0)`,
+                                            transform: `translate(${value.x}px, 0)`,
+                                            opacity: value.opacity,
+                                        }} variant="h6"
+                                        >
+                                            Key Management
+                                        </Typography>
+                                        <div style={{
+                                            position: "relative",
+                                            WebkitTransform: `translate(${value.x}px, 0)`,
+                                            transform: `translate(${value.x}px, 0)`,
+                                            opacity: value.opacity,
+                                        }} className={isWidthDown("sm", width) ?
+                                            "m-t m-b flex-box-col items-centered" :
+                                            "m-t m-b flex-box-row space-around"}
+                                        >
+                                            <ShambhalaPureCard />
+
+                                            {isWidthDown("sm", width) &&
+                                                <div className="m-b"></div>}
+
+                                            <ShambhalaLedgerCard />
+
+                                            {isWidthDown("sm", width) &&
+                                                <div className="m-b"></div>}
+
+                                            <ShambhalaScepticCard />
+                                        </div>
+                                    </Fragment>
                                 }
                             </Motion>
-
-                            <div className={isWidthDown("sm", width) ?
-                                "m-t m-b flex-box-col items-centered" :
-                                "m-t m-b flex-box-row space-around"}
-                            >
-                                <ShambhalaPureCard />
-
-                                {isWidthDown("sm", width) &&
-                                    <div className="m-b"></div>}
-
-                                <ShambhalaLedgerCard />
-
-                                {isWidthDown("sm", width) &&
-                                    <div className="m-b"></div>}
-
-                                <ShambhalaScepticCard />
-                            </div>
-
                         </Paper>
 
                     </Route>

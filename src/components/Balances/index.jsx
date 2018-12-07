@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { Component, Fragment } from "react"
 import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
@@ -6,6 +6,7 @@ import { Redirect, Route } from "react-router-dom"
 import { Paper, Typography } from "@material-ui/core"
 import { ConnectedSwitch as Switch, resolvePath } from "../FusionRouter"
 import { Motion, presets, spring } from "react-motion"
+import Roster from "./Roster"
 
 
 
@@ -50,15 +51,27 @@ export default compose(
                                 }}
                             >
                                 {value =>
-                                    <Typography style={{
-                                        position: "relative",
-                                        WebkitTransform: `translate(${value.x}px, 0)`,
-                                        transform: `translate(${value.x}px, 0)`,
-                                        opacity: value.opacity,
-                                    }} variant="h6"
-                                    >
-                                        Balances
-                                    </Typography>
+                                    <Fragment>
+                                        <Typography style={{
+                                            position: "relative",
+                                            WebkitTransform: `translate(${value.x}px, 0)`,
+                                            transform: `translate(${value.x}px, 0)`,
+                                            opacity: value.opacity,
+                                        }} variant="h6"
+                                        >
+                                            Balances
+                                        </Typography>
+                                        <div style={{
+                                            position: "relative",
+                                            WebkitTransform: `translate(${value.x}px, 0)`,
+                                            transform: `translate(${value.x}px, 0)`,
+                                            opacity: value.opacity,
+                                        }}
+                                        >
+                                            <Roster />
+                                        </div>
+
+                                    </Fragment>
                                 }
                             </Motion>
 
