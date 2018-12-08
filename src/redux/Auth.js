@@ -75,9 +75,6 @@ export const action = {
                     dispatch(StellarAccountsActions.updateAccountState(
                         accounts[accountId]
                     ))
-                    dispatch(StellarAccountsActions.addSigningMethod(
-                        accountId, accounts[accountId].signingMethod
-                    ))
                 })
             })
         },

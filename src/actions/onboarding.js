@@ -289,7 +289,7 @@ export const saveAccountData = () =>
             [accountId]: {
                 id: accountId,
                 networkPassphrase,
-                signingMethod,
+                signingMethods: [signingMethod],
             },
         })
     }
