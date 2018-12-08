@@ -256,21 +256,37 @@ export const setTransactionDetails = (txObject) =>
 
 
 /**
- * Handle user cancel decision. Cancels any pending awaits with Shambhala and
- * closes Shambhala pop-up window/tab.
+ * Handle user cancel decision. Cancels any pending awaits with Shambhala.
  *
  * @function cancel
- * @returns {Function} Resets component's state when _Cancel_ is selected.
+ * @returns {Function}
  */
-export const cancel = () =>
-    async (dispatch, getState) => {
+export const cancelShambhala = () =>
+    async (_dispatch, getState) => {
         let shambhala = new Shambhala(
             config.shambhala.client,
             { token: getState().Auth.jwt }
         )
         await shambhala.cancel()
+    }
+
+
+
+
+/**
+ * Try to close Shambhala instance pop-up window/tab.
+ * closes Shambhala pop-up window/tab.
+ *
+ * @function close
+ * @returns {Function}
+ */
+export const closeShambhala = () =>
+    async (_dispatch, getState) => {
+        let shambhala = new Shambhala(
+            config.shambhala.client,
+            { token: getState().Auth.jwt }
+        )
         await shambhala.close()
-        dispatch(KeysActions.resetState())
     }
 
 
@@ -293,3 +309,15 @@ export const saveAccountData = () =>
             },
         })
     }
+
+
+
+/**
+ * Reset onboarding _Redux_ branch state.
+ *
+ * @function resetOnboardingState
+ * @returns {Function}
+ */
+export const resetOnboardingState = () =>
+    async (dispatch, _getState) =>
+        await dispatch(KeysActions.resetState())

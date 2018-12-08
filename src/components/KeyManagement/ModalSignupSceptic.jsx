@@ -13,7 +13,7 @@ import {
     signup,
     handleAccountIdInput,
 } from "../../actions/recipes/signup"
-import { cancel } from "../../actions/onboarding"
+import { resetOnboardingState } from "../../actions/onboarding"
 import { signingMethod as sm } from "../../redux/Keys"
 
 
@@ -49,7 +49,7 @@ export default compose(
             yesButtonDisabled: state.Keys.yesButtonDisabled,
         }),
         (dispatch) => bindActionCreators({
-            cancel,
+            resetOnboardingState,
             signup,
             handleAccountIdInput,
         }, dispatch)
@@ -68,7 +68,7 @@ export default compose(
 
 
         // ...
-        handleNo = () => this.props.cancel()
+        handleNo = () => this.props.resetOnboardingState()
 
 
         // ...

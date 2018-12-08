@@ -98,7 +98,7 @@ class UserMenu extends Component {
                                 {displayName}
                             </Typography>
                             <Typography variant="h4" noWrap>
-                                Admin
+                                Bank Owner
                             </Typography>
                         </div>
                     </MenuItem>

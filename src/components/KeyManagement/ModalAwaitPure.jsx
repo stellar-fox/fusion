@@ -11,7 +11,10 @@ import {
     withMobileDialog
 } from "@material-ui/core"
 import Button from "../../lib/mui-v1/Button"
-import { cancel } from "../../actions/onboarding"
+import {
+    closeShambhala,
+    resetOnboardingState,
+} from "../../actions/onboarding"
 import Awaiter from "../Awaiter"
 
 
@@ -30,7 +33,8 @@ export default compose(
             open: state.Keys.ModalAwaitPure.showing,
         }),
         (dispatch) => bindActionCreators({
-            cancel,
+            closeShambhala,
+            resetOnboardingState,
         }, dispatch)
     )
 )(
@@ -43,7 +47,10 @@ export default compose(
 
 
         // ...
-        handleNo = () => this.props.cancel()
+        handleNo = () => {
+            this.props.closeShambhala()
+            this.props.resetOnboardingState()
+        }
 
 
         // ...

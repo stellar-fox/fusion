@@ -12,11 +12,13 @@ import {
 } from "@material-ui/core"
 import TextField from "@material-ui/core/TextField"
 import Button from "../../lib/mui-v1/Button"
-import { action as KeysActions } from "../../redux/Keys"
 import { action as SnackyActions } from "../../redux/Snacky"
 import { Motion, presets, spring } from "react-motion"
 import { passSignature } from "../../actions/recipes/sign"
-import { cancel } from "../../actions/onboarding"
+import {
+    closeShambhala,
+    resetOnboardingState,
+} from "../../actions/onboarding"
 import Awaiter from "../Awaiter"
 
 
@@ -36,9 +38,9 @@ export default compose(
             txBody: state.Keys.txBody,
         }),
         (dispatch) => bindActionCreators({
-            cancel,
+            closeShambhala,
             passSignature,
-            resetState: KeysActions.resetState,
+            resetOnboardingState,
             showSnacky: SnackyActions.showSnacky,
             setSnackyMessage: SnackyActions.setMessage,
             setSnackyColor: SnackyActions.setColor,
@@ -60,9 +62,9 @@ export default compose(
 
 
         // ...
-        handleNo = async () => {
-            await this.props.cancel()
-            this.props.resetState()
+        handleNo = () => {
+            this.props.closeShambhala()
+            this.props.resetOnboardingState()
         }
 
 

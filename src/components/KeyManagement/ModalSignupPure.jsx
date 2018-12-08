@@ -11,7 +11,9 @@ import {
     Typography,
     withMobileDialog
 } from "@material-ui/core"
-import { cancel } from "../../actions/onboarding"
+import {
+    resetOnboardingState,
+} from "../../actions/onboarding"
 import { signup } from "../../actions/recipes/signup"
 import Button from "../../lib/mui-v1/Button"
 import { signingMethod as sm } from "../../redux/Keys"
@@ -31,7 +33,7 @@ export default compose(
             open: state.Keys.ModalSignupPure.showing,
         }),
         (dispatch) => bindActionCreators({
-            cancel,
+            resetOnboardingState,
             signup,
         }, dispatch)
     )
@@ -49,7 +51,7 @@ export default compose(
 
 
         // ...
-        handleNo = () => this.props.cancel()
+        handleNo = () => this.props.resetOnboardingState()
 
 
         // ...

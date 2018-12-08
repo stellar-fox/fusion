@@ -15,7 +15,7 @@ import {
 } from "@material-ui/core"
 import Button from "../../lib/mui-v1/Button"
 import TextInput from "../../lib/mui-v1/TextInput"
-import { cancel } from "../../actions/onboarding"
+import { resetOnboardingState } from "../../actions/onboarding"
 import { signup } from "../../actions/recipes/signup"
 import {
     setAccount,
@@ -63,7 +63,7 @@ export default compose(
             errorMessage: state.LedgerHQ.errorMessage,
         }),
         (dispatch) => bindActionCreators({
-            cancel,
+            resetOnboardingState,
             signup,
             setAccount,
             setUseDefaultAccount,
@@ -83,7 +83,7 @@ export default compose(
 
 
         // ...
-        handleNo = () => this.props.cancel()
+        handleNo = () => this.props.resetOnboardingState()
 
 
         // ...

@@ -15,9 +15,12 @@ import {
     withMobileDialog
 } from "@material-ui/core"
 import { string } from "@xcmats/js-toolbox"
-import { action as KeysActions} from "../../redux/Keys"
 import { submitTx } from "../../actions/recipes/signup"
-import { cancel, saveAccountData } from "../../actions/onboarding"
+import {
+    closeShambhala,
+    resetOnboardingState,
+    saveAccountData
+} from "../../actions/onboarding"
 import Button from "../../lib/mui-v1/Button"
 import Awaiter from "../Awaiter"
 
@@ -61,9 +64,8 @@ export default compose(
             noButtonDisabled: state.Keys.noButtonDisabled,
         }),
         (dispatch) => bindActionCreators({
-            cancel,
-            hideTransactionDetailsModal: KeysActions.hideTransactionDetailsModal,
-            resetState: KeysActions.resetState,
+            closeShambhala,
+            resetOnboardingState,
             saveAccountData,
             submitTx,
         }, dispatch)
@@ -77,7 +79,10 @@ export default compose(
         }
 
         // ...
-        handleNo = () => this.props.cancel()
+        handleNo = () => {
+            this.props.closeShambhala()
+            this.props.resetOnboardingState()
+        }
 
 
         // ...

@@ -22,7 +22,7 @@ import {
     signingMethod as sm,
 } from "../../redux/Keys"
 import {
-    cancel,
+    closeShambhala,
     generateMultisigTx,
     generateSigningKeys,
     obtainAccountId,
@@ -148,7 +148,8 @@ export const signup = (signingMethod) =>
                 dispatch(KeysActions.setSucceded())
                 dispatch(setProgressMessage("Complete."))
                 await delay(1500)
-                dispatch(cancel())
+                dispatch(closeShambhala())
+                dispatch(KeysActions.resetState())
             }
 
 
@@ -157,6 +158,7 @@ export const signup = (signingMethod) =>
             dispatch(setProgressMessage(string.empty()))
             dispatch(KeysActions.setFailed())
             dispatch(setErrorMessage(error.message))
+            dispatch(closeShambhala())
         }
 
     }
@@ -192,7 +194,8 @@ export const submitTx = () =>
             dispatch(setProgressMessage("Complete."))
 
             await delay(1500)
-            dispatch(cancel())
+            dispatch(closeShambhala())
+            dispatch(KeysActions.resetState())
 
         } catch (error) {
             dispatch(KeysActions.setState({
