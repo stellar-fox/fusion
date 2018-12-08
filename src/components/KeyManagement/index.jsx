@@ -52,7 +52,7 @@ export default compose(
                             <Snacky />
                             <Motion defaultStyle={{ x: -10, opacity: 0 }}
                                 style={{
-                                    x: spring(0, presets.gentle),
+                                    x: spring(0, presets.stiff),
                                     opacity: spring(1),
                                 }}
                             >

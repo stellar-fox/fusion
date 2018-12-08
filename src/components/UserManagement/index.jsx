@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { Component, Fragment } from "react"
 import PropTypes from "prop-types"
 import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
@@ -8,6 +8,7 @@ import { Paper, Typography } from "@material-ui/core"
 import { ConnectedSwitch as Switch, resolvePath } from "../FusionRouter"
 import { action as AuthActions } from "../../redux/Auth"
 import { action as UserManagementActions } from "../../redux/UserManagement"
+import { Motion, presets, spring } from "react-motion"
 import Tab from "@material-ui/core/Tab"
 import Tabs from "@material-ui/core/Tabs"
 import SwipeableViews from "react-swipeable-views"
@@ -78,45 +79,67 @@ export default compose(
                         <Paper className={classes.paperCanvas}>
                             <Snacky />
 
-                            <Tabs
-                                value={tabSelected}
-                                onChange={this.onTabChange}
-                                fullWidth
-                                classes={{ indicator: classes.indicator }}
+                            <Motion defaultStyle={{ x: -10, opacity: 0 }}
+                                style={{
+                                    x: spring(0, presets.stiff),
+                                    opacity: spring(1),
+                                }}
                             >
-                                <Tab label="Profile" />
-                                <Tab label="Settings" />
-                                <Tab label="Security" />
-                            </Tabs>
+                                {value =>
+                                    <Fragment>
+                                        <Tabs
+                                            style={{
+                                                position: "relative",
+                                                WebkitTransform: `translate(${value.x}px, 0)`,
+                                                transform: `translate(${value.x}px, 0)`,
+                                                opacity: value.opacity,
+                                            }}
+                                            value={tabSelected}
+                                            onChange={this.onTabChange}
+                                            fullWidth
+                                            classes={{ indicator: classes.indicator }}
+                                        >
+                                            <Tab label="Profile" />
+                                            <Tab label="Settings" />
+                                            <Tab label="Security" />
+                                        </Tabs>
 
-                            <SwipeableViews
-                                axis={this.props.theme.direction === "rtl" ? "x-reverse" : "x"}
-                                index={tabSelected}
-                                onChangeIndex={this.handleChangeIndex}
-                                disabled={cropInProgress}
-                            >
-                                <Typography component="div"
-                                    dir={this.props.theme.direction}
-                                    style={{ padding: "1rem 0.5rem" }}
-                                >
-                                    <Profile />
-                                </Typography>
+                                        <SwipeableViews
+                                            style={{
+                                                position: "relative",
+                                                WebkitTransform: `translate(${value.x}px, 0)`,
+                                                transform: `translate(${value.x}px, 0)`,
+                                                opacity: value.opacity,
+                                            }}
+                                            axis={this.props.theme.direction === "rtl" ? "x-reverse" : "x"}
+                                            index={tabSelected}
+                                            onChangeIndex={this.handleChangeIndex}
+                                            disabled={cropInProgress}
+                                        >
+                                            <Typography component="div"
+                                                dir={this.props.theme.direction}
+                                                style={{ padding: "1rem 0.5rem" }}
+                                            >
+                                                <Profile />
+                                            </Typography>
 
-                                <Typography component="div"
-                                    dir={this.props.theme.direction}
-                                    style={{ padding: "2rem 0" }}
-                                >
-                                    Settings
-                                </Typography>
-                                <Typography component="div"
-                                    dir={this.props.theme.direction}
-                                    style={{ padding: "2rem 0" }}
-                                >
-                                    Security
-                                </Typography>
+                                            <Typography component="div"
+                                                dir={this.props.theme.direction}
+                                                style={{ padding: "2rem 0" }}
+                                            >
+                                                Settings
+                                            </Typography>
+                                            <Typography component="div"
+                                                dir={this.props.theme.direction}
+                                                style={{ padding: "2rem 0" }}
+                                            >
+                                                Security
+                                            </Typography>
 
-                            </SwipeableViews>
-
+                                        </SwipeableViews>
+                                    </Fragment>
+                                }
+                            </Motion>
                         </Paper>
 
                     </Route>
