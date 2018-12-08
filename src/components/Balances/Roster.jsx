@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core"
 import { func, string } from "@xcmats/js-toolbox"
 import { signingMethod as sm } from "../../redux/Keys"
-import { action as PayActions } from "../../redux/Pay"
+import { select } from "../../actions/payment"
 import ModalPay from "./ModalPay"
 
 
@@ -56,8 +56,7 @@ export default compose(
             stellarAccounts: state.StellarAccounts,
         }),
         (dispatch) => bindActionCreators({
-            showModalPay: PayActions.showModalPay,
-            hideModalPay: PayActions.hideModalPay,
+            select,
         }, dispatch)
     )
 )(
@@ -87,8 +86,8 @@ export default compose(
 
 
         // ...
-        showModal = (destination) => (_event) =>
-            this.props.showModalPay(destination)
+        showModal = (source) => (_event) =>
+            this.props.select(source)
 
 
         // ...
