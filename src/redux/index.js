@@ -2,6 +2,7 @@ import { reducer as App } from "./Fusion"
 import { reducer as Auth } from "./Auth"
 import { reducer as Keys } from "./Keys"
 import { reducer as LedgerHQ } from "./LedgerHQ"
+import { reducer as Pay } from "./Pay"
 import { reducer as Router } from "./FusionRouter"
 import { reducer as Snacky } from "./Snacky"
 import { reducer as StellarAccounts } from "./StellarAccounts"
@@ -16,6 +17,7 @@ export default {
     Auth,
     Keys,
     LedgerHQ,
+    Pay,
     Router,
     Snacky,
     StellarAccounts,

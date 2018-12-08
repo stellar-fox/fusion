@@ -13,7 +13,8 @@ import {
 } from "@material-ui/core"
 import { func, string } from "@xcmats/js-toolbox"
 import { signingMethod as sm } from "../../redux/Keys"
-
+import { action as PayActions } from "../../redux/Pay"
+import ModalPay from "./ModalPay"
 
 
 
@@ -41,6 +42,7 @@ export default compose(
             borderBottom: "none !important",
         },
         tableRow: {
+            cursor: "pointer",
             borderBottom: `1px solid ${theme.palette.custom.darkGunmetal} !important`,
             "&:last-child": {
                 borderBottom: "none !important",
@@ -53,7 +55,10 @@ export default compose(
             accounts: Object.keys(state.StellarAccounts),
             stellarAccounts: state.StellarAccounts,
         }),
-        (dispatch) => bindActionCreators({}, dispatch)
+        (dispatch) => bindActionCreators({
+            showModalPay: PayActions.showModalPay,
+            hideModalPay: PayActions.hideModalPay,
+        }, dispatch)
     )
 )(
     class extends Component {
@@ -82,9 +87,15 @@ export default compose(
 
 
         // ...
+        showModal = (destination) => (_event) =>
+            this.props.showModalPay(destination)
+
+
+        // ...
         render = () => (
             ({ accounts, classes }) =>
                 <Fragment>
+                    <ModalPay />
                     <Typography variant="h5">
                         $1,234,567.89
                     </Typography>
@@ -99,7 +110,7 @@ export default compose(
                         </TableHead>
                         <TableBody>
                             {accounts.map((account) => {
-                                return <TableRow key={account} classes={{ root: classes.tableRow }}>
+                                return <TableRow key={account} onClick={this.showModal(account)} classes={{ root: classes.tableRow }}>
                                     <TableCell classes={{ root: classes.tableCell }} padding="none">
                                         <div className="flex-box-row">
                                             {this.bar(account)}
