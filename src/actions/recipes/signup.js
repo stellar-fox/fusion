@@ -14,7 +14,6 @@ import {
     codec,
     func,
     choose,
-    delay,
     string,
 } from "@xcmats/js-toolbox"
 import {
@@ -76,7 +75,7 @@ export const signup = (signingMethod) =>
             await dispatch(obtainAccountId())
 
             dispatch(setProgressMessage(
-                "ACTION REQUIRED. Check pop-up window."
+                "Generating signing keys ..."
             ))
             await dispatch(generateSigningKeys())
 
@@ -108,6 +107,8 @@ export const signup = (signingMethod) =>
 
                     tx = await dispatch(generateMultisigTx())
 
+                    await dispatch(closeShambhala())
+
                     await dispatch(KeysActions.setTxBody(
                         func.pipe(tx)(
                             (t) => t.toEnvelope(),
@@ -125,6 +126,7 @@ export const signup = (signingMethod) =>
                         "ACTION REQUIRED. Check your signing device."
                     ))
                     tx = await dispatch(generateMultisigTx())
+                    await dispatch(closeShambhala())
                     signedTx = await dispatch(sign(sm.LEDGERHQ, tx))
                 },
                 [sm.SHAMBHALA]: async () => {
@@ -132,6 +134,7 @@ export const signup = (signingMethod) =>
                         "Creating additional signatures ..."
                     ))
                     signedTx = await dispatch(sign(sm.SHAMBHALA, null))
+                    await dispatch(closeShambhala())
                 },
             },() => Promise.reject("unknown signing method"))
 
@@ -147,9 +150,6 @@ export const signup = (signingMethod) =>
                 await dispatch(KeysActions.hideSpinner())
                 dispatch(KeysActions.setSucceded())
                 dispatch(setProgressMessage("Complete."))
-                await delay(1500)
-                dispatch(closeShambhala())
-                dispatch(KeysActions.resetState())
             }
 
 
@@ -192,10 +192,6 @@ export const submitTx = () =>
             await dispatch(KeysActions.hideSpinner())
             dispatch(KeysActions.setSucceded())
             dispatch(setProgressMessage("Complete."))
-
-            await delay(1500)
-            dispatch(closeShambhala())
-            dispatch(KeysActions.resetState())
 
         } catch (error) {
             dispatch(KeysActions.setState({

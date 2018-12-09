@@ -71,7 +71,7 @@ export const action = {
     fetchUserAccounts: (user) =>
         async (dispatch, _getState) => {
             readOnce(`user/${user.uid}/accounts`).then((accounts) => {
-                Object.keys(accounts).forEach((accountId) => {
+                accounts && Object.keys(accounts).forEach((accountId) => {
                     dispatch(StellarAccountsActions.updateAccountState(
                         accounts[accountId]
                     ))

@@ -102,7 +102,7 @@ export default compose(
                     classes={{ paper: classes.paper }}
                 >
                     <DialogTitle id="responsive-dialog-title">
-                        Shambhala Scaptic: Transaction Details
+                        Shambhala Sceptic: Transaction Details
                     </DialogTitle>
                     <DialogContent>
                         <div className="flex-box-col items-centered content-centered">

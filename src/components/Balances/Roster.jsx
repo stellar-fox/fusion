@@ -14,6 +14,7 @@ import {
 import { func, string } from "@xcmats/js-toolbox"
 import { signingMethod as sm } from "../../redux/Keys"
 import { select } from "../../actions/payment"
+import { getSigningMethodsForAccount } from "../../lib/logic/stellarAccount"
 import ModalPay from "./ModalPay"
 
 
@@ -69,20 +70,21 @@ export default compose(
 
 
         // ...
-        bar = (account) =>
-            this.props.stellarAccounts[account].signingMethods.map((signingMethod) => {
-                return <div key={`${account}-${signingMethod}`} style={{
-                    width: "3px",
-                    marginRight: "3px",
-                }} className={
-                    func.choose(signingMethod, {
-                        [sm.SHAMBHALA]: () => this.props.classes.colorShambhala,
-                        [sm.LEDGERHQ]: () => this.props.classes.colorLedgerHQ,
-                        [sm.MANUAL]: () => this.props.classes.colorManual,
-                    }, () => this.props.classes.colorUnknown)
-                }
-                ></div>
-            })
+        bar = (accountId) =>
+            getSigningMethodsForAccount(this.props.stellarAccounts, accountId)
+                .map((signingMethod) => {
+                    return <div key={`${accountId}-${signingMethod}`} style={{
+                        width: "3px",
+                        marginRight: "3px",
+                    }} className={
+                        func.choose(signingMethod, {
+                            [sm.SHAMBHALA]: () => this.props.classes.colorShambhala,
+                            [sm.LEDGERHQ]: () => this.props.classes.colorLedgerHQ,
+                            [sm.MANUAL]: () => this.props.classes.colorManual,
+                        }, () => this.props.classes.colorUnknown)
+                    }
+                    ></div>
+                })
 
 
         // ...
@@ -99,6 +101,7 @@ export default compose(
                         $1,234,567.89
                     </Typography>
 
+                    {accounts.length > 0 &&
                     <Table classes={{ root: classes.table }}>
                         <TableHead>
                             <TableRow>
@@ -130,6 +133,7 @@ export default compose(
 
                         </TableBody>
                     </Table>
+                    }
                 </Fragment>
         )(this.props)
 

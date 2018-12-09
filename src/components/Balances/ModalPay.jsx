@@ -22,6 +22,7 @@ import {
     setMemo,
     setSigningMethod,
 } from "../../actions/payment"
+import { getSigningMethodsForAccount } from "../../lib/logic/stellarAccount"
 import Awaiter from "../Awaiter"
 import { shorten } from "@xcmats/js-toolbox"
 
@@ -87,7 +88,7 @@ export default compose(
         // ...
         signingMethods = () =>
             this.props.source &&
-                this.props.stellarAccounts[this.props.source].signingMethods
+                getSigningMethodsForAccount(this.props.stellarAccounts, this.props.source)
                     .map((sm) =>
                         <option key={sm} value={sm}>{sm}</option>
                     )

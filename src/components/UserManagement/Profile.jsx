@@ -20,6 +20,9 @@ import PhotoAvatar from "../PhotoAvatar"
 import ImageCropper from "../ImageCropper"
 import { action as SnackyActions } from "../../redux/Snacky"
 import AnimatedValue from "../AnimatedValue"
+import { getCountOfAccounts } from "../../lib/logic/stellarAccount"
+
+
 
 
 // <Profile> component
@@ -39,7 +42,7 @@ export default compose(
             uid: state.Auth.uid,
             displayName: state.Auth.displayName,
             photoUrl: state.Auth.photoUrl,
-            count: Object.keys(state.StellarAccounts).length,
+            count: getCountOfAccounts(state.StellarAccounts),
         }),
         (dispatch) => bindActionCreators({
             sendEmailVerification: AuthActions.sendEmailVerification,

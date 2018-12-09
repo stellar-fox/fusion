@@ -19,6 +19,7 @@ import AnimatedValue from "../AnimatedValue"
 import background from "../Fusion/static/bg.png"
 import { action as KeysActions, signingMethod as sm } from "../../redux/Keys"
 import { setSigningMethod } from "../../actions/onboarding"
+import { getCountOfSigningMethod } from "../../lib/logic/stellarAccount"
 import ModalSignupLedger from "./ModalSignupLedger"
 import ModalAwaitLedger from "./ModalAwaitLedger"
 
@@ -46,11 +47,7 @@ export default compose(
     })),
     connect(
         (state) => ({
-            count: Object.keys(state.StellarAccounts).filter((account) =>
-                state.StellarAccounts[account].signingMethods.includes(
-                    sm.LEDGERHQ
-                )
-            ).length,
+            count: getCountOfSigningMethod(state.StellarAccounts, sm.LEDGERHQ),
         }),
         (dispatch) => bindActionCreators({
             showSignupLedgerModal: KeysActions.showSignupLedgerModal,
