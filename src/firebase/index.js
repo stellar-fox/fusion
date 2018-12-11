@@ -166,7 +166,6 @@ export const write = async (path, data) => {
 
 
 
-// ...
 /**
  * Update a value in _Firebase_ real time database.
  *
@@ -177,9 +176,8 @@ export const write = async (path, data) => {
 export const update = async (path, data) => {
     try {
         await firebase.database().ref(path).update(data)
-        return { ok: true }
     } catch (error) {
-        return { error: error.message }
+        throw new Error(error)
     }
 }
 
