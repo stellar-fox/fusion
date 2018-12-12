@@ -70,13 +70,21 @@ export const action = {
     // ...
     fetchUserAccounts: (user) =>
         async (dispatch, _getState) => {
-            readOnce(`user/${user.uid}/accounts`).then((accounts) => {
-                accounts && Object.keys(accounts).forEach((accountId) => {
-                    dispatch(StellarAccountsActions.updateAccountState(
-                        accounts[accountId]
-                    ))
-                })
-            })
+            readOnce(`user/${user.uid}/stellarAccounts`).then((accounts) =>
+
+                accounts.map((account, index) =>
+                    dispatch(StellarAccountsActions.setState({
+                        [index]: {
+                            accountId: account.accountId,
+                            networkPassphrase: account.networkPassphrase,
+                            createdAt: account.createdAt,
+                            updatedAt: account.updatedAt,
+                            signingMethods: {...account.signingMethods},
+                        },
+                    }))
+                )
+
+            )
         },
 
 

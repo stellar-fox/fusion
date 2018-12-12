@@ -17,6 +17,10 @@ import { action as AccountsActions } from "../../redux/Accounts"
 import Tab from "@material-ui/core/Tab"
 import Tabs from "@material-ui/core/Tabs"
 import SwipeableViews from "react-swipeable-views"
+import {
+    getDemoAccounts,
+    getRealAccounts,
+} from "../../lib/logic/stellarAccount"
 
 
 
@@ -68,6 +72,7 @@ export default compose(
         // map state to props.
         (state) => ({
             tabSelected: state.Accounts.tabSelected,
+            stellarAccounts: state.StellarAccounts,
         }),
         // match dispatch to props.
         (dispatch) => bindActionCreators({
@@ -83,6 +88,21 @@ export default compose(
 
             // relative resolve
             this.rr = resolvePath(this.props.match.path)
+        }
+
+        // ...
+        state = {
+            realAccounts: [],
+            demoAccounts: [],
+        }
+
+
+        // ...
+        componentDidMount = () => {
+            this.setState({
+                realAccounts: getRealAccounts(this.props.stellarAccounts),
+                demoAccounts: getDemoAccounts(this.props.stellarAccounts),
+            })
         }
 
 
@@ -204,12 +224,24 @@ export default compose(
                                                     Real Accounts
                                                 </Typography>
 
+                                                {this.state.realAccounts.map((account) =>
+                                                    <Typography key={`${account.accountId}-real`} style={{ padding: "1rem 0" }}>
+                                                        {account.accountId}
+                                                    </Typography>
+                                                )}
+
                                             </Fragment>
 
                                             <Fragment>
                                                 <Typography style={{ padding: "1rem 0" }}>
                                                     Demo Accounts
                                                 </Typography>
+
+                                                {this.state.demoAccounts.map((account) =>
+                                                    <Typography key={`${account.accountId}-demo`} style={{ padding: "1rem 0" }}>
+                                                        {account.accountId}
+                                                    </Typography>
+                                                )}
 
                                             </Fragment>
 

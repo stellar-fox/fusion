@@ -10,6 +10,11 @@
 
 
 
+import { Networks } from "stellar-sdk"
+
+
+
+
 /**
  * @function getCountOfSigningMethod
  * @param {Object} stellarAccounts
@@ -45,3 +50,37 @@ export const getCountOfAccounts = (stellarAccounts) =>
  */
 export const getSigningMethodsForAccount = (stellarAccounts, accountId) =>
     Object.keys(stellarAccounts[accountId].signingMethods)
+
+
+
+
+/**
+ * Collection of user created accounts with public network passphrase.
+ *
+ * @function getRealAccounts
+ * @param {Object} stellarAccounts
+ * @returns {Array}
+ */
+export const getRealAccounts = (stellarAccounts) =>
+    Object.keys(stellarAccounts)
+        .filter((key) =>
+            stellarAccounts[key].networkPassphrase === Networks.PUBLIC
+        )
+        .map((key) => stellarAccounts[key])
+
+
+
+
+/**
+ * Collection of user created accounts with testnet network passphrase.
+ *
+ * @function getDemoAccounts
+ * @param {Object} stellarAccounts
+ * @returns {Array}
+ */
+export const getDemoAccounts = (stellarAccounts) =>
+    Object.keys(stellarAccounts)
+        .filter((key) =>
+            stellarAccounts[key].networkPassphrase === Networks.TESTNET
+        )
+        .map((key) => stellarAccounts[key])
