@@ -16,7 +16,7 @@ import { func } from "@xcmats/js-toolbox"
 import { Network, Networks, Server, Transaction } from "stellar-sdk"
 import { action as StellarAccountsActions } from "../redux/StellarAccounts"
 import { testNetworkPassphrase } from "../lib/constants"
-import { action as KeysActions } from "../redux/Keys"
+import { action as KeysActions, signingMethod as sm } from "../redux/Keys"
 import { config } from "../firebase/config"
 import axios from "axios"
 
@@ -80,9 +80,16 @@ export const getLatestAccountState = () =>
  */
 export const tagSigningMethod = () =>
     async (dispatch, getState) => {
-        let { accountId, signingMethod } = getState().Keys
+        let
+            { accountId, signingMethod } = getState().Keys,
+            account = getState().LedgerHQ.useDefaultAccount ?
+                "0" : getState().LedgerHQ.account
 
-        await dispatch(StellarAccountsActions.addSigningMethod(
+        signingMethod === sm.LEDGERHQ ? await dispatch(
+            StellarAccountsActions.addSigningMethodWithAccount(
+                accountId, signingMethod, account
+            )
+        ) : await dispatch(StellarAccountsActions.addSigningMethod(
             accountId, signingMethod
         ))
 

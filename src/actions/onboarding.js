@@ -300,15 +300,31 @@ export const closeShambhala = () =>
  */
 export const saveAccountData = () =>
     async (_dispatch, getState) => {
-        let { accountId, networkPassphrase, signingMethod } = getState().Keys
-        await update(`user/${getState().Auth.uid}/accounts`, {
-            [accountId]: {
-                id: accountId,
-                networkPassphrase,
-                signingMethods: [signingMethod],
+        let { accountId, signingMethod, networkPassphrase } = getState().Keys
+
+        await update(`user/${getState().Auth.uid}/accounts/${accountId}`, {
+            id: accountId,
+        })
+
+        await update(`user/${getState().Auth.uid}/accounts/${accountId}/signingMethods`, {
+            [signingMethod]: {
+                createdAt: Date.now(),
             },
         })
+
+        await update(`user/${getState().Auth.uid}/accounts/${accountId}/signingMethods/${signingMethod}`, {
+            updatedAt: Date.now(),
+            networkPassphrase,
+        })
+
+        signingMethod === sm.LEDGERHQ &&
+        await update(`user/${getState().Auth.uid}/accounts/${accountId}/signingMethods/${signingMethod}`, {
+            updatedAt: Date.now(),
+            account: getState().LedgerHQ.useDefaultAccount ? "0" : getState().LedgerHQ.account,
+        })
+
     }
+
 
 
 

@@ -18,7 +18,7 @@
  */
 export const getCountOfSigningMethod = (stellarAccounts, signingMethod) =>
     Object.keys(stellarAccounts).filter((account) =>
-        stellarAccounts[account].signingMethods.includes(
+        Object.keys(stellarAccounts[account].signingMethods).includes(
             signingMethod
         )
     ).length
@@ -44,4 +44,4 @@ export const getCountOfAccounts = (stellarAccounts) =>
  * @returns {Array} Collection of signing methods types for a given `accountId`
  */
 export const getSigningMethodsForAccount = (stellarAccounts, accountId) =>
-    stellarAccounts[accountId].signingMethods
+    Object.keys(stellarAccounts[accountId].signingMethods)
