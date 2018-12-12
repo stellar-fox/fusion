@@ -3,7 +3,14 @@ import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
 import { Redirect, Route } from "react-router-dom"
-import { Grid, Paper, Typography } from "@material-ui/core"
+import {
+    Fab,
+    Grid,
+    Paper,
+    Typography,
+    Zoom,
+} from "@material-ui/core"
+import { AddRounded } from "@material-ui/icons"
 import { ConnectedSwitch as Switch, resolvePath } from "../FusionRouter"
 import { Motion, presets, spring } from "react-motion"
 import { action as AccountsActions } from "../../redux/Accounts"
@@ -17,6 +24,29 @@ import SwipeableViews from "react-swipeable-views"
 // <Accounts> component
 export default compose(
     withStyles((theme) => ({
+
+        fab: {
+            position: "absolute",
+            right: "1rem",
+            top: "0.5rem",
+        },
+
+        fabDemo: {
+            backgroundColor: theme.palette.error.dark,
+            color: theme.palette.common.white,
+            "&:hover": {
+                backgroundColor: theme.palette.error.main,
+            },
+        },
+
+        fabReal: {
+            backgroundColor: theme.palette.custom.greenDark,
+            color: theme.palette.common.white,
+            "&:hover": {
+                backgroundColor: theme.palette.custom.green,
+            },
+        },
+
         indicator: {
             backgroundColor: theme.palette.custom.greenDark,
         },
@@ -24,12 +54,20 @@ export default compose(
         paperCanvas: {
             padding: "10px",
         },
+
+        labelRealAccounts: {
+            color: theme.palette.custom.green,
+        },
+
+        labelDemoAccounts: {
+            color: theme.palette.error.main,
+        },
+
     })),
     connect(
         // map state to props.
-        (state, theme) => ({
+        (state) => ({
             tabSelected: state.Accounts.tabSelected,
-            theme,
         }),
         // match dispatch to props.
         (dispatch) => bindActionCreators({
@@ -54,8 +92,14 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, tabSelected }) =>
-                <Switch>
+            ({ classes, tabSelected }) => {
+
+                const transitionDuration = {
+                    enter: 225,
+                    exit: 195,
+                }
+
+                return <Switch>
                     <Route exact path={this.rr(".")}>
 
                         <Paper className={classes.paperCanvas}>
@@ -72,6 +116,8 @@ export default compose(
                                             container
                                             direction={"column"}
                                             wrap={"nowrap"}
+                                            style={{ position: "relative" }}
+                                            className="m-b"
                                         >
                                             <Grid item>
                                                 <Typography style={{
@@ -95,7 +141,38 @@ export default compose(
                                                     Manage all your accounts in one place.
                                                 </Typography>
                                             </Grid>
+                                            <Grid item>
+                                                <Zoom
+                                                    key="add-real"
+                                                    in={tabSelected === 0}
+                                                    timeout={transitionDuration}
+                                                    style={{
+                                                        transitionDelay: `${tabSelected === 0 ? transitionDuration.exit : 0}ms`,
+                                                    }}
+                                                    unmountOnExit
+                                                >
+                                                    <Fab aria-label="Add Real" size="small" className={classes.fab} classes={{ root: classes.fabReal }}>
+                                                        <AddRounded />
+                                                    </Fab>
+                                                </Zoom>
+
+                                                <Zoom
+                                                    key="add-demo"
+                                                    in={tabSelected === 1}
+                                                    timeout={transitionDuration}
+                                                    style={{
+                                                        transitionDelay: `${tabSelected === 1 ? transitionDuration.exit : 0}ms`,
+                                                    }}
+                                                    unmountOnExit
+                                                >
+                                                    <Fab aria-label="Add Demo" size="small" className={classes.fab} classes={{ root: classes.fabDemo }}>
+                                                        <AddRounded />
+                                                    </Fab>
+                                                </Zoom>
+                                            </Grid>
                                         </Grid>
+
+
 
                                         <Tabs
                                             style={{
@@ -109,8 +186,8 @@ export default compose(
                                             fullWidth
                                             classes={{ indicator: classes.indicator }}
                                         >
-                                            <Tab label="Real Accounts" />
-                                            <Tab label="Demo Accounts" />
+                                            <Tab classes={{ label: classes.labelRealAccounts }} label="Real" />
+                                            <Tab classes={{ label: classes.labelDemoAccounts }} label="Demo" />
                                         </Tabs>
 
                                         <SwipeableViews
@@ -120,25 +197,24 @@ export default compose(
                                                 transform: `translate(${value.x}px, 0)`,
                                                 opacity: value.opacity,
                                             }}
-                                            axis={this.props.theme.direction === "rtl" ? "x-reverse" : "x"}
                                             index={tabSelected}
-                                            onChangeIndex={this.handleChangeIndex}
                                         >
-                                            <Typography component="div"
-                                                dir={this.props.theme.direction}
-                                                style={{ padding: "1rem 0.5rem" }}
-                                            >
-                                                Real Accounts
-                                            </Typography>
+                                            <Fragment>
+                                                <Typography style={{ padding: "1rem 0" }}>
+                                                    Real Accounts
+                                                </Typography>
 
-                                            <Typography component="div"
-                                                dir={this.props.theme.direction}
-                                                style={{ padding: "2rem 0" }}
-                                            >
-                                                Demo Accounts
-                                            </Typography>
+                                            </Fragment>
+
+                                            <Fragment>
+                                                <Typography style={{ padding: "1rem 0" }}>
+                                                    Demo Accounts
+                                                </Typography>
+
+                                            </Fragment>
 
                                         </SwipeableViews>
+
                                     </Fragment>
 
                                 }
@@ -149,7 +225,7 @@ export default compose(
                     </Route>
                     <Redirect to={this.rr(".")} />
                 </Switch>
-        )(this.props)
+            })(this.props)
 
     }
 )
