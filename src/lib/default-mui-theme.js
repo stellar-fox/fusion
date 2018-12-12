@@ -130,7 +130,6 @@ export default createMuiTheme({
         h6: {
             fontSize: 20,
             fontFamily: "'Roboto Condensed', sans-serif",
-            fontWeight: 200,
         },
 
         h5: {

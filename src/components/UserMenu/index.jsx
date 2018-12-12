@@ -108,7 +108,7 @@ class UserMenu extends Component {
                     >Profile</MenuItem>
                     <MenuItem className={classes.menuItem} component={Link}
                         to="/dashboard/account/" onClick={this.handleClose}
-                    >Account</MenuItem>
+                    >Accounts</MenuItem>
                     <Divider />
                     <MenuItem className={classes.menuItem} onClick={
                         (event) => this.handleClose(event, this.logout)}

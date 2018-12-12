@@ -13,7 +13,7 @@ import KeyManagement from "../KeyManagement"
 import UserManagement from "../UserManagement"
 import Balances from "../Balances"
 import Transactions from "../Transactions"
-import UserAccount from "../UserAccount"
+import Accounts from "../Accounts"
 import Contacts from "../Contacts"
 
 
@@ -59,7 +59,7 @@ export default compose(
                 "user": this.rr("user/"),
                 "balances": this.rr("balances/"),
                 "transactions": this.rr("transactions/"),
-                "account": this.rr("account/"),
+                "accounts": this.rr("accounts/"),
                 "contacts": this.rr("contacts/"),
             })
         }
@@ -67,7 +67,7 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, staticRouter: { getPath, }, }) =>
+            ({ classes, staticRouter: { getPath } }) =>
                 <div className={classes.dashboardContent}>
                     <Switch>
                         <Redirect exact
@@ -86,8 +86,8 @@ export default compose(
                         <Route path={getPath("transactions")}>
                             {(routeProps) => <Transactions {...routeProps} />}
                         </Route>
-                        <Route path={getPath("account")}>
-                            {(routeProps) => <UserAccount {...routeProps} />}
+                        <Route path={getPath("accounts")}>
+                            {(routeProps) => <Accounts {...routeProps} />}
                         </Route>
                         <Route path={getPath("contacts")}>
                             {(routeProps) => <Contacts {...routeProps} />}

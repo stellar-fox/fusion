@@ -48,11 +48,11 @@ export default compose(
                         <UserLogin />
                         <div className="flex-box-row space-between">
                             <Button size="small" component={Link} to="/reset"
-                                variant="outlined" color="secondary"
+                                color="secondary"
                                 className={classes.button}
                             >Reset Password</Button>
                             <Button size="small" component={Link} to="/signup"
-                                variant="outlined" color="secondary"
+                                color="secondary"
                                 className={classes.button}
                             >Signup</Button>
                         </div>
@@ -74,11 +74,11 @@ export default compose(
                             <UserLogin />
                             <div className="flex-box-row space-between m-t-small">
                                 <Button size="small" component={Link} to="/reset"
-                                    variant="outlined" color="secondary"
+                                    color="secondary"
                                     className={classes.button}
                                 >Reset Password</Button>
                                 <Button size="small" component={Link} to="/signup"
-                                    variant="outlined" color="secondary"
+                                    color="secondary"
                                     className={classes.button}
                                 >Signup</Button>
                             </div>
