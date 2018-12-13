@@ -32,12 +32,27 @@ export const getCountOfSigningMethod = (stellarAccounts, signingMethod) =>
 
 
 /**
- * @function getCountOfAccounts
+ * Number of real accounts created/registered by user.
+ *
+ * @function getCountOfRealAccounts
  * @param {Object} stellarAccounts
- * @returns {Number} Count of accounts created/registered by user.
+ * @returns {Number}
  */
-export const getCountOfAccounts = (stellarAccounts) =>
-    Object.keys(stellarAccounts).length
+export const getCountOfRealAccounts = (stellarAccounts) =>
+    getRealAccountIds(stellarAccounts).length
+
+
+
+
+/**
+ * Number of demo accounts created/registered by user.
+ *
+ * @function getCountOfRealAccounts
+ * @param {Object} stellarAccounts
+ * @returns {Number}
+ */
+export const getCountOfDemoAccounts = (stellarAccounts) =>
+    getDemoAccountIds(stellarAccounts).length
 
 
 

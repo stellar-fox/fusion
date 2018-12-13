@@ -42,6 +42,7 @@ export default compose(
     })),
     connect(
         (state) => ({
+            accountType: state.Pay.accountType,
             availableSigningMethods: state.Pay.availableSigningMethods,
             open: state.Pay.ModalPay.showing,
             source: state.Pay.source,

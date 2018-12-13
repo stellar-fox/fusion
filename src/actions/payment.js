@@ -34,22 +34,6 @@ export const cancel = () =>
 
 
 /**
- * Selection of an account from which to make payment.
- *
- * @function select
- * @param {String} source `AccountId`, which is originating the payment.
- * @returns {Function}
- */
-export const select = (source) =>
-    async (dispatch, _getState) => {
-        await dispatch(setSource(source))
-        dispatch(showModalPay())
-    }
-
-
-
-
-/**
  * Show modal for making payments.
  *
  * @function showModalPay
@@ -85,6 +69,21 @@ export const hideModalPay = () => (dispatch) =>
 export const setSource = (source) =>
     async (dispatch, _getState) => dispatch(PayActions.setState({
         source,
+    }))
+
+
+
+
+/**
+ * Sets account type _live_ or _demo_.
+ *
+ * @function setAccountType
+ * @param {String} accountType One of the account types REAL | DEMO.
+ * @returns {Function}
+ */
+export const setAccountType = (accountType) =>
+    async (dispatch, _getState) => dispatch(PayActions.setState({
+        accountType,
     }))
 
 

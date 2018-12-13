@@ -20,7 +20,10 @@ import PhotoAvatar from "../PhotoAvatar"
 import ImageCropper from "../ImageCropper"
 import { action as SnackyActions } from "../../redux/Snacky"
 import AnimatedValue from "../AnimatedValue"
-import { getCountOfAccounts } from "../../lib/logic/stellarAccount"
+import {
+    getCountOfDemoAccounts,
+    getCountOfRealAccounts,
+} from "../../lib/logic/stellarAccount"
 
 
 
@@ -42,7 +45,8 @@ export default compose(
             uid: state.Auth.uid,
             displayName: state.Auth.displayName,
             photoUrl: state.Auth.photoUrl,
-            count: getCountOfAccounts(state.StellarAccounts),
+            countDemo: getCountOfDemoAccounts(state.StellarAccounts),
+            countReal: getCountOfRealAccounts(state.StellarAccounts),
         }),
         (dispatch) => bindActionCreators({
             sendEmailVerification: AuthActions.sendEmailVerification,
@@ -271,7 +275,7 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, count, email, photoUrl, uid, width }) => <Fragment>
+            ({ classes, countDemo, countReal, email, photoUrl, uid, width }) => <Fragment>
                 <ConfirmDialog
                     dialogVisible={this.state.dialogReAuthVisible}
                     onOk={this.reAuthenticate}
@@ -407,14 +411,22 @@ export default compose(
 
                         <div className="m-t m-b flex-box-row">
                             <Typography className="p-r" variant="h4">
-                                Number of Accounts:
+                                Number of Real Accounts:
                             </Typography>
                             <AnimatedValue
-                                valueToAnimate={count}
+                                valueToAnimate={countReal}
                                 variant="h4"
                             />
                         </div>
-
+                        <div className="m-t m-b flex-box-row">
+                            <Typography className="p-r" variant="h4">
+                                Number of Demo Accounts:
+                            </Typography>
+                            <AnimatedValue
+                                valueToAnimate={countDemo}
+                                variant="h4"
+                            />
+                        </div>
 
                         <div className="m-t-large">
                             <Typography style={{ paddingBottom: "1em" }}

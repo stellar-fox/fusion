@@ -16,6 +16,7 @@ import { Motion, presets, spring } from "react-motion"
 import RosterReal from "./RosterReal"
 import RosterDemo from "./RosterDemo"
 import { action as BalancesActions } from "../../redux/Balances"
+import ModalPay from "./ModalPay"
 
 
 
@@ -72,7 +73,7 @@ export default compose(
                     <Route exact path={this.rr(".")}>
 
                         <Paper className={classes.paperCanvas}>
-
+                            <ModalPay />
                             <Motion defaultStyle={{ x: -10, opacity: 0 }}
                                 style={{
                                     x: spring(0, presets.stiff),

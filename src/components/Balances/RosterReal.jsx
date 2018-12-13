@@ -13,14 +13,17 @@ import {
 } from "@material-ui/core"
 import { func, string } from "@xcmats/js-toolbox"
 import { signingMethod as sm } from "../../redux/Keys"
-import { select } from "../../actions/payment"
+import {
+    setAccountType,
+    setSource,
+    showModalPay,
+} from "../../actions/payment"
 import {
     getRealAccountIds,
     getSigningMethodsForRealAccount,
 } from "../../lib/logic/stellarAccount"
-import ModalPay from "./ModalPay"
-import { accountType as at } from "../../redux/Accounts"
 import { action as PayActions } from "../../redux/Pay"
+import { accountType as at } from "../../redux/Accounts"
 
 
 
@@ -70,7 +73,9 @@ export default compose(
         }),
         (dispatch) => bindActionCreators({
             setAvailableSigningMethods: PayActions.setAvailableSigningMethods,
-            select,
+            setAccountType,
+            setSource,
+            showModalPay,
         }, dispatch)
     )
 )(
@@ -102,13 +107,15 @@ export default compose(
 
         // ...
         showModal = (source) => (_event) => {
+            this.props.setSource(source)
+            this.props.setAccountType(at.REAL)
             this.props.setAvailableSigningMethods(
                 getSigningMethodsForRealAccount(
                     this.props.stellarAccounts,
                     source
                 )
             )
-            this.props.select(source)
+            this.props.showModalPay()
         }
 
 
@@ -116,7 +123,6 @@ export default compose(
         render = () => (
             ({ realAccountIds, classes }) =>
                 <Fragment>
-                    <ModalPay accountType={at.REAL} />
 
                     <Typography style={{ padding: "1rem 0 0 0" }} variant="h4">
                         Total for all accounts
