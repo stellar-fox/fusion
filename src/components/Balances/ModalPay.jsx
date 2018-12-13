@@ -146,7 +146,7 @@ export default compose(
                                 >
                                     <option disabled value="">Please Select</option>
                                     {availableSigningMethods.map((signingMethod) =>
-                                        <option value="signingMethod">{signingMethod}</option>
+                                        <option value={signingMethod}>{signingMethod}</option>
                                     )}
                                 </Select>
                             </FormControl>
