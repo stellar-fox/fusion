@@ -7,6 +7,8 @@ import {
     Fab,
     Grid,
     Paper,
+    Tab,
+    Tabs,
     Typography,
     Zoom,
 } from "@material-ui/core"
@@ -14,8 +16,6 @@ import { AddRounded } from "@material-ui/icons"
 import { ConnectedSwitch as Switch, resolvePath } from "../FusionRouter"
 import { Motion, presets, spring } from "react-motion"
 import { action as AccountsActions } from "../../redux/Accounts"
-import Tab from "@material-ui/core/Tab"
-import Tabs from "@material-ui/core/Tabs"
 import SwipeableViews from "react-swipeable-views"
 import {
     getDemoAccounts,
@@ -55,16 +55,16 @@ export default compose(
             backgroundColor: theme.palette.custom.greenDark,
         },
 
-        paperCanvas: {
-            padding: "10px",
-        },
-
         labelRealAccounts: {
             color: theme.palette.custom.green,
         },
 
         labelDemoAccounts: {
             color: theme.palette.error.main,
+        },
+
+        paperCanvas: {
+            padding: "10px",
         },
 
     })),

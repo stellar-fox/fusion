@@ -22,9 +22,9 @@ import {
     setMemo,
     setSigningMethod,
 } from "../../actions/payment"
-import { getSigningMethodsForAccount } from "../../lib/logic/stellarAccount"
 import Awaiter from "../Awaiter"
-import { shorten } from "@xcmats/js-toolbox"
+import { func, shorten } from "@xcmats/js-toolbox"
+import { accountType as at } from "../../redux/Accounts"
 
 
 
@@ -33,15 +33,18 @@ import { shorten } from "@xcmats/js-toolbox"
 export default compose(
     withMobileDialog(),
     withStyles((theme) => ({
-        paper: {
+        paperReal: {
             backgroundColor: theme.palette.custom.greenDark,
+        },
+        paperDemo: {
+            backgroundColor: theme.palette.error.main,
         },
     })),
     connect(
         (state) => ({
+            availableSigningMethods: state.Pay.availableSigningMethods,
             open: state.Pay.ModalPay.showing,
             source: state.Pay.source,
-            signingMethod: state.Pay.signingMethod,
             yesButtonDisabled: state.Pay.yesButtonDisabled,
             stellarAccounts: state.StellarAccounts,
         }),
@@ -86,25 +89,19 @@ export default compose(
 
 
         // ...
-        signingMethods = () =>
-            this.props.source &&
-                getSigningMethodsForAccount(this.props.stellarAccounts, this.props.source)
-                    .map((sm) =>
-                        <option key={sm} value={sm}>{sm}</option>
-                    )
-
-
-        // ...
         render = () => (
             ({
-                classes, error, errorMessage, source, fullScreen, open,
-                signingMethod, yesButtonDisabled,
+                accountType, availableSigningMethods, classes, error,
+                errorMessage, source, fullScreen, open, yesButtonDisabled,
             }) =>
                 <Dialog
                     fullScreen={fullScreen}
                     open={open}
                     aria-labelledby="responsive-dialog-title"
-                    classes={{ paper: classes.paper }}
+                    classes={{ paper: func.choose(accountType, {
+                        [at.REAL]: () => classes.paperReal,
+                        [at.DEMO]: () => classes.paperDemo,
+                    }, () => "unknown account type") }}
                 >
                     <DialogTitle id="responsive-dialog-title">
                         Pay using {source && shorten(source, 11, shorten.MIDDLE, "-")}
@@ -140,7 +137,6 @@ export default compose(
                                 <Select
                                     native
                                     defaultValue=""
-                                    value={signingMethod}
                                     onChange={this.handleSigningMethodChange("sm")}
                                     inputProps={{
                                         name: "sm",
@@ -148,7 +144,9 @@ export default compose(
                                     }}
                                 >
                                     <option disabled value="">Please Select</option>
-                                    {this.signingMethods()}
+                                    {availableSigningMethods.map((signingMethod) =>
+                                        <option value="signingMethod">{signingMethod}</option>
+                                    )}
                                 </Select>
                             </FormControl>
                         </div>

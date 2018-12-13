@@ -3,7 +3,7 @@ import { createReducer } from "@xcmats/js-toolbox"
 
 
 
-// <Accounts> initial state
+// <Balances> initial state
 const initState = {
     tabSelected: 0,
 }
@@ -12,22 +12,8 @@ const initState = {
 
 
 // state const definitions
-export const RESET_STATE = "@Accounts/RESET_STATE"
-export const SET_STATE = "@Accounts/SET_STATE"
-
-
-
-
-/**
- * Enumeration of possible account types.
- * REAL, DEMO
- *
- * @constant accountType
- */
-export const accountType = Object.freeze({
-    REAL: "real",
-    DEMO: "demo",
-})
+export const RESET_STATE = "@Balances/RESET_STATE"
+export const SET_STATE = "@Balances/SET_STATE"
 
 
 

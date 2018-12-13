@@ -3,26 +3,51 @@ import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
 import { Redirect, Route } from "react-router-dom"
-import { Paper, Typography } from "@material-ui/core"
+import {
+    Grid,
+    Paper,
+    Tab,
+    Tabs,
+    Typography,
+} from "@material-ui/core"
+import SwipeableViews from "react-swipeable-views"
 import { ConnectedSwitch as Switch, resolvePath } from "../FusionRouter"
 import { Motion, presets, spring } from "react-motion"
-import Roster from "./Roster"
+import RosterReal from "./RosterReal"
+import RosterDemo from "./RosterDemo"
+import { action as BalancesActions } from "../../redux/Balances"
 
 
 
 
 // <Balances> component
 export default compose(
-    withStyles((_theme) => ({
+    withStyles((theme) => ({
+        indicator: {
+            backgroundColor: theme.palette.custom.greenDark,
+        },
+
+        labelRealAccounts: {
+            color: theme.palette.custom.green,
+        },
+
+        labelDemoAccounts: {
+            color: theme.palette.error.main,
+        },
+
         paperCanvas: {
             padding: "10px",
         },
     })),
     connect(
         // map state to props.
-        (_state) => ({}),
+        (state) => ({
+            tabSelected: state.Balances.tabSelected,
+        }),
         // match dispatch to props.
-        (dispatch) => bindActionCreators({}, dispatch)
+        (dispatch) => bindActionCreators({
+            changeTab: BalancesActions.changeTab,
+        }, dispatch)
     )
 )(
     class extends Component {
@@ -37,8 +62,12 @@ export default compose(
 
 
         // ...
+        onTabChange = (_event, value) => this.props.changeTab(value)
+
+
+        // ...
         render = () => (
-            ({ classes }) =>
+            ({ classes, tabSelected }) =>
                 <Switch>
                     <Route exact path={this.rr(".")}>
 
@@ -52,24 +81,65 @@ export default compose(
                             >
                                 {value =>
                                     <Fragment>
-                                        <Typography style={{
-                                            position: "relative",
-                                            WebkitTransform: `translate(${value.x}px, 0)`,
-                                            transform: `translate(${value.x}px, 0)`,
-                                            opacity: value.opacity,
-                                        }} variant="h6"
+                                        <Grid
+                                            container
+                                            direction={"column"}
+                                            wrap={"nowrap"}
+                                            style={{ position: "relative" }}
+                                            className="m-b"
                                         >
-                                            Balances
-                                        </Typography>
-                                        <div style={{
-                                            position: "relative",
-                                            WebkitTransform: `translate(${value.x}px, 0)`,
-                                            transform: `translate(${value.x}px, 0)`,
-                                            opacity: value.opacity,
-                                        }}
+                                            <Grid item>
+                                                <Typography style={{
+                                                    position: "relative",
+                                                    WebkitTransform: `translate(${value.x}px, 0)`,
+                                                    transform: `translate(${value.x}px, 0)`,
+                                                    opacity: value.opacity,
+                                                }} variant="h6"
+                                                >
+                                                    Balances
+                                                </Typography>
+                                            </Grid>
+                                            <Grid item>
+                                                <Typography style={{
+                                                    position: "relative",
+                                                    WebkitTransform: `translate(${value.x}px, 0)`,
+                                                    transform: `translate(${value.x}px, 0)`,
+                                                    opacity: value.opacity,
+                                                }} variant="h4"
+                                                >
+                                                    Overview of your accounts in one place.
+                                                </Typography>
+                                            </Grid>
+                                        </Grid>
+
+                                        <Tabs
+                                            style={{
+                                                position: "relative",
+                                                WebkitTransform: `translate(${value.x}px, 0)`,
+                                                transform: `translate(${value.x}px, 0)`,
+                                                opacity: value.opacity,
+                                            }}
+                                            value={tabSelected}
+                                            onChange={this.onTabChange}
+                                            fullWidth
+                                            classes={{ indicator: classes.indicator }}
                                         >
-                                            <Roster />
-                                        </div>
+                                            <Tab classes={{ label: classes.labelRealAccounts }} label="Real" />
+                                            <Tab classes={{ label: classes.labelDemoAccounts }} label="Demo" />
+                                        </Tabs>
+
+                                        <SwipeableViews
+                                            style={{
+                                                position: "relative",
+                                                WebkitTransform: `translate(${value.x}px, 0)`,
+                                                transform: `translate(${value.x}px, 0)`,
+                                                opacity: value.opacity,
+                                            }}
+                                            index={tabSelected}
+                                        >
+                                            <RosterReal />
+                                            <RosterDemo />
+                                        </SwipeableViews>
 
                                     </Fragment>
                                 }

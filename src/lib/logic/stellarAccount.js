@@ -43,13 +43,37 @@ export const getCountOfAccounts = (stellarAccounts) =>
 
 
 /**
- * @function getSigningMethodsForAccount
+ * Collection of signing methods types for a given real `accountId`.
+ *
+ * @function getSigningMethodsForRealAccount
  * @param {Object} stellarAccounts
  * @param {String} accountId
- * @returns {Array} Collection of signing methods types for a given `accountId`
+ * @returns {Array}
  */
-export const getSigningMethodsForAccount = (stellarAccounts, accountId) =>
-    Object.keys(stellarAccounts[accountId].signingMethods)
+export const getSigningMethodsForRealAccount = (stellarAccounts, accountId) => {
+    let
+        realAccount = getRealAccounts(stellarAccounts)
+            .find((account) => account.accountId === accountId),
+
+        signingMethods = Object.keys(realAccount.signingMethods)
+            .map((smKey) => realAccount.signingMethods[smKey].type)
+
+    return signingMethods
+}
+
+
+
+
+/**
+ * Collection of user created real `accountId`s.
+ *
+ * @function getRealAccountIds
+ * @param {Object} stellarAccounts
+ * @returns {Array}
+ */
+export const getRealAccountIds = (stellarAccounts) =>
+    getRealAccounts(stellarAccounts)
+        .map((realAccount) => realAccount.accountId)
 
 
 
@@ -67,6 +91,42 @@ export const getRealAccounts = (stellarAccounts) =>
             stellarAccounts[key].networkPassphrase === Networks.PUBLIC
         )
         .map((key) => stellarAccounts[key])
+
+
+
+
+/**
+ * Collection of signing methods types for a given demo `accountId`.
+ *
+ * @function getSigningMethodsForDemoAccount
+ * @param {Object} stellarAccounts
+ * @param {String} accountId
+ * @returns {Array}
+ */
+export const getSigningMethodsForDemoAccount = (stellarAccounts, accountId) => {
+    let
+        demoAccount = getDemoAccounts(stellarAccounts)
+            .find((account) => account.accountId === accountId),
+
+        signingMethods = Object.keys(demoAccount.signingMethods)
+            .map((smKey) => demoAccount.signingMethods[smKey].type)
+
+    return signingMethods
+}
+
+
+
+
+/**
+ * Collection of user created real `accountId`s.
+ *
+ * @function getDemoAccountIds
+ * @param {Object} stellarAccounts
+ * @returns {Array}
+ */
+export const getDemoAccountIds = (stellarAccounts) =>
+    getDemoAccounts(stellarAccounts)
+        .map((demoAccount) => demoAccount.accountId)
 
 
 

@@ -14,12 +14,19 @@ import {
 import { func, string } from "@xcmats/js-toolbox"
 import { signingMethod as sm } from "../../redux/Keys"
 import { select } from "../../actions/payment"
-import { getSigningMethodsForAccount } from "../../lib/logic/stellarAccount"
+import {
+    getDemoAccountIds,
+    getSigningMethodsForDemoAccount,
+} from "../../lib/logic/stellarAccount"
 import ModalPay from "./ModalPay"
+import { accountType as at } from "../../redux/Accounts"
+import { action as PayActions } from "../../redux/Pay"
 
 
 
-// <Roster> component
+
+
+// <RosterDemo> component
 export default compose(
     withStyles((theme) => ({
         colorShambhala: {
@@ -42,6 +49,12 @@ export default compose(
             fontWeight: 100,
             borderBottom: "none !important",
         },
+        tableCellHead: {
+            borderBottom: `1px solid ${theme.palette.custom.darkGunmetal} !important`,
+        },
+        tableHead: {
+            height: 32,
+        },
         tableRow: {
             cursor: "pointer",
             borderBottom: `1px solid ${theme.palette.custom.darkGunmetal} !important`,
@@ -53,10 +66,11 @@ export default compose(
     })),
     connect(
         (state) => ({
-            accounts: Object.keys(state.StellarAccounts),
+            demoAccountIds: getDemoAccountIds(state.StellarAccounts),
             stellarAccounts: state.StellarAccounts,
         }),
         (dispatch) => bindActionCreators({
+            setAvailableSigningMethods: PayActions.setAvailableSigningMethods,
             select,
         }, dispatch)
     )
@@ -71,9 +85,9 @@ export default compose(
 
         // ...
         bar = (accountId) =>
-            getSigningMethodsForAccount(this.props.stellarAccounts, accountId)
-                .map((signingMethod) => {
-                    return <div key={`${accountId}-${signingMethod}`} style={{
+            getSigningMethodsForDemoAccount(this.props.stellarAccounts, accountId)
+                .map((signingMethod) =>
+                    <div key={`${accountId}-${signingMethod}`} style={{
                         width: "3px",
                         marginRight: "3px",
                     }} className={
@@ -84,41 +98,53 @@ export default compose(
                         }, () => this.props.classes.colorUnknown)
                     }
                     ></div>
-                })
+                )
 
 
         // ...
-        showModal = (source) => (_event) =>
+        showModal = (source) => (_event) => {
+            this.props.setAvailableSigningMethods(
+                getSigningMethodsForDemoAccount(
+                    this.props.stellarAccounts,
+                    source
+                )
+            )
             this.props.select(source)
+        }
 
 
         // ...
         render = () => (
-            ({ accounts, classes }) =>
+            ({ demoAccountIds, classes }) =>
                 <Fragment>
-                    <ModalPay />
-                    <Typography variant="h5">
+                    <ModalPay accountType={at.DEMO} />
+
+                    <Typography style={{ padding: "1rem 0 0 0" }} variant="h4">
+                        Total for all accounts
+                    </Typography>
+                    <Typography style={{ padding: "0 0 1rem 0" }} variant="h5">
                         $1,234,567.89
                     </Typography>
 
-                    {accounts.length > 0 &&
+
+                    {demoAccountIds.length > 0 &&
                     <Table classes={{ root: classes.table }}>
                         <TableHead>
-                            <TableRow>
-                                <TableCell padding="none">Account Name</TableCell>
-                                <TableCell padding="none" numeric>Available</TableCell>
-                                <TableCell padding="none" numeric>Balance</TableCell>
+                            <TableRow classes={{ root: classes.tableHead }}>
+                                <TableCell classes={{ root: classes.tableCellHead }} padding="none">Account Name</TableCell>
+                                <TableCell classes={{ root: classes.tableCellHead }} padding="none" numeric>Available</TableCell>
+                                <TableCell classes={{ root: classes.tableCellHead }} padding="none" numeric>Balance</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {accounts.map((account) => {
-                                return <TableRow key={account} onClick={this.showModal(account)} classes={{ root: classes.tableRow }}>
+                            {demoAccountIds.map((accountId) => {
+                                return <TableRow key={accountId} onClick={this.showModal(accountId)} classes={{ root: classes.tableRow }}>
                                     <TableCell classes={{ root: classes.tableCell }} padding="none">
                                         <div className="flex-box-row">
-                                            {this.bar(account)}
+                                            {this.bar(accountId)}
                                             <div className="flex-box-col">
                                                 <div>No name</div>
-                                                <div>{string.shorten(account, 11, string.shorten.MIDDLE, "-")}</div>
+                                                <div>{string.shorten(accountId, 11, string.shorten.MIDDLE, "-")}</div>
                                             </div>
                                         </div>
                                     </TableCell>
