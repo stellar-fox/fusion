@@ -3,6 +3,7 @@ import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
 import { Redirect, Route } from "react-router-dom"
+import withWidth, { isWidthUp } from "@material-ui/core/withWidth"
 import {
     Fab,
     Grid,
@@ -85,7 +86,8 @@ export default compose(
         (dispatch) => bindActionCreators({
             changeTab: AccountsActions.changeTab,
         }, dispatch)
-    )
+    ),
+    withWidth(),
 )(
     class extends Component {
 
@@ -119,7 +121,7 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, tabSelected }) => {
+            ({ classes, tabSelected, width }) => {
 
                 const transitionDuration = {
                     enter: 225,
@@ -226,26 +228,24 @@ export default compose(
                                             }}
                                             index={tabSelected}
                                         >
-                                            <div>
-                                                <Grid
-                                                    container
-                                                    direction={"row"}
-                                                    spacing={8}
-                                                    style={{ position: "relative" }}
-                                                    className="m-t m-b"
-                                                    classes={{ "spacing-xs-8": classes.spacing }}
-                                                >
-                                                    {this.state.realAccounts.map((account) =>
-                                                        <Grid key={`${account.accountId}-${at.REAL}`} item>
-                                                            <AccountCard accountId={account.accountId} accountType={at.REAL} />
-                                                        </Grid>
-                                                    )}
-                                                </Grid>
-                                            </div>
+                                            <Grid
+                                                container
+                                                direction={isWidthUp("md", width) ? "row" : "column"}
+                                                spacing={8}
+                                                style={{ position: "relative"}}
+                                                className="m-t m-b"
+                                                classes={{ "spacing-xs-8": classes.spacing }}
+                                            >
+                                                {this.state.realAccounts.map((account) =>
+                                                    <Grid key={`${account.accountId}-${at.REAL}`} item>
+                                                        <AccountCard accountId={account.accountId} accountType={at.REAL} />
+                                                    </Grid>
+                                                )}
+                                            </Grid>
 
                                             <Grid
                                                 container
-                                                direction={"row"}
+                                                direction={isWidthUp("md", width) ? "row" : "column"}
                                                 spacing={8}
                                                 style={{ position: "relative" }}
                                                 className="m-t m-b"

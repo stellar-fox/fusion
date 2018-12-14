@@ -40,8 +40,6 @@ export default compose(
             opacity: "0.5",
         },
         card: {
-            maxWidth: 400,
-            minWidth: 400,
             backgroundColor: theme.palette.custom.outerSpace,
         },
         cardDemo: {
@@ -91,7 +89,7 @@ export default compose(
                             />
                         }
                         action={
-                            <IconButton aria-label="Edit"
+                            <IconButton style={{ marginLeft: "1rem" }} aria-label="Edit"
                                 classes={{ root: func.choose(accountType, {
                                     [at.REAL]: () => classes.iconButtonReal,
                                     [at.DEMO]: () => classes.iconButtonDemo,
