@@ -22,6 +22,8 @@ import {
 } from "@material-ui/icons"
 import { func, shorten } from "@xcmats/js-toolbox"
 import { accountType as at } from "../../redux/Accounts"
+import { Sparklines, SparklinesLine, SparklinesReferenceLine } from "react-sparklines"
+
 
 
 
@@ -41,6 +43,11 @@ export default compose(
         },
         card: {
             backgroundColor: theme.palette.custom.outerSpace,
+        },
+        cardContent: {
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
         },
         cardDemo: {
 
@@ -101,13 +108,21 @@ export default compose(
                         title="No Name"
                         subheader={accountId && shorten(accountId, 11, shorten.MIDDLE, "-")}
                     />
-                    <CardContent>
-                        <Typography variant="h4">
-                            Current Balance
-                        </Typography>
-                        <Typography variant="h5">
-                            $1,234,567.89
-                        </Typography>
+                    <CardContent classes={{ root: classes.cardContent }}>
+                        <div>
+                            <Typography variant="h4">
+                                Current Balance
+                            </Typography>
+                            <Typography variant="h5">
+                                $1,234,567.89
+                            </Typography>
+                        </div>
+                        <div style={{ marginLeft: "1rem", width: 80 }}>
+                            <Sparklines data={[5, 10, 15, 9, 20, 28, 30, 28, 20, 25]}>
+                                <SparklinesLine style={{ stroke: "#8ed53f", strokeWidth: "2", fill: "#8fc638", fillOpacity: "0.2" }} />
+                                <SparklinesReferenceLine type="mean" style={{ stroke: "white", strokeOpacity: "0.9", strokeDasharray: "2, 2" }} />
+                            </Sparklines>
+                        </div>
                     </CardContent>
 
                     <CardActions className={classes.actions} disableActionSpacing>
