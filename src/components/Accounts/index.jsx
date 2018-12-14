@@ -21,6 +21,8 @@ import {
     getDemoAccounts,
     getRealAccounts,
 } from "../../lib/logic/stellarAccount"
+import AccountCard from "./AccountCard"
+import { accountType as at } from "../../redux/Accounts"
 
 
 
@@ -65,6 +67,11 @@ export default compose(
 
         paperCanvas: {
             padding: "10px",
+        },
+
+        spacing: {
+            width: "100%",
+            margin: "0.5rem 0 0 0",
         },
 
     })),
@@ -219,31 +226,37 @@ export default compose(
                                             }}
                                             index={tabSelected}
                                         >
-                                            <Fragment>
-                                                <Typography style={{ padding: "1rem 0" }}>
-                                                    Real Accounts
-                                                </Typography>
+                                            <div>
+                                                <Grid
+                                                    container
+                                                    direction={"row"}
+                                                    spacing={8}
+                                                    style={{ position: "relative" }}
+                                                    className="m-t m-b"
+                                                    classes={{ "spacing-xs-8": classes.spacing }}
+                                                >
+                                                    {this.state.realAccounts.map((account) =>
+                                                        <Grid key={`${account.accountId}-${at.REAL}`} item>
+                                                            <AccountCard accountId={account.accountId} accountType={at.REAL} />
+                                                        </Grid>
+                                                    )}
+                                                </Grid>
+                                            </div>
 
-                                                {this.state.realAccounts.map((account) =>
-                                                    <Typography key={`${account.accountId}-real`} style={{ padding: "1rem 0" }}>
-                                                        {account.accountId}
-                                                    </Typography>
-                                                )}
-
-                                            </Fragment>
-
-                                            <Fragment>
-                                                <Typography style={{ padding: "1rem 0" }}>
-                                                    Demo Accounts
-                                                </Typography>
-
+                                            <Grid
+                                                container
+                                                direction={"row"}
+                                                spacing={8}
+                                                style={{ position: "relative" }}
+                                                className="m-t m-b"
+                                                classes={{ "spacing-xs-8": classes.spacing }}
+                                            >
                                                 {this.state.demoAccounts.map((account) =>
-                                                    <Typography key={`${account.accountId}-demo`} style={{ padding: "1rem 0" }}>
-                                                        {account.accountId}
-                                                    </Typography>
+                                                    <Grid key={`${account.accountId}-${at.DEMO}`} item>
+                                                        <AccountCard accountId={account.accountId} accountType={at.DEMO} />
+                                                    </Grid>
                                                 )}
-
-                                            </Fragment>
+                                            </Grid>
 
                                         </SwipeableViews>
 
