@@ -53,7 +53,7 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, }) =>
+            ({ classes }) =>
                 <div className={classes.root}>
 
                     <AppBar />
