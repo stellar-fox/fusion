@@ -101,11 +101,11 @@ export const getRealAccountIds = (stellarAccounts) =>
  * @returns {Array}
  */
 export const getRealAccounts = (stellarAccounts) =>
-    Object.keys(stellarAccounts)
+    stellarAccounts ? Object.keys(stellarAccounts)
         .filter((key) =>
             stellarAccounts[key].networkPassphrase === Networks.PUBLIC
         )
-        .map((key) => stellarAccounts[key])
+        .map((key) => stellarAccounts[key]) : []
 
 
 
@@ -154,8 +154,8 @@ export const getDemoAccountIds = (stellarAccounts) =>
  * @returns {Array}
  */
 export const getDemoAccounts = (stellarAccounts) =>
-    Object.keys(stellarAccounts)
+    stellarAccounts ? Object.keys(stellarAccounts)
         .filter((key) =>
             stellarAccounts[key].networkPassphrase === Networks.TESTNET
         )
-        .map((key) => stellarAccounts[key])
+        .map((key) => stellarAccounts[key]) : []

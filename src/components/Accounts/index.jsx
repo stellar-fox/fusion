@@ -80,7 +80,8 @@ export default compose(
         // map state to props.
         (state) => ({
             tabSelected: state.Accounts.tabSelected,
-            stellarAccounts: state.StellarAccounts,
+            realAccounts: getRealAccounts(state.StellarAccounts),
+            demoAccounts: getDemoAccounts(state.StellarAccounts),
         }),
         // match dispatch to props.
         (dispatch) => bindActionCreators({
@@ -99,21 +100,6 @@ export default compose(
             this.rr = resolvePath(this.props.match.path)
         }
 
-        // ...
-        state = {
-            realAccounts: [],
-            demoAccounts: [],
-        }
-
-
-        // ...
-        componentDidMount = () => {
-            this.setState({
-                realAccounts: getRealAccounts(this.props.stellarAccounts),
-                demoAccounts: getDemoAccounts(this.props.stellarAccounts),
-            })
-        }
-
 
         // ...
         onTabChange = (_event, value) => this.props.changeTab(value)
@@ -121,7 +107,7 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, tabSelected, width }) => {
+            ({ classes, demoAccounts, realAccounts, tabSelected, width }) => {
 
                 const transitionDuration = {
                     enter: 225,
@@ -236,7 +222,7 @@ export default compose(
                                                 className="m-t m-b"
                                                 classes={{ "spacing-xs-8": classes.spacing }}
                                             >
-                                                {this.state.realAccounts.map((account) =>
+                                                {realAccounts.map((account) =>
                                                     <Grid key={`${account.accountId}-${at.REAL}`} item>
                                                         <AccountCard accountId={account.accountId} accountType={at.REAL} />
                                                     </Grid>
@@ -251,7 +237,7 @@ export default compose(
                                                 className="m-t m-b"
                                                 classes={{ "spacing-xs-8": classes.spacing }}
                                             >
-                                                {this.state.demoAccounts.map((account) =>
+                                                {demoAccounts.map((account) =>
                                                     <Grid key={`${account.accountId}-${at.DEMO}`} item>
                                                         <AccountCard accountId={account.accountId} accountType={at.DEMO} />
                                                     </Grid>

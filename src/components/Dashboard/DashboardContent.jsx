@@ -72,7 +72,7 @@ export default compose(
                     <Switch>
                         <Redirect exact
                             from={this.rr(".")}
-                            to={getPath("keys")}
+                            to={getPath("accounts")}
                         />
                         <Route path={getPath("keys")}>
                             { (routeProps) => <KeyManagement {...routeProps} /> }
@@ -92,7 +92,7 @@ export default compose(
                         <Route path={getPath("contacts")}>
                             {(routeProps) => <Contacts {...routeProps} />}
                         </Route>
-                        <Redirect to={getPath("keys")} />
+                        <Redirect to={getPath("accounts")} />
                     </Switch>
                 </div>
         )(this.props)
