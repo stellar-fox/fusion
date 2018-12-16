@@ -38,7 +38,7 @@ import {
     generateSignedMultisigTx,
     setTransactionDetails,
 } from "../../actions/onboarding"
-import { action as AwaiterActions } from "../redux/Awaiter"
+import { action as AwaiterActions } from "../../redux/Awaiter"
 
 
 
