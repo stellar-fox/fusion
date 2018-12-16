@@ -73,34 +73,6 @@ export const setSigningMethod = (signingMethod) =>
 
 
 /**
- * Updates _redux_ state holding the current progress message during onboarding.
- *
- * @function setProgressMessage
- * @param {String} progressMessage Current progress message to be set.
- * @returns {Function}
- */
-export const setProgressMessage = (progressMessage) =>
-    async (dispatch, _getState) =>
-        await dispatch(KeysActions.setState({ progressMessage }))
-
-
-
-
-/**
- * Updates _redux_ state holding the possible error message during onboarding.
- *
- * @function setErrorMessage
- * @param {String} errorMessage Error message to be set.
- * @returns {Function}
- */
-export const setErrorMessage = (errorMessage) =>
-    async (dispatch, _getState) =>
-        await dispatch(KeysActions.setState({ errorMessage }))
-
-
-
-
-/**
  * Depending on a method of onboarding it executes
  * a set of actions in order to obtain an account number that will be
  * associated with the Shambhala signing mechanism.

@@ -1,5 +1,6 @@
 import {
     createReducer,
+    delay,
     string,
 } from "@xcmats/js-toolbox"
 import {
@@ -18,6 +19,7 @@ import {
     write,
 } from "../firebase"
 import { action as StellarAccountsActions } from "../redux/StellarAccounts"
+import { action as AwaiterActions } from "../redux/Awaiter"
 
 
 
@@ -63,7 +65,12 @@ export const action = {
                 await dispatch(action.getStorageAvatar(auth.user))
 
             // fetch user accounts
+            await dispatch(AwaiterActions.setProgressMessage("loading accounts data"))
+            await dispatch(AwaiterActions.showSpinner())
+            await dispatch(AwaiterActions.setLoading())
             await dispatch(action.fetchUserAccounts(auth.user))
+            await delay(2000)
+            await dispatch(AwaiterActions.resetState())
         },
 
 

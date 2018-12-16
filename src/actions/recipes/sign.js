@@ -36,9 +36,9 @@ import {
 } from "../../actions/ledgering"
 import {
     generateSignedMultisigTx,
-    setErrorMessage,
     setTransactionDetails,
 } from "../../actions/onboarding"
+import { action as AwaiterActions } from "../redux/Awaiter"
 
 
 
@@ -117,12 +117,12 @@ export const sign = (signingMethod, transaction) =>
                     // 3. inspect horizon validity
                     if (!validity.ok) {
                         //  return to beginning
-                        dispatch(setErrorMessage("Invalid input."))
+                        dispatch(AwaiterActions.setErrorMessage("Invalid input."))
 
                     } else {
                         //  all good - end this loop
                         repeat = false
-                        dispatch(setErrorMessage(string.empty()))
+                        dispatch(AwaiterActions.setErrorMessage(string.empty()))
                         await dispatch(KeysActions.setTxSignedBody(
                             func.pipe(transactionToSubmit)(
                                 (t) => t.toEnvelope(),

@@ -24,6 +24,7 @@ import {
 } from "../../lib/logic/stellarAccount"
 import AccountCard from "./AccountCard"
 import { accountType as at } from "../../redux/Accounts"
+import Awaiter from "../Awaiter"
 
 
 
@@ -31,6 +32,15 @@ import { accountType as at } from "../../redux/Accounts"
 // <Accounts> component
 export default compose(
     withStyles((theme) => ({
+
+        awaiter: {
+            position: "absolute",
+            left: 0,
+            top: "50%",
+            bottom: 0,
+            right: 0,
+            margin: "auto",
+        },
 
         fab: {
             position: "absolute",
@@ -83,6 +93,7 @@ export default compose(
             tabSelected: state.Accounts.tabSelected,
             realAccounts: getRealAccounts(state.StellarAccounts),
             demoAccounts: getDemoAccounts(state.StellarAccounts),
+            loading: state.Awaiter.loading,
         }),
         // match dispatch to props.
         (dispatch) => bindActionCreators({
@@ -108,7 +119,7 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, demoAccounts, realAccounts, tabSelected, width }) => {
+            ({ classes, demoAccounts, loading, realAccounts, tabSelected, width }) => {
 
                 const transitionDuration = {
                     enter: 225,
@@ -206,47 +217,49 @@ export default compose(
                                             <Tab classes={{ label: classes.labelDemoAccounts }} label="Demo" />
                                         </Tabs>
 
-                                        <SwipeableViews
-                                            style={{
-                                                position: "relative",
-                                                WebkitTransform: `translate(${value.x}px, 0)`,
-                                                transform: `translate(${value.x}px, 0)`,
-                                                opacity: value.opacity,
-                                            }}
-                                            index={tabSelected}
-                                        >
-                                            <Grid
-                                                container
-                                                direction={isWidthUp("md", width) ? "row" : "column"}
-                                                spacing={8}
-                                                style={{ position: "relative"}}
-                                                className="m-t m-b"
-                                                classes={{ "spacing-xs-8": classes.spacing }}
+                                        {loading ? <div className={classes.awaiter}>
+                                            <Awaiter /></div> :
+                                            <SwipeableViews
+                                                style={{
+                                                    position: "relative",
+                                                    WebkitTransform: `translate(${value.x}px, 0)`,
+                                                    transform: `translate(${value.x}px, 0)`,
+                                                    opacity: value.opacity,
+                                                }}
+                                                index={tabSelected}
                                             >
-                                                {realAccounts.map((account) =>
-                                                    <Grid key={`${account.accountId}-${at.REAL}`} item>
-                                                        <AccountCard accountId={account.accountId} accountType={at.REAL} />
-                                                    </Grid>
-                                                )}
-                                            </Grid>
+                                                <Grid
+                                                    container
+                                                    direction={isWidthUp("md", width) ? "row" : "column"}
+                                                    spacing={8}
+                                                    style={{ position: "relative"}}
+                                                    className="m-t m-b"
+                                                    classes={{ "spacing-xs-8": classes.spacing }}
+                                                >
+                                                    {realAccounts.map((account) =>
+                                                        <Grid key={`${account.accountId}-${at.REAL}`} item>
+                                                            <AccountCard accountId={account.accountId} accountType={at.REAL} />
+                                                        </Grid>
+                                                    )}
+                                                </Grid>
 
-                                            <Grid
-                                                container
-                                                direction={isWidthUp("md", width) ? "row" : "column"}
-                                                spacing={8}
-                                                style={{ position: "relative" }}
-                                                className="m-t m-b"
-                                                classes={{ "spacing-xs-8": classes.spacing }}
-                                            >
-                                                {demoAccounts.map((account) =>
-                                                    <Grid key={`${account.accountId}-${at.DEMO}`} item>
-                                                        <AccountCard accountId={account.accountId} accountType={at.DEMO} />
-                                                    </Grid>
-                                                )}
-                                            </Grid>
+                                                <Grid
+                                                    container
+                                                    direction={isWidthUp("md", width) ? "row" : "column"}
+                                                    spacing={8}
+                                                    style={{ position: "relative" }}
+                                                    className="m-t m-b"
+                                                    classes={{ "spacing-xs-8": classes.spacing }}
+                                                >
+                                                    {demoAccounts.map((account) =>
+                                                        <Grid key={`${account.accountId}-${at.DEMO}`} item>
+                                                            <AccountCard accountId={account.accountId} accountType={at.DEMO} />
+                                                        </Grid>
+                                                    )}
+                                                </Grid>
 
-                                        </SwipeableViews>
-
+                                            </SwipeableViews>
+                                        }
                                     </Fragment>
 
                                 }

@@ -26,9 +26,8 @@ import {
     generateSigningKeys,
     obtainAccountId,
     saveAccountData,
-    setErrorMessage,
-    setProgressMessage,
 } from "../../actions/onboarding"
+import { action as AwaiterActions } from "../../redux/Awaiter"
 import {
     tagSigningMethod,
     getLatestAccountState,
@@ -70,11 +69,11 @@ export const signup = (signingMethod) =>
                 },
             },() => Promise.reject("unknown signing method"))
 
-            dispatch(KeysActions.showSpinner())
-            dispatch(setProgressMessage("Querying signing service ..."))
+            dispatch(AwaiterActions.showSpinner())
+            dispatch(AwaiterActions.setProgressMessage("Querying signing service ..."))
             await dispatch(obtainAccountId())
 
-            dispatch(setProgressMessage(
+            dispatch(AwaiterActions.setProgressMessage(
                 "Generating signing keys ..."
             ))
             await dispatch(generateSigningKeys())
@@ -83,14 +82,14 @@ export const signup = (signingMethod) =>
                 [sm.MANUAL]: async () => func.identity,
                 [sm.LEDGERHQ]: async () => func.identity,
                 [sm.SHAMBHALA]: async () => {
-                    dispatch(setProgressMessage(
+                    dispatch(AwaiterActions.setProgressMessage(
                         "Funding account ..."
                     ))
                     await dispatch(fundAccount())
                 },
             },() => Promise.reject("unknown signing method"))
 
-            dispatch(setProgressMessage(
+            dispatch(AwaiterActions.setProgressMessage(
                 "Fetching current account data ..."
             ))
             await dispatch(getLatestAccountState())
@@ -101,7 +100,7 @@ export const signup = (signingMethod) =>
 
             await choose(signingMethod, {
                 [sm.MANUAL]: async () => {
-                    dispatch(setProgressMessage(
+                    dispatch(AwaiterActions.setProgressMessage(
                         "Generating transaction body ..."
                     ))
 
@@ -116,13 +115,13 @@ export const signup = (signingMethod) =>
                             codec.b64enc
                         )))
 
-                    dispatch(setProgressMessage(string.empty()))
-                    dispatch(KeysActions.hideSpinner())
+                    dispatch(AwaiterActions.setProgressMessage(string.empty()))
+                    dispatch(AwaiterActions.hideSpinner())
 
                     signedTx = await dispatch(sign(sm.MANUAL, tx))
                 },
                 [sm.LEDGERHQ]: async () => {
-                    dispatch(setProgressMessage(
+                    dispatch(AwaiterActions.setProgressMessage(
                         "ACTION REQUIRED. Check your signing device."
                     ))
                     tx = await dispatch(generateMultisigTx())
@@ -130,7 +129,7 @@ export const signup = (signingMethod) =>
                     signedTx = await dispatch(sign(sm.LEDGERHQ, tx))
                 },
                 [sm.SHAMBHALA]: async () => {
-                    dispatch(setProgressMessage(
+                    dispatch(AwaiterActions.setProgressMessage(
                         "Creating additional signatures ..."
                     ))
                     signedTx = await dispatch(sign(sm.SHAMBHALA, null))
@@ -144,20 +143,20 @@ export const signup = (signingMethod) =>
                 dispatch(KeysActions.showTransactionDetailsModal())
             }
             else {
-                await dispatch(setProgressMessage("Submitting ..."))
+                await dispatch(AwaiterActions.setProgressMessage("Submitting ..."))
                 await dispatch(submitTransaction(signedTx))
                 await dispatch(saveAccountData())
-                await dispatch(KeysActions.hideSpinner())
-                dispatch(KeysActions.setSucceded())
-                dispatch(setProgressMessage("Complete."))
+                await dispatch(AwaiterActions.hideSpinner())
+                dispatch(AwaiterActions.setSucceded())
+                dispatch(AwaiterActions.setProgressMessage("Complete."))
             }
 
 
         } catch (error) {
-            dispatch(KeysActions.hideSpinner())
-            dispatch(setProgressMessage(string.empty()))
-            dispatch(KeysActions.setFailed())
-            dispatch(setErrorMessage(error.message))
+            dispatch(AwaiterActions.hideSpinner())
+            dispatch(AwaiterActions.setProgressMessage(string.empty()))
+            dispatch(AwaiterActions.setFailed())
+            dispatch(AwaiterActions.setErrorMessage(error.message))
             dispatch(closeShambhala())
         }
 
@@ -175,9 +174,9 @@ export const signup = (signingMethod) =>
 export const submitTx = () =>
     async (dispatch, getState) => {
         try {
-            dispatch(setErrorMessage(string.empty()))
-            dispatch(KeysActions.showSpinner())
-            dispatch(setProgressMessage("Submitting transaction ..."))
+            dispatch(AwaiterActions.setErrorMessage(string.empty()))
+            dispatch(AwaiterActions.showSpinner())
+            dispatch(AwaiterActions.setProgressMessage("Submitting transaction ..."))
             dispatch(KeysActions.setState({
                 yesButtonDisabled: true,
                 noButtonDisabled: true,
@@ -189,19 +188,19 @@ export const submitTx = () =>
                 yesButtonDisabled: false,
                 noButtonDisabled: false,
             }))
-            await dispatch(KeysActions.hideSpinner())
-            dispatch(KeysActions.setSucceded())
-            dispatch(setProgressMessage("Complete."))
+            await dispatch(AwaiterActions.hideSpinner())
+            dispatch(AwaiterActions.setSucceded())
+            dispatch(AwaiterActions.setProgressMessage("Complete."))
 
         } catch (error) {
             dispatch(KeysActions.setState({
                 yesButtonDisabled: false,
                 noButtonDisabled: false,
             }))
-            dispatch(KeysActions.hideSpinner())
-            dispatch(setProgressMessage(string.empty()))
-            dispatch(KeysActions.setFailed())
-            dispatch(setErrorMessage(error.message))
+            dispatch(AwaiterActions.hideSpinner())
+            dispatch(AwaiterActions.setProgressMessage(string.empty()))
+            dispatch(AwaiterActions.setFailed())
+            dispatch(AwaiterActions.setErrorMessage(error.message))
             throw new Error(error)
         }
     }
@@ -235,10 +234,10 @@ export const handleAccountIdInput = (accountId) =>
             dispatch(KeysActions.setState({
                 yesButtonDisabled: false,
             }))
-            dispatch(setErrorMessage(string.empty()))
+            dispatch(AwaiterActions.setErrorMessage(string.empty()))
 
         } else {
-            dispatch(setErrorMessage("Invalid account id."))
+            dispatch(AwaiterActions.setErrorMessage("Invalid account id."))
             dispatch(KeysActions.setState({
                 yesButtonDisabled: true,
             }))

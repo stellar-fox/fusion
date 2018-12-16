@@ -51,10 +51,10 @@ export default compose(
     })),
     connect(
         (state) => ({
-            errorMessage: state.Keys.errorMessage,
-            progressMessage: state.Keys.progressMessage,
-            spinnerVisible: state.Keys.spinnerVisible,
-            success: state.Keys.success,
+            errorMessage: state.Awaiter.errorMessage,
+            progressMessage: state.Awaiter.progressMessage,
+            spinnerVisible: state.Awaiter.spinnerVisible,
+            success: state.Awaiter.success,
         }),
         (dispatch) => bindActionCreators({}, dispatch)
     )

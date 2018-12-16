@@ -1,6 +1,7 @@
 import { reducer as Accounts } from "./Accounts"
 import { reducer as App } from "./Fusion"
 import { reducer as Auth } from "./Auth"
+import { reducer as Awaiter } from "./Awaiter"
 import { reducer as Balances } from "./Balances"
 import { reducer as Keys } from "./Keys"
 import { reducer as LedgerHQ } from "./LedgerHQ"
@@ -18,6 +19,7 @@ export default {
     Accounts,
     App,
     Auth,
+    Awaiter,
     Balances,
     Keys,
     LedgerHQ,
