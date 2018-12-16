@@ -68,6 +68,7 @@ export default compose(
 
         paperCanvas: {
             padding: "10px",
+            height: "calc(100vh - 84px)",
         },
 
         spacing: {
