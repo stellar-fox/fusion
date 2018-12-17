@@ -20,6 +20,7 @@ import {
     resetOnboardingState,
 } from "../../actions/onboarding"
 import Awaiter from "../Awaiter"
+import { action as AwaiterActions } from "../../redux/Awaiter"
 
 
 
@@ -44,6 +45,7 @@ export default compose(
             showSnacky: SnackyActions.showSnacky,
             setSnackyMessage: SnackyActions.setMessage,
             setSnackyColor: SnackyActions.setColor,
+            resetAwaiterState: AwaiterActions.resetState,
         }, dispatch)
     )
 )(
@@ -65,6 +67,7 @@ export default compose(
         handleNo = () => {
             this.props.closeShambhala()
             this.props.resetOnboardingState()
+            this.props.resetAwaiterState()
         }
 
 
