@@ -38,7 +38,7 @@ export default compose(
 
         paperCanvas: {
             padding: "10px",
-            height: "calc(100vh - 84px)",
+            height: "calc(100vh - 90px)",
         },
     })),
     connect(
