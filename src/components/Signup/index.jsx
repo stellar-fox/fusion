@@ -72,8 +72,7 @@ export default compose(
                             <UserSignup />
                             <div className="flex-box-row space-between">
                                 <Button size="small" component={Link} to="/"
-                                    variant="outlined" color="secondary"
-                                    className={classes.button}
+                                    color="secondary" className={classes.button}
                                 >Log In</Button>
                             </div>
                         </Paper>
