@@ -53,7 +53,7 @@ export const ssSaveThrottlingTime = timeUnit.second
 
 
 // default drawer width (when unfolded)
-export const drawerWidth = 260
+export const drawerWidth = 240
 
 
 
