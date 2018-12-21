@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react"
 import PropTypes from "prop-types"
 import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
-import { toBool } from "@xcmats/js-toolbox"
+import { inc, toBool } from "@xcmats/js-toolbox"
 import { withStyles } from "@material-ui/core/styles"
 import {
     AppBar, Hidden, IconButton, Toolbar, Typography,
@@ -23,7 +23,7 @@ export default compose(
     withStyles((theme) => ({
 
         appBar: {
-            zIndex: theme.zIndex.drawer + 1,
+            zIndex: inc(theme.zIndex.drawer),
             transition: theme.transitions.create(["width", "margin"], {
                 easing: theme.transitions.easing.easeIn,
                 duration: theme.transitions.duration.leavingScreen,
