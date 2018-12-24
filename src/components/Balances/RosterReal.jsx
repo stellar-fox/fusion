@@ -137,8 +137,8 @@ export default compose(
                         <TableHead>
                             <TableRow classes={{ root: classes.tableHead }}>
                                 <TableCell classes={{ root: classes.tableCellHead }} padding="none">Account Name</TableCell>
-                                <TableCell classes={{ root: classes.tableCellHead }} padding="none" numeric>Available</TableCell>
-                                <TableCell classes={{ root: classes.tableCellHead }} padding="none" numeric>Balance</TableCell>
+                                <TableCell classes={{ root: classes.tableCellHead }} padding="none" align="right">Available</TableCell>
+                                <TableCell classes={{ root: classes.tableCellHead }} padding="none" align="right">Balance</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -153,10 +153,10 @@ export default compose(
                                             </div>
                                         </div>
                                     </TableCell>
-                                    <TableCell classes={{ root: classes.tableCell }} numeric padding="none">
+                                    <TableCell classes={{ root: classes.tableCell }} align="right" padding="none">
                                         0.00
                                     </TableCell>
-                                    <TableCell classes={{ root: classes.tableCell }} numeric padding="none">
+                                    <TableCell classes={{ root: classes.tableCell }} align="right" padding="none">
                                         0.00
                                     </TableCell>
                                 </TableRow>

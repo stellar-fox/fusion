@@ -114,7 +114,7 @@ export default compose(
                                         <TableCell classes={{ root: classes.tableCell }} padding="none">
                                             Signing For:
                                         </TableCell>
-                                        <TableCell classes={{ root: classes.tableCell }} numeric padding="none">
+                                        <TableCell classes={{ root: classes.tableCell }} align="right" padding="none">
                                             {this.props.networkPassphrase}
                                         </TableCell>
                                     </TableRow>
@@ -122,7 +122,7 @@ export default compose(
                                         <TableCell classes={{ root: classes.tableCell }} padding="none">
                                             Transaction Hash:
                                         </TableCell>
-                                        <TableCell classes={{ root: classes.tableCell }} numeric padding="none">
+                                        <TableCell classes={{ root: classes.tableCell }} align="right" padding="none">
                                             {string.shorten(this.props.txHash, 30)}
                                         </TableCell>
                                     </TableRow>
@@ -130,7 +130,7 @@ export default compose(
                                         <TableCell classes={{ root: classes.tableCell }} padding="none">
                                             Source Account:
                                         </TableCell>
-                                        <TableCell classes={{ root: classes.tableCell }} numeric padding="none">
+                                        <TableCell classes={{ root: classes.tableCell }} align="right" padding="none">
                                             {string.shorten(this.props.txSourceAccount, 25)}
                                         </TableCell>
                                     </TableRow>
@@ -138,7 +138,7 @@ export default compose(
                                         <TableCell classes={{ root: classes.tableCell }} padding="none">
                                             Sequence Number:
                                         </TableCell>
-                                        <TableCell classes={{ root: classes.tableCell }} numeric padding="none">
+                                        <TableCell classes={{ root: classes.tableCell }} align="right" padding="none">
                                             {this.props.txSequenceNumber}
                                         </TableCell>
                                     </TableRow>
@@ -146,7 +146,7 @@ export default compose(
                                         <TableCell classes={{ root: classes.tableCell }} padding="none">
                                             Transaction Fee:
                                         </TableCell>
-                                        <TableCell classes={{ root: classes.tableCell }} numeric padding="none">
+                                        <TableCell classes={{ root: classes.tableCell }} align="right" padding="none">
                                             {this.props.txFee}
                                         </TableCell>
                                     </TableRow>
@@ -154,7 +154,7 @@ export default compose(
                                         <TableCell classes={{ root: classes.tableCell }} padding="none">
                                             Operations:
                                         </TableCell>
-                                        <TableCell classes={{ root: classes.tableCell }} numeric padding="none">
+                                        <TableCell classes={{ root: classes.tableCell }} align="right" padding="none">
                                             {this.props.txOpsNum}
                                         </TableCell>
                                     </TableRow>
@@ -162,7 +162,7 @@ export default compose(
                                         <TableCell classes={{ root: classes.tableCell }} padding="none">
                                             Signature:
                                         </TableCell>
-                                        <TableCell classes={{ root: classes.tableCell }} numeric padding="none">
+                                        <TableCell classes={{ root: classes.tableCell }} align="right" padding="none">
                                             {string.shorten(this.props.txSignature, 30)}
                                         </TableCell>
                                     </TableRow>
