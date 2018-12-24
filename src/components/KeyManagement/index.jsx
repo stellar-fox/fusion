@@ -72,18 +72,18 @@ export default compose(
                                             WebkitTransform: `translate(${value.x}px, 0)`,
                                             transform: `translate(${value.x}px, 0)`,
                                             opacity: value.opacity,
-                                        }} className={isWidthDown("sm", width) ?
+                                        }} className={isWidthDown("md", width) ?
                                             "m-t m-b flex-box-col items-centered" :
                                             "m-t m-b flex-box-row space-around"}
                                         >
                                             <ShambhalaPureCard />
 
-                                            {isWidthDown("sm", width) &&
+                                            {isWidthDown("md", width) &&
                                                 <div className="m-b"></div>}
 
                                             <ShambhalaLedgerCard />
 
-                                            {isWidthDown("sm", width) &&
+                                            {isWidthDown("md", width) &&
                                                 <div className="m-b"></div>}
 
                                             <ShambhalaScepticCard />
