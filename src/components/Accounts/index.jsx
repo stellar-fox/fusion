@@ -128,96 +128,98 @@ export default compose(
                 return <Switch>
                     <Route exact path={this.rr(".")}>
 
-                        <Paper className={classes.paperCanvas}>
+                        {loading ? <div className={classes.awaiter}>
+                            <Awaiter />
+                        </div> :
+                            <Paper className={classes.paperCanvas}>
 
-                            <Motion defaultStyle={{ x: -10, opacity: 0 }}
-                                style={{
-                                    x: spring(0, presets.stiff),
-                                    opacity: spring(1),
-                                }}
-                            >
-                                {value =>
-                                    <Fragment>
-                                        <Grid
-                                            container
-                                            direction={"column"}
-                                            wrap={"nowrap"}
-                                            style={{ position: "relative" }}
-                                            className="m-b"
-                                        >
-                                            <Grid item>
-                                                <Typography style={{
+                                <Motion defaultStyle={{ x: -10, opacity: 0 }}
+                                    style={{
+                                        x: spring(0, presets.stiff),
+                                        opacity: spring(1),
+                                    }}
+                                >
+                                    {value =>
+                                        <Fragment>
+                                            <Grid
+                                                container
+                                                direction={"column"}
+                                                wrap={"nowrap"}
+                                                style={{ position: "relative" }}
+                                                className="m-b"
+                                            >
+                                                <Grid item>
+                                                    <Typography style={{
+                                                        position: "relative",
+                                                        WebkitTransform: `translate(${value.x}px, 0)`,
+                                                        transform: `translate(${value.x}px, 0)`,
+                                                        opacity: value.opacity,
+                                                    }} variant="h6"
+                                                    >
+                                                        Accounts
+                                                    </Typography>
+                                                </Grid>
+                                                <Grid item>
+                                                    <Typography style={{
+                                                        position: "relative",
+                                                        WebkitTransform: `translate(${value.x}px, 0)`,
+                                                        transform: `translate(${value.x}px, 0)`,
+                                                        opacity: value.opacity,
+                                                    }} variant="h4"
+                                                    >
+                                                        Manage all your accounts in one place.
+                                                    </Typography>
+                                                </Grid>
+                                                <Grid item>
+                                                    <Zoom
+                                                        key="add-real"
+                                                        in={tabSelected === 0}
+                                                        timeout={transitionDuration}
+                                                        style={{
+                                                            transitionDelay: `${tabSelected === 0 ? transitionDuration.exit : 0}ms`,
+                                                        }}
+                                                        unmountOnExit
+                                                    >
+                                                        <Fab aria-label="Add Real" size="small" className={classes.fab} classes={{ root: classes.fabReal }}>
+                                                            <AddRounded />
+                                                        </Fab>
+                                                    </Zoom>
+
+                                                    <Zoom
+                                                        key="add-demo"
+                                                        in={tabSelected === 1}
+                                                        timeout={transitionDuration}
+                                                        style={{
+                                                            transitionDelay: `${tabSelected === 1 ? transitionDuration.exit : 0}ms`,
+                                                        }}
+                                                        unmountOnExit
+                                                    >
+                                                        <Fab aria-label="Add Demo" size="small" className={classes.fab} classes={{ root: classes.fabDemo }}>
+                                                            <AddRounded />
+                                                        </Fab>
+                                                    </Zoom>
+                                                </Grid>
+                                            </Grid>
+
+
+
+                                            <Tabs
+                                                style={{
                                                     position: "relative",
                                                     WebkitTransform: `translate(${value.x}px, 0)`,
                                                     transform: `translate(${value.x}px, 0)`,
                                                     opacity: value.opacity,
-                                                }} variant="h6"
-                                                >
-                                                    Accounts
-                                                </Typography>
-                                            </Grid>
-                                            <Grid item>
-                                                <Typography style={{
-                                                    position: "relative",
-                                                    WebkitTransform: `translate(${value.x}px, 0)`,
-                                                    transform: `translate(${value.x}px, 0)`,
-                                                    opacity: value.opacity,
-                                                }} variant="h4"
-                                                >
-                                                    Manage all your accounts in one place.
-                                                </Typography>
-                                            </Grid>
-                                            <Grid item>
-                                                <Zoom
-                                                    key="add-real"
-                                                    in={tabSelected === 0}
-                                                    timeout={transitionDuration}
-                                                    style={{
-                                                        transitionDelay: `${tabSelected === 0 ? transitionDuration.exit : 0}ms`,
-                                                    }}
-                                                    unmountOnExit
-                                                >
-                                                    <Fab aria-label="Add Real" size="small" className={classes.fab} classes={{ root: classes.fabReal }}>
-                                                        <AddRounded />
-                                                    </Fab>
-                                                </Zoom>
+                                                }}
+                                                value={tabSelected}
+                                                onChange={this.onTabChange}
+                                                fullWidth
+                                                classes={{ indicator: classes.indicator }}
+                                            >
+                                                <Tab classes={{ label: classes.labelRealAccounts }} label="Real" />
+                                                <Tab classes={{ label: classes.labelDemoAccounts }} label="Demo" />
+                                            </Tabs>
 
-                                                <Zoom
-                                                    key="add-demo"
-                                                    in={tabSelected === 1}
-                                                    timeout={transitionDuration}
-                                                    style={{
-                                                        transitionDelay: `${tabSelected === 1 ? transitionDuration.exit : 0}ms`,
-                                                    }}
-                                                    unmountOnExit
-                                                >
-                                                    <Fab aria-label="Add Demo" size="small" className={classes.fab} classes={{ root: classes.fabDemo }}>
-                                                        <AddRounded />
-                                                    </Fab>
-                                                </Zoom>
-                                            </Grid>
-                                        </Grid>
-
-
-
-                                        <Tabs
-                                            style={{
-                                                position: "relative",
-                                                WebkitTransform: `translate(${value.x}px, 0)`,
-                                                transform: `translate(${value.x}px, 0)`,
-                                                opacity: value.opacity,
-                                            }}
-                                            value={tabSelected}
-                                            onChange={this.onTabChange}
-                                            fullWidth
-                                            classes={{ indicator: classes.indicator }}
-                                        >
-                                            <Tab classes={{ label: classes.labelRealAccounts }} label="Real" />
-                                            <Tab classes={{ label: classes.labelDemoAccounts }} label="Demo" />
-                                        </Tabs>
-
-                                        {loading ? <div className={classes.awaiter}>
-                                            <Awaiter /></div> :
+                                            
                                             <SwipeableViews
                                                 style={{
                                                     position: "relative",
@@ -258,14 +260,13 @@ export default compose(
                                                 </Grid>
 
                                             </SwipeableViews>
-                                        }
-                                    </Fragment>
+                                        </Fragment>
 
-                                }
-                            </Motion>
-
-                        </Paper>
-
+                                    }
+                                </Motion>
+                        
+                            </Paper>
+                        }
                     </Route>
                     <Redirect to={this.rr(".")} />
                 </Switch>
