@@ -28,6 +28,15 @@ if (!firebase.apps.length) {
 
 
 /**
+ * _Firebase_ instance.
+ * @constant {Object} firebaseSingleton _Firebase_ singleton instance.
+ */
+export const firebaseSingleton = firebase
+
+
+
+
+/**
  * Authenticate with _Firebase_ using email/password credentials.
  *
  * @function authenticate

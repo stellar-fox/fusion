@@ -1,12 +1,10 @@
 import {
     createReducer,
-    delay,
     string,
 } from "@xcmats/js-toolbox"
 import {
     applyVerificationCode,
     authenticate,
-    readOnce,
     resetPassword,
     signout,
     signup,
@@ -19,9 +17,7 @@ import {
     write,
 } from "../firebase"
 import { action as StellarAccountsActions } from "../redux/StellarAccounts"
-import { action as AwaiterActions } from "../redux/Awaiter"
-
-
+import { getStellarAccountsForUser } from "../actions/stellarAccount"
 
 
 // <Auth> state
@@ -64,35 +60,12 @@ export const action = {
             !auth.user.photoURL &&
                 await dispatch(action.getStorageAvatar(auth.user))
 
-            // fetch user accounts
-            await dispatch(AwaiterActions.setProgressMessage("loading accounts data"))
-            await dispatch(AwaiterActions.showSpinner())
-            await dispatch(AwaiterActions.setLoading())
-            await dispatch(action.fetchUserAccounts(auth.user))
-            await delay(2000)
-            await dispatch(AwaiterActions.resetState())
-        },
-
-
-    // ...
-    fetchUserAccounts: (user) =>
-        async (dispatch, _getState) => {
-            readOnce(`user/${user.uid}/stellarAccounts`).then((accounts) =>
-
-                accounts.map((account, index) =>
-                    dispatch(StellarAccountsActions.setState({
-                        [index]: {
-                            accountId: account.accountId,
-                            networkPassphrase: account.networkPassphrase,
-                            createdAt: account.createdAt,
-                            updatedAt: account.updatedAt,
-                            signingMethods: {...account.signingMethods},
-                        },
-                    }))
-                )
-
+            await dispatch(
+                getStellarAccountsForUser(auth.user.uid)
             )
         },
+
+
 
 
     // ...

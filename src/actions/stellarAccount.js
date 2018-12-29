@@ -19,6 +19,7 @@ import { testNetworkPassphrase } from "../lib/constants"
 import { action as KeysActions, signingMethod as sm } from "../redux/Keys"
 import { config } from "../firebase/config"
 import axios from "axios"
+import { firebaseSingleton } from "../firebase"
 
 
 
@@ -42,6 +43,26 @@ const setEnv = async ({
 }
 
 setEnv()
+
+
+
+
+/**
+ * Fetches _Stellar_ accounts that are associated with the current user.
+ * 
+ * @function getStellarAccountsForUser
+ * @param {String} uid Unique _Firebase_ generated user id.
+ * @returns {Function}
+ */
+export const getStellarAccountsForUser = (uid) =>
+    async (dispatch, _getState) => {
+        firebaseSingleton.database().ref(`user/${uid}/stellarAccounts`)
+            .on("value", (snapshot) => {
+                dispatch(StellarAccountsActions.setState({
+                    ...snapshot.val(),
+                }))               
+            })
+    }
 
 
 
