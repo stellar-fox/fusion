@@ -101,7 +101,7 @@ export default compose(
                                     />
                                 }
                                 action={
-                                    <IconButton style={{ marginLeft: "1rem" }} aria-label="Edit"
+                                    <IconButton style={{ margin: "0 1rem" }} aria-label="Edit"
                                         classes={{ root: func.choose(accountType, {
                                             [at.REAL]: () => classes.iconButtonReal,
                                             [at.DEMO]: () => classes.iconButtonDemo,
