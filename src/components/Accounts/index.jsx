@@ -26,6 +26,9 @@ import AccountCard from "./AccountCard"
 import { accountType as at } from "../../redux/Accounts"
 import Awaiter from "../Awaiter"
 
+import { listenForStellarAccountsChange } from "../../actions/stellarAccount"
+import { listenForSigningMethodsChange } from "../../actions/signingMethods"
+
 
 
 
@@ -93,10 +96,13 @@ export default compose(
             realAccounts: getRealAccounts(state.StellarAccounts),
             demoAccounts: getDemoAccounts(state.StellarAccounts),
             loading: state.Awaiter.loading,
+            uid: state.Auth.uid,
         }),
         // match dispatch to props.
         (dispatch) => bindActionCreators({
             changeTab: AccountsActions.changeTab,
+            listenForSigningMethodsChange,
+            listenForStellarAccountsChange,
         }, dispatch)
     ),
     withWidth(),
@@ -109,6 +115,13 @@ export default compose(
 
             // relative resolve
             this.rr = resolvePath(this.props.match.path)
+        }
+
+
+        // ...
+        componentDidMount = () => {
+            this.props.listenForStellarAccountsChange(this.props.uid)
+            this.props.listenForSigningMethodsChange(this.props.uid)
         }
 
 

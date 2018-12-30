@@ -17,7 +17,9 @@ import {
     write,
 } from "../firebase"
 import { action as StellarAccountsActions } from "../redux/StellarAccounts"
-import { getStellarAccountsForUser } from "../actions/stellarAccount"
+import { action as SigningMethodsActions } from "../redux/SigningMethods"
+
+
 
 
 // <Auth> state
@@ -60,9 +62,6 @@ export const action = {
             !auth.user.photoURL &&
                 await dispatch(action.getStorageAvatar(auth.user))
 
-            await dispatch(
-                getStellarAccountsForUser(auth.user.uid)
-            )
         },
 
 
@@ -83,6 +82,7 @@ export const action = {
             await signout()
             dispatch(action.resetState())
             dispatch(StellarAccountsActions.resetState())
+            dispatch(SigningMethodsActions.resetState())
         },
 
 

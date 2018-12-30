@@ -3,16 +3,16 @@ import { createReducer } from "@xcmats/js-toolbox"
 
 
 
-// <StellarAccount> initial state
+// <StellarAccounts> initial state
 const initState = {}
 
 
 // state const definitions
-export const ADD_SIGNING_METHOD_WITH_ACCOUNT = "@StellarAccount/ADD_SIGNING_METHOD_WITH_ACCOUNT"
-export const UPDATE_ACCOUNT_STATE = "@StellarAccount/UPDATE_ACCOUNT_STATE"
-export const ADD_SIGNING_METHOD = "@StellarAccount/ADD_SIGNING_METHOD"
-export const RESET_STATE = "@StellarAccount/RESET_STATE"
-export const SET_STATE = "@StellarAccount/SET_STATE"
+export const ADD_SIGNING_METHOD_WITH_ACCOUNT = "@StellarAccounts/ADD_SIGNING_METHOD_WITH_ACCOUNT"
+export const UPDATE_ACCOUNT_STATE = "@StellarAccounts/UPDATE_ACCOUNT_STATE"
+export const ADD_SIGNING_METHOD = "@StellarAccounts/ADD_SIGNING_METHOD"
+export const RESET_STATE = "@StellarAccounts/RESET_STATE"
+export const SET_STATE = "@StellarAccounts/SET_STATE"
 
 
 // ...

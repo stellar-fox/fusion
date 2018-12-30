@@ -50,11 +50,11 @@ setEnv()
 /**
  * Fetches _Stellar_ accounts that are associated with the current user.
  * 
- * @function getStellarAccountsForUser
+ * @function listenForStellarAccountsChange
  * @param {String} uid Unique _Firebase_ generated user id.
  * @returns {Function}
  */
-export const getStellarAccountsForUser = (uid) =>
+export const listenForStellarAccountsChange = (uid) =>
     async (dispatch, _getState) => {
         firebaseSingleton.database().ref(`user/${uid}/stellarAccounts`)
             .on("value", (snapshot) => {
