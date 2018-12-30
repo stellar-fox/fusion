@@ -64,23 +64,15 @@ export const getCountOfDemoAccounts = (stellarAccounts) =>
 
 
 /**
- * Collection of signing methods types for a given real `accountId`.
- *
- * @function getSigningMethodsForRealAccount
- * @param {Object} stellarAccounts
- * @param {String} accountId
- * @returns {Array}
+ * Signing methods available for the _stellar account_.
+ * 
+ * @function getSigningMethodsForAccount
+ * @param {Object} signingMethods 
+ * @param {String} accountId 
+ * @returns {Object}
  */
-export const getSigningMethodsForRealAccount = (stellarAccounts, accountId) => {
-    let
-        realAccount = getRealAccounts(stellarAccounts)
-            .find((account) => account.accountId === accountId),
-
-        signingMethods = Object.keys(realAccount.signingMethods)
-            .map((smKey) => realAccount.signingMethods[smKey].type)
-
-    return signingMethods
-}
+export const getSigningMethodsForAccount = (signingMethods, accountId) =>
+    signingMethods[accountId]
 
 
 
@@ -108,32 +100,10 @@ export const getRealAccountIds = (stellarAccounts) =>
  */
 export const getRealAccounts = (stellarAccounts) =>
     stellarAccounts ? Object.keys(stellarAccounts)
-        .filter((key) =>
-            stellarAccounts[key].networkPassphrase === Networks.PUBLIC
+        .filter((accountId) =>
+            stellarAccounts[accountId].networkPassphrase === Networks.PUBLIC
         )
-        .map((key) => stellarAccounts[key]) : []
-
-
-
-
-/**
- * Collection of signing methods types for a given demo `accountId`.
- *
- * @function getSigningMethodsForDemoAccount
- * @param {Object} stellarAccounts
- * @param {String} accountId
- * @returns {Array}
- */
-export const getSigningMethodsForDemoAccount = (stellarAccounts, accountId) => {
-    let
-        demoAccount = getDemoAccounts(stellarAccounts)
-            .find((account) => account.accountId === accountId),
-
-        signingMethods = Object.keys(demoAccount.signingMethods)
-            .map((smKey) => demoAccount.signingMethods[smKey].type)
-
-    return signingMethods
-}
+        .map((accountId) => stellarAccounts[accountId]) : []
 
 
 

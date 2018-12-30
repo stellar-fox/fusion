@@ -20,7 +20,7 @@ import {
 } from "../../actions/payment"
 import {
     getRealAccountIds,
-    getSigningMethodsForRealAccount,
+    getSigningMethodsForAccount,
 } from "../../lib/logic/stellarAccount"
 import { action as PayActions } from "../../redux/Pay"
 import { accountType as at } from "../../redux/Accounts"
@@ -69,7 +69,7 @@ export default compose(
     connect(
         (state) => ({
             realAccountIds: getRealAccountIds(state.StellarAccounts),
-            stellarAccounts: state.StellarAccounts,
+            signingMethods: state.SigningMethods,
         }),
         (dispatch) => bindActionCreators({
             setAvailableSigningMethods: PayActions.setAvailableSigningMethods,
@@ -89,9 +89,9 @@ export default compose(
 
         // ...
         bar = (accountId) =>
-            getSigningMethodsForRealAccount(this.props.stellarAccounts, accountId)
+            Object.keys(getSigningMethodsForAccount(this.props.signingMethods, accountId))
                 .map((signingMethod) =>
-                    <div key={`${accountId}-${signingMethod}`} style={{
+                    <div key={`real-${accountId}-${signingMethod}`} style={{
                         width: "3px",
                         marginRight: "3px",
                     }} className={
@@ -110,10 +110,10 @@ export default compose(
             this.props.setSource(source)
             this.props.setAccountType(at.REAL)
             this.props.setAvailableSigningMethods(
-                getSigningMethodsForRealAccount(
-                    this.props.stellarAccounts,
+                Object.keys(getSigningMethodsForAccount(
+                    this.props.signingMethods,
                     source
-                )
+                ))
             )
             this.props.showModalPay()
         }
