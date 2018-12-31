@@ -1,4 +1,4 @@
-import { createReducer } from "@xcmats/js-toolbox"
+import { createReducer, string } from "@xcmats/js-toolbox"
 
 
 
@@ -7,6 +7,7 @@ import { createReducer } from "@xcmats/js-toolbox"
 const initState = {
     ModalPay: { showing: false },
     availableSigningMethods: [],
+    signingMethod: string.empty(),
 }
 
 

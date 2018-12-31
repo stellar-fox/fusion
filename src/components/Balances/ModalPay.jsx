@@ -10,6 +10,7 @@ import {
     DialogTitle,
     FormControl,
     InputLabel,
+    MenuItem,
     Select,
     withMobileDialog
 } from "@material-ui/core"
@@ -39,15 +40,42 @@ export default compose(
         paperDemo: {
             backgroundColor: theme.palette.error.main,
         },
+        selectMenuReal: {
+            color: theme.palette.custom.antiFlashWhite,
+            "&:focus": {
+                backgroundColor: theme.palette.custom.greenDark,
+            },
+        },
+        selectMenuDemo: {
+            color: theme.palette.custom.antiFlashWhite,
+            "&:focus": {
+                backgroundColor: theme.palette.error.main,
+            },
+        },
+        inputReal: {
+            color: theme.palette.primary.main,
+            borderBottom: `1px solid ${theme.palette.custom.onyx}`,
+        },
+        inputDemo: {
+            color: theme.palette.primary.main,
+            borderBottom: `1px solid ${theme.palette.custom.onyx}`,
+        },
+        selectIconReal: {
+            color: theme.palette.custom.antiFlashWhite,
+        },
+        selectIconDemo: {
+            color: theme.palette.custom.onyx,
+        },
     })),
     connect(
         (state) => ({
             accountType: state.Pay.accountType,
             availableSigningMethods: state.Pay.availableSigningMethods,
             open: state.Pay.ModalPay.showing,
-            source: state.Pay.source,
-            yesButtonDisabled: state.Pay.yesButtonDisabled,
+            signingMethod: state.Pay.signingMethod,
+            source: state.Pay.source,            
             stellarAccounts: state.StellarAccounts,
+            yesButtonDisabled: state.Pay.yesButtonDisabled,
         }),
         (dispatch) => bindActionCreators({
             cancel,
@@ -94,6 +122,7 @@ export default compose(
             ({
                 accountType, availableSigningMethods, classes, error,
                 errorMessage, source, fullScreen, open, yesButtonDisabled,
+                signingMethod,
             }) =>
                 <Dialog
                     fullScreen={fullScreen}
@@ -136,17 +165,34 @@ export default compose(
                             <FormControl className={classes.formControl}>
                                 <InputLabel shrink htmlFor="sm">Signature Provider</InputLabel>
                                 <Select
-                                    native
-                                    defaultValue=""
+                                    classes={{
+                                        selectMenu: func.choose(accountType, {
+                                            [at.REAL]: () => classes.selectMenuReal,
+                                            [at.DEMO]: () => classes.selectMenuDemo,
+                                        }, () => "unknown account type"),
+                                        root: func.choose(accountType, {
+                                            [at.REAL]: () => classes.inputReal,
+                                            [at.DEMO]: () => classes.inputDemo,
+                                        }, () => "unknown account type"),
+                                        icon: func.choose(accountType, {
+                                            [at.REAL]: () => classes.selectIconReal,
+                                            [at.DEMO]: () => classes.selectIconDemo,
+                                        }, () => "unknown account type"),
+                                    }}
+                                    displayEmpty
+                                    disableUnderline
+                                    value={signingMethod}
                                     onChange={this.handleSigningMethodChange("sm")}
                                     inputProps={{
                                         name: "sm",
                                         id: "sm",
                                     }}
                                 >
-                                    <option disabled value="">Please Select</option>
+                                    <MenuItem disabled value="">
+                                        <em>Please Select</em>
+                                    </MenuItem>
                                     {availableSigningMethods.map((signingMethod) =>
-                                        <option key={signingMethod} value={signingMethod}>{signingMethod}</option>
+                                        <MenuItem key={signingMethod} value={signingMethod}>{signingMethod}</MenuItem>
                                     )}
                                 </Select>
                             </FormControl>
