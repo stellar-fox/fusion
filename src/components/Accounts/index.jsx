@@ -28,6 +28,7 @@ import Awaiter from "../Awaiter"
 
 import { listenForStellarAccountsChange } from "../../actions/stellarAccount"
 import { listenForSigningMethodsChange } from "../../actions/signingMethods"
+import ModalEditName from "./ModalEditName"
 
 
 
@@ -140,10 +141,10 @@ export default compose(
 
                 return <Switch>
                     <Route exact path={this.rr(".")}>
-
                         {loading ? <div className={classes.awaiter}>
                             <Awaiter />
-                        </div> :
+                        </div> : <Fragment>
+                            <ModalEditName />
                             <Paper className={classes.paperCanvas}>
 
                                 <Motion defaultStyle={{ x: -10, opacity: 0 }}
@@ -225,7 +226,7 @@ export default compose(
                                                 }}
                                                 value={tabSelected}
                                                 onChange={this.onTabChange}
-                                                fullWidth
+                                                variant="fullWidth"
                                                 classes={{ indicator: classes.indicator }}
                                             >
                                                 <Tab classes={{ label: classes.labelRealAccounts }} label="Real" />
@@ -279,6 +280,7 @@ export default compose(
                                 </Motion>
                         
                             </Paper>
+                        </Fragment>
                         }
                     </Route>
                     <Redirect to={this.rr(".")} />

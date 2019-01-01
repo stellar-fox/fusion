@@ -122,7 +122,7 @@ export default compose(
                                             }}
                                             value={tabSelected}
                                             onChange={this.onTabChange}
-                                            fullWidth
+                                            variant="fullWidth"
                                             classes={{ indicator: classes.indicator }}
                                         >
                                             <Tab classes={{ label: classes.labelRealAccounts }} label="Real" />

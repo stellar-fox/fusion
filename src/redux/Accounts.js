@@ -6,6 +6,9 @@ import { createReducer } from "@xcmats/js-toolbox"
 // <Accounts> initial state
 const initState = {
     tabSelected: 0,
+    ModalEditName: {
+        showing: false,
+    },
 }
 
 
@@ -36,6 +39,16 @@ export const accountType = Object.freeze({
 export const action = {
 
     // ...
+    showEditNameModal: () => (dispatch) => dispatch(action.setState({
+        ModalEditName: { showing: true },
+    })),
+
+    // ...
+    hideEditNameModal: () => (dispatch) => dispatch(action.setState({
+        ModalEditName: { showing: false },
+    })),
+
+    // ...
     changeTab: (tabIndex) => (dispatch) => dispatch(action.setState({
         tabSelected: tabIndex,
     })),
@@ -44,10 +57,21 @@ export const action = {
     resetState: () => ({ type: RESET_STATE }),
 
     // ...
+    setName: (name) => (dispatch) => dispatch(action.setState({
+        name,
+    })),
+
+    // ...
     setState: (state) => ({
         type: SET_STATE,
         state,
     }),
+
+    // ...
+    updateName: (name) =>
+        async (_dispatch, _getState) => {
+            console.log("Save account name as: ", name)
+        },
 
 }
 

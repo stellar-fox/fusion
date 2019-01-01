@@ -21,9 +21,11 @@ import {
     PaymentRounded,
 } from "@material-ui/icons"
 import { func, shorten } from "@xcmats/js-toolbox"
-import { accountType as at } from "../../redux/Accounts"
 import { Sparklines, SparklinesLine, SparklinesReferenceLine } from "react-sparklines"
-
+import {
+    accountType as at,
+    action as AccountsActions,
+} from "../../redux/Accounts"
 
 
 
@@ -67,7 +69,9 @@ export default compose(
     })),
     connect(
         (_state) => ({}),
-        (dispatch) => bindActionCreators({}, dispatch)
+        (dispatch) => bindActionCreators({
+            showEditNameModal: AccountsActions.showEditNameModal,
+        }, dispatch)
     )
 )(
     class extends Component {
@@ -80,7 +84,7 @@ export default compose(
 
         // ...
         render = () => (
-            ({ accountId, accountType, classes }) =>
+            ({ accountId, accountType, classes, showEditNameModal }) =>
                 <Motion defaultStyle={{ opacity: 0 }}
                     style={{ opacity: spring(1, presets.stiff) }}
                 >
@@ -106,6 +110,7 @@ export default compose(
                                             [at.REAL]: () => classes.iconButtonReal,
                                             [at.DEMO]: () => classes.iconButtonDemo,
                                         }, () => "unknown account type") }}
+                                        onClick={showEditNameModal}
                                     >
                                         <EditRounded />
                                     </IconButton>
