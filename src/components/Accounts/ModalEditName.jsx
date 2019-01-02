@@ -16,6 +16,11 @@ import Awaiter from "../Awaiter"
 import {
     action as AccountsActions,
 } from "../../redux/Accounts"
+import { shorten } from "@xcmats/js-toolbox"
+import {
+    handleYes,
+    handleNo,
+} from "../../actions/setAccountName"
 
 
 
@@ -31,13 +36,15 @@ export default compose(
     })),
     connect(
         (state) => ({
+            accountId: state.Accounts.accountId,
             name: state.Accounts.name,
             open: state.Accounts.ModalEditName.showing,
         }),
         (dispatch) => bindActionCreators({
+            handleNo,
+            handleYes,
             resetState: AccountsActions.resetState,
             setName: AccountsActions.setName,
-            updateName: AccountsActions.updateName,
         }, dispatch)
     )
 )(
@@ -55,22 +62,10 @@ export default compose(
 
 
         // ...
-        handleNo = () => {
-            this.props.resetState()
-        }
-
-
-        // ...
-        handleYes = () => {
-            this.props.updateName(this.props.name)
-            this.props.resetState()
-        }
-
-
-        // ...
         render = () => (
             ({
-                classes, error, errorMessage, fullScreen, open,
+                accountId, classes, error, errorMessage, fullScreen, open,
+                handleNo, handleYes,
             }) =>
                 <Dialog
                     fullScreen={fullScreen}
@@ -79,7 +74,7 @@ export default compose(
                     classes={{ paper: classes.paper }}
                 >
                     <DialogTitle id="responsive-dialog-title">
-                        Update Account Name
+                        Set account name for {shorten(accountId, 11, shorten.MIDDLE, "-")}
                     </DialogTitle>
                     <DialogContent>
                         <div className="flex-box-col items-centered content-centered">
@@ -98,12 +93,12 @@ export default compose(
                     </DialogContent>
                     <DialogActions>
                         <Button
-                            onClick={this.handleYes} color="green"
+                            onClick={handleYes} color="green"
                         >
                             Submit
                         </Button>
                         <Button style={{ margin: "0 3px 0 10px" }}
-                            onClick={this.handleNo} color="yellow"
+                            onClick={handleNo} color="yellow"
                         >
                             Cancel
                         </Button>

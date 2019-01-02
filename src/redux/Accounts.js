@@ -1,4 +1,4 @@
-import { createReducer } from "@xcmats/js-toolbox"
+import { createReducer, string } from "@xcmats/js-toolbox"
 
 
 
@@ -6,6 +6,8 @@ import { createReducer } from "@xcmats/js-toolbox"
 // <Accounts> initial state
 const initState = {
     tabSelected: 0,
+    accountId: string.empty(),
+    name: string.empty(),
     ModalEditName: {
         showing: false,
     },
@@ -66,12 +68,6 @@ export const action = {
         type: SET_STATE,
         state,
     }),
-
-    // ...
-    updateName: (name) =>
-        async (_dispatch, _getState) => {
-            console.log("Save account name as: ", name)
-        },
 
 }
 

@@ -22,11 +22,8 @@ import {
 } from "@material-ui/icons"
 import { func, shorten } from "@xcmats/js-toolbox"
 import { Sparklines, SparklinesLine, SparklinesReferenceLine } from "react-sparklines"
-import {
-    accountType as at,
-    action as AccountsActions,
-} from "../../redux/Accounts"
-
+import { accountType as at } from "../../redux/Accounts"
+import { showEditNameModal } from "../../actions/setAccountName"
 
 
 // <AccountCard> component
@@ -68,9 +65,11 @@ export default compose(
 
     })),
     connect(
-        (_state) => ({}),
+        (state) => ({
+            stellarAccounts: state.StellarAccounts,
+        }),
         (dispatch) => bindActionCreators({
-            showEditNameModal: AccountsActions.showEditNameModal,
+            showEditNameModal,
         }, dispatch)
     )
 )(
@@ -83,8 +82,14 @@ export default compose(
 
 
         // ...
+        handleEditNameButtonClick = () => {
+            this.props.showEditNameModal(this.props.accountId)
+        }
+
+
+        // ...
         render = () => (
-            ({ accountId, accountType, classes, showEditNameModal }) =>
+            ({ accountId, accountType, classes, stellarAccounts }) =>
                 <Motion defaultStyle={{ opacity: 0 }}
                     style={{ opacity: spring(1, presets.stiff) }}
                 >
@@ -110,12 +115,12 @@ export default compose(
                                             [at.REAL]: () => classes.iconButtonReal,
                                             [at.DEMO]: () => classes.iconButtonDemo,
                                         }, () => "unknown account type") }}
-                                        onClick={showEditNameModal}
+                                        onClick={this.handleEditNameButtonClick}
                                     >
                                         <EditRounded />
                                     </IconButton>
                                 }
-                                title="No Name"
+                                title={stellarAccounts[accountId].name || "No Name"}
                                 subheader={accountId && shorten(accountId, 11, shorten.MIDDLE, "-")}
                             />
                             <CardContent classes={{ root: classes.cardContent }}>
