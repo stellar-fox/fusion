@@ -110,7 +110,7 @@ export default compose(
                                     />
                                 }
                                 action={
-                                    <IconButton style={{ margin: "0 1rem" }} aria-label="Edit"
+                                    <IconButton style={{ margin: "0" }} aria-label="Edit"
                                         classes={{ root: func.choose(accountType, {
                                             [at.REAL]: () => classes.iconButtonReal,
                                             [at.DEMO]: () => classes.iconButtonDemo,
@@ -129,7 +129,10 @@ export default compose(
                                         Current Balance
                                     </Typography>
                                     <Typography variant="h5">
-                                        $1,234,567.89
+                                        $ 1,234,567.89
+                                    </Typography>
+                                    <Typography className="fade-strong" variant="body1">
+                                        10,234,567.1234567 XLM
                                     </Typography>
                                 </div>
                                 <div style={{ marginLeft: "1rem", width: 80 }}>

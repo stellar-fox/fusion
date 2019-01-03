@@ -274,26 +274,20 @@ export const saveAccountData = () =>
     async (_dispatch, getState) => {
         let { accountId, signingMethod, networkPassphrase } = getState().Keys
 
-        await update(`user/${getState().Auth.uid}/accounts/${accountId}`, {
-            id: accountId,
-        })
-
-        await update(`user/${getState().Auth.uid}/accounts/${accountId}/signingMethods`, {
-            [signingMethod]: {
-                createdAt: Date.now(),
-            },
-        })
-
-        await update(`user/${getState().Auth.uid}/accounts/${accountId}/signingMethods/${signingMethod}`, {
-            updatedAt: Date.now(),
+        await update(`user/${getState().Auth.uid}/stellarAccounts/${accountId}`, {
+            accountId,
             networkPassphrase,
+            createdAt: Date.now(),
+        })
+
+        await update(`user/${getState().Auth.uid}/signingMethods/${accountId}/${signingMethod}`, {
+            createdAt: Date.now(),
         })
 
         signingMethod === sm.LEDGERHQ &&
-        await update(`user/${getState().Auth.uid}/accounts/${accountId}/signingMethods/${signingMethod}`, {
-            updatedAt: Date.now(),
-            account: getState().LedgerHQ.useDefaultAccount ? "0" : getState().LedgerHQ.account,
-        })
+            await update(`user/${getState().Auth.uid}/signingMethods/${accountId}/${signingMethod}`, {
+                account: getState().LedgerHQ.useDefaultAccount ? "0" : getState().LedgerHQ.account,
+            })
 
     }
 
