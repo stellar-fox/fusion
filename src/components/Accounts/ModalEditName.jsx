@@ -43,6 +43,7 @@ export default compose(
             accountId: state.Accounts.accountId,
             open: state.Accounts.ModalEditName.showing,
             stellarAccounts: state.StellarAccounts,
+            spinnerVisible: state.Awaiter.spinnerVisible,
         }),
         (dispatch) => bindActionCreators({
             handleNo,
@@ -61,6 +62,12 @@ export default compose(
 
 
         // ...
+        componentDidUpdate = (prevProps) =>
+            this.props.accountId && this.props.accountId !== prevProps.accountId &&
+                this.props.setName(this.props.stellarAccounts[this.props.accountId].name)
+
+
+        // ...
         handleNameChange = () => (event) =>
             this.props.setName(event.target.value)
 
@@ -69,7 +76,7 @@ export default compose(
         render = () => (
             ({
                 accountId, classes, error, errorMessage, fullScreen, open,
-                handleNo, handleYes, stellarAccounts,
+                handleNo, handleYes, stellarAccounts, spinnerVisible,
             }) =>
                 <Dialog
                     fullScreen={fullScreen}
@@ -86,20 +93,22 @@ export default compose(
                         Set account name for {shorten(accountId, 11, shorten.MIDDLE, "-")}
                     </DialogTitle>
                     <DialogContent>
-                        <div className="flex-box-col items-centered content-centered">
-                            <Awaiter />
-                        </div>
-                        <div className="flex-box-col">
-                            <TextInput
-                                autoFocus
-                                defaultValue={accountId && stellarAccounts[accountId].name}
-                                label="Account Name"
-                                onChange={this.handleNameChange()}
-                                error={error}
-                                errorMessage={errorMessage}
-                                errorClasses={classes.inputError}
-                            />
-                        </div>
+                        {spinnerVisible ?
+                            <div className="flex-box-col items-centered content-centered">
+                                <Awaiter />
+                            </div> :
+                            <div className="flex-box-col">
+                                <TextInput
+                                    autoFocus
+                                    defaultValue={accountId && stellarAccounts[accountId].name}
+                                    label="Account Name"
+                                    onChange={this.handleNameChange()}
+                                    error={error}
+                                    errorMessage={errorMessage}
+                                    errorClasses={classes.inputError}
+                                />
+                            </div>
+                        }
                     </DialogContent>
                     <DialogActions>
                         <Button

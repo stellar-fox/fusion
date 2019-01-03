@@ -29,6 +29,7 @@ import Awaiter from "../Awaiter"
 import { listenForStellarAccountsChange } from "../../actions/stellarAccount"
 import { listenForSigningMethodsChange } from "../../actions/signingMethods"
 import ModalEditName from "./ModalEditName"
+import Snacky from "../../lib/mui-v1/Snacky"
 
 
 
@@ -144,6 +145,7 @@ export default compose(
                         {loading ? <div className={classes.awaiter}>
                             <Awaiter />
                         </div> : <Fragment>
+                            <Snacky />
                             <ModalEditName />
                             <Paper className={classes.paperCanvas}>
 
