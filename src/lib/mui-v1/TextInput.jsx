@@ -83,7 +83,7 @@ export default withStyles((theme) => ({
         // ...
         render = () => (
             ({
-                classes, id, error, errorMessage, margin, label, type,
+                autoFocus, classes, id, error, errorMessage, margin, label, type,
                 onChange, fullWidth, autoComplete, lighter, value, required,
                 errorClasses, defaultValue, min, max, step, shrink,
             }) =>
@@ -107,6 +107,7 @@ export default withStyles((theme) => ({
                     <Input
                         id={id}
                         autoComplete={autoComplete}
+                        autoFocus={autoFocus}
                         classes={{
                             underline: lighter ? classes.underlineLighter :
                                 classes.underline,

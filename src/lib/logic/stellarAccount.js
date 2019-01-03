@@ -11,7 +11,7 @@
 
 
 import { Networks } from "stellar-sdk"
-
+import { accountType as at } from "../../redux/Accounts"
 
 
 
@@ -33,6 +33,21 @@ export const getCountOfSigningMethodType = (signingMethods, signingMethod) => {
     })
     return count
 }
+
+
+
+
+/**
+ * Determines account type using network passphrase.
+ * 
+ * @function getAccountType
+ * @param {Object} stellarAccounts 
+ * @param {String} accountId 
+ * @returns {String}
+ */
+export const getAccountType = (stellarAccounts, accountId) =>
+    stellarAccounts[accountId].networkPassphrase === Networks.PUBLIC ?
+        at.REAL : at.DEMO
 
 
 

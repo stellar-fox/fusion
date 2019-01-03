@@ -15,12 +15,14 @@ import TextInput from "../../lib/mui-v1/TextInput"
 import Awaiter from "../Awaiter"
 import {
     action as AccountsActions,
+    accountType as at,
 } from "../../redux/Accounts"
-import { shorten } from "@xcmats/js-toolbox"
+import { func, shorten } from "@xcmats/js-toolbox"
 import {
     handleYes,
     handleNo,
 } from "../../actions/setAccountName"
+import { getAccountType } from "../../lib/logic/stellarAccount"
 
 
 
@@ -29,16 +31,18 @@ import {
 export default compose(
     withMobileDialog(),
     withStyles((theme) => ({
-        input: {
-            color: theme.palette.primary.silverChalice,
-            borderBottom: `1px solid ${theme.palette.custom.onyx}`,
+        paperReal: {
+            backgroundColor: theme.palette.custom.greenDark,
+        },
+        paperDemo: {
+            backgroundColor: theme.palette.error.main,
         },
     })),
     connect(
         (state) => ({
             accountId: state.Accounts.accountId,
-            name: state.Accounts.name,
             open: state.Accounts.ModalEditName.showing,
+            stellarAccounts: state.StellarAccounts,
         }),
         (dispatch) => bindActionCreators({
             handleNo,
@@ -65,13 +69,18 @@ export default compose(
         render = () => (
             ({
                 accountId, classes, error, errorMessage, fullScreen, open,
-                handleNo, handleYes,
+                handleNo, handleYes, stellarAccounts,
             }) =>
                 <Dialog
                     fullScreen={fullScreen}
                     open={open}
                     aria-labelledby="responsive-dialog-title"
-                    classes={{ paper: classes.paper }}
+                    classes={{
+                        paper: accountId && func.choose(getAccountType(stellarAccounts, accountId), {
+                            [at.REAL]: () => classes.paperReal,
+                            [at.DEMO]: () => classes.paperDemo,
+                        }, () => "unknown account type"),
+                    }}
                 >
                     <DialogTitle id="responsive-dialog-title">
                         Set account name for {shorten(accountId, 11, shorten.MIDDLE, "-")}
@@ -82,7 +91,8 @@ export default compose(
                         </div>
                         <div className="flex-box-col">
                             <TextInput
-                                classes={{ root: classes.input }}
+                                autoFocus
+                                defaultValue={accountId && stellarAccounts[accountId].name}
                                 label="Account Name"
                                 onChange={this.handleNameChange()}
                                 error={error}
