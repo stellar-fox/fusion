@@ -40,7 +40,6 @@ export const showEditNameModal = (accountId) =>
  * Handles positive button click event.
  * 
  * @function handleYes
- * @param {String} uid _Firebase_ generated unique user id.
  * @returns {Function}
  */
 export const handleYes = () => {
@@ -79,10 +78,9 @@ export const handleYes = () => {
 
 
 /**
- * Handles netative button click event.
+ * Handles negative button click event.
  * 
  * @function handleNo
- * @param {String} uid _Firebase_ generated unique user id.
  * @returns {Function}
  */
 export const handleNo = () =>

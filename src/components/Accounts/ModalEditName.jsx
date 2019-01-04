@@ -48,7 +48,6 @@ export default compose(
         (dispatch) => bindActionCreators({
             handleNo,
             handleYes,
-            resetState: AccountsActions.resetState,
             setName: AccountsActions.setName,
         }, dispatch)
     )
