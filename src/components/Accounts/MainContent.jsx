@@ -96,6 +96,9 @@ const MainContent = ({
                             <Fab aria-label="Add Real" size="small"
                                 className={classes.fab}
                                 classes={{ root: classes.fabReal }}
+                                onClick={() => {
+                                    console.log("create new real account")
+                                }}
                             >
                                 <AddRounded />
                             </Fab>
@@ -114,6 +117,9 @@ const MainContent = ({
                             <Fab aria-label="Add Demo" size="small"
                                 className={classes.fab}
                                 classes={{ root: classes.fabDemo }}
+                                onClick={() => {
+                                    console.log("create new demo account")
+                                }}
                             >
                                 <AddRounded />
                             </Fab>
