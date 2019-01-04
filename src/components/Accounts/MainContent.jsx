@@ -24,7 +24,7 @@ import {
 } from "../../lib/logic/stellarAccount"
 import { accountType as at } from "../../redux/Accounts"
 import { action as AccountsActions } from "../../redux/Accounts"
-
+import { showCreateAccountModal } from "../../actions/createAccount"
 
 
 
@@ -37,7 +37,8 @@ import { action as AccountsActions } from "../../redux/Accounts"
  * @license Apache-2.0
  */
 const MainContent = ({
-    changeTab, classes, demoAccounts, realAccounts, tabSelected, width,
+    changeTab, classes, demoAccounts, realAccounts, showCreateAccountModal,
+    tabSelected, width,
 }) => {
     
     const transitionDuration = {
@@ -96,9 +97,7 @@ const MainContent = ({
                             <Fab aria-label="Add Real" size="small"
                                 className={classes.fab}
                                 classes={{ root: classes.fabReal }}
-                                onClick={() => {
-                                    console.log("create new real account")
-                                }}
+                                onClick={ () => showCreateAccountModal(at.REAL) }
                             >
                                 <AddRounded />
                             </Fab>
@@ -117,9 +116,7 @@ const MainContent = ({
                             <Fab aria-label="Add Demo" size="small"
                                 className={classes.fab}
                                 classes={{ root: classes.fabDemo }}
-                                onClick={() => {
-                                    console.log("create new demo account")
-                                }}
+                                onClick={() => showCreateAccountModal(at.DEMO)}
                             >
                                 <AddRounded />
                             </Fab>
@@ -249,6 +246,7 @@ export default func.compose(
         }),
         (dispatch) => bindActionCreators({
             changeTab: AccountsActions.changeTab,
+            showCreateAccountModal,
         }, dispatch)
     ),
 )(MainContent)

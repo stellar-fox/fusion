@@ -7,7 +7,11 @@ import { createReducer, string } from "@xcmats/js-toolbox"
 const initState = {
     tabSelected: 0,
     accountId: string.empty(),
+    accountType: string.empty(),
     name: string.empty(),
+    ModalCreateAccount: {
+        showing: false,
+    },
     ModalEditName: {
         showing: false,
     },
@@ -39,6 +43,16 @@ export const accountType = Object.freeze({
 
 // ...
 export const action = {
+
+    // ...
+    showCreateAccountModal: () => (dispatch) => dispatch(action.setState({
+        ModalCreateAccount: { showing: true },
+    })),
+
+    // ...
+    hideCreateAccountModal: () => (dispatch) => dispatch(action.setState({
+        ModalCreateAccount: { showing: false },
+    })),
 
     // ...
     showEditNameModal: () => (dispatch) => dispatch(action.setState({
