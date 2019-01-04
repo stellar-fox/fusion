@@ -70,6 +70,7 @@ export default compose(
         (state) => ({
             demoAccountIds: getDemoAccountIds(state.StellarAccounts),
             signingMethods: state.SigningMethods,
+            stellarAccounts: state.StellarAccounts,
         }),
         (dispatch) => bindActionCreators({
             setAvailableSigningMethods: PayActions.setAvailableSigningMethods,
@@ -121,7 +122,7 @@ export default compose(
 
         // ...
         render = () => (
-            ({ demoAccountIds, classes }) =>
+            ({ classes, demoAccountIds, stellarAccounts }) =>
                 <Fragment>
 
                     <Typography style={{ padding: "1rem 0 0 0" }} variant="h4">
@@ -148,7 +149,7 @@ export default compose(
                                         <div className="flex-box-row">
                                             {this.bar(accountId)}
                                             <div className="flex-box-col">
-                                                <div>No name</div>
+                                                <div>{stellarAccounts[accountId].name || "No Name"}</div>
                                                 <div>{string.shorten(accountId, 11, string.shorten.MIDDLE, "-")}</div>
                                             </div>
                                         </div>
