@@ -52,6 +52,7 @@ export const handleYes = () => {
             await dispatch(AwaiterActions.setProgressMessage("Updating ..."))
             await update(`user/${uid}/stellarAccounts/${accountId}`, { name })
             await dispatch(AwaiterActions.hideSpinner())
+            await dispatch(AwaiterActions.setProgressMessage(string.empty()))
             await dispatch(AccountsActions.hideEditNameModal())
             await dispatch(AccountsActions.setState({
                 accountId: string.empty(),
@@ -63,6 +64,7 @@ export const handleYes = () => {
         } catch (error) {
             await dispatch(AwaiterActions.hideSpinner())
             await dispatch(AccountsActions.hideEditNameModal())
+            await dispatch(AwaiterActions.setProgressMessage(string.empty()))
             await dispatch(AccountsActions.setState({
                 accountId: string.empty(),
                 name: string.empty(),
