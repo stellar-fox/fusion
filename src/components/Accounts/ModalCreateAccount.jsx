@@ -19,6 +19,7 @@ import {
 } from "../../actions/createAccount"
 import Awaiter from "../Awaiter"
 import { action as AccountsActions } from "../../redux/Accounts"
+import StepperCreateAccount from "./StepperCreateAccount"
 
 
 
@@ -76,6 +77,7 @@ const ModalCreateAccount = ({
                 Cancel
             </Button>
         </DialogActions>
+        <StepperCreateAccount />
     </Dialog>
 }
 
