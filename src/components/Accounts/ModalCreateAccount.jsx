@@ -4,19 +4,13 @@ import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
 import {
     Dialog,
-    DialogActions,
     DialogContent,
     DialogTitle,
     withMobileDialog
 } from "@material-ui/core"
-import Button from "../../lib/mui-v1/Button"
 import TextInput from "../../lib/mui-v1/TextInput"
 import { func, string } from "@xcmats/js-toolbox"
 import { accountType as at } from "../../redux/Accounts"
-import {
-    handleYes,
-    handleNo,
-} from "../../actions/createAccount"
 import Awaiter from "../Awaiter"
 import { action as AccountsActions } from "../../redux/Accounts"
 import StepperCreateAccount from "./StepperCreateAccount"
@@ -26,7 +20,7 @@ import StepperCreateAccount from "./StepperCreateAccount"
 
 // ...
 const ModalCreateAccount = ({
-    accountType, classes, error, errorMessage, fullScreen, handleNo, handleYes,
+    accountType, classes, error, errorMessage, fullScreen,
     open, setName, spinnerVisible,
 }) => {
     return <Dialog
@@ -65,18 +59,6 @@ const ModalCreateAccount = ({
                 </div>
             }
         </DialogContent>
-        <DialogActions>
-            <Button
-                onClick={handleYes} color="green"
-            >
-                Submit
-            </Button>
-            <Button style={{ margin: "0 3px 0 10px" }}
-                onClick={handleNo} color="yellow"
-            >
-                Cancel
-            </Button>
-        </DialogActions>
         <StepperCreateAccount />
     </Dialog>
 }
@@ -100,8 +82,6 @@ export default func.compose(
             spinnerVisible: state.Awaiter.spinnerVisible,
         }),
         (dispatch) => bindActionCreators({
-            handleNo,
-            handleYes,
             setName: AccountsActions.setName,
         }, dispatch),
     ),

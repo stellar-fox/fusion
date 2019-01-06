@@ -1,54 +1,67 @@
 import React from "react"
-import { makeStyles } from "@material-ui/styles"
-import MobileStepper from "@material-ui/core/MobileStepper"
-import Button from "@material-ui/core/Button"
-import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft"
-import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight"
+import { bindActionCreators } from "redux"
+import { connect } from "react-redux"
+import { withStyles } from "@material-ui/core/styles"
+import { func } from "@xcmats/js-toolbox"
+import {
+    MobileStepper,
+    withMobileDialog
+} from "@material-ui/core"
+import Button from "../../lib/mui-v1/Button"
+import {
+    KeyboardArrowRight,
+} from "@material-ui/icons"
+import {
+    handleYes,
+    handleNo,
+} from "../../actions/createAccount"
 
 
 
 
 // ...
-const useStyles = makeStyles({
-    root: {
-        maxWidth: 400,
-        flexGrow: 1,
-    },
-})
-
-
-
-// ...
-const StepperCreateAccount = () => {
-    const classes = useStyles()
+const StepperCreateAccount = ({ classes, handleNo, handleYes }) => {
 
     const [activeStep, setActiveStep] = React.useState(0)
 
-    const handleNext = () => {
+    const handleNext = () =>
         setActiveStep(prevActiveStep => prevActiveStep + 1)
-    }
-
-    const handleBack = () => {
-        setActiveStep(prevActiveStep => prevActiveStep - 1)
-    }
 
     return (
         <MobileStepper
+            LinearProgressProps={{
+                classes: {
+                    root: classes.progress,
+                    bar: classes.bar,
+                },
+            }}
             variant="progress"
             steps={6}
-            position="static"
             activeStep={activeStep}
             className={classes.root}
             nextButton={
-                <Button size="small" onClick={handleNext} disabled={activeStep === 5}>
-                    Next
-                    <KeyboardArrowRight />
+                <Button color="green"
+                    style={{
+                        marginLeft: "0.5rem",
+                        paddingRight: activeStep < 4 && "0.2rem",
+                    }}
+                    size="small"
+                    onClick={activeStep < 4 ? handleNext : handleYes}
+                    disabled={activeStep === 5}
+                >{activeStep === 4 ? "Finish" : "Next"}
+                    {activeStep < 4 && <KeyboardArrowRight />}
                 </Button>
             }
             backButton={
-                <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-                    <KeyboardArrowLeft />
-                Back
+                <Button color="yellow"
+                    style={{
+                        marginRight: "0.5rem",
+                    }}
+                    size="small"
+                    onClick={handleNo}
+                    disabled={activeStep === 5}
+                >
+                Cancel
                 </Button>
             }
         />
@@ -59,4 +72,31 @@ const StepperCreateAccount = () => {
 
 
 // ...
-export default StepperCreateAccount
+export default func.compose(
+    withMobileDialog(),
+    withStyles((theme) => ({
+        root: {
+            flexGrow: 1,
+            backgroundColor: theme.palette.custom.greenDark,
+        },
+        progress: {
+            backgroundColor: theme.palette.custom.green,
+        },
+        bar: {
+            backgroundColor: theme.palette.custom.yellowLight,
+        },
+        backButton: {
+            marginRight: "0.5rem",
+        },
+        nextButton: {
+            marginLeft: "0.5rem",
+        },
+    })),
+    connect(
+        (_state) => ({}),
+        (dispatch) => bindActionCreators({
+            handleNo,
+            handleYes,
+        }, dispatch),
+    ),
+)(StepperCreateAccount)
