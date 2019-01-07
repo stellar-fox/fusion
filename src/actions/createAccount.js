@@ -6,6 +6,25 @@ import { action as SnackyActions } from "../redux/Snacky"
 
 
 
+export const incrementActiveStep = () =>
+    async (dispatch, getState) => {
+        let { activeStep, name } = getState().Accounts
+        if (!name) {
+            await dispatch(AccountsActions.setState({
+                error: true,
+                errorMessage: "Account name cannot be blank.",
+            }))
+            return
+        }
+        await dispatch(AccountsActions.setState({
+            error: true,
+            errorMessage: "Account name cannot be blank.",
+            activeStep: activeStep + 1,
+        }))
+    }
+
+
+
 /**
  * Sets account name type for new account and shows the modal.
  * 
@@ -60,6 +79,7 @@ export const handleYes = () => {
             await dispatch(AccountsActions.hideCreateAccountModal())
             await dispatch(AccountsActions.setState({
                 accountType: string.empty(),
+                activeStep: 0,
                 name: string.empty(),
             }))
             await dispatch(SnackyActions.setColor("success"))
@@ -73,6 +93,7 @@ export const handleYes = () => {
             await dispatch(AccountsActions.hideCreateAccountModal())
             await dispatch(AccountsActions.setState({
                 accountType: string.empty(),
+                activeStep: 0,
                 name: string.empty(),
             }))
             await dispatch(SnackyActions.setColor("error"))

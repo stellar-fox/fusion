@@ -6,6 +6,7 @@ import {
     Dialog,
     DialogContent,
     DialogTitle,
+    Typography,
     withMobileDialog
 } from "@material-ui/core"
 import TextInput from "../../lib/mui-v1/TextInput"
@@ -20,9 +21,10 @@ import StepperCreateAccount from "./StepperCreateAccount"
 
 // ...
 const ModalCreateAccount = ({
-    accountType, classes, error, errorMessage, fullScreen,
-    open, setName, spinnerVisible,
+    accountType, classes, error, errorMessage, fullScreen, open, setName,
+    spinnerVisible,
 }) => {
+
     return <Dialog
         fullScreen={fullScreen}
         open={open}
@@ -48,6 +50,13 @@ const ModalCreateAccount = ({
                     <Awaiter />
                 </div> :
                 <div className="flex-box-col">
+                    <Typography
+                        style={{ marginBottom: "1rem" }}
+                        variant="subtitle1"
+                    >
+                        Please select the name that will best identify your
+                        new account. This name can be edited later at any time.
+                    </Typography>
                     <TextInput
                         autoFocus
                         label="Account Name"

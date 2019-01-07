@@ -14,18 +14,18 @@ import {
 import {
     handleYes,
     handleNo,
+    incrementActiveStep,
 } from "../../actions/createAccount"
 
 
 
 
 // ...
-const StepperCreateAccount = ({ classes, handleNo, handleYes }) => {
+const StepperCreateAccount = ({
+    activeStep, classes, handleNo, handleYes, incrementActiveStep,
+}) => {
 
-    const [activeStep, setActiveStep] = React.useState(0)
-
-    const handleNext = () =>
-        setActiveStep(prevActiveStep => prevActiveStep + 1)
+    const handleNext = () => incrementActiveStep()
 
     return (
         <MobileStepper
@@ -35,7 +35,10 @@ const StepperCreateAccount = ({ classes, handleNo, handleYes }) => {
                     bar: classes.bar,
                 },
             }}
-            variant="progress"
+            classes={{
+                dotActive: classes.dotActive,
+            }}
+            variant="dots"
             steps={6}
             activeStep={activeStep}
             className={classes.root}
@@ -43,13 +46,13 @@ const StepperCreateAccount = ({ classes, handleNo, handleYes }) => {
                 <Button color="green"
                     style={{
                         marginLeft: "0.5rem",
-                        paddingRight: activeStep < 4 && "0.2rem",
+                        paddingRight: activeStep < 5 && "0.2rem",
                     }}
                     size="small"
-                    onClick={activeStep < 4 ? handleNext : handleYes}
-                    disabled={activeStep === 5}
-                >{activeStep === 4 ? "Finish" : "Next"}
-                    {activeStep < 4 && <KeyboardArrowRight />}
+                    onClick={activeStep < 5 ? handleNext : handleYes}
+                    disabled={activeStep === 6}
+                >{activeStep === 5 ? "Finish" : "Next"}
+                    {activeStep < 5 && <KeyboardArrowRight />}
                 </Button>
             }
             backButton={
@@ -75,6 +78,9 @@ const StepperCreateAccount = ({ classes, handleNo, handleYes }) => {
 export default func.compose(
     withMobileDialog(),
     withStyles((theme) => ({
+        dotActive: {
+            backgroundColor: theme.palette.custom.yellowLight,
+        },
         root: {
             flexGrow: 1,
             backgroundColor: theme.palette.custom.greenDark,
@@ -93,10 +99,13 @@ export default func.compose(
         },
     })),
     connect(
-        (_state) => ({}),
+        (state) => ({
+            activeStep: state.Accounts.activeStep,
+        }),
         (dispatch) => bindActionCreators({
             handleNo,
             handleYes,
+            incrementActiveStep,
         }, dispatch),
     ),
 )(StepperCreateAccount)

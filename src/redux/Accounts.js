@@ -5,10 +5,13 @@ import { createReducer, string } from "@xcmats/js-toolbox"
 
 // <Accounts> initial state
 const initState = {
-    tabSelected: 0,
     accountId: string.empty(),
     accountType: string.empty(),
+    activeStep: 0,
+    error: false,
+    errorMessage: string.empty(),
     name: string.empty(),
+    tabSelected: 0,
     ModalCreateAccount: {
         showing: false,
     },
