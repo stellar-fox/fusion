@@ -38,7 +38,7 @@ const ModalCreateAccount = ({
         }}
     >
         <DialogTitle id="responsive-dialog-title">
-            Create new {func.choose(
+            You are creating a {func.choose(
                 accountType, {
                     [at.REAL]: () => at.REAL,
                     [at.DEMO]: () => at.DEMO,

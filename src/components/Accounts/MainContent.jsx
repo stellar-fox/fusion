@@ -28,13 +28,24 @@ import { showCreateAccountModal } from "../../actions/createAccount"
 
 
 
+
 /**
  * Fusion.
  *
  * Main content view.
  *
- * @module Accounts
+ * @module client-ui-components
  * @license Apache-2.0
+ */
+
+
+
+
+/**
+ * `<MainContent>` component.
+ *
+ * @function MainContent
+ * @returns {React.ReactElement}
  */
 const MainContent = ({
     changeTab, classes, demoAccounts, realAccounts, showCreateAccountModal,
@@ -191,6 +202,8 @@ const MainContent = ({
         }
     </Motion>    
 }
+
+
 
 
 // ...

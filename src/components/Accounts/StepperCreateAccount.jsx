@@ -9,9 +9,6 @@ import {
 } from "@material-ui/core"
 import Button from "../../lib/mui-v1/Button"
 import {
-    KeyboardArrowRight,
-} from "@material-ui/icons"
-import {
     handleYes,
     handleNo,
     incrementActiveStep,
@@ -46,13 +43,11 @@ const StepperCreateAccount = ({
                 <Button color="green"
                     style={{
                         marginLeft: "0.5rem",
-                        paddingRight: activeStep < 5 && "0.2rem",
                     }}
                     size="small"
                     onClick={activeStep < 5 ? handleNext : handleYes}
                     disabled={activeStep === 6}
                 >{activeStep === 5 ? "Finish" : "Next"}
-                    {activeStep < 5 && <KeyboardArrowRight />}
                 </Button>
             }
             backButton={
