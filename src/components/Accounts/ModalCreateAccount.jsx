@@ -6,23 +6,22 @@ import {
     Dialog,
     DialogContent,
     DialogTitle,
-    Typography,
     withMobileDialog
 } from "@material-ui/core"
-import TextInput from "../../lib/mui-v1/TextInput"
+
 import { func, string } from "@xcmats/js-toolbox"
 import { accountType as at } from "../../redux/Accounts"
 import Awaiter from "../Awaiter"
 import StepperCreateAccount from "./StepperCreateAccount"
-import { setName } from "../../actions/createAccount"
+import Step0 from "./Step0"
+import Step1 from "./Step1"
 
 
 
 
 // ...
 const ModalCreateAccount = ({
-    accountType, classes, error, errorMessage, fullScreen, open, setName,
-    spinnerVisible,
+    accountType, activeStep, classes, fullScreen, open, spinnerVisible,
 }) => {
 
     return <Dialog
@@ -49,23 +48,11 @@ const ModalCreateAccount = ({
                 <div className="flex-box-col items-centered content-centered">
                     <Awaiter />
                 </div> :
-                <div className="flex-box-col">
-                    <Typography
-                        style={{ marginBottom: "1rem" }}
-                        variant="subtitle1"
-                    >
-                        Please select the name that will best identify your
-                        new account. This name can be edited later at any time.
-                    </Typography>
-                    <TextInput
-                        autoFocus
-                        label="Account Name"
-                        onChange={(e) => setName(e.target.value)}
-                        error={error}
-                        errorMessage={errorMessage}
-                        errorClasses={classes.inputError}
-                    />
-                </div>
+                func.choose(
+                    activeStep, {
+                        0: () => <Step0 />,
+                        1: () => <Step1 />,
+                    }, () => string.empty())
             }
         </DialogContent>
         <StepperCreateAccount />
@@ -73,24 +60,12 @@ const ModalCreateAccount = ({
 }
 
 
+
+
 // ...
 export default func.compose(
     withMobileDialog(),
     withStyles((theme) => ({
-        inputError: {
-            "&:hover:before": {
-                borderBottomColor: `${theme.palette.error.light} !important`,
-                borderBottomWidth: "1px !important",
-            },
-            "&:before": {
-                borderBottomColor:
-                    `${theme.palette.error.light} !important`,
-            },
-            "&:after": {
-                borderBottomColor:
-                    `${theme.palette.error.light} !important`,
-            },
-        },
         paperReal: {
             backgroundColor: theme.palette.custom.greenDark,
         },
@@ -101,13 +76,12 @@ export default func.compose(
     connect(
         (state) => ({
             accountType: state.Accounts.accountType,
-            error: state.Accounts.error,
-            errorMessage: state.Accounts.errorMessage,
+            activeStep: state.Accounts.activeStep,
             open: state.Accounts.ModalCreateAccount.showing,
             spinnerVisible: state.Awaiter.spinnerVisible,
         }),
         (dispatch) => bindActionCreators({
-            setName,
+
         }, dispatch),
     ),
 )(ModalCreateAccount)
