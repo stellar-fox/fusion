@@ -5,7 +5,7 @@
  * _Stellar Account_ entity. They can query or mutate the account state.
  * Should be used to set the _Redux_ state and called from within UI components.
  *
- * @module stellar-account
+ * @module actions-stellarAccount
  * @license Apache-2.0
  */
 
@@ -50,11 +50,11 @@ setEnv()
 /**
  * Fetches _Stellar_ accounts that are associated with the current user.
  * 
- * @function listenForStellarAccountsChange
+ * @function detectAccount
  * @param {String} uid Unique _Firebase_ generated user id.
  * @returns {Function}
  */
-export const listenForStellarAccountsChange = (uid) =>
+export const detectAccount = (uid) =>
     async (dispatch, _getState) => {
         firebaseSingleton.database().ref(`user/${uid}/stellarAccounts`)
             .on("value", (snapshot) => {

@@ -5,7 +5,7 @@
  * module reflect user interaction with the front-end elements pertaining to
  * the hardware keyring device such as _Ledger Nano S_.
  *
- * @module ledgerhq-actions
+ * @module actions-onboarding
  * @license Apache-2.0
  */
 

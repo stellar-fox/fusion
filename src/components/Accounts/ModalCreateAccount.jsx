@@ -13,8 +13,8 @@ import TextInput from "../../lib/mui-v1/TextInput"
 import { func, string } from "@xcmats/js-toolbox"
 import { accountType as at } from "../../redux/Accounts"
 import Awaiter from "../Awaiter"
-import { action as AccountsActions } from "../../redux/Accounts"
 import StepperCreateAccount from "./StepperCreateAccount"
+import { setName } from "../../actions/createAccount"
 
 
 
@@ -77,6 +77,20 @@ const ModalCreateAccount = ({
 export default func.compose(
     withMobileDialog(),
     withStyles((theme) => ({
+        inputError: {
+            "&:hover:before": {
+                borderBottomColor: `${theme.palette.error.light} !important`,
+                borderBottomWidth: "1px !important",
+            },
+            "&:before": {
+                borderBottomColor:
+                    `${theme.palette.error.light} !important`,
+            },
+            "&:after": {
+                borderBottomColor:
+                    `${theme.palette.error.light} !important`,
+            },
+        },
         paperReal: {
             backgroundColor: theme.palette.custom.greenDark,
         },
@@ -87,11 +101,13 @@ export default func.compose(
     connect(
         (state) => ({
             accountType: state.Accounts.accountType,
+            error: state.Accounts.error,
+            errorMessage: state.Accounts.errorMessage,
             open: state.Accounts.ModalCreateAccount.showing,
             spinnerVisible: state.Awaiter.spinnerVisible,
         }),
         (dispatch) => bindActionCreators({
-            setName: AccountsActions.setName,
+            setName,
         }, dispatch),
     ),
 )(ModalCreateAccount)

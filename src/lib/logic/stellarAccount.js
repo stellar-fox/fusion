@@ -3,7 +3,7 @@
  *
  * Stellar accounts data helper methods.
  *
- * @module stellar-accounts-logic
+ * @module logic-stellarAccounts
  * @license Apache-2.0
  */
 
@@ -12,27 +12,6 @@
 
 import { Networks } from "stellar-sdk"
 import { accountType as at } from "../../redux/Accounts"
-
-
-
-
-
-
-/**
- * @function getCountOfSigningMethodType
- * @param {Object} signingMethods
- * @param {String} signingMethod
- * @returns {Number} Count of `signingMethod` type.
- */
-export const getCountOfSigningMethodType = (signingMethods, signingMethod) => {
-    let count = 0
-    Object.keys(signingMethods).forEach((accountId) => {
-        if (Object.keys(signingMethods[accountId]).includes(signingMethod)) {
-            count = count + 1
-        }
-    })
-    return count
-}
 
 
 
@@ -68,26 +47,12 @@ export const getCountOfRealAccounts = (stellarAccounts) =>
 /**
  * Number of demo accounts created/registered by user.
  *
- * @function getCountOfRealAccounts
+ * @function getCountOfDemoAccounts
  * @param {Object} stellarAccounts
  * @returns {Number}
  */
 export const getCountOfDemoAccounts = (stellarAccounts) =>
     getDemoAccountIds(stellarAccounts).length
-
-
-
-
-/**
- * Signing methods available for the _stellar account_.
- * 
- * @function getSigningMethodsForAccount
- * @param {Object} signingMethods 
- * @param {String} accountId 
- * @returns {Object}
- */
-export const getSigningMethodsForAccount = (signingMethods, accountId) =>
-    signingMethods[accountId]
 
 
 

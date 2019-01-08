@@ -3,7 +3,7 @@
  *
  * Action set servicing `ModalEditName`.
  *
- * @module actions
+ * @module actions-accountName
  * @license Apache-2.0
  */
 

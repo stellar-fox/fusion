@@ -19,7 +19,7 @@ import AnimatedValue from "../AnimatedValue"
 import background from "../Fusion/static/bg.png"
 import { action as KeysActions, signingMethod as sm } from "../../redux/Keys"
 import { setSigningMethod } from "../../actions/onboarding"
-import { getCountOfSigningMethodType } from "../../lib/logic/signingMethods"
+import { signingMethodCount } from "../../lib/logic/signingMethods"
 import ModalSignupSceptic from "./ModalSignupSceptic"
 import ModalAwaitSceptic from "./ModalAwaitSceptic"
 import ModalTransactionDetails from "./ModalTransactionDetails"
@@ -48,7 +48,7 @@ export default compose(
     })),
     connect(
         (state) => ({
-            count: getCountOfSigningMethodType(state.SigningMethods, sm.MANUAL),
+            count: signingMethodCount(state.SigningMethods, sm.MANUAL),
         }),
         (dispatch) => bindActionCreators({
             showSignupScepticModal: KeysActions.showSignupScepticModal,

@@ -5,7 +5,7 @@
  * module reflect user interaction with the front-end elements during
  * payment related actions.
  *
- * @module pay-actions
+ * @module actions-onboarding
  * @license Apache-2.0
  */
 

@@ -12,8 +12,8 @@ import {
     getRealAccounts,
 } from "../../lib/logic/stellarAccount"
 import Awaiter from "../Awaiter"
-import { listenForStellarAccountsChange } from "../../actions/stellarAccount"
-import { listenForSigningMethodsChange } from "../../actions/signingMethods"
+import { detectAccount } from "../../actions/stellarAccount"
+import { detectSigningMethod } from "../../actions/signingMethods"
 import MainContent from "./MainContent"
 import ModalCreateAccount from "./ModalCreateAccount"
 import ModalEditName from "./ModalEditName"
@@ -52,8 +52,8 @@ export default compose(
         // match dispatch to props.
         (dispatch) => bindActionCreators({
             changeTab: AccountsActions.changeTab,
-            listenForSigningMethodsChange,
-            listenForStellarAccountsChange,
+            detectAccount,
+            detectSigningMethod,
         }, dispatch)
     ),
     withWidth(),
@@ -71,8 +71,8 @@ export default compose(
 
         // ...
         componentDidMount = () => {
-            this.props.listenForStellarAccountsChange(this.props.uid)
-            this.props.listenForSigningMethodsChange(this.props.uid)
+            this.props.detectAccount(this.props.uid)
+            this.props.detectSigningMethod(this.props.uid)
         }
 
 

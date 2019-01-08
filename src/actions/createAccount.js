@@ -1,3 +1,16 @@
+/**
+ * Fusion.
+ *
+ * Represents an action set that manipulates _Redux_ state. The actions in this
+ * module reflect user interaction with the front-end elements.
+ *
+ * @module actions-createAccount
+ * @license Apache-2.0
+ */
+
+
+
+
 import { action as AccountsActions } from "../redux/Accounts"
 import { string } from "@xcmats/js-toolbox"
 import { action as AwaiterActions } from "../redux/Awaiter"
@@ -6,6 +19,11 @@ import { action as SnackyActions } from "../redux/Snacky"
 
 
 
+/**
+ * Increments active step for `Stepper` component.
+ * @function incrementActiveStep
+ * @returns {Function}
+ */
 export const incrementActiveStep = () =>
     async (dispatch, getState) => {
         let { activeStep, name } = getState().Accounts
@@ -17,11 +35,31 @@ export const incrementActiveStep = () =>
             return
         }
         await dispatch(AccountsActions.setState({
-            error: true,
-            errorMessage: "Account name cannot be blank.",
+            error: false,
+            errorMessage: string.empty(),
             activeStep: activeStep + 1,
         }))
     }
+
+
+
+
+/**
+ * Sets the desired account name from the UI.
+ * 
+ * @function setName
+ * @param {String} name 
+ * @returns {Function}
+ */
+export const setName = (name) =>
+    async (dispatch, _getState) => {
+        await dispatch(AccountsActions.setName(name))
+        await dispatch(AccountsActions.setState({
+            error: false,
+            errorMessage: string.empty(),
+        }))
+    }
+
 
 
 
@@ -39,6 +77,8 @@ export const showCreateAccountModal = (accountType) =>
     }
 
 
+
+
 /**
  * Handles negative button click event.
  * 
@@ -50,7 +90,10 @@ export const handleNo = () =>
         await dispatch(AccountsActions.hideCreateAccountModal())
         await dispatch(AccountsActions.setState({
             accountType: string.empty(),
+            activeStep: 0,
             name: string.empty(),
+            error: false,
+            errorMessage: string.empty(),
         }))
     }
 
