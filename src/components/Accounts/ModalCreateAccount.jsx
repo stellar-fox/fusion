@@ -6,7 +6,6 @@ import {
     Dialog,
     DialogContent,
     DialogTitle,
-    withMobileDialog
 } from "@material-ui/core"
 
 import { func, string } from "@xcmats/js-toolbox"
@@ -21,11 +20,11 @@ import Step1 from "./Step1"
 
 // ...
 const ModalCreateAccount = ({
-    accountType, activeStep, classes, fullScreen, open, spinnerVisible,
+    accountType, activeStep, classes, open, spinnerVisible,
 }) => {
 
     return <Dialog
-        fullScreen={fullScreen}
+        fullScreen
         open={open}
         aria-labelledby="responsive-dialog-title"
         classes={{
@@ -64,7 +63,6 @@ const ModalCreateAccount = ({
 
 // ...
 export default func.compose(
-    withMobileDialog(),
     withStyles((theme) => ({
         paperReal: {
             backgroundColor: theme.palette.custom.greenDark,
