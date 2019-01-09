@@ -13,13 +13,31 @@ import {
     handleNo,
     incrementActiveStep,
 } from "../../actions/createAccount"
+import { accountType as at } from "../../redux/Accounts"
 
 
 
 
-// ...
+/**
+ * Fusion.
+ *
+ * Stepper for creating new account.
+ *
+ * @module client-ui-components
+ * @license Apache-2.0
+ */
+
+
+
+
+/**
+ * `<StepperCreateAccount>` component.
+ *
+ * @function StepperCreateAccount
+ * @returns {React.ReactElement}
+ */
 const StepperCreateAccount = ({
-    activeStep, classes, handleNo, handleYes, incrementActiveStep,
+    accountType, activeStep, classes, handleNo, handleYes, incrementActiveStep,
 }) => {
 
     const handleNext = () => incrementActiveStep()
@@ -34,11 +52,16 @@ const StepperCreateAccount = ({
             }}
             classes={{
                 dotActive: classes.dotActive,
+                root: func.choose(
+                    accountType, {
+                        [at.REAL]: () => classes.paperReal,
+                        [at.DEMO]: () => classes.paperDemo,
+                    }, () => "unknown account type"),
             }}
             variant="dots"
             steps={6}
             activeStep={activeStep}
-            className={classes.root}
+            className={classes.rootCommon}
             nextButton={
                 <Button color="green"
                     style={{
@@ -76,9 +99,14 @@ export default func.compose(
         dotActive: {
             backgroundColor: theme.palette.custom.yellowLight,
         },
-        root: {
-            flexGrow: 1,
+        paperReal: {
             backgroundColor: theme.palette.custom.greenDark,
+        },
+        paperDemo: {
+            backgroundColor: theme.palette.error.main,
+        },
+        rootCommon: {
+            flexGrow: 1,
         },
         progress: {
             backgroundColor: theme.palette.custom.green,
@@ -95,6 +123,7 @@ export default func.compose(
     })),
     connect(
         (state) => ({
+            accountType: state.Accounts.accountType,
             activeStep: state.Accounts.activeStep,
         }),
         (dispatch) => bindActionCreators({
