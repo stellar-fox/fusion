@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core"
 import TextInput from "../../lib/mui-v1/TextInput"
 import { setName } from "../../actions/createAccount"
-
+import { Motion, presets, spring } from "react-motion"
 
 
 // ...
@@ -18,23 +18,33 @@ const StepperCreateAccount = ({
 }) => {
 
     return (
-        <div className="flex-box-col">
-            <Typography
-                style={{ marginBottom: "1rem" }}
-                variant="subtitle1"
-            >
-                Please select the name that will best identify your
-                new account. This name can be edited later at any time.
-            </Typography>
-            <TextInput
-                autoFocus
-                label="Account Name"
-                onChange={(e) => setName(e.target.value)}
-                error={error}
-                errorMessage={errorMessage}
-                errorClasses={classes.inputError}
-            />
-        </div>
+        <Motion defaultStyle={{ opacity: 0 }}
+            style={{
+                opacity: spring(1, presets.gentle),
+            }}
+        >
+            {value =>
+                <div style={{
+                    opacity: value.opacity,
+                }} className="flex-box-col"
+                >
+                    <Typography
+                        style={{ marginBottom: "1rem" }}
+                        variant="subtitle1"
+                    >
+                        Please select the name that will best identify your
+                        new account. This name can be edited later at any time.
+                    </Typography>
+                    <TextInput
+                        autoFocus
+                        label="Account Name"
+                        onChange={(e) => setName(e.target.value)}
+                        error={error}
+                        errorMessage={errorMessage}
+                        errorClasses={classes.inputError}
+                    />
+                </div>}
+        </Motion>
     )
 }
 

@@ -7,21 +7,32 @@ import {
     Typography,
     withMobileDialog
 } from "@material-ui/core"
-
+import { Motion, presets, spring } from "react-motion"
 
 
 // ...
 const StepperCreateAccount = () => {
 
     return (
-        <div className="flex-box-col">
-            <Typography
-                style={{ marginBottom: "1rem" }}
-                variant="subtitle1"
-            >
-                Next Step
-            </Typography>
-        </div>
+        <Motion defaultStyle={{ opacity: 0 }}
+            style={{
+                opacity: spring(1, presets.gentle),
+            }}
+        >
+            {value =>
+                <div style={{
+                    opacity: value.opacity,
+                }} className="flex-box-col"
+                >
+                    <Typography
+                        style={{ marginBottom: "1rem" }}
+                        variant="subtitle1"
+                    >
+                        Next Step
+                    </Typography>
+                </div>
+            }
+        </Motion>
     )
 }
 
