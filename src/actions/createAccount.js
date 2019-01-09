@@ -15,7 +15,10 @@ import { action as AccountsActions } from "../redux/Accounts"
 import { string } from "@xcmats/js-toolbox"
 import { action as AwaiterActions } from "../redux/Awaiter"
 import { action as SnackyActions } from "../redux/Snacky"
-
+import {
+    action as KeysActions,
+    signingMethod as sm,
+} from "../redux/Keys"
 
 
 
@@ -64,6 +67,23 @@ export const setName = (name) =>
 
 
 /**
+ * Sets the user selected key manager type.
+ * 
+ * @function setKeyManager
+ * @param {String} keyManager Specifies the type of key manager.
+ * @returns {Function}
+ */
+export const setKeyManager = (keyManager) =>
+    async (dispatch, _getState) => {
+        await dispatch(AccountsActions.setState({
+            keyManager,
+        }))
+    }
+
+
+
+
+/**
  * Sets account name type for new account and shows the modal.
  * 
  * @function showCreateAccountModal
@@ -95,6 +115,9 @@ export const handleNo = () =>
             error: false,
             errorMessage: string.empty(),
         }))
+        await dispatch(KeysActions.setState({
+            signingMethod: sm.SHAMBHALA,
+        }))
     }
 
 
@@ -116,21 +139,16 @@ export const handleYes = () => {
             await dispatch(AwaiterActions.setProgressMessage(
                 `Creating ${accountType} account ...`
             ))
-            // await update(`user/${uid}/stellarAccounts/${accountId}`, { name })
-            await dispatch(AwaiterActions.hideSpinner())
-            await dispatch(AwaiterActions.setProgressMessage(string.empty()))
-            await dispatch(AccountsActions.hideCreateAccountModal())
-            await dispatch(AccountsActions.setState({
-                accountType: string.empty(),
-                activeStep: 0,
-                name: string.empty(),
-            }))
             await dispatch(SnackyActions.setColor("success"))
             await dispatch(SnackyActions.setMessage(
                 `Account '${name}' created.`
             ))
             await dispatch(SnackyActions.showSnacky())
         } catch (error) {
+            await dispatch(SnackyActions.setColor("error"))
+            await dispatch(SnackyActions.setMessage(error.message))
+            await dispatch(SnackyActions.showSnacky())
+        } finally {
             await dispatch(AwaiterActions.hideSpinner())
             await dispatch(AwaiterActions.setProgressMessage(string.empty()))
             await dispatch(AccountsActions.hideCreateAccountModal())
@@ -139,9 +157,9 @@ export const handleYes = () => {
                 activeStep: 0,
                 name: string.empty(),
             }))
-            await dispatch(SnackyActions.setColor("error"))
-            await dispatch(SnackyActions.setMessage(error.message))
-            await dispatch(SnackyActions.showSnacky())
+            await dispatch(KeysActions.setState({
+                signingMethod: sm.SHAMBHALA,
+            }))
         }
     }
 }

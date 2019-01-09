@@ -2,6 +2,24 @@ import { createReducer } from "@xcmats/js-toolbox"
 import { testNetworkPassphrase } from "../lib/constants"
 import { string } from "@xcmats/js-toolbox"
 
+
+
+
+/**
+ * Enumeration of possible signing methods.
+ * MANUAL, LEDGERHQ, SHAMBHALA
+ *
+ * @constant signingMethod
+ */
+export const signingMethod = Object.freeze({
+    MANUAL: "manual",
+    LEDGERHQ: "ledgerhq",
+    SHAMBHALA: "shambhala",
+})
+
+
+
+
 // <Keys> initial state
 const initState = {
     accountId: null,
@@ -17,7 +35,7 @@ const initState = {
     noButtonDisabled: false,
     progressMessage: string.empty(),
     signingKeys: {},
-    signingMethod: null,
+    signingMethod: signingMethod.SHAMBHALA,
     spinnerVisible: false,
     success: false,
     txBody: string.empty(),
@@ -39,17 +57,6 @@ export const RESET_STATE = "@Keys/RESET_STATE"
 export const SET_STATE = "@Keys/SET_STATE"
 
 
-/**
- * Enumeration of possible signing methods.
- * MANUAL, LEDGERHQ, SHAMBHALA
- *
- * @constant signingMethod
- */
-export const signingMethod = Object.freeze({
-    MANUAL: "manual",
-    LEDGERHQ: "ledgerhq",
-    SHAMBHALA: "shambhala",
-})
 
 
 // ...

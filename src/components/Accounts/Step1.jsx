@@ -4,14 +4,40 @@ import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
 import { func } from "@xcmats/js-toolbox"
 import {
+    FormControl,
+    FormControlLabel,
+    FormLabel,
+    Radio,
+    RadioGroup,
     Typography,
     withMobileDialog
 } from "@material-ui/core"
+import { setSigningMethod } from "../../actions/onboarding"
 import { Motion, presets, spring } from "react-motion"
+import { signingMethod as sm } from "../../redux/Keys"
 
 
-// ...
-const StepperCreateAccount = () => {
+
+
+/**
+ * Fusion.
+ *
+ * Step 1 for creating new account.
+ *
+ * @module client-ui-components
+ * @license Apache-2.0
+ */
+
+
+
+
+/**
+ * `<Step1>` component.
+ *
+ * @function Step1
+ * @returns {React.ReactElement}
+ */
+const Step1 = ({classes, signingMethod, setSigningMethod}) => {
 
     return (
         <Motion defaultStyle={{ opacity: 0 }}
@@ -28,8 +54,75 @@ const StepperCreateAccount = () => {
                         style={{ marginBottom: "1rem" }}
                         variant="subtitle1"
                     >
-                        Next Step
+                        Your funds and transactions are securely managed with a
+                        set of keys. We provide different ways of signing your
+                        transactions.
                     </Typography>
+                    <FormControl component="fieldset">
+                        <FormLabel component="legend">
+                            Please select signing method:
+                        </FormLabel>
+                        <RadioGroup aria-label="position" name="position"
+                            value={value}
+                            onChange={(e) => setSigningMethod(e.target.value)}
+                        >
+                            <FormControlLabel
+                                value="end"
+                                control={
+                                    <Radio
+                                        checked={signingMethod === sm.SHAMBHALA}
+                                        onChange={(e) => setSigningMethod(e.target.value)}
+                                        value={sm.SHAMBHALA}
+                                        name="radio-button-shambhala"
+                                        aria-label="Shambhala Pure"
+                                        classes={{
+                                            root: classes.root,
+                                            checked: classes.checked,
+                                        }}
+                                    />
+                                }
+                                label="Shambhala Pure"
+                                labelPlacement="end"
+                            />
+                            <FormControlLabel
+                                value="end"
+                                control={
+                                    <Radio
+                                        checked={signingMethod === sm.LEDGERHQ}
+                                        onChange={(e) => setSigningMethod(e.target.value)}
+                                        value={sm.LEDGERHQ}
+                                        name="radio-button-ledgerhq"
+                                        aria-label="Shambhala Ledger"
+                                        classes={{
+                                            root: classes.root,
+                                            checked: classes.checked,
+                                        }}
+                                    />
+                                }
+                                label="Shambhala Ledger"
+                                labelPlacement="end"
+                            />
+                            <FormControlLabel
+                                value="end"
+                                control={
+                                    <Radio
+                                        checked={signingMethod === sm.MANUAL}
+                                        onChange={(e) => setSigningMethod(e.target.value)}
+                                        value={sm.MANUAL}
+                                        name="radio-button-manual"
+                                        aria-label="Shambhala Sceptic"
+                                        classes={{
+                                            root: classes.root,
+                                            checked: classes.checked,
+                                        }}
+                                    />
+                                }
+                                label="Shambhala Sceptic"
+                                labelPlacement="end"
+                            />
+
+                        </RadioGroup>
+                    </FormControl>
                 </div>
             }
         </Motion>
@@ -42,15 +135,20 @@ const StepperCreateAccount = () => {
 // ...
 export default func.compose(
     withMobileDialog(),
-    withStyles((_theme) => ({
-
+    withStyles((theme) => ({
+        root: {
+            "&$checked": {
+                color: theme.palette.custom.yellowDark,
+            },
+        },
+        checked: {},
     })),
     connect(
-        (_state) => ({
-            
+        (state) => ({
+            signingMethod: state.Keys.signingMethod,
         }),
         (dispatch) => bindActionCreators({
-
+            setSigningMethod,
         }, dispatch),
     ),
-)(StepperCreateAccount)
+)(Step1)

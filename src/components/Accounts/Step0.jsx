@@ -12,8 +12,27 @@ import { setName } from "../../actions/createAccount"
 import { Motion, presets, spring } from "react-motion"
 
 
-// ...
-const StepperCreateAccount = ({
+
+
+/**
+ * Fusion.
+ *
+ * Step 0 for creating new account.
+ *
+ * @module client-ui-components
+ * @license Apache-2.0
+ */
+
+
+
+
+/**
+ * `<Step0>` component.
+ *
+ * @function Step0
+ * @returns {React.ReactElement}
+ */
+const Step0 = ({
     classes, error, errorMessage, setName,
 }) => {
 
@@ -79,4 +98,4 @@ export default func.compose(
             setName,
         }, dispatch),
     ),
-)(StepperCreateAccount)
+)(Step0)

@@ -7,7 +7,6 @@ import {
     DialogContent,
     DialogTitle,
 } from "@material-ui/core"
-
 import { func, string } from "@xcmats/js-toolbox"
 import { accountType as at } from "../../redux/Accounts"
 import Awaiter from "../Awaiter"
@@ -18,7 +17,24 @@ import Step1 from "./Step1"
 
 
 
-// ...
+/**
+ * Fusion.
+ *
+ * Full screen modal for account creation content.
+ *
+ * @module client-ui-components
+ * @license Apache-2.0
+ */
+
+
+
+
+/**
+ * `<ModalCreateAccount>` component.
+ *
+ * @function ModalCreateAccount
+ * @returns {React.ReactElement}
+ */
 const ModalCreateAccount = ({
     accountType, activeStep, classes, open, spinnerVisible,
 }) => {
