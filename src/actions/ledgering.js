@@ -12,6 +12,7 @@
 
 
 
+import { action as AccountsActions } from "../redux/Accounts"
 import { action as LedgerHQActions } from "../redux/LedgerHQ"
 import { string } from "@xcmats/js-toolbox"
 import { signTransaction } from "../lib/logic/ledgerhq"
@@ -50,9 +51,17 @@ export const setAccount = (account) =>
                 error: true,
                 errorMessage: "Invalid input. Integer numbers only.",
             }))
+            await dispatch(AccountsActions.setState({
+                error: true,
+                errorMessage: "Invalid input. Integer numbers only.",
+            }))
         } else {
             await dispatch(LedgerHQActions.setState({
                 account,
+                error: false,
+                errorMessage: string.empty(),
+            }))
+            await dispatch(AccountsActions.setState({
                 error: false,
                 errorMessage: string.empty(),
             }))

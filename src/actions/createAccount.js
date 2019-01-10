@@ -29,7 +29,11 @@ import {
  */
 export const incrementActiveStep = () =>
     async (dispatch, getState) => {
-        let { activeStep, name } = getState().Accounts
+        let
+            { activeStep, name } = getState().Accounts,
+            { account } = getState().LedgerHQ,
+            { accountId, signingMethod } = getState().Keys
+
         if (!name) {
             await dispatch(AccountsActions.setState({
                 error: true,
@@ -37,6 +41,23 @@ export const incrementActiveStep = () =>
             }))
             return
         }
+
+        if (signingMethod === sm.LEDGERHQ && !account) {
+            await dispatch(AccountsActions.setState({
+                error: true,
+                errorMessage: "Please provide a valid account.",
+            }))
+            return
+        }
+
+        if (signingMethod === sm.MANUAL && !accountId) {
+            await dispatch(AccountsActions.setState({
+                error: true,
+                errorMessage: "Please provide a valid Account ID.",
+            }))
+            return
+        }
+
         await dispatch(AccountsActions.setState({
             error: false,
             errorMessage: string.empty(),
@@ -117,6 +138,7 @@ export const handleNo = () =>
         }))
         await dispatch(KeysActions.setState({
             signingMethod: sm.SHAMBHALA,
+            accountId: null,
         }))
     }
 

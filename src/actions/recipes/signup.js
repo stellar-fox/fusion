@@ -27,6 +27,7 @@ import {
     obtainAccountId,
     saveAccountData,
 } from "../../actions/onboarding"
+import { action as AccountsActions } from "../../redux/Accounts"
 import { action as AwaiterActions } from "../../redux/Awaiter"
 import {
     tagSigningMethod,
@@ -235,9 +236,17 @@ export const handleAccountIdInput = (accountId) =>
                 yesButtonDisabled: false,
             }))
             dispatch(AwaiterActions.setErrorMessage(string.empty()))
+            dispatch(AccountsActions.setState({
+                error: false,
+                errorMessage: string.empty(),
+            }))
 
         } else {
             dispatch(AwaiterActions.setErrorMessage("Invalid account id."))
+            dispatch(AccountsActions.setState({
+                error: true,
+                errorMessage: "Invalid Account ID.",
+            }))
             dispatch(KeysActions.setState({
                 yesButtonDisabled: true,
             }))
