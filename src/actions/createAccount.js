@@ -11,9 +11,10 @@
 
 
 
-import { action as AccountsActions } from "../redux/Accounts"
 import { string } from "@xcmats/js-toolbox"
+import { action as AccountsActions } from "../redux/Accounts"
 import { action as AwaiterActions } from "../redux/Awaiter"
+import { action as LedgerHQActions } from "../redux/LedgerHQ"
 import { action as SnackyActions } from "../redux/Snacky"
 import {
     action as KeysActions,
@@ -136,10 +137,8 @@ export const handleNo = () =>
             error: false,
             errorMessage: string.empty(),
         }))
-        await dispatch(KeysActions.setState({
-            signingMethod: sm.SHAMBHALA,
-            accountId: null,
-        }))
+        await dispatch(LedgerHQActions.resetState())
+        await dispatch(KeysActions.resetState())
     }
 
 
@@ -182,6 +181,8 @@ export const handleYes = () => {
             await dispatch(KeysActions.setState({
                 signingMethod: sm.SHAMBHALA,
             }))
+            await dispatch(LedgerHQActions.resetState())
+            await dispatch(KeysActions.resetState())
         }
     }
 }

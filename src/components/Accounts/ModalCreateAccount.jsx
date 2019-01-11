@@ -13,6 +13,7 @@ import Awaiter from "../Awaiter"
 import StepperCreateAccount from "./StepperCreateAccount"
 import Step0 from "./Step0"
 import Step1 from "./Step1"
+import Step2 from "./Step2"
 
 
 
@@ -67,6 +68,7 @@ const ModalCreateAccount = ({
                     activeStep, {
                         0: () => <Step0 />,
                         1: () => <Step1 />,
+                        2: () => <Step2 />,
                     }, () => string.empty())
             }
         </DialogContent>
