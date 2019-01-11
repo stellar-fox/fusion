@@ -49,7 +49,7 @@ const Step0 = ({
                 >
                     <Typography
                         style={{ marginBottom: "1rem" }}
-                        variant="subtitle1"
+                        variant="body2"
                     >
                         Please select the name that will best identify your
                         new account. This name can be edited later at any time.

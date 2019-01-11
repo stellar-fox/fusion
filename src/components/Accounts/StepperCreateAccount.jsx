@@ -40,7 +40,9 @@ const StepperCreateAccount = ({
     accountType, activeStep, classes, handleNo, handleYes, incrementActiveStep,
 }) => {
 
-    const handleNext = () => incrementActiveStep()
+    const
+        numSteps = 2,
+        handleNext = () => incrementActiveStep()
 
     return (
         <MobileStepper
@@ -59,7 +61,7 @@ const StepperCreateAccount = ({
                     }, () => "unknown account type"),
             }}
             variant="dots"
-            steps={6}
+            steps={numSteps+1}
             activeStep={activeStep}
             className={classes.rootCommon}
             nextButton={
@@ -68,9 +70,8 @@ const StepperCreateAccount = ({
                         marginLeft: "0.5rem",
                     }}
                     size="small"
-                    onClick={activeStep < 5 ? handleNext : handleYes}
-                    disabled={activeStep === 6}
-                >{activeStep === 5 ? "Finish" : "Next"}
+                    onClick={activeStep < numSteps ? handleNext : handleYes}
+                >{activeStep === numSteps ? "Finish" : "Next"}
                 </Button>
             }
             backButton={
@@ -80,7 +81,6 @@ const StepperCreateAccount = ({
                     }}
                     size="small"
                     onClick={handleNo}
-                    disabled={activeStep === 5}
                 >
                 Cancel
                 </Button>

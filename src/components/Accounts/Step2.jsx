@@ -98,6 +98,14 @@ const Step2 = ({account, accountId, classes, name, signingMethod}) =>
                         </TableRow>}
                     </TableBody>
                 </Table>
+                <Typography
+                    style={{ margin: "1rem 0" }}
+                    variant="h4"
+                >
+                    Please make sure the information in the above table is
+                    correct and click <span className="cursive">FINISH
+                    </span> to create your account.
+                </Typography>
             </div>
         }
     </Motion>
