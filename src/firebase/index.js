@@ -181,6 +181,7 @@ export const write = async (path, data) => {
  * @param {String} path A relative path from this location to the desired child
  *  location.
  * @param {Any} _JavaScript_ value to be written to database.
+ * @returns {Promise} Contains `void` when resolved.
  */
 export const update = async (path, data) => {
     try {

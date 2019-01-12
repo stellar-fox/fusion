@@ -63,7 +63,7 @@ const Step1 = ({classes, signingMethod, setSigningMethod}) =>
                         Please select signing method:
                     </FormLabel>
                     <RadioGroup aria-label="position" name="position"
-                        value={value}
+                        value={signingMethod}
                         onChange={(e) => setSigningMethod(e.target.value)}
                     >
                         <FormControlLabel

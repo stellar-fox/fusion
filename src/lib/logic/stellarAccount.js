@@ -12,6 +12,7 @@
 
 import { Networks } from "stellar-sdk"
 import { accountType as at } from "../../redux/Accounts"
+import { update } from "../../firebase"
 
 
 
@@ -115,3 +116,18 @@ export const getDemoAccounts = (stellarAccounts) =>
             stellarAccounts[key].networkPassphrase === Networks.TESTNET
         )
         .map((key) => stellarAccounts[key]) : []
+
+
+
+
+/**
+ * Updates appropriate record in _Firebase Real Time Database_.
+ * 
+ * @async
+ * @param {String} uid Unique _Firebase_ user id.
+ * @param {String} accountId
+ * @param {String} name Alias string for the account.
+ * @returns {Promise} Contains `void` when resolved successfully.
+ */
+export const updateAccountName = async (uid, accountId, name) =>
+    await update(`user/${uid}/stellarAccounts/${accountId}`, { name })

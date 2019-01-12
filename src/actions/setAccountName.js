@@ -9,8 +9,7 @@
 
 
 
-
-import { update } from "../firebase"
+import { updateAccountName } from "../lib/logic/stellarAccount"
 import { action as AccountsActions } from "../redux/Accounts"
 import { action as AwaiterActions } from "../redux/Awaiter"
 import { action as SnackyActions } from "../redux/Snacky"
@@ -50,9 +49,7 @@ export const handleYes = () => {
                 { accountId, name } = getState().Accounts
             await dispatch(AwaiterActions.showSpinner())
             await dispatch(AwaiterActions.setProgressMessage("Updating ..."))
-            await update(`user/${uid}/stellarAccounts/${accountId}`, { name })
-            await dispatch(AwaiterActions.hideSpinner())
-            await dispatch(AwaiterActions.setProgressMessage(string.empty()))
+            await updateAccountName(uid, accountId, name)
             await dispatch(AccountsActions.hideEditNameModal())
             await dispatch(AccountsActions.setState({
                 accountId: string.empty(),
@@ -62,9 +59,7 @@ export const handleYes = () => {
             await dispatch(SnackyActions.setMessage("User data saved."))
             await dispatch(SnackyActions.showSnacky())
         } catch (error) {
-            await dispatch(AwaiterActions.hideSpinner())
             await dispatch(AccountsActions.hideEditNameModal())
-            await dispatch(AwaiterActions.setProgressMessage(string.empty()))
             await dispatch(AccountsActions.setState({
                 accountId: string.empty(),
                 name: string.empty(),
@@ -72,6 +67,8 @@ export const handleYes = () => {
             await dispatch(SnackyActions.setColor("error"))
             await dispatch(SnackyActions.setMessage(error.message))
             await dispatch(SnackyActions.showSnacky())
+        } finally {
+            await dispatch(AwaiterActions.resetState())
         }
     }
 }

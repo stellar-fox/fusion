@@ -20,6 +20,9 @@ import {
     action as KeysActions,
     signingMethod as sm,
 } from "../redux/Keys"
+import { signup } from "../actions/recipes/signup"
+import { updateAccountName } from "../lib/logic/stellarAccount"
+
 
 
 
@@ -154,33 +157,35 @@ export const handleYes = () => {
     return async (dispatch, getState) => {
         try {
             let
-                // { uid } = getState().Auth,
-                { accountType, name } = getState().Accounts
-            await dispatch(AwaiterActions.showSpinner())
-            await dispatch(AwaiterActions.setProgressMessage(
-                `Creating ${accountType} account ...`
-            ))
-            await dispatch(SnackyActions.setColor("success"))
-            await dispatch(SnackyActions.setMessage(
-                `Account '${name}' created.`
-            ))
-            await dispatch(SnackyActions.showSnacky())
-        } catch (error) {
-            await dispatch(SnackyActions.setColor("error"))
-            await dispatch(SnackyActions.setMessage(error.message))
-            await dispatch(SnackyActions.showSnacky())
-        } finally {
-            await dispatch(AwaiterActions.hideSpinner())
-            await dispatch(AwaiterActions.setProgressMessage(string.empty()))
+                { uid } = getState().Auth,
+                { name } = getState().Accounts,
+                { accountId, signingMethod } = getState().Keys
+
+            await dispatch(signup(signingMethod))
+            await updateAccountName(uid, accountId, name)
             await dispatch(AccountsActions.hideCreateAccountModal())
             await dispatch(AccountsActions.setState({
                 accountType: string.empty(),
                 activeStep: 0,
                 name: string.empty(),
             }))
-            await dispatch(KeysActions.setState({
-                signingMethod: sm.SHAMBHALA,
+            await dispatch(SnackyActions.setColor("success"))
+            await dispatch(SnackyActions.setMessage(
+                `Account '${name}' created.`
+            ))
+            await dispatch(SnackyActions.showSnacky())
+        } catch (error) {
+            await dispatch(AccountsActions.hideCreateAccountModal())
+            await dispatch(AccountsActions.setState({
+                accountType: string.empty(),
+                activeStep: 0,
+                name: string.empty(),
             }))
+            await dispatch(SnackyActions.setColor("error"))
+            await dispatch(SnackyActions.setMessage(error.message))
+            await dispatch(SnackyActions.showSnacky())
+        } finally {
+            await dispatch(AwaiterActions.resetState())
             await dispatch(LedgerHQActions.resetState())
             await dispatch(KeysActions.resetState())
         }

@@ -272,10 +272,13 @@ export const closeShambhala = () =>
  */
 export const saveAccountData = () =>
     async (_dispatch, getState) => {
-        let { accountId, signingMethod, networkPassphrase } = getState().Keys
+        let
+            { accountId, signingMethod, networkPassphrase } = getState().Keys,
+            { name } = getState().Accounts
 
         await update(`user/${getState().Auth.uid}/stellarAccounts/${accountId}`, {
             accountId,
+            name,
             networkPassphrase,
             createdAt: Date.now(),
         })
