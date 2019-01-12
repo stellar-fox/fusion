@@ -159,6 +159,7 @@ export const signup = (signingMethod) =>
             dispatch(AwaiterActions.setFailed())
             dispatch(AwaiterActions.setErrorMessage(error.message))
             dispatch(closeShambhala())
+            return Promise.reject(error)
         }
 
     }

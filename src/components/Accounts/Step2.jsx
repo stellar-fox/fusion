@@ -86,16 +86,15 @@ const Step2 = ({account, accountId, classes, name, signingMethod}) =>
                                         {account}
                                     </TableCell>
                                 </TableRow>,
-                            [sm.MANUAL]: () => func.identity(),
+                            [sm.MANUAL]: () => <TableRow key="summary-account-id" classes={{ root: classes.tableRow }}>
+                                <TableCell classes={{ root: classes.tableCell }} padding="none">
+                                    Account ID:
+                                </TableCell>
+                                <TableCell classes={{ root: classes.tableCell }} align="right" padding="none">
+                                    {handleException(() => shorten(accountId, 11, shorten.MIDDLE, "-"), () => accountId)}
+                                </TableCell>
+                            </TableRow>,
                         }, () => "Invalid signing method.")}
-                        {signingMethod !== sm.SHAMBHALA && <TableRow key="summary-ledger-account" classes={{ root: classes.tableRow }}>
-                            <TableCell classes={{ root: classes.tableCell }} padding="none">
-                                Account ID:
-                            </TableCell>
-                            <TableCell classes={{ root: classes.tableCell }} align="right" padding="none">
-                                {handleException(() => shorten(accountId, 11, shorten.MIDDLE, "-"), () => accountId)}
-                            </TableCell>
-                        </TableRow>}
                     </TableBody>
                 </Table>
                 <Typography
