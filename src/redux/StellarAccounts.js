@@ -13,6 +13,9 @@ export const UPDATE_ACCOUNT_STATE = "@StellarAccounts/UPDATE_ACCOUNT_STATE"
 export const ADD_SIGNING_METHOD = "@StellarAccounts/ADD_SIGNING_METHOD"
 export const RESET_STATE = "@StellarAccounts/RESET_STATE"
 export const SET_STATE = "@StellarAccounts/SET_STATE"
+export const UPDATE_NATIVE_BALANCE = "@StellarAccounts/UPDATE_NATIVE_BALANCE"
+
+
 
 
 // ...
@@ -22,6 +25,12 @@ export const action = {
     updateAccountState: (stellarAccount) => ({
         type: UPDATE_ACCOUNT_STATE,
         stellarAccount,
+    }),
+
+    updateNativeBalance: (accountId, nativeBalance) => ({
+        type: UPDATE_NATIVE_BALANCE,
+        accountId,
+        nativeBalance,
     }),
 
     // ...
@@ -64,6 +73,17 @@ export const reducer = createReducer(initState)({
             horizonUrl: action.stellarAccount.horizonUrl,
             balances: action.stellarAccount.balances,
             signingMethods: action.stellarAccount.signingMethods || [],
+        },
+    }),
+
+
+    // Update balance
+    [UPDATE_NATIVE_BALANCE]: (state, action) => ({
+        ...state,
+        [action.accountId]: {
+            ...state[action.accountId],
+            nativeBalance: action.nativeBalance,
+            updatedAt: Date.now(),
         },
     }),
 

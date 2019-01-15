@@ -20,7 +20,7 @@ import { action as KeysActions, signingMethod as sm } from "../redux/Keys"
 import { config } from "../firebase/config"
 import axios from "axios"
 import { firebaseSingleton } from "../firebase"
-
+import { loadAccountState } from "../lib/logic/stellarAccount"
 
 
 
@@ -43,6 +43,30 @@ const setEnv = async ({
 }
 
 setEnv()
+
+
+
+
+/**
+ * @function showUpdatedBalance
+ * @param {String} accountId 
+ * @param {String} networkPassphrase 
+ */
+export const showUpdatedBalance = (accountId, networkPassphrase) =>
+    async (dispatch, _getState) => {
+        
+        let stellarAccount = await loadAccountState(
+            accountId, networkPassphrase
+        )
+
+        await dispatch(
+            StellarAccountsActions.updateNativeBalance(
+                stellarAccount.id,
+                stellarAccount.balances.find((balance) => balance.asset_type === "native")
+            )
+        )
+
+    }
 
 
 

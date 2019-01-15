@@ -10,9 +10,59 @@
 
 
 
-import { Networks } from "stellar-sdk"
 import { accountType as at } from "../../redux/Accounts"
 import { update } from "../../firebase"
+import {
+    Network,
+    Networks,
+    Server,
+} from "stellar-sdk"
+
+
+
+
+const context = {}
+
+const setEnvDemo = async ({
+    network = Networks.TESTNET,
+    horizonUrl = "https://horizon-testnet.stellar.org/",
+} = {}) => {
+
+    Network.use(new Network(network))
+    context.networkDemo = network
+
+    context.serverDemo = new Server(horizonUrl)
+    context.horizonUrlDemo = horizonUrl
+
+    return context
+
+}
+
+
+const setEnvReal = async ({
+    network = Networks.PUBLIC,
+    horizonUrl = "https://horizon.stellar.org/",
+} = {}) => {
+
+    Network.use(new Network(network))
+    context.networkReal = network
+
+    context.serverReal = new Server(horizonUrl)
+    context.horizonUrlReal = horizonUrl
+
+    return context
+
+}
+
+setEnvDemo()
+setEnvReal()
+
+
+
+export const loadAccountState = async (accountId, networkPassphrase) => 
+    await networkPassphrase === Networks.PUBLIC ?
+        context.serverReal.loadAccount(accountId) :
+        context.serverDemo.loadAccount(accountId)
 
 
 
