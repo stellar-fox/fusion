@@ -145,8 +145,8 @@ export default compose(
                                         $ 1,234,567.89
                                     </Typography>
                                     <Typography className="fade-strong" variant="body1">
-                                        {this.props.stellarAccounts[this.props.accountId].nativeBalance &&
-                                            this.props.stellarAccounts[this.props.accountId].nativeBalance.balance || "... "} XLM
+                                        {(this.props.stellarAccounts[this.props.accountId].nativeBalance &&
+                                            this.props.stellarAccounts[this.props.accountId].nativeBalance.balance) || "... "} XLM
                                     </Typography>
                                 </div>
                                 <div style={{ marginLeft: "1rem", width: 80 }}>
