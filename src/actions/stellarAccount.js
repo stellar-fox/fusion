@@ -48,11 +48,14 @@ setEnv()
 
 
 /**
- * @function showUpdatedBalance
+ * Fetches balances for the active user accounts directly from _SDF Horizon_.
+ * 
+ * @function showBalances
  * @param {String} accountId 
  * @param {String} networkPassphrase 
+ * @returns {Function}
  */
-export const showUpdatedBalance = (accountId, networkPassphrase) =>
+export const showBalances = (accountId, networkPassphrase) =>
     async (dispatch, _getState) => {
         
         let stellarAccount = await loadAccountState(
@@ -60,9 +63,14 @@ export const showUpdatedBalance = (accountId, networkPassphrase) =>
         )
 
         await dispatch(
-            StellarAccountsActions.updateNativeBalance(
+            StellarAccountsActions.updateBalances(
                 stellarAccount.id,
-                stellarAccount.balances.find((balance) => balance.asset_type === "native")
+                stellarAccount.balances.find(
+                    (balance) => balance.asset_type === "native"
+                ),
+                stellarAccount.balances.filter(
+                    (balance) => balance.asset_type !== "native"
+                ),
             )
         )
 

@@ -24,7 +24,7 @@ import { func, shorten } from "@xcmats/js-toolbox"
 import { Sparklines, SparklinesLine, SparklinesReferenceLine } from "react-sparklines"
 import { accountType as at } from "../../redux/Accounts"
 import { showEditNameModal } from "../../actions/setAccountName"
-import { showUpdatedBalance } from "../../actions/stellarAccount"
+import { showBalances } from "../../actions/stellarAccount"
 
 
 
@@ -74,7 +74,7 @@ export default compose(
         }),
         (dispatch) => bindActionCreators({
             showEditNameModal,
-            showUpdatedBalance,
+            showBalances,
         }, dispatch)
     )
 )(
@@ -86,7 +86,7 @@ export default compose(
         }
 
         componentDidMount = () => {
-            this.props.showUpdatedBalance(
+            this.props.showBalances(
                 this.props.accountId,
                 this.props.stellarAccounts[this.props.accountId].networkPassphrase
             )
