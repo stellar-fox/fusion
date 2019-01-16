@@ -57,7 +57,7 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, open, message, color, }) =>
+            ({ classes, open, message, color }) =>
                 <Snackbar
                     anchorOrigin={{
                         vertical: "bottom",
@@ -70,7 +70,7 @@ export default compose(
 
                     ContentProps={{
                         "aria-describedby": "message-id",
-                        classes: { root: classes[color], },
+                        classes: { root: classes[color] },
                     }}
                     message={
                         <span id="message-id">
