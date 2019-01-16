@@ -24,8 +24,7 @@ import { func, shorten } from "@xcmats/js-toolbox"
 import { Sparklines, SparklinesLine, SparklinesReferenceLine } from "react-sparklines"
 import { accountType as at } from "../../redux/Accounts"
 import { showEditNameModal } from "../../actions/setAccountName"
-import { showBalances } from "../../actions/stellarAccount"
-
+import { updateBalances } from "../../actions/stellarAccount"
 
 
 
@@ -74,7 +73,7 @@ export default compose(
         }),
         (dispatch) => bindActionCreators({
             showEditNameModal,
-            showBalances,
+            updateBalances,
         }, dispatch)
     )
 )(
@@ -85,8 +84,10 @@ export default compose(
             classes: PropTypes.object.isRequired,
         }
 
+
+        // ...
         componentDidMount = () => {
-            this.props.showBalances(
+            this.props.updateBalances(
                 this.props.accountId,
                 this.props.stellarAccounts[this.props.accountId].networkPassphrase
             )
@@ -144,7 +145,8 @@ export default compose(
                                         $ 1,234,567.89
                                     </Typography>
                                     <Typography className="fade-strong" variant="body1">
-                                        10,234,567.1234567 XLM
+                                        {this.props.stellarAccounts[this.props.accountId].nativeBalance &&
+                                            this.props.stellarAccounts[this.props.accountId].nativeBalance.balance || "... "} XLM
                                     </Typography>
                                 </div>
                                 <div style={{ marginLeft: "1rem", width: 80 }}>
