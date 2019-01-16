@@ -10,6 +10,7 @@ import {
 const initState = {
     backupError: string.empty(),
     backupInProgress: false,
+    loading: false,
     restoreError: string.empty(),
     restoreInProgress: false,
     restoredBackup: null,

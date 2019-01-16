@@ -14,6 +14,7 @@ import Signup from "../Signup"
 import PasswordReset from "../PasswordReset"
 import FirebaseActions from "../FirebaseActions"
 import queryString from "query-string"
+import { setDataLoaded } from "../../thunks/main"
 
 
 
@@ -27,7 +28,9 @@ export default compose(
             authenticated: toBool(state.Auth.uid),
         }),
         // map actions to props.
-        (dispatch) => bindActionCreators({}, dispatch)
+        (dispatch) => bindActionCreators({
+            setDataLoaded,
+        }, dispatch)
     )
 )(
     class extends Component {
@@ -55,6 +58,8 @@ export default compose(
                 "actions": this.rr("actions/"),
                 "reset": this.rr("reset/"),
             })
+
+            this.props.setDataLoaded()
         }
 
 

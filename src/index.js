@@ -32,6 +32,7 @@ import {
     dynamicImportLibs,
     dynamicImportReducers,
 } from "./lib/utils"
+import { setDataLoading } from "./thunks/main"
 
 
 window.addEventListener("load", () => {
@@ -70,7 +71,7 @@ window.addEventListener("load", () => {
 
 
     // TODO
-    // store.dispatch(thunks.setInfoMessage("Loading data ..."))
+    store.dispatch(setDataLoading())
 
 
     // expose 'sf' dev. namespace only in dev. environment
