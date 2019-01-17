@@ -1,17 +1,20 @@
 import React, { Fragment } from "react"
-import { compose } from "redux"
+import { bindActionCreators } from "redux"
+import { connect } from "react-redux"
+import { func } from "@xcmats/js-toolbox"
 import { withStyles } from "@material-ui/core/styles"
 import { url, rgba } from "../../lib/utils"
 import { Button, Grid, Hidden, Paper } from "@material-ui/core"
 import UserLogin from "../UserLogin"
 import background from "../Fusion/static/bg.png"
 import { Link } from "react-router-dom"
+import Awaiter from "../Awaiter"
 
 
 
 
 // <Welcome> component
-export default compose(
+export default func.compose(
     withStyles((_theme) => ({
 
         container: {
@@ -31,8 +34,18 @@ export default compose(
             fontSize: "12px",
             borderRadius: "3px",
         },
-    }))
-)(({ classes }) => {
+    })),
+    connect(
+        (state) => ({
+            error: state.Accounts.error,
+            errorMessage: state.Accounts.errorMessage,
+            loading: state.App.loading,
+        }),
+        (dispatch) => bindActionCreators({
+            
+        }, dispatch),
+    ),
+)(({ classes, loading }) => {
 
     return (
         <Fragment>
@@ -45,17 +58,22 @@ export default compose(
                     wrap={"nowrap"}
                 >
                     <Grid item>
-                        <UserLogin />
-                        <div className="flex-box-row space-between">
-                            <Button size="small" component={Link} to="/reset"
-                                color="secondary"
-                                className={classes.button}
-                            >Reset Password</Button>
-                            <Button size="small" component={Link} to="/signup"
-                                color="secondary"
-                                className={classes.button}
-                            >Signup</Button>
-                        </div>
+                        {loading ?
+                            <Awaiter /> :
+                            <Fragment>
+                                <UserLogin />
+                                <div className="flex-box-row space-between">
+                                    <Button size="small" component={Link} to="/reset"
+                                        color="secondary"
+                                        className={classes.button}
+                                    >Reset Password</Button>
+                                    <Button size="small" component={Link} to="/signup"
+                                        color="secondary"
+                                        className={classes.button}
+                                    >Signup</Button>
+                                </div>
+                            </Fragment>
+                        }
                     </Grid>
                 </Grid>
             </Hidden>
@@ -70,19 +88,24 @@ export default compose(
                     wrap={"nowrap"}
                 >
                     <Grid item>
-                        <Paper elevation={2} className={classes.loginPaper}>
-                            <UserLogin />
-                            <div className="flex-box-row space-between m-t-small">
-                                <Button size="small" component={Link} to="/reset"
-                                    color="secondary"
-                                    className={classes.button}
-                                >Reset Password</Button>
-                                <Button size="small" component={Link} to="/signup"
-                                    color="secondary"
-                                    className={classes.button}
-                                >Signup</Button>
-                            </div>
-                        </Paper>
+                        {loading ?
+                            <Awaiter /> :
+                            <Fragment>
+                                <Paper elevation={2} className={classes.loginPaper}>
+                                    <UserLogin />
+                                    <div className="flex-box-row space-between m-t-small">
+                                        <Button size="small" component={Link} to="/reset"
+                                            color="secondary"
+                                            className={classes.button}
+                                        >Reset Password</Button>
+                                        <Button size="small" component={Link} to="/signup"
+                                            color="secondary"
+                                            className={classes.button}
+                                        >Signup</Button>
+                                    </div>
+                                </Paper>
+                            </Fragment>
+                        }
                     </Grid>
                 </Grid>
             </Hidden>

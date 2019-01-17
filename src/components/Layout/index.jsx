@@ -4,7 +4,10 @@ import { compose, bindActionCreators } from "redux"
 import { connect } from "react-redux"
 import { Redirect, Route } from "react-router-dom"
 import raf from "raf"
-import { toBool } from "@xcmats/js-toolbox"
+import {
+    toBool,
+    timeUnit,
+} from "@xcmats/js-toolbox"
 import {
     ConnectedSwitch as Switch, resolvePath, withStaticRouter,
 } from "../FusionRouter"
@@ -59,7 +62,7 @@ export default compose(
                 "reset": this.rr("reset/"),
             })
 
-            this.props.setDataLoaded()
+            setTimeout(this.props.setDataLoaded, 1.2 * timeUnit.second)
         }
 
 
