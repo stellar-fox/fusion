@@ -11,7 +11,6 @@ import { string } from "@xcmats/js-toolbox"
 export const doAuthenticate = () =>
     async (dispatch, getState) => {
         try {
-            console.log("Attempting to authenticate ...")
             const { email, password } = getState().UserLogin
 
             await dispatch(UserLoginActions.setState({
@@ -27,20 +26,17 @@ export const doAuthenticate = () =>
             const jwt = await auth.user.getIdToken()
 
             await dispatch(AuthActions.setState({
-                uid: auth.user.uid,
                 email: auth.user.email,
                 displayName: auth.user.displayName || string.empty(),
                 photoUrl: auth.user.photoURL || string.empty(),
                 emailVerified: auth.user.emailVerified,
                 jwt,
             }))
-
-            console.log("Got user credentials.")
             
             !auth.user.photoURL &&
                 await dispatch(getStorageAvatar(auth.user))
             
-            console.log("Logged in.")
+            await dispatch(AuthActions.setState({ uid: auth.user.uid }))
             await dispatch(UserLoginActions.resetState())
 
         } catch (error) {
