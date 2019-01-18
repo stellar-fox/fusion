@@ -2,8 +2,6 @@ import React, { Component } from "react"
 import PropTypes from "prop-types"
 import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
-import { string } from "@xcmats/js-toolbox"
-import { action as AuthActions } from "../../redux/Auth"
 import { withStyles } from "@material-ui/core/styles"
 import { LinearProgress } from "@material-ui/core"
 import Button from "../../lib/mui-v1/Button"
@@ -11,6 +9,8 @@ import TextInput from "../../lib/mui-v1/TextInput"
 import { Typography } from "@material-ui/core"
 import { env } from "../Fusion"
 import logo from "../Fusion/static/logo.svg"
+import { doAuthenticate } from "../../thunks/main"
+import { action as UserLoginActions } from "../../redux/UserLogin"
 
 
 
@@ -48,115 +48,30 @@ export default compose(
     })),
     connect(
         (state) => ({
-            loginAttempts: state.Auth.status.loginAttempts,
-            maxLoginAttempts: state.Auth.status.maxLoginAttempts,
+            userLogin: state.UserLogin,
         }),
         (dispatch) => bindActionCreators({
-            login: AuthActions.login,
+            doAuthenticate,
+            setEmail: UserLoginActions.setEmail,
+            setPassword: UserLoginActions.setPassword,
         }, dispatch)
     ),
 )(
     class extends Component {
 
+
         // ...
         static propTypes = {
             classes: PropTypes.object.isRequired,
-            login: PropTypes.func.isRequired,
-        }
-
-
-        // ...
-        state = {
-            disabled: false,
-            email: string.empty(),
-            password: string.empty(),
-            progressBarOpacity: 0,
-            errorMessageEmail: string.empty(),
-            errorMessagePassword: string.empty(),
-        }
-
-
-        // ...
-        setEmail = (e) =>
-            this.setState({ email: e.target.value })
-
-
-        // ...
-        setPassword = (e) =>
-            this.setState({ password: e.target.value })
-
-
-        // ...
-        authenticate = async (_e) => {
-            try {
-                this.setState({
-                    disabled: true,
-                    errorEmail: false,
-                    errorMessageEmail: string.empty(),
-                    errorPassword: false,
-                    errorMessagePassword: string.empty(),
-                    progressBarOpacity: 1,
-                })
-                await this.props.login(
-                    this.state.email,
-                    this.state.password
-                )
-            } catch (error) {
-
-                // reset button and progress bar
-                this.setState({
-                    progressBarOpacity: 0,
-                    disabled: false,
-                })
-
-                // THE CHECKS BELOW NEED TO BE DONE ON THE BACKEND.
-
-                // handle error on UI based on error code
-                if (error.code === "auth/invalid-email") {
-                    this.setState({
-                        errorEmail: true,
-                        errorMessageEmail: error.message,
-                        errorPassword: false,
-                        errorMessagePassword: string.empty(),
-                    })
-                    return
-                }
-
-                if (error.code === "auth/wrong-password") {
-                    this.setState({
-                        errorEmail: false,
-                        errorMessagePassword: "Password is invalid.",
-                        errorPassword: true,
-                        errorMessageEmail: string.empty(),
-                    })
-                    return
-                }
-
-                if (error.code === "auth/user-not-found") {
-                    this.setState({
-                        errorEmail: true,
-                        errorPassword: true,
-                        errorMessageEmail: "Invalid credentials.",
-                        errorMessagePassword: "Invalid credentials.",
-                    })
-                    return
-                }
-
-                // in case of other error - display the code/message
-                this.setState({
-                    errorEmail: true,
-                    errorPassword: true,
-                    errorMessageEmail: error.code,
-                    errorMessagePassword: error.message,
-                })
-
-            }
+            doAuthenticate: PropTypes.func.isRequired,
+            setEmail: PropTypes.func.isRequired,
+            setPassword: PropTypes.func.isRequired,
         }
 
 
         // ...
         render = () => (
-            ({ classes }) =>
+            ({ doAuthenticate, classes, setEmail, setPassword, userLogin }) =>
                 <div className={classes.root}>
                     <img
                         className={classes.appLogo}
@@ -173,36 +88,35 @@ export default compose(
                         label="Email"
                         type="text"
                         fullWidth
-                        value={this.state.email}
-                        onChange={this.setEmail}
+                        value={userLogin.email}
+                        onChange={(e) => setEmail(e.target.value)}
                         autocomplete={false}
-                        error={this.state.errorEmail}
-                        errorMessage={this.state.errorMessageEmail}
+                        error={userLogin.errorEmail}
+                        errorMessage={userLogin.errorMessageEmail}
                     />
                     <TextInput
                         id="password"
                         label="Password"
                         type="password"
                         fullWidth
-                        value={this.state.password}
-                        onChange={this.setPassword}
+                        value={userLogin.password}
+                        onChange={(e) => setPassword(e.target.value)}
                         autocomplete={false}
-                        error={this.state.errorPassword}
-                        errorMessage={this.state.errorMessagePassword}
+                        error={userLogin.errorPassword}
+                        errorMessage={userLogin.errorMessagePassword}
                     />
-
                     <Button
                         fullWidth
                         color="green"
-                        disabled={this.state.disabled}
-                        onClick={this.authenticate}
+                        disabled={userLogin.disabled}
+                        onClick={() => doAuthenticate()}
                     >
                         Sign In
                     </Button>
                     <LinearProgress
                         variant="indeterminate"
                         classes={{ root: this.props.classes.progressBar }}
-                        style={{ opacity: this.state.progressBarOpacity }}
+                        style={{ opacity: userLogin.progressBarOpacity }}
                     />
                 </div>
         )(this.props)

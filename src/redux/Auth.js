@@ -4,11 +4,9 @@ import {
 } from "@xcmats/js-toolbox"
 import {
     applyVerificationCode,
-    authenticate,
     resetPassword,
     signout,
     signup,
-    storageRef,
     updateEmail,
     updateUserProfile,
     updatePassword,
@@ -24,10 +22,8 @@ import { action as SigningMethodsActions } from "../redux/SigningMethods"
 
 // <Auth> state
 const initState = {
-    status: {
-        loginAttempts: 0,
-        maxLoginAttempts: 1,
-    },
+    ready: true,
+    
 }
 
 
@@ -43,38 +39,6 @@ export const SEND_EMAIL_VERIFICATION = "@Auth/SEND_EMAIL_VERIFICATION"
 
 // ...
 export const action = {
-
-    // ...
-    login: (...args) =>
-        async (dispatch, _getState) => {
-            const auth = await authenticate(...args)
-            const jwt = await auth.user.getIdToken()
-
-            await dispatch(action.setState({
-                uid: auth.user.uid,
-                email: auth.user.email,
-                displayName: auth.user.displayName || string.empty(),
-                photoUrl: auth.user.photoURL || string.empty(),
-                emailVerified: auth.user.emailVerified,
-                jwt,
-            }))
-
-            !auth.user.photoURL &&
-                await dispatch(action.getStorageAvatar(auth.user))
-
-        },
-
-
-
-
-    // ...
-    getStorageAvatar: (user) =>
-        async (dispatch, _getState) =>
-            storageRef().child(`${user.uid}/avatar.jpeg`)
-                .getDownloadURL().then((photoUrl) => {
-                    dispatch(action.setState({ photoUrl }))
-                }),
-
 
     // ...
     logout: () =>
