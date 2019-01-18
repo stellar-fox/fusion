@@ -10,6 +10,7 @@ import { reducer as Router } from "./FusionRouter"
 import { reducer as SigningMethods } from "./SigningMethods"
 import { reducer as Snacky } from "./Snacky"
 import { reducer as StellarAccounts } from "./StellarAccounts"
+import { reducer as UserLogin } from "./UserLogin"
 import { reducer as UserManagement } from "./UserManagement"
 
 
@@ -29,5 +30,6 @@ export default {
     SigningMethods,
     Snacky,
     StellarAccounts,
+    UserLogin,
     UserManagement,
 }
