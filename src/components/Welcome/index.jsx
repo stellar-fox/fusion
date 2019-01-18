@@ -39,13 +39,14 @@ export default func.compose(
         (state) => ({
             error: state.Accounts.error,
             errorMessage: state.Accounts.errorMessage,
+            disabled: state.UserLogin.disabled,
             loading: state.App.loading,
         }),
         (dispatch) => bindActionCreators({
             
         }, dispatch),
     ),
-)(({ classes, loading }) => {
+)(({ classes, disabled, loading }) => {
 
     return (
         <Fragment>
@@ -63,13 +64,21 @@ export default func.compose(
                             <Fragment>
                                 <UserLogin />
                                 <div className="flex-box-row space-between">
-                                    <Button size="small" component={Link} to="/reset"
+                                    <Button
+                                        size="small"
+                                        component={Link}
+                                        to="/reset"
                                         color="secondary"
                                         className={classes.button}
+                                        disabled={disabled}
                                     >Reset Password</Button>
-                                    <Button size="small" component={Link} to="/signup"
+                                    <Button
+                                        size="small"
+                                        component={Link}
+                                        to="/signup"
                                         color="secondary"
                                         className={classes.button}
+                                        disabled={disabled}
                                     >Signup</Button>
                                 </div>
                             </Fragment>
@@ -94,13 +103,21 @@ export default func.compose(
                                 <Paper elevation={2} className={classes.loginPaper}>
                                     <UserLogin />
                                     <div className="flex-box-row space-between m-t-small">
-                                        <Button size="small" component={Link} to="/reset"
+                                        <Button
+                                            size="small"
+                                            component={Link}
+                                            to="/reset"
                                             color="secondary"
                                             className={classes.button}
+                                            disabled={disabled}
                                         >Reset Password</Button>
-                                        <Button size="small" component={Link} to="/signup"
+                                        <Button
+                                            size="small"
+                                            component={Link}
+                                            to="/signup"
                                             color="secondary"
                                             className={classes.button}
+                                            disabled={disabled}
                                         >Signup</Button>
                                     </div>
                                 </Paper>
