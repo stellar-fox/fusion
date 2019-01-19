@@ -70,13 +70,6 @@ export default compose(
 
 
         // ...
-        componentDidMount = () => {
-            this.props.detectAccount(this.props.uid)
-            this.props.detectSigningMethod(this.props.uid)
-        }
-
-
-        // ...
         render = () => (
             ({ classes, loading }) => {
 

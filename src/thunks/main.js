@@ -2,6 +2,8 @@ import { action as AppActions } from "../redux/Fusion"
 import { action as AuthActions } from "../redux/Auth"
 import { action as AwaiterActions } from "../redux/Awaiter"
 import { action as UserLoginActions } from "../redux/UserLogin"
+import { detectAccount } from "../actions/stellarAccount"
+import { detectSigningMethod } from "../actions/signingMethods"
 import { authenticate, storageRef } from "../firebase"
 import { string } from "@xcmats/js-toolbox"
 
@@ -36,6 +38,9 @@ export const doAuthenticate = () =>
             !auth.user.photoURL &&
                 await dispatch(getStorageAvatar(auth.user))
             
+            await dispatch(detectAccount(auth.user.uid))
+            await dispatch(detectSigningMethod(auth.user.uid))
+
             await dispatch(AuthActions.setState({ uid: auth.user.uid }))
             await dispatch(UserLoginActions.resetState())
 
