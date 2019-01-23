@@ -33,7 +33,7 @@ export const doAuthenticate = () =>
             const { email, password } = getState().UserLogin
 
             // reset user login UI state
-            await dispatch(UserLoginActions.setState({
+            await dispatch( await UserLoginActions.setState({
                 disabled: true,
                 errorEmail: false,
                 errorMessageEmail: string.empty(),
@@ -47,7 +47,7 @@ export const doAuthenticate = () =>
             const jwt = await auth.user.getIdToken()
 
             // Set Redux variables
-            await dispatch(AuthActions.setState({
+            await dispatch( await AuthActions.setState({
                 email: auth.user.email,
                 displayName: auth.user.displayName || string.empty(),
                 photoUrl: auth.user.photoURL || string.empty(),
@@ -57,15 +57,14 @@ export const doAuthenticate = () =>
             
             // Fetch photo url once
             !auth.user.photoURL &&
-                await dispatch(getStorageAvatar(auth.user))
+                await dispatch( await getStorageAvatar(auth.user))
             
             // Load user stellar accounts
-            await dispatch(detectAccount(auth.user.uid))
-            await dispatch(detectSigningMethod(auth.user.uid))
+            await dispatch( await detectAccount(auth.user.uid))
+            await dispatch( await detectSigningMethod(auth.user.uid))
 
-            // Signal to the UI ready state of Redux tree
-            await dispatch(AuthActions.setState({ uid: auth.user.uid }))
-            await dispatch(UserLoginActions.resetState())
+            // Signaling UI ready is done within above actions as they use
+            // Firebase's "on value" event listener.
 
         } catch (error) {
 

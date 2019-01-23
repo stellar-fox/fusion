@@ -17,10 +17,14 @@ import { Network, Networks, Server, Transaction } from "stellar-sdk"
 import { action as StellarAccountsActions } from "../redux/StellarAccounts"
 import { testNetworkPassphrase } from "../lib/constants"
 import { action as KeysActions, signingMethod as sm } from "../redux/Keys"
+import { action as AuthActions } from "../redux/Auth"
+import { action as UserLoginActions } from "../redux/UserLogin"
 import { config } from "../firebase/config"
 import axios from "axios"
 import { firebaseSingleton } from "../firebase"
 import { loadAccountState } from "../lib/logic/stellarAccount"
+import { async } from "@xcmats/js-toolbox"
+
 
 
 
@@ -89,10 +93,35 @@ export const updateBalances = (accountId, networkPassphrase) =>
 export const detectAccount = (uid) =>
     async (dispatch, _getState) => {
         firebaseSingleton.database().ref(`user/${uid}/stellarAccounts`)
-            .on("value", (snapshot) => {
+            .on("value", async (snapshot) => {
+                const snap = snapshot.val()
+                // Set initial Firebase stored account state in Redux
                 dispatch(StellarAccountsActions.setState({
                     ...snapshot.val(),
-                }))               
+                }))
+
+                // load user stellar accounts and their latest state
+                await async.parMap(Object.keys(snap), async (accountId) => {
+                    let stellarAccount = await loadAccountState(
+                        accountId, snap[accountId].networkPassphrase
+                    )
+                    await dispatch(
+                        await StellarAccountsActions.updateBalances(
+                            stellarAccount.id,
+                            stellarAccount.balances.find(
+                                (balance) => balance.asset_type === "native"
+                            ),
+                            stellarAccount.balances.filter(
+                                (balance) => balance.asset_type !== "native"
+                            ),
+                        )
+                    )
+                })
+
+                // done
+                await dispatch(AuthActions.setState({ uid }))
+                await dispatch(UserLoginActions.resetState())
+
             })
     }
 
