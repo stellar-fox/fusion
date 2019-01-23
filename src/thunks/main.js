@@ -1,3 +1,15 @@
+/**
+ * Fusion.
+ *
+ * Thunks.
+ *
+ * @module client-ui-thunks
+ * @license Apache-2.0
+ */
+
+
+
+
 import { action as AppActions } from "../redux/Fusion"
 import { action as AuthActions } from "../redux/Auth"
 import { action as AwaiterActions } from "../redux/Awaiter"
@@ -10,11 +22,17 @@ import { string } from "@xcmats/js-toolbox"
 
 
 
+/**
+ * Log-in the user via UI.
+ * @function doAuthenticate
+ * @returns {Function} thunk action
+ */
 export const doAuthenticate = () =>
     async (dispatch, getState) => {
         try {
             const { email, password } = getState().UserLogin
 
+            // reset user login UI state
             await dispatch(UserLoginActions.setState({
                 disabled: true,
                 errorEmail: false,
@@ -24,9 +42,11 @@ export const doAuthenticate = () =>
                 progressBarOpacity: 1,
             }))
             
+            // Authenticate with Firebase
             const auth = await authenticate(email, password)
             const jwt = await auth.user.getIdToken()
 
+            // Set Redux variables
             await dispatch(AuthActions.setState({
                 email: auth.user.email,
                 displayName: auth.user.displayName || string.empty(),
@@ -35,12 +55,15 @@ export const doAuthenticate = () =>
                 jwt,
             }))
             
+            // Fetch photo url once
             !auth.user.photoURL &&
                 await dispatch(getStorageAvatar(auth.user))
             
+            // Load user stellar accounts
             await dispatch(detectAccount(auth.user.uid))
             await dispatch(detectSigningMethod(auth.user.uid))
 
+            // Signal to the UI ready state of Redux tree
             await dispatch(AuthActions.setState({ uid: auth.user.uid }))
             await dispatch(UserLoginActions.resetState())
 
@@ -95,6 +118,13 @@ export const doAuthenticate = () =>
 
 
 
+/**
+ * Fetch user uploaded avatar URL from _Firebase Storage_.
+ * 
+ * @function getStorageAvatar
+ * @param {Object} user 
+ * @returns {Function} thunk action
+ */
 export const getStorageAvatar = (user) =>
     async (dispatch, _getState) =>
         storageRef().child(`${user.uid}/avatar.jpeg`)
