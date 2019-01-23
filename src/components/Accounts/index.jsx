@@ -43,6 +43,7 @@ export default compose(
     connect(
         // map state to props.
         (state) => ({
+            height: state.App.dim.height,
             tabSelected: state.Accounts.tabSelected,
             realAccounts: getRealAccounts(state.StellarAccounts),
             demoAccounts: getDemoAccounts(state.StellarAccounts),
@@ -71,7 +72,7 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, loading }) => {
+            ({ classes, height, loading }) => {
 
                 return <Switch>
                     <Route exact path={this.rr(".")}>
@@ -80,7 +81,10 @@ export default compose(
                         </div> : <Fragment>
                             <ModalCreateAccount />
                             <ModalEditName />
-                            <Paper className={classes.paperCanvas}>
+                            <Paper style={{
+                                height: height - 90,
+                            }} className={classes.paperCanvas}
+                            >
                                 <MainContent />
                             </Paper>
                             <Snacky />

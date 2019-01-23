@@ -48,7 +48,7 @@ import { showCreateAccountModal } from "../../actions/createAccount"
  * @returns {React.ReactElement}
  */
 const MainContent = ({
-    changeTab, classes, demoAccounts, realAccounts, showCreateAccountModal,
+    changeTab, classes, demoAccounts, height, realAccounts, showCreateAccountModal,
     tabSelected, width,
 }) => {
     
@@ -161,6 +161,10 @@ const MainContent = ({
                         WebkitTransform: `translate(${value.x}px, 0)`,
                         transform: `translate(${value.x}px, 0)`,
                         opacity: value.opacity,
+                        height: height - 220,
+                    }}
+                    slideStyle={{
+                        height: height - 220,
                     }}
                     index={tabSelected}
                 >
@@ -253,6 +257,7 @@ export default func.compose(
     withWidth(),
     connect(
         (state) => ({
+            height: state.App.dim.height,
             tabSelected: state.Accounts.tabSelected,
             realAccounts: getRealAccounts(state.StellarAccounts),
             demoAccounts: getDemoAccounts(state.StellarAccounts),
