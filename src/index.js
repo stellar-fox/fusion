@@ -32,7 +32,12 @@ import {
     dynamicImportLibs,
     dynamicImportReducers,
 } from "./lib/utils"
-import { setDataLoading } from "./thunks/main"
+import {
+    setDataLoading,
+    setScreenDimensions
+} from "./thunks/main"
+
+
 
 
 window.addEventListener("load", () => {
@@ -69,6 +74,13 @@ window.addEventListener("load", () => {
         return s
     })()
 
+
+    // add available window-dimensions event listener
+    // (needed for some hacky components)
+    window.addEventListener(
+        "resize",
+        () => store.dispatch(setScreenDimensions())
+    )
 
     // TODO
     store.dispatch(setDataLoading())

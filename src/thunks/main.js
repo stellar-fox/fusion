@@ -13,6 +13,7 @@
 import { action as AppActions } from "../redux/Fusion"
 import { action as AuthActions } from "../redux/Auth"
 import { action as AwaiterActions } from "../redux/Awaiter"
+import { action as FusionActions } from "../redux/Fusion"
 import { action as UserLoginActions } from "../redux/UserLogin"
 import { detectAccount } from "../actions/stellarAccount"
 import { detectSigningMethod } from "../actions/signingMethods"
@@ -23,7 +24,21 @@ import { string } from "@xcmats/js-toolbox"
 
 
 /**
+ * Set new screen dimensions when browser-resize event is detected.
+ * 
+ * @function setScreenDimensions
+ * @returns {Function} thunk action
+ */
+export const setScreenDimensions = () =>
+    async (dispatch, _getState) =>
+        await dispatch( await FusionActions.setDimensions())
+
+
+
+
+/**
  * Log-in the user via UI.
+ * 
  * @function doAuthenticate
  * @returns {Function} thunk action
  */
