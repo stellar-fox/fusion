@@ -30,6 +30,7 @@
         "@stellar-fox/redshift": "^1.0.2",
         "@xcmats/js-toolbox": "^0.8.0",
         "axios": "^0.18.0",
+        "bignumber.js": "^8.0.2",
         "classnames": "^2.2.6",
         "firebase": "^5.7.3",
         "fuse.js": "^3.3.0",
