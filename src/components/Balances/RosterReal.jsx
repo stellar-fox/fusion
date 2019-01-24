@@ -24,6 +24,7 @@ import { action as PayActions } from "../../redux/Pay"
 import { accountType as at } from "../../redux/Accounts"
 import withWidth, { isWidthUp } from "@material-ui/core/withWidth"
 import { fade } from "@material-ui/core/styles/colorManipulator"
+import BigNumber from "bignumber.js"
 
 
 
@@ -52,14 +53,14 @@ export default compose(
             borderBottom: "none !important",
         },
         tableCellHead: {
-            borderBottom: `1px solid ${theme.palette.custom.darkGunmetal} !important`,
+            borderBottom: `1px solid ${fade(theme.palette.custom.darkGunmetal, 0.5)} !important`,
         },
         tableHead: {
             height: 32,
         },
         tableRow: {
             cursor: "pointer",
-            borderBottom: `1px solid ${theme.palette.custom.darkGunmetal} !important`,
+            borderBottom: `1px solid ${fade(theme.palette.custom.darkGunmetal, 0.3)} !important`,
             "&:last-child": {
                 borderBottom: "none !important",
                 borderTop: "none !important",
@@ -140,11 +141,17 @@ export default compose(
                     </Typography>
                 </div> :
                     <Fragment>
-                        <Typography style={{ padding: "1rem 0 0 0" }} variant="h4">
+                        <Typography style={{ padding: "1rem 0 0 0", opacity: 0.5 }} variant="h4">
                             Total for all accounts
                         </Typography>
-                        <Typography style={{ padding: "0 0 1rem 0" }} variant="h5">
-                            $1,234,567.89
+                        <Typography style={{ padding: "0 0 0.5rem 0" }} variant="body1">
+                            {realAccountIds.map((
+                                accountId => stellarAccounts[accountId].nativeBalance.balance
+                            )).reduce((a,b) => {
+                                let bna = BigNumber(a)
+                                let bnb = BigNumber(b)
+                                return bna.plus(bnb).toFixed(7)
+                            }, 0)} <span style={{ fontSize: "0.7rem" }}>XLM</span>
                         </Typography>
                         <Table classes={{ root: classes.table }}>
                             <TableHead>
@@ -167,10 +174,10 @@ export default compose(
                                             </div>
                                         </TableCell>
                                         <TableCell classes={{ root: classes.tableCell }} align="right" padding="none">
-                                            0.00
+                                            {stellarAccounts[accountId].nativeBalance.balance}
                                         </TableCell>
                                         <TableCell classes={{ root: classes.tableCell }} align="right" padding="none">
-                                            0.00
+                                            {stellarAccounts[accountId].nativeBalance.balance}
                                         </TableCell>
                                     </TableRow>
                                 })}
