@@ -143,16 +143,16 @@ const MainContent = ({
             index={tabSelected}
         >
             {realAccounts.length === 0 ? <div
-                className="flex-box-col items-centered content-centered space-around"
+                className="flex-box-col items-centered content-centered"
                 style={{
                     marginTop: "10%",
                     opacity: 0.3,
                 }}
             >
-                <Typography variant="h1">
+                <Typography variant={isWidthUp("md", width) ? "h1" : "h4"}>
                     You have no real accounts at the moment.
                 </Typography>
-                <Typography variant="h4">
+                <Typography variant={isWidthUp("md", width) ? "h4" : "h3"}>
                     Open one today! It only takes 15 seconds.
                 </Typography>
             </div> :
@@ -175,7 +175,7 @@ const MainContent = ({
             }
 
             {demoAccounts.length === 0 ? <div
-                className="flex-box-col items-centered content-centered space-around"
+                className="flex-box-col items-centered content-centered"
                 style={{
                     marginTop: "10%",
                     opacity: 0.3,

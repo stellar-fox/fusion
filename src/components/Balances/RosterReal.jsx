@@ -22,6 +22,7 @@ import { getRealAccountIds } from "../../lib/logic/stellarAccount"
 import { signingMethods } from "../../lib/logic/signingMethods"
 import { action as PayActions } from "../../redux/Pay"
 import { accountType as at } from "../../redux/Accounts"
+import withWidth, { isWidthUp } from "@material-ui/core/withWidth"
 
 
 
@@ -64,6 +65,7 @@ export default compose(
             },
         },
     })),
+    withWidth(),
     connect(
         (state) => ({
             realAccountIds: getRealAccountIds(state.StellarAccounts),
@@ -120,51 +122,60 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, realAccountIds, stellarAccounts }) =>
-                <Fragment>
-
-                    <Typography style={{ padding: "1rem 0 0 0" }} variant="h4">
-                        Total for all accounts
+            ({ classes, realAccountIds, stellarAccounts, width }) =>    
+                realAccountIds.length === 0 ? <div
+                    className="flex-box-col items-centered content-centered"
+                    style={{
+                        marginTop: "10%",
+                        opacity: 0.3,
+                    }}
+                >
+                    
+                    <Typography variant={isWidthUp("md", width) ? "h1" : "h4"}>
+                        You have no real accounts at the moment.
                     </Typography>
-                    <Typography style={{ padding: "0 0 1rem 0" }} variant="h5">
-                        $1,234,567.89
+                    <Typography variant={isWidthUp("md", width) ? "h4" : "h3"}>
+                        Please create a real account first in order to view the balance roster.
                     </Typography>
-
-
-                    {realAccountIds.length > 0 &&
-                    <Table classes={{ root: classes.table }}>
-                        <TableHead>
-                            <TableRow classes={{ root: classes.tableHead }}>
-                                <TableCell classes={{ root: classes.tableCellHead }} padding="none">Account Name</TableCell>
-                                <TableCell classes={{ root: classes.tableCellHead }} padding="none" align="right">Available</TableCell>
-                                <TableCell classes={{ root: classes.tableCellHead }} padding="none" align="right">Balance</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {realAccountIds.map((accountId) => {
-                                return <TableRow key={accountId} onClick={this.showModal(accountId)} classes={{ root: classes.tableRow }}>
-                                    <TableCell classes={{ root: classes.tableCell }} padding="none">
-                                        <div className="flex-box-row">
-                                            {this.bar(accountId)}
-                                            <div className="flex-box-col">
-                                                <div>{stellarAccounts[accountId].name || "No Name"}</div>
-                                                <div>{string.shorten(accountId, 11, string.shorten.MIDDLE, "-")}</div>
-                                            </div>
-                                        </div>
-                                    </TableCell>
-                                    <TableCell classes={{ root: classes.tableCell }} align="right" padding="none">
-                                        0.00
-                                    </TableCell>
-                                    <TableCell classes={{ root: classes.tableCell }} align="right" padding="none">
-                                        0.00
-                                    </TableCell>
+                </div> :
+                    <Fragment>
+                        <Typography style={{ padding: "1rem 0 0 0" }} variant="h4">
+                            Total for all accounts
+                        </Typography>
+                        <Typography style={{ padding: "0 0 1rem 0" }} variant="h5">
+                            $1,234,567.89
+                        </Typography>
+                        <Table classes={{ root: classes.table }}>
+                            <TableHead>
+                                <TableRow classes={{ root: classes.tableHead }}>
+                                    <TableCell classes={{ root: classes.tableCellHead }} padding="none">Account Name</TableCell>
+                                    <TableCell classes={{ root: classes.tableCellHead }} padding="none" align="right">Available</TableCell>
+                                    <TableCell classes={{ root: classes.tableCellHead }} padding="none" align="right">Balance</TableCell>
                                 </TableRow>
-                            })}
-
-                        </TableBody>
-                    </Table>
-                    }
-                </Fragment>
+                            </TableHead>
+                            <TableBody>
+                                {realAccountIds.map((accountId) => {
+                                    return <TableRow key={accountId} onClick={this.showModal(accountId)} classes={{ root: classes.tableRow }}>
+                                        <TableCell classes={{ root: classes.tableCell }} padding="none">
+                                            <div className="flex-box-row">
+                                                {this.bar(accountId)}
+                                                <div className="flex-box-col">
+                                                    <div>{stellarAccounts[accountId].name || "No Name"}</div>
+                                                    <div>{string.shorten(accountId, 11, string.shorten.MIDDLE, "-")}</div>
+                                                </div>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell classes={{ root: classes.tableCell }} align="right" padding="none">
+                                            0.00
+                                        </TableCell>
+                                        <TableCell classes={{ root: classes.tableCell }} align="right" padding="none">
+                                            0.00
+                                        </TableCell>
+                                    </TableRow>
+                                })}
+                            </TableBody>
+                        </Table>
+                    </Fragment>
         )(this.props)
 
     }
