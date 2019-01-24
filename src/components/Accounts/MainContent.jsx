@@ -168,39 +168,69 @@ const MainContent = ({
                     }}
                     index={tabSelected}
                 >
-                    <Grid
-                        container
-                        direction={isWidthUp("md", width) ? "row" : "column"}
-                        spacing={8}
-                        style={{ position: "relative" }}
-                        className="m-t m-b"
-                        classes={{ "spacing-xs-8": classes.spacing }}
+                    {realAccounts.length === 0 ? <div
+                        className="flex-box-col items-centered content-centered space-around"
+                        style={{
+                            marginTop: "10%",
+                            opacity: 0.3,
+                        }}
                     >
-                        {realAccounts.map((account) =>
-                            <Grid key={`${account.accountId}-${at.REAL}`} item>
-                                <AccountCard accountId={account.accountId}
-                                    accountType={at.REAL}
-                                />
-                            </Grid>
-                        )}
-                    </Grid>
+                        <Typography variant="h1">
+                            You have no real accounts at the moment.
+                        </Typography>
+                        <Typography variant="h4">
+                            Open one today! It only takes 15 seconds.
+                        </Typography>
+                    </div> :
+                        <Grid
+                            container
+                            direction={isWidthUp("md", width) ? "row" : "column"}
+                            spacing={8}
+                            style={{ position: "relative" }}
+                            className="m-t m-b"
+                            classes={{ "spacing-xs-8": classes.spacing }}
+                        >
+                            {realAccounts.map((account) =>
+                                <Grid key={`${account.accountId}-${at.REAL}`} item>
+                                    <AccountCard accountId={account.accountId}
+                                        accountType={at.REAL}
+                                    />
+                                </Grid>
+                            )}
+                        </Grid>
+                    }
 
-                    <Grid
-                        container
-                        direction={isWidthUp("md", width) ? "row" : "column"}
-                        spacing={8}
-                        style={{ position: "relative" }}
-                        className="m-t m-b"
-                        classes={{ "spacing-xs-8": classes.spacing }}
+                    {demoAccounts.length === 0 ? <div
+                        className="flex-box-col items-centered content-centered space-around"
+                        style={{
+                            marginTop: "10%",
+                            opacity: 0.3,
+                        }}
                     >
-                        {demoAccounts.map((account) =>
-                            <Grid key={`${account.accountId}-${at.DEMO}`} item>
-                                <AccountCard accountId={account.accountId}
-                                    accountType={at.DEMO}
-                                />
-                            </Grid>
-                        )}
-                    </Grid>
+                        <Typography variant="h1">
+                            You have no demo accounts at the moment.
+                        </Typography>
+                        <Typography variant="h4">
+                            Open one today! It only takes 15 seconds.
+                        </Typography>
+                    </div> :
+                        <Grid
+                            container
+                            direction={isWidthUp("md", width) ? "row" : "column"}
+                            spacing={8}
+                            style={{ position: "relative" }}
+                            className="m-t m-b"
+                            classes={{ "spacing-xs-8": classes.spacing }}
+                        >
+                            {demoAccounts.map((account) =>
+                                <Grid key={`${account.accountId}-${at.DEMO}`} item>
+                                    <AccountCard accountId={account.accountId}
+                                        accountType={at.DEMO}
+                                    />
+                                </Grid>
+                            )}
+                        </Grid>
+                    }
                 </SwipeableViews>
             </Fragment>
         }
