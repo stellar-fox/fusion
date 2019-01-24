@@ -14,7 +14,6 @@ import {
 import { AddRounded } from "@material-ui/icons"
 import SwipeableViews from "react-swipeable-views"
 import AccountCard from "./AccountCard"
-import { Motion, presets, spring } from "react-motion"
 import {
     func,
 } from "@xcmats/js-toolbox"
@@ -57,184 +56,157 @@ const MainContent = ({
         exit: 195,
     }
 
-    return <Motion defaultStyle={{ x: -10, opacity: 0 }}
-        style={{
-            x: spring(0, presets.stiff),
-            opacity: spring(1),
-        }}
-    >
-        {value =>
-            <Fragment>
+    return <Fragment>
+        <Grid
+            container
+            direction={"column"}
+            wrap={"nowrap"}
+            style={{ position: "relative" }}
+            className="m-b"
+        >
+            <Grid item>
+                <Typography variant="h6">
+                    Accounts
+                </Typography>
+            </Grid>
+            <Grid item>
+                <Typography variant="h4">
+                    Manage all your accounts in one place.
+                </Typography>
+            </Grid>
+            <Grid item>
+                <Zoom
+                    key="add-real"
+                    in={tabSelected === 0}
+                    timeout={transitionDuration}
+                    style={{
+                        transitionDelay: `${tabSelected === 0 ?
+                            transitionDuration.exit : 0}ms`,
+                    }}
+                    unmountOnExit
+                >
+                    <Fab aria-label="Add Real" size="small"
+                        className={classes.fab}
+                        classes={{ root: classes.fabReal }}
+                        onClick={ () => showCreateAccountModal(at.REAL) }
+                    >
+                        <AddRounded />
+                    </Fab>
+                </Zoom>
+
+                <Zoom
+                    key="add-demo"
+                    in={tabSelected === 1}
+                    timeout={transitionDuration}
+                    style={{
+                        transitionDelay: `${tabSelected === 1 ?
+                            transitionDuration.exit : 0}ms`,
+                    }}
+                    unmountOnExit
+                >
+                    <Fab aria-label="Add Demo" size="small"
+                        className={classes.fab}
+                        classes={{ root: classes.fabDemo }}
+                        onClick={() => showCreateAccountModal(at.DEMO)}
+                    >
+                        <AddRounded />
+                    </Fab>
+                </Zoom>
+            </Grid>
+        </Grid>
+
+        <Tabs
+            style={{
+                position: "relative",
+            }}
+            value={tabSelected}
+            onChange={(_e, value) => changeTab(value)}
+            variant="fullWidth"
+            classes={{ indicator: classes.indicator }}
+        >
+            <Tab classes={{ label: classes.labelRealAccounts }}
+                label="Real"
+            />
+            <Tab classes={{ label: classes.labelDemoAccounts }}
+                label="Demo"
+            />
+        </Tabs>
+
+        <SwipeableViews
+            style={{
+                position: "relative",
+                height: height - 220,
+            }}
+            slideStyle={{
+                height: height - 220,
+            }}
+            index={tabSelected}
+        >
+            {realAccounts.length === 0 ? <div
+                className="flex-box-col items-centered content-centered space-around"
+                style={{
+                    marginTop: "10%",
+                    opacity: 0.3,
+                }}
+            >
+                <Typography variant="h1">
+                    You have no real accounts at the moment.
+                </Typography>
+                <Typography variant="h4">
+                    Open one today! It only takes 15 seconds.
+                </Typography>
+            </div> :
                 <Grid
                     container
-                    direction={"column"}
-                    wrap={"nowrap"}
+                    direction={isWidthUp("md", width) ? "row" : "column"}
+                    spacing={8}
                     style={{ position: "relative" }}
-                    className="m-b"
+                    className="m-t m-b"
+                    classes={{ "spacing-xs-8": classes.spacing }}
                 >
-                    <Grid item>
-                        <Typography style={{
-                            position: "relative",
-                            WebkitTransform: `translate(${value.x}px, 0)`,
-                            transform: `translate(${value.x}px, 0)`,
-                            opacity: value.opacity,
-                        }} variant="h6"
-                        >
-                            Accounts
-                        </Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography style={{
-                            position: "relative",
-                            WebkitTransform: `translate(${value.x}px, 0)`,
-                            transform: `translate(${value.x}px, 0)`,
-                            opacity: value.opacity,
-                        }} variant="h4"
-                        >
-                            Manage all your accounts in one place.
-                        </Typography>
-                    </Grid>
-                    <Grid item>
-                        <Zoom
-                            key="add-real"
-                            in={tabSelected === 0}
-                            timeout={transitionDuration}
-                            style={{
-                                transitionDelay: `${tabSelected === 0 ?
-                                    transitionDuration.exit : 0}ms`,
-                            }}
-                            unmountOnExit
-                        >
-                            <Fab aria-label="Add Real" size="small"
-                                className={classes.fab}
-                                classes={{ root: classes.fabReal }}
-                                onClick={ () => showCreateAccountModal(at.REAL) }
-                            >
-                                <AddRounded />
-                            </Fab>
-                        </Zoom>
-
-                        <Zoom
-                            key="add-demo"
-                            in={tabSelected === 1}
-                            timeout={transitionDuration}
-                            style={{
-                                transitionDelay: `${tabSelected === 1 ?
-                                    transitionDuration.exit : 0}ms`,
-                            }}
-                            unmountOnExit
-                        >
-                            <Fab aria-label="Add Demo" size="small"
-                                className={classes.fab}
-                                classes={{ root: classes.fabDemo }}
-                                onClick={() => showCreateAccountModal(at.DEMO)}
-                            >
-                                <AddRounded />
-                            </Fab>
-                        </Zoom>
-                    </Grid>
+                    {realAccounts.map((account) =>
+                        <Grid key={`${account.accountId}-${at.REAL}`} item>
+                            <AccountCard accountId={account.accountId}
+                                accountType={at.REAL}
+                            />
+                        </Grid>
+                    )}
                 </Grid>
+            }
 
-                <Tabs
-                    style={{
-                        position: "relative",
-                        WebkitTransform: `translate(${value.x}px, 0)`,
-                        transform: `translate(${value.x}px, 0)`,
-                        opacity: value.opacity,
-                    }}
-                    value={tabSelected}
-                    onChange={(_e, value) => changeTab(value)}
-                    variant="fullWidth"
-                    classes={{ indicator: classes.indicator }}
+            {demoAccounts.length === 0 ? <div
+                className="flex-box-col items-centered content-centered space-around"
+                style={{
+                    marginTop: "10%",
+                    opacity: 0.3,
+                }}
+            >
+                <Typography variant="h1">
+                    You have no demo accounts at the moment.
+                </Typography>
+                <Typography variant="h4">
+                    Open one today! It only takes 15 seconds.
+                </Typography>
+            </div> :
+                <Grid
+                    container
+                    direction={isWidthUp("md", width) ? "row" : "column"}
+                    spacing={8}
+                    style={{ position: "relative" }}
+                    className="m-t m-b"
+                    classes={{ "spacing-xs-8": classes.spacing }}
                 >
-                    <Tab classes={{ label: classes.labelRealAccounts }}
-                        label="Real"
-                    />
-                    <Tab classes={{ label: classes.labelDemoAccounts }}
-                        label="Demo"
-                    />
-                </Tabs>
-
-                <SwipeableViews
-                    style={{
-                        position: "relative",
-                        WebkitTransform: `translate(${value.x}px, 0)`,
-                        transform: `translate(${value.x}px, 0)`,
-                        opacity: value.opacity,
-                        height: height - 220,
-                    }}
-                    slideStyle={{
-                        height: height - 220,
-                    }}
-                    index={tabSelected}
-                >
-                    {realAccounts.length === 0 ? <div
-                        className="flex-box-col items-centered content-centered space-around"
-                        style={{
-                            marginTop: "10%",
-                            opacity: 0.3,
-                        }}
-                    >
-                        <Typography variant="h1">
-                            You have no real accounts at the moment.
-                        </Typography>
-                        <Typography variant="h4">
-                            Open one today! It only takes 15 seconds.
-                        </Typography>
-                    </div> :
-                        <Grid
-                            container
-                            direction={isWidthUp("md", width) ? "row" : "column"}
-                            spacing={8}
-                            style={{ position: "relative" }}
-                            className="m-t m-b"
-                            classes={{ "spacing-xs-8": classes.spacing }}
-                        >
-                            {realAccounts.map((account) =>
-                                <Grid key={`${account.accountId}-${at.REAL}`} item>
-                                    <AccountCard accountId={account.accountId}
-                                        accountType={at.REAL}
-                                    />
-                                </Grid>
-                            )}
+                    {demoAccounts.map((account) =>
+                        <Grid key={`${account.accountId}-${at.DEMO}`} item>
+                            <AccountCard accountId={account.accountId}
+                                accountType={at.DEMO}
+                            />
                         </Grid>
-                    }
-
-                    {demoAccounts.length === 0 ? <div
-                        className="flex-box-col items-centered content-centered space-around"
-                        style={{
-                            marginTop: "10%",
-                            opacity: 0.3,
-                        }}
-                    >
-                        <Typography variant="h1">
-                            You have no demo accounts at the moment.
-                        </Typography>
-                        <Typography variant="h4">
-                            Open one today! It only takes 15 seconds.
-                        </Typography>
-                    </div> :
-                        <Grid
-                            container
-                            direction={isWidthUp("md", width) ? "row" : "column"}
-                            spacing={8}
-                            style={{ position: "relative" }}
-                            className="m-t m-b"
-                            classes={{ "spacing-xs-8": classes.spacing }}
-                        >
-                            {demoAccounts.map((account) =>
-                                <Grid key={`${account.accountId}-${at.DEMO}`} item>
-                                    <AccountCard accountId={account.accountId}
-                                        accountType={at.DEMO}
-                                    />
-                                </Grid>
-                            )}
-                        </Grid>
-                    }
-                </SwipeableViews>
-            </Fragment>
-        }
-    </Motion>    
+                    )}
+                </Grid>
+            }
+        </SwipeableViews>
+    </Fragment>   
 }
 
 
