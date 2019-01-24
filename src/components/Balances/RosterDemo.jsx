@@ -22,6 +22,7 @@ import { getDemoAccountIds } from "../../lib/logic/stellarAccount"
 import { signingMethods } from "../../lib/logic/signingMethods"
 import { action as PayActions } from "../../redux/Pay"
 import { accountType as at } from "../../redux/Accounts"
+import { fade } from "@material-ui/core/styles/colorManipulator"
 
 
 
@@ -50,14 +51,14 @@ export default compose(
             borderBottom: "none !important",
         },
         tableCellHead: {
-            borderBottom: `1px solid ${theme.palette.custom.darkGunmetal} !important`,
+            borderBottom: `1px solid ${fade(theme.palette.custom.darkGunmetal, 0.5)} !important`,
         },
         tableHead: {
             height: 32,
         },
         tableRow: {
             cursor: "pointer",
-            borderBottom: `1px solid ${theme.palette.custom.darkGunmetal} !important`,
+            borderBottom: `1px solid ${fade(theme.palette.custom.darkGunmetal, 0.3)} !important`,
             "&:last-child": {
                 borderBottom: "none !important",
                 borderTop: "none !important",
@@ -157,8 +158,8 @@ export default compose(
                                             <div className="flex-box-row">
                                                 {this.bar(accountId)}
                                                 <div className="flex-box-col">
-                                                    <div>{stellarAccounts[accountId].name || "No Name"}</div>
-                                                    <div>{string.shorten(accountId, 11, string.shorten.MIDDLE, "-")}</div>
+                                                    <Typography style={{ marginBottom: "0.2rem" }} variant="h4">{stellarAccounts[accountId].name || "No Name"}</Typography>
+                                                    <Typography style={{ opacity: 0.5 }} variant="h3">{string.shorten(accountId, 11, string.shorten.MIDDLE, "-")}</Typography>
                                                 </div>
                                             </div>
                                         </TableCell>
