@@ -118,6 +118,15 @@ export default compose(
                         classes={{ root: this.props.classes.progressBar }}
                         style={{ opacity: userLogin.progressBarOpacity }}
                     />
+                    <Typography
+                        style={{
+                            marginTop: "0.5rem",
+                            opacity: userLogin.progressBarOpacity - 0.5,
+                        }}
+                        variant="h4"
+                    >
+                        {userLogin.statusMessage}
+                    </Typography>
                 </div>
         )(this.props)
     }

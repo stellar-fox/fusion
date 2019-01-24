@@ -55,6 +55,7 @@ export const doAuthenticate = () =>
                 errorPassword: false,
                 errorMessagePassword: string.empty(),
                 progressBarOpacity: 1,
+                statusMessage: "Authenticating ...",
             }))
             
             // Authenticate with Firebase
@@ -74,6 +75,10 @@ export const doAuthenticate = () =>
             !auth.user.photoURL &&
                 await dispatch( await getStorageAvatar(auth.user))
             
+            await dispatch(await UserLoginActions.setState({
+                statusMessage: "Fetching user accounts ...",
+            }))
+
             // Load user stellar accounts
             await dispatch( await detectAccount(auth.user.uid))
             await dispatch( await detectSigningMethod(auth.user.uid))

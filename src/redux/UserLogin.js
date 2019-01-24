@@ -16,6 +16,7 @@ const initState = {
     errorPassword: false,
     password: string.empty(),
     progressBarOpacity: 0,
+    statusMessage: string.empty(),
 }
 
 

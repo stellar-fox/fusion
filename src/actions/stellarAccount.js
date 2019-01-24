@@ -100,6 +100,10 @@ export const detectAccount = (uid) =>
                     ...snapshot.val(),
                 }))
 
+                await dispatch(await UserLoginActions.setState({
+                    statusMessage: "Fetching latest accounts state ...",
+                }))
+
                 // load user stellar accounts and their latest state
                 await async.parMap(Object.keys(snap), async (accountId) => {
                     let stellarAccount = await loadAccountState(
