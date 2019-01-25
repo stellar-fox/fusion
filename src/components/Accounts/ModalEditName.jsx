@@ -8,6 +8,7 @@ import {
     DialogActions,
     DialogContent,
     DialogTitle,
+    Typography,
     withMobileDialog
 } from "@material-ui/core"
 import Button from "../../lib/mui-v1/Button"
@@ -89,7 +90,7 @@ export default compose(
                     }}
                 >
                     <DialogTitle id="responsive-dialog-title">
-                        Set account name for {shorten(accountId, 11, shorten.MIDDLE, "-")}
+                        Change account name for:
                     </DialogTitle>
                     <DialogContent>
                         {spinnerVisible ?
@@ -97,6 +98,12 @@ export default compose(
                                 <Awaiter />
                             </div> :
                             <div className="flex-box-col">
+                                <Typography variant="h6" align="center" style={{
+                                    marginBottom: "1rem",
+                                }}
+                                >
+                                    {shorten(accountId, 11, shorten.MIDDLE, "-")}
+                                </Typography>
                                 <TextInput
                                     autoFocus
                                     defaultValue={accountId && stellarAccounts[accountId].name}
