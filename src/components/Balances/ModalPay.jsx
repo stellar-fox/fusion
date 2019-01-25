@@ -12,6 +12,7 @@ import {
     InputLabel,
     MenuItem,
     Select,
+    Typography,
     withMobileDialog
 } from "@material-ui/core"
 import Button from "../../lib/mui-v1/Button"
@@ -134,13 +135,19 @@ export default compose(
                     }, () => "unknown account type") }}
                 >
                     <DialogTitle id="responsive-dialog-title">
-                        Pay using {source && shorten(source, 11, shorten.MIDDLE, "-")}
+                        Pay from:
                     </DialogTitle>
                     <DialogContent>
                         <div className="flex-box-col items-centered content-centered">
                             <Awaiter />
                         </div>
                         <div className="flex-box-col">
+                            <Typography variant="h6" align="center" style={{
+                                marginBottom: "1rem",
+                            }}
+                            >
+                                {source && shorten(source, 11, shorten.MIDDLE, "-")}
+                            </Typography>
                             <TextInput
                                 label="Destination"
                                 onChange={this.handleDestinationChange()}
