@@ -17,6 +17,7 @@ import {
     Networks,
     Server,
 } from "stellar-sdk"
+import BigNumber from "bignumber.js"
 
 
 
@@ -174,6 +175,7 @@ export const getDemoAccounts = (stellarAccounts) =>
  * Updates appropriate record in _Firebase Real Time Database_.
  * 
  * @async
+ * @function updateAccountName
  * @param {String} uid Unique _Firebase_ user id.
  * @param {String} accountId
  * @param {String} name Alias string for the account.
@@ -181,3 +183,40 @@ export const getDemoAccounts = (stellarAccounts) =>
  */
 export const updateAccountName = async (uid, accountId, name) =>
     await update(`user/${uid}/stellarAccounts/${accountId}`, { name })
+
+
+
+
+/**
+ * @function totalForAllAccounts
+ * @param {Array} accountIds Holds ids of real or demo accounts.
+ * @param {Object} stellarAccounts Holds user stellar accounts.
+ * @returns {String} Total balance for all user's _stellar_ accounts (demo | real).
+ */
+export const totalForAllAccounts = (accountIds, stellarAccounts) =>
+    accountIds.map((
+        accountId => stellarAccounts[accountId].nativeBalance.balance
+    )).reduce((a, b) => {
+        let bna = BigNumber(a)
+        let bnb = BigNumber(b)
+        return bna.plus(bnb).toFixed(7)
+    }, 0)
+
+
+
+
+/**
+ * Calculates available balance for the account by subtracting current liabilities.
+ * 
+ * @function availableBalance
+ * @param {String} accountId
+ * @param {Object} stellarAccounts HOlds user stellar accounts.
+ */
+export const availableBalance = (accountId, stellarAccounts) => {
+    let balance = BigNumber(stellarAccounts[accountId].nativeBalance.balance)
+    let buyingLiabilities = BigNumber(stellarAccounts[accountId]
+        .nativeBalance.buying_liabilities)
+    let sellingLiabilities = BigNumber(stellarAccounts[accountId]
+        .nativeBalance.selling_liabilities)
+    return balance.minus(buyingLiabilities).minus(sellingLiabilities).toFixed(7)
+}

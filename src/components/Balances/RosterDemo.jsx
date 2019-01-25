@@ -18,12 +18,15 @@ import {
     setSource,
     showModalPay,
 } from "../../actions/payment"
-import { getDemoAccountIds } from "../../lib/logic/stellarAccount"
+import {
+    availableBalance,
+    getDemoAccountIds,
+    totalForAllAccounts,
+} from "../../lib/logic/stellarAccount"
 import { signingMethods } from "../../lib/logic/signingMethods"
 import { action as PayActions } from "../../redux/Pay"
 import { accountType as at } from "../../redux/Accounts"
 import { fade } from "@material-ui/core/styles/colorManipulator"
-import BigNumber from "bignumber.js"
 
 
 
@@ -141,13 +144,8 @@ export default compose(
                             Total for all demo accounts
                         </Typography>
                         <Typography style={{ padding: "0 0 0.5rem 0" }} variant="body1">
-                            {demoAccountIds.map((
-                                accountId => stellarAccounts[accountId].nativeBalance.balance
-                            )).reduce((a,b) => {
-                                let bna = BigNumber(a)
-                                let bnb = BigNumber(b)
-                                return bna.plus(bnb).toFixed(7)
-                            }, 0)} <span style={{ fontSize: "0.7rem" }}>XLM</span>
+                            {totalForAllAccounts(demoAccountIds, stellarAccounts)}
+                            <span style={{ fontSize: "0.7rem" }}> XLM</span>
                         </Typography>
                         <Table classes={{ root: classes.table }}>
                             <TableHead>
@@ -170,7 +168,7 @@ export default compose(
                                             </div>
                                         </TableCell>
                                         <TableCell classes={{ root: classes.tableCell }} align="right" padding="none">
-                                            {stellarAccounts[accountId].nativeBalance.balance}
+                                            {availableBalance(accountId, stellarAccounts)}
                                         </TableCell>
                                         <TableCell classes={{ root: classes.tableCell }} align="right" padding="none">
                                             {stellarAccounts[accountId].nativeBalance.balance}
