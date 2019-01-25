@@ -18,6 +18,7 @@ import MainContent from "./MainContent"
 import ModalCreateAccount from "./ModalCreateAccount"
 import ModalEditName from "./ModalEditName"
 import Snacky from "../../lib/mui-v1/Snacky"
+import Fade from "@material-ui/core/Fade"
 
 
 
@@ -81,12 +82,18 @@ export default compose(
                         </div> : <Fragment>
                             <ModalCreateAccount />
                             <ModalEditName />
-                            <Paper style={{
-                                height: height - 90,
-                            }} className={classes.paperCanvas}
+                            <Fade in={true} timeout={{
+                                enter: 700,
+                                exit: 300,
+                            }}
                             >
-                                <MainContent />
-                            </Paper>
+                                <Paper style={{
+                                    height: height - 90,
+                                }} className={classes.paperCanvas}
+                                >
+                                    <MainContent />
+                                </Paper>
+                            </Fade>
                             <Snacky />
                         </Fragment>
                         }

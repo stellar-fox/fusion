@@ -10,6 +10,7 @@ import ShambhalaLedgerCard from "./ShambhalaLedgerCard"
 import ShambhalaScepticCard from "./ShambhalaScepticCard"
 import withWidth, { isWidthDown } from "@material-ui/core/withWidth"
 import Snacky from "../../lib/mui-v1/Snacky"
+import Fade from "@material-ui/core/Fade"
 
 
 
@@ -46,39 +47,44 @@ export default compose(
             ({ classes, width }) =>
                 <Switch>
                     <Route exact path={this.rr(".")}>
-
-                        <Paper className={classes.paperCanvas}>
-                            <Snacky />
-                            
-                            <Fragment>
-                                <Typography variant="h6">
-                                    Key Management
-                                </Typography>
-                                <Typography variant="h4">
-                                    Manage additional keys with your account.
-                                </Typography>
-                                <div style={{
-                                    position: "relative",
-                                }} className={isWidthDown("md", width) ?
-                                    "m-t m-b flex-box-col items-centered" :
-                                    "m-t m-b flex-box-row space-around"}
-                                >
-                                    <ShambhalaPureCard />
-
-                                    {isWidthDown("md", width) &&
-                                        <div className="m-b"></div>}
-
-                                    <ShambhalaLedgerCard />
-
-                                    {isWidthDown("md", width) &&
-                                        <div className="m-b"></div>}
-
-                                    <ShambhalaScepticCard />
-                                </div>
-                            </Fragment>
+                        
+                        <Fade in={true} timeout={{
+                            enter: 700,
+                            exit: 300,
+                        }}
+                        >
+                            <Paper className={classes.paperCanvas}>
+                                <Snacky />
                                 
-                        </Paper>
+                                <Fragment>
+                                    <Typography variant="h6">
+                                        Key Management
+                                    </Typography>
+                                    <Typography variant="h4">
+                                        Manage additional keys with your account.
+                                    </Typography>
+                                    <div style={{
+                                        position: "relative",
+                                    }} className={isWidthDown("md", width) ?
+                                        "m-t m-b flex-box-col items-centered" :
+                                        "m-t m-b flex-box-row space-around"}
+                                    >
+                                        <ShambhalaPureCard />
 
+                                        {isWidthDown("md", width) &&
+                                            <div className="m-b"></div>}
+
+                                        <ShambhalaLedgerCard />
+
+                                        {isWidthDown("md", width) &&
+                                            <div className="m-b"></div>}
+
+                                        <ShambhalaScepticCard />
+                                    </div>
+                                </Fragment>
+                                    
+                            </Paper>
+                        </Fade>
                     </Route>
                     <Redirect to={this.rr(".")} />
                 </Switch>
