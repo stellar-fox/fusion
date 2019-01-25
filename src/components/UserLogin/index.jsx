@@ -120,6 +120,7 @@ export default compose(
                     />
                     <Typography
                         style={{
+                            height: 11,
                             marginTop: "0.5rem",
                             opacity: userLogin.progressBarOpacity - 0.5,
                         }}
