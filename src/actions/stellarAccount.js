@@ -93,7 +93,7 @@ export const updateBalances = (accountId, networkPassphrase) =>
 export const detectAccount = (uid) =>
     async (dispatch, _getState) => {
         firebaseSingleton.database().ref(`user/${uid}/stellarAccounts`)
-            .on("value", async (snapshot) => {
+            .once("value", async (snapshot) => {
                 const snap = snapshot.val()
                 // Set initial Firebase stored account state in Redux
                 dispatch(StellarAccountsActions.setState({
@@ -106,20 +106,26 @@ export const detectAccount = (uid) =>
 
                 // load user stellar accounts and their latest state
                 await async.parMap(Object.keys(snap), async (accountId) => {
-                    let stellarAccount = await loadAccountState(
-                        accountId, snap[accountId].networkPassphrase
-                    )
-                    await dispatch(
-                        await StellarAccountsActions.updateBalances(
-                            stellarAccount.id,
-                            stellarAccount.balances.find(
-                                (balance) => balance.asset_type === "native"
-                            ),
-                            stellarAccount.balances.filter(
-                                (balance) => balance.asset_type !== "native"
-                            ),
+                    try {
+                        let stellarAccount = await loadAccountState(
+                            accountId, snap[accountId].networkPassphrase
                         )
-                    )
+                        await dispatch(
+                            await StellarAccountsActions.updateBalances(
+                                stellarAccount.id,
+                                stellarAccount.balances.find(
+                                    (balance) => balance.asset_type === "native"
+                                ),
+                                stellarAccount.balances.filter(
+                                    (balance) => balance.asset_type !== "native"
+                                ),
+                            )
+                        )
+                    } catch (error) {
+                        // eslint-disable-next-line
+                        console.log(`Error loading ${accountId}: ${error.message}`)
+                    }
+                    
                 })
 
                 // done
