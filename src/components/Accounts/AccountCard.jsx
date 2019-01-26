@@ -158,7 +158,7 @@ export default compose(
                             <AccountBalanceWalletRounded />
                         </IconButton>
                         <div style={{ marginLeft: "1rem", width: 80 }}>
-                            <Sparklines data={[5, 10, 15, 9, 20, 28, 30, 28, 20, 25]}>
+                            <Sparklines data={[5, 40, 35, 10, 15, 9, 20, 28, 30, 28, 20, 25]}>
                                 <SparklinesLine style={{ stroke: "#8ed53f", strokeWidth: "2", fill: "#8fc638", fillOpacity: "0.2" }} />
                                 <SparklinesReferenceLine type="mean" style={{ stroke: "white", strokeOpacity: "0.9", strokeDasharray: "2, 2" }} />
                             </Sparklines>
