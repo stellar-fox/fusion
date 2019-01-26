@@ -55,6 +55,12 @@ export default compose(
             fontWeight: 100,
             borderBottom: "none !important",
         },
+        tableCellEczar: {
+            fontSize: "0.75rem",
+            fontWeight: 100,
+            borderBottom: "none !important",
+            fontFamily: "Eczar, sans-serif",
+        },
         tableCellHead: {
             borderBottom: `1px solid ${fade(theme.palette.custom.darkGunmetal, 0.5)} !important`,
         },
@@ -171,10 +177,10 @@ export default compose(
                                                 </div>
                                             </div>
                                         </TableCell>
-                                        <TableCell classes={{ root: classes.tableCell }} align="right" padding="none">
+                                        <TableCell classes={{ root: classes.tableCellEczar }} align="right" padding="none">
                                             {availableBalance(accountId, stellarAccounts)}
                                         </TableCell>
-                                        <TableCell classes={{ root: classes.tableCell }} align="right" padding="none">
+                                        <TableCell classes={{ root: classes.tableCellEczar }} align="right" padding="none">
                                             {stellarAccounts[accountId].nativeBalance.balance}
                                         </TableCell>
                                     </TableRow>
