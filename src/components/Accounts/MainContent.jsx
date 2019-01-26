@@ -14,9 +14,7 @@ import {
 import { AddRounded } from "@material-ui/icons"
 import SwipeableViews from "react-swipeable-views"
 import AccountCard from "./AccountCard"
-import {
-    func,
-} from "@xcmats/js-toolbox"
+import { func } from "@xcmats/js-toolbox"
 import {
     getDemoAccounts,
     getRealAccounts,
@@ -122,7 +120,10 @@ const MainContent = ({
             value={tabSelected}
             onChange={(_e, value) => changeTab(value)}
             variant="fullWidth"
-            classes={{ indicator: classes.indicator }}
+            classes={{ indicator: func.choose(tabSelected, {
+                [0]: () => classes.indicatorGreen,
+                [1]: () => classes.indicatorRed, 
+            }, () => classes.indicator) }}
         >
             <Tab classes={{ label: classes.labelRealAccounts }}
                 label="Real"
@@ -240,6 +241,14 @@ export default func.compose(
 
         indicator: {
             backgroundColor: theme.palette.custom.greenDark,
+        },
+
+        indicatorGreen: {
+            backgroundColor: theme.palette.custom.greenDark,
+        },
+        
+        indicatorRed: {
+            backgroundColor: theme.palette.error.main,
         },
 
         labelRealAccounts: {

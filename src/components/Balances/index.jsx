@@ -17,6 +17,7 @@ import RosterDemo from "./RosterDemo"
 import { action as BalancesActions } from "../../redux/Balances"
 import ModalPay from "./ModalPay"
 import Fade from "@material-ui/core/Fade"
+import { func } from "@xcmats/js-toolbox"
 
 
 
@@ -26,6 +27,14 @@ export default compose(
     withStyles((theme) => ({
         indicator: {
             backgroundColor: theme.palette.custom.greenDark,
+        },
+
+        indicatorGreen: {
+            backgroundColor: theme.palette.custom.greenDark,
+        },
+
+        indicatorRed: {
+            backgroundColor: theme.palette.error.main,
         },
 
         labelRealAccounts: {
@@ -117,7 +126,12 @@ export default compose(
                                         value={tabSelected}
                                         onChange={this.onTabChange}
                                         variant="fullWidth"
-                                        classes={{ indicator: classes.indicator }}
+                                        classes={{
+                                            indicator: func.choose(tabSelected, {
+                                                [0]: () => classes.indicatorGreen,
+                                                [1]: () => classes.indicatorRed,
+                                            }, () => classes.indicator),
+                                        }}
                                     >
                                         <Tab classes={{ label: classes.labelRealAccounts }} label="Real" />
                                         <Tab classes={{ label: classes.labelDemoAccounts }} label="Demo" />
