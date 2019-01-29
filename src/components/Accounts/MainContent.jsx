@@ -121,8 +121,8 @@ const MainContent = ({
             onChange={(_e, value) => changeTab(value)}
             variant="fullWidth"
             classes={{ indicator: func.choose(tabSelected, {
-                [0]: () => classes.indicatorGreen,
-                [1]: () => classes.indicatorRed, 
+                0: () => classes.indicatorGreen,
+                1: () => classes.indicatorRed, 
             }, () => classes.indicator) }}
         >
             <Tab classes={{ label: classes.labelRealAccounts }}

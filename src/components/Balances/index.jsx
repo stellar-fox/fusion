@@ -128,8 +128,8 @@ export default compose(
                                         variant="fullWidth"
                                         classes={{
                                             indicator: func.choose(tabSelected, {
-                                                [0]: () => classes.indicatorGreen,
-                                                [1]: () => classes.indicatorRed,
+                                                0: () => classes.indicatorGreen,
+                                                1: () => classes.indicatorRed,
                                             }, () => classes.indicator),
                                         }}
                                     >
