@@ -6,7 +6,6 @@ import { func } from "@xcmats/js-toolbox"
 import {
     FormControl,
     FormControlLabel,
-    FormLabel,
     Radio,
     RadioGroup,
     Typography,
@@ -56,12 +55,10 @@ const Step1 = ({classes, signingMethod, setSigningMethod}) =>
                 >
                     Your funds and transactions are securely managed with a
                     set of keys. We provide different ways of signing your
-                    transactions.
+                    transactions. Please select the signing method of your
+                    choice:
                 </Typography>
                 <FormControl component="fieldset">
-                    <FormLabel component="legend">
-                        Please select signing method:
-                    </FormLabel>
                     <RadioGroup aria-label="position" name="position"
                         value={signingMethod}
                         onChange={(e) => setSigningMethod(e.target.value)}

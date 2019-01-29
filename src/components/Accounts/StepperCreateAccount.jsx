@@ -7,6 +7,7 @@ import {
     MobileStepper,
     withMobileDialog
 } from "@material-ui/core"
+import withWidth, { isWidthDown } from "@material-ui/core/withWidth"
 import Button from "../../lib/mui-v1/Button"
 import {
     handleYes,
@@ -38,6 +39,7 @@ import { accountType as at } from "../../redux/Accounts"
  */
 const StepperCreateAccount = ({
     accountType, activeStep, classes, handleNo, handleYes, incrementActiveStep,
+    width,
 }) => {
 
     const
@@ -61,6 +63,7 @@ const StepperCreateAccount = ({
                     }, () => "unknown account type"),
             }}
             variant="dots"
+            position={isWidthDown("md", width) ? "bottom" : "static"}
             steps={numSteps+1}
             activeStep={activeStep}
             className={classes.rootCommon}
@@ -95,6 +98,7 @@ const StepperCreateAccount = ({
 // ...
 export default func.compose(
     withMobileDialog(),
+    withWidth(),
     withStyles((theme) => ({
         dotActive: {
             backgroundColor: theme.palette.custom.yellowLight,

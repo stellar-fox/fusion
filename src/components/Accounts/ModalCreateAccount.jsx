@@ -2,6 +2,7 @@ import React from "react"
 import { bindActionCreators } from "redux"
 import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
+import withWidth, { isWidthDown } from "@material-ui/core/withWidth"
 import {
     Dialog,
     DialogContent,
@@ -37,11 +38,11 @@ import Step2 from "./Step2"
  * @returns {React.ReactElement}
  */
 const ModalCreateAccount = ({
-    accountType, activeStep, classes, open, spinnerVisible,
+    accountType, activeStep, classes, open, spinnerVisible, width,
 }) => {
 
     return <Dialog
-        fullScreen
+        fullScreen={isWidthDown("md", width)}
         open={open}
         aria-labelledby="responsive-dialog-title"
         classes={{
@@ -81,6 +82,7 @@ const ModalCreateAccount = ({
 
 // ...
 export default func.compose(
+    withWidth(),
     withStyles((theme) => ({
         paperReal: {
             backgroundColor: theme.palette.custom.greenDark,
