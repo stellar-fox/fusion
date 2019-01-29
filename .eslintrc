@@ -1,7 +1,9 @@
 {
     "env": {
         "browser": true,
-        "es6": true
+        "es6": true,
+        "jest/globals": true,
+        "jest": true
     },
     "extends": "eslint:recommended",
     "parser": "babel-eslint",
@@ -19,7 +21,7 @@
             "version": "16.3"
         }
     },
-    "plugins": ["react"],
+    "plugins": ["react", "jest"],
     "rules": {
         "comma-dangle": [
             "error",
