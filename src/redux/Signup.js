@@ -18,6 +18,7 @@ const initState = {
  */
 export const RESET_STATE = "@Signup/RESET_STATE"
 export const SET_NAME = "@Signup/SET_NAME"
+export const SET_SIGNING_METHOD = "@Signup/SET_SIGNING_METHOD"
 export const SET_STATE = "@Signup/SET_STATE"
 
 
@@ -36,6 +37,13 @@ export const actions = {
     setName: (name) => ({
         type: SET_NAME,
         name,
+    }),
+
+
+    // ...
+    setSigningMethod: (signingMethod) => ({
+        type: SET_SIGNING_METHOD,
+        signingMethod,
     }),
 
 
@@ -63,6 +71,13 @@ export const reducers = createReducer(initState)({
     [SET_NAME]: (state, action) => ({
         ...state,
         name: action.name,
+    }),
+
+
+    // ...
+    [SET_SIGNING_METHOD]: (state, action) => ({
+        ...state,
+        signingMethod: action.signingMethod,
     }),
 
 
