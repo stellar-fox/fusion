@@ -1,4 +1,5 @@
 import { reducer as Accounts } from "./Accounts"
+import { reducers as AddAccount } from "./AddAccount"
 import { reducer as App } from "./Fusion"
 import { reducer as Auth } from "./Auth"
 import { reducer as Awaiter } from "./Awaiter"
@@ -8,7 +9,6 @@ import { reducer as LedgerHQ } from "./LedgerHQ"
 import { reducer as Pay } from "./Pay"
 import { reducer as Router } from "./FusionRouter"
 import { reducer as SigningMethods } from "./SigningMethods"
-import { reducers as Signup } from "./Signup"
 import { reducer as Snacky } from "./Snacky"
 import { reducer as StellarAccounts } from "./StellarAccounts"
 import { reducer as UserLogin } from "./UserLogin"
@@ -20,6 +20,7 @@ import { reducer as UserManagement } from "./UserManagement"
 // ...
 export default {
     Accounts,
+    AddAccount,
     App,
     Auth,
     Awaiter,
@@ -29,7 +30,6 @@ export default {
     Pay,
     Router,
     SigningMethods,
-    Signup,
     Snacky,
     StellarAccounts,
     UserLogin,

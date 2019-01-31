@@ -21,7 +21,7 @@ import {
 } from "../../lib/logic/stellarAccount"
 import { accountType as at } from "../../redux/Accounts"
 import { action as AccountsActions } from "../../redux/Accounts"
-import { showCreateAccountModal } from "../../actions/createAccount"
+import { addAccountAction } from "../../actions/addAccount"
 
 
 
@@ -45,7 +45,7 @@ import { showCreateAccountModal } from "../../actions/createAccount"
  * @returns {React.ReactElement}
  */
 const MainContent = ({
-    changeTab, classes, demoAccounts, height, realAccounts, showCreateAccountModal,
+    changeTab, classes, demoAccounts, height, realAccounts, addAccountAction,
     tabSelected, width,
 }) => {
     
@@ -86,7 +86,7 @@ const MainContent = ({
                     <Fab aria-label="Add Real" size="small"
                         className={classes.fab}
                         classes={{ root: classes.fabReal }}
-                        onClick={ () => showCreateAccountModal(at.REAL) }
+                        onClick={() => addAccountAction(at.REAL)}
                     >
                         <AddRounded />
                     </Fab>
@@ -105,7 +105,7 @@ const MainContent = ({
                     <Fab aria-label="Add Demo" size="small"
                         className={classes.fab}
                         classes={{ root: classes.fabDemo }}
-                        onClick={() => showCreateAccountModal(at.DEMO)}
+                        onClick={() => addAccountAction(at.DEMO)}
                     >
                         <AddRounded />
                     </Fab>
@@ -275,7 +275,7 @@ export default func.compose(
         }),
         (dispatch) => bindActionCreators({
             changeTab: AccountsActions.changeTab,
-            showCreateAccountModal,
+            addAccountAction,
         }, dispatch)
     ),
 )(MainContent)

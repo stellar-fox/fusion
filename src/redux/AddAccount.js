@@ -17,6 +17,7 @@ const initState = {
  * Action Types
  */
 export const RESET_STATE = "@Signup/RESET_STATE"
+export const SET_ACCOUNT_TYPE = "@Signup/SET_ACCOUNT_TYPE"
 export const SET_NAME = "@Signup/SET_NAME"
 export const SET_SIGNING_METHOD = "@Signup/SET_SIGNING_METHOD"
 export const SET_STATE = "@Signup/SET_STATE"
@@ -33,14 +34,21 @@ export const actions = {
     resetState: () => ({ type: RESET_STATE }),
 
 
-    // ...
+    // Sets account type (DEMO or REAL).
+    setAccountType: (accountType) => ({
+        type: SET_ACCOUNT_TYPE,
+        accountType,
+    }),
+
+
+    // Sets the name alias on the account.
     setName: (name) => ({
         type: SET_NAME,
         name,
     }),
 
 
-    // ...
+    // Sets the signing method name string.
     setSigningMethod: (signingMethod) => ({
         type: SET_SIGNING_METHOD,
         signingMethod,
@@ -65,6 +73,13 @@ export const reducers = createReducer(initState)({
     
     // ...
     [RESET_STATE]: () => initState,
+
+
+    // ...
+    [SET_ACCOUNT_TYPE]: (state, action) => ({
+        ...state,
+        accountType: action.accountType,
+    }),
 
 
     // ...
