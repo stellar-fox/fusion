@@ -12,7 +12,6 @@ import {
     withMobileDialog
 } from "@material-ui/core"
 import { setSigningMethod } from "../../actions/onboarding"
-import { Motion, presets, spring } from "react-motion"
 import { signingMethod as sm } from "../../redux/Keys"
 import InputAccountId from "./InputAccountId"
 import InputLedgerAccount from "./InputLedgerAccount"
@@ -39,113 +38,96 @@ import InputLedgerAccount from "./InputLedgerAccount"
  * @returns {React.ReactElement}
  */
 const Step1 = ({classes, signingMethod, setSigningMethod}) =>
-    <Motion defaultStyle={{ opacity: 0 }}
-        style={{
-            opacity: spring(1, presets.gentle),
-        }}
-    >
-        {value =>
-            <div style={{
-                opacity: value.opacity,
-            }} className="flex-box-col"
+    <div className="flex-box-col">
+        <Typography
+            style={{ margin: "0 0 1rem 0" }}
+            variant="body2"
+        >
+            Your funds and transactions are securely managed with a
+            set of keys. We provide different ways of signing your
+            transactions. Please select the signing method of your
+            choice:
+        </Typography>
+        <FormControl component="fieldset">
+            <RadioGroup aria-label="position" name="position"
+                value={signingMethod}
+                onChange={(e) => setSigningMethod(e.target.value)}
             >
-                <Typography
-                    style={{ margin: "0 0 1rem 0" }}
-                    variant="body2"
-                >
-                    Your funds and transactions are securely managed with a
-                    set of keys. We provide different ways of signing your
-                    transactions. Please select the signing method of your
-                    choice:
-                </Typography>
-                <FormControl component="fieldset">
-                    <RadioGroup aria-label="position" name="position"
-                        value={signingMethod}
-                        onChange={(e) => setSigningMethod(e.target.value)}
-                    >
-                        <FormControlLabel
-                            value="end"
-                            control={
-                                <Radio
-                                    checked={signingMethod === sm.SHAMBHALA}
-                                    onChange={(e) => setSigningMethod(e.target.value)}
-                                    value={sm.SHAMBHALA}
-                                    name="radio-button-shambhala"
-                                    aria-label="Shambhala Pure"
-                                    classes={{
-                                        root: classes.root,
-                                        checked: classes.checked,
-                                    }}
-                                />
-                            }
-                            label="Shambhala Pure"
-                            labelPlacement="end"
+                <FormControlLabel
+                    value="end"
+                    control={
+                        <Radio
+                            checked={signingMethod === sm.SHAMBHALA}
+                            onChange={(e) => setSigningMethod(e.target.value)}
+                            value={sm.SHAMBHALA}
+                            name="radio-button-shambhala"
+                            aria-label="Shambhala Pure"
+                            classes={{
+                                root: classes.root,
+                                checked: classes.checked,
+                            }}
                         />
-                        <FormControlLabel
-                            value="end"
-                            control={
-                                <Radio
-                                    checked={signingMethod === sm.LEDGERHQ}
-                                    onChange={(e) => setSigningMethod(e.target.value)}
-                                    value={sm.LEDGERHQ}
-                                    name="radio-button-ledgerhq"
-                                    aria-label="Shambhala Ledger"
-                                    classes={{
-                                        root: classes.root,
-                                        checked: classes.checked,
-                                    }}
-                                />
-                            }
-                            label="Shambhala Ledger"
-                            labelPlacement="end"
+                    }
+                    label="Shambhala Pure"
+                    labelPlacement="end"
+                />
+                <FormControlLabel
+                    value="end"
+                    control={
+                        <Radio
+                            checked={signingMethod === sm.LEDGERHQ}
+                            onChange={(e) => setSigningMethod(e.target.value)}
+                            value={sm.LEDGERHQ}
+                            name="radio-button-ledgerhq"
+                            aria-label="Shambhala Ledger"
+                            classes={{
+                                root: classes.root,
+                                checked: classes.checked,
+                            }}
                         />
-                        <FormControlLabel
-                            value="end"
-                            control={
-                                <Radio
-                                    checked={signingMethod === sm.MANUAL}
-                                    onChange={(e) => setSigningMethod(e.target.value)}
-                                    value={sm.MANUAL}
-                                    name="radio-button-manual"
-                                    aria-label="Shambhala Sceptic"
-                                    classes={{
-                                        root: classes.root,
-                                        checked: classes.checked,
-                                    }}
-                                />
-                            }
-                            label="Shambhala Sceptic"
-                            labelPlacement="end"
+                    }
+                    label="Shambhala Ledger"
+                    labelPlacement="end"
+                />
+                <FormControlLabel
+                    value="end"
+                    control={
+                        <Radio
+                            checked={signingMethod === sm.MANUAL}
+                            onChange={(e) => setSigningMethod(e.target.value)}
+                            value={sm.MANUAL}
+                            name="radio-button-manual"
+                            aria-label="Shambhala Sceptic"
+                            classes={{
+                                root: classes.root,
+                                checked: classes.checked,
+                            }}
                         />
+                    }
+                    label="Shambhala Sceptic"
+                    labelPlacement="end"
+                />
 
-                    </RadioGroup>
-                </FormControl>
-                <div className="flex-box-col">
-                    {func.choose(signingMethod, {
-                        [sm.SHAMBHALA]: () => <Motion defaultStyle={{ opacity: 0 }}
-                            style={{ opacity: spring(1, presets.gentle) }}
-                        >
-                            {value => <div style={{ opacity: value.opacity }}
-                                className="flex-box-col"
-                            >
-                                <Typography
-                                    style={{ marginTop: "1rem" }}
-                                    variant="h4"
-                                >
-                                    Your account will be secured by
-                                    multisignature mechanism and you will have
-                                    full control of your account at all times.
-                                    This is option is meant for novice users.
-                                </Typography>
-                            </div>}
-                        </Motion>,
-                        [sm.LEDGERHQ]: () => <InputLedgerAccount />,
-                        [sm.MANUAL]: () => <InputAccountId />,
-                    }, () => "unknown signing method")}
-                </div>
-            </div>
-        }
-    </Motion>
+            </RadioGroup>
+        </FormControl>
+        <div className="flex-box-col">
+            {func.choose(signingMethod, {
+                [sm.SHAMBHALA]: () => <div className="flex-box-col">
+                    <Typography
+                        style={{ marginTop: "1rem" }}
+                        variant="h4"
+                    >
+                        Your account will be secured by
+                        multisignature mechanism and you will have
+                        full control of your account at all times.
+                        This is option is meant for novice users.
+                    </Typography>
+                </div>,
+                [sm.LEDGERHQ]: () => <InputLedgerAccount />,
+                [sm.MANUAL]: () => <InputAccountId />,
+            }, () => "unknown signing method")}
+        </div>
+    </div>
 
 
 
