@@ -29,6 +29,15 @@ describe("AddAccount steps for Shambhala Pure:", () => {
         }
         expect(AddAccountActions.setAccountType(accountType.REAL))
             .toEqual(expectedAction)
+    })
+
+    it("should set the name key in AddAccount Redux tree", () => {
+        const expectedAction = {
+            name: "Test Account",
+            type: SET_NAME,
+        }
+        expect(AddAccountActions.setName("Test Account"))
+            .toEqual(expectedAction)
     })    
 
     it("should set the signingMethod key in AddAccount Redux tree", () => {
@@ -37,15 +46,6 @@ describe("AddAccount steps for Shambhala Pure:", () => {
             type: SET_SIGNING_METHOD,
         }
         expect(AddAccountActions.setSigningMethod(signingMethod.SHAMBHALA))
-            .toEqual(expectedAction)
-    })
-
-    it("should set the name key in AddAccount Redux tree", () => {
-        const expectedAction = {
-            name: "Test Name",
-            type: SET_NAME,
-        }
-        expect(AddAccountActions.setName("Test Name"))
             .toEqual(expectedAction)
     })
 

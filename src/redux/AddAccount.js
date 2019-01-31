@@ -1,4 +1,4 @@
-import { createReducer, string } from "@xcmats/js-toolbox"
+import { createReducer, string, toBool } from "@xcmats/js-toolbox"
 
 
 
@@ -10,6 +10,8 @@ const initState = {
     accountType: string.empty(),
     activeStep: 0,
     dialogShowing: false,
+    error: false,
+    errorMessage: string.empty(),
     name: string.empty(),
     signingMethod: string.empty(),
 }
@@ -27,6 +29,7 @@ export const SET_NAME = "@AddAccount/SET_NAME"
 export const SET_SIGNING_METHOD = "@AddAccount/SET_SIGNING_METHOD"
 export const SET_STATE = "@AddAccount/SET_STATE"
 export const TOGGLE_DIALOG = "@AddAccount/TOGGLE_DIALOG"
+export const TOGGLE_ERROR = "@AddAccount/TOGGLE_ERROR"
 
 
 
@@ -72,6 +75,13 @@ export const actions = {
     setState: (state) => ({
         type: SET_STATE,
         state,
+    }),
+
+
+    // Turns error indicator on/off in a user input component.
+    toggleError: (errorMessage) => ({
+        type: TOGGLE_ERROR,
+        errorMessage,
     }),
 
 
@@ -135,5 +145,16 @@ export const reducers = createReducer(initState)({
         ...state,
         dialogShowing: action.showing,
     }),
+
+
+    // ...
+    [TOGGLE_ERROR]: (state, action) => {
+        return ({
+            ...state,
+            error: toBool(action.errorMessage),
+            errorMessage: action.errorMessage,
+        })
+    },
+    
 
 })
