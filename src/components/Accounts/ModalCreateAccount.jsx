@@ -93,9 +93,9 @@ export default func.compose(
     })),
     connect(
         (state) => ({
-            accountType: state.Accounts.accountType,
+            accountType: state.AddAccount.accountType,
             activeStep: state.Accounts.activeStep,
-            open: state.Accounts.ModalCreateAccount.showing,
+            open: state.AddAccount.dialogShowing,
             spinnerVisible: state.Awaiter.spinnerVisible,
         }),
         (dispatch) => bindActionCreators({

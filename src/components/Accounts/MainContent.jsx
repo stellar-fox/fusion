@@ -21,7 +21,7 @@ import {
 } from "../../lib/logic/stellarAccount"
 import { accountType as at } from "../../redux/Accounts"
 import { action as AccountsActions } from "../../redux/Accounts"
-import { addAccountAction } from "../../actions/addAccount"
+import { addAccount } from "../../thunks/AddAccount/"
 
 
 
@@ -45,7 +45,7 @@ import { addAccountAction } from "../../actions/addAccount"
  * @returns {React.ReactElement}
  */
 const MainContent = ({
-    changeTab, classes, demoAccounts, height, realAccounts, addAccountAction,
+    changeTab, classes, demoAccounts, height, realAccounts, addAccount,
     tabSelected, width,
 }) => {
     
@@ -86,7 +86,7 @@ const MainContent = ({
                     <Fab aria-label="Add Real" size="small"
                         className={classes.fab}
                         classes={{ root: classes.fabReal }}
-                        onClick={() => addAccountAction(at.REAL)}
+                        onClick={() => addAccount(at.REAL)}
                     >
                         <AddRounded />
                     </Fab>
@@ -105,7 +105,7 @@ const MainContent = ({
                     <Fab aria-label="Add Demo" size="small"
                         className={classes.fab}
                         classes={{ root: classes.fabDemo }}
-                        onClick={() => addAccountAction(at.DEMO)}
+                        onClick={() => addAccount(at.DEMO)}
                     >
                         <AddRounded />
                     </Fab>
@@ -275,7 +275,7 @@ export default func.compose(
         }),
         (dispatch) => bindActionCreators({
             changeTab: AccountsActions.changeTab,
-            addAccountAction,
+            addAccount,
         }, dispatch)
     ),
 )(MainContent)

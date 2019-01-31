@@ -11,10 +11,10 @@ import withWidth, { isWidthDown } from "@material-ui/core/withWidth"
 import Button from "../../lib/mui-v1/Button"
 import {
     handleYes,
-    handleNo,
     incrementActiveStep,
 } from "../../actions/createAccount"
 import { accountType as at } from "../../redux/Accounts"
+import { cancel } from "../../thunks/AddAccount/"
 
 
 
@@ -38,7 +38,7 @@ import { accountType as at } from "../../redux/Accounts"
  * @returns {React.ReactElement}
  */
 const StepperCreateAccount = ({
-    accountType, activeStep, classes, handleNo, handleYes, incrementActiveStep,
+    accountType, activeStep, classes, cancel, handleYes, incrementActiveStep,
     width,
 }) => {
 
@@ -83,7 +83,7 @@ const StepperCreateAccount = ({
                         marginRight: "0.5rem",
                     }}
                     size="small"
-                    onClick={handleNo}
+                    onClick={cancel}
                 >
                 Cancel
                 </Button>
@@ -127,11 +127,11 @@ export default func.compose(
     })),
     connect(
         (state) => ({
-            accountType: state.Accounts.accountType,
+            accountType: state.AddAccount.accountType,
             activeStep: state.Accounts.activeStep,
         }),
         (dispatch) => bindActionCreators({
-            handleNo,
+            cancel,
             handleYes,
             incrementActiveStep,
         }, dispatch),

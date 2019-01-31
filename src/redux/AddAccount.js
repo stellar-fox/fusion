@@ -4,10 +4,13 @@ import { createReducer, string } from "@xcmats/js-toolbox"
 
 
 /**
- * Initial state for _Signup_ Redux key.
+ * Initial state for _AddAccount_ Redux key.
  */
 const initState = {
+    accountType: string.empty(),
+    dialogShowing: false,
     name: string.empty(),
+    signingMethod: string.empty(),
 }
 
 
@@ -16,11 +19,12 @@ const initState = {
 /**
  * Action Types
  */
-export const RESET_STATE = "@Signup/RESET_STATE"
-export const SET_ACCOUNT_TYPE = "@Signup/SET_ACCOUNT_TYPE"
-export const SET_NAME = "@Signup/SET_NAME"
-export const SET_SIGNING_METHOD = "@Signup/SET_SIGNING_METHOD"
-export const SET_STATE = "@Signup/SET_STATE"
+export const RESET_STATE = "@AddAccount/RESET_STATE"
+export const SET_ACCOUNT_TYPE = "@AddAccount/SET_ACCOUNT_TYPE"
+export const SET_NAME = "@AddAccount/SET_NAME"
+export const SET_SIGNING_METHOD = "@AddAccount/SET_SIGNING_METHOD"
+export const SET_STATE = "@AddAccount/SET_STATE"
+export const TOGGLE_DIALOG = "@AddAccount/TOGGLE_DIALOG"
 
 
 
@@ -59,6 +63,13 @@ export const actions = {
     setState: (state) => ({
         type: SET_STATE,
         state,
+    }),
+
+
+    // ...
+    toggleDialog: (showing) => ({
+        type: TOGGLE_DIALOG,
+        showing,
     }),
 
 }
@@ -100,6 +111,13 @@ export const reducers = createReducer(initState)({
     [SET_STATE]: (state, action) => ({
         ...state, // preserve previous state
         ...action.state, // set new key(s) and their values
+    }),
+
+
+    // ...
+    [TOGGLE_DIALOG]: (state, action) => ({
+        ...state,
+        dialogShowing: action.showing,
     }),
 
 })

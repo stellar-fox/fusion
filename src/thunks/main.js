@@ -3,7 +3,7 @@
  *
  * Thunks.
  *
- * @module client-ui-thunks
+ * @module thunks
  * @license Apache-2.0
  */
 
