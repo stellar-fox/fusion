@@ -94,7 +94,7 @@ export default func.compose(
     connect(
         (state) => ({
             accountType: state.AddAccount.accountType,
-            activeStep: state.Accounts.activeStep,
+            activeStep: state.AddAccount.activeStep,
             open: state.AddAccount.dialogShowing,
             spinnerVisible: state.Awaiter.spinnerVisible,
         }),

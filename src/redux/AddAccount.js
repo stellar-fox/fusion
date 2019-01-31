@@ -8,6 +8,7 @@ import { createReducer, string } from "@xcmats/js-toolbox"
  */
 const initState = {
     accountType: string.empty(),
+    activeStep: 0,
     dialogShowing: false,
     name: string.empty(),
     signingMethod: string.empty(),
@@ -21,6 +22,7 @@ const initState = {
  */
 export const RESET_STATE = "@AddAccount/RESET_STATE"
 export const SET_ACCOUNT_TYPE = "@AddAccount/SET_ACCOUNT_TYPE"
+export const SET_ACTIVE_STEP = "@AddAccount/SET_ACTIVE_STEP"
 export const SET_NAME = "@AddAccount/SET_NAME"
 export const SET_SIGNING_METHOD = "@AddAccount/SET_SIGNING_METHOD"
 export const SET_STATE = "@AddAccount/SET_STATE"
@@ -42,6 +44,13 @@ export const actions = {
     setAccountType: (accountType) => ({
         type: SET_ACCOUNT_TYPE,
         accountType,
+    }),
+
+
+    // Sets the current step of the account creation process
+    setActiveStep: (step) => ({
+        type: SET_ACTIVE_STEP,
+        step,
     }),
 
 
@@ -90,6 +99,13 @@ export const reducers = createReducer(initState)({
     [SET_ACCOUNT_TYPE]: (state, action) => ({
         ...state,
         accountType: action.accountType,
+    }),
+
+
+    // ...
+    [SET_ACTIVE_STEP]: (state, action) => ({
+        ...state,
+        activeStep: action.step,
     }),
 
 

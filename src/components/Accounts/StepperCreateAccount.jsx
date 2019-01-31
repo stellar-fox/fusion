@@ -128,7 +128,7 @@ export default func.compose(
     connect(
         (state) => ({
             accountType: state.AddAccount.accountType,
-            activeStep: state.Accounts.activeStep,
+            activeStep: state.AddAccount.activeStep,
         }),
         (dispatch) => bindActionCreators({
             cancel,
