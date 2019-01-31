@@ -11,10 +11,12 @@ import withWidth, { isWidthDown } from "@material-ui/core/withWidth"
 import Button from "../../lib/mui-v1/Button"
 import {
     handleYes,
-    incrementActiveStep,
 } from "../../actions/createAccount"
 import { accountType as at } from "../../redux/Accounts"
-import { cancel } from "../../thunks/AddAccount/"
+import {
+    cancel,
+    next,
+} from "../../thunks/AddAccount/"
 
 
 
@@ -38,58 +40,55 @@ import { cancel } from "../../thunks/AddAccount/"
  * @returns {React.ReactElement}
  */
 const StepperCreateAccount = ({
-    accountType, activeStep, classes, cancel, handleYes, incrementActiveStep,
+    accountType, activeStep, classes, cancel, handleYes, next,
     width,
 }) => {
 
-    const
-        numSteps = 2,
-        handleNext = () => incrementActiveStep()
+    const numSteps = 2
 
-    return (
-        <MobileStepper
-            LinearProgressProps={{
-                classes: {
-                    root: classes.progress,
-                    bar: classes.bar,
-                },
-            }}
-            classes={{
-                dotActive: classes.dotActive,
-                root: func.choose(
-                    accountType, {
-                        [at.REAL]: () => classes.paperReal,
-                        [at.DEMO]: () => classes.paperDemo,
-                    }, () => "unknown account type"),
-            }}
-            variant="dots"
-            position={isWidthDown("md", width) ? "bottom" : "static"}
-            steps={numSteps+1}
-            activeStep={activeStep}
-            className={classes.rootCommon}
-            nextButton={
-                <Button color="green"
-                    style={{
-                        marginLeft: "0.5rem",
-                    }}
-                    size="small"
-                    onClick={activeStep < numSteps ? handleNext : handleYes}
-                >{activeStep === numSteps ? "Finish" : "Next"}
-                </Button>
-            }
-            backButton={
-                <Button color="yellow"
-                    style={{
-                        marginRight: "0.5rem",
-                    }}
-                    size="small"
-                    onClick={cancel}
-                >
-                Cancel
-                </Button>
-            }
-        />
-    )
+    return <MobileStepper
+        LinearProgressProps={{
+            classes: {
+                root: classes.progress,
+                bar: classes.bar,
+            },
+        }}
+        classes={{
+            dotActive: classes.dotActive,
+            root: func.choose(
+                accountType, {
+                    [at.REAL]: () => classes.paperReal,
+                    [at.DEMO]: () => classes.paperDemo,
+                }, () => "unknown account type"),
+        }}
+        variant="dots"
+        position={isWidthDown("md", width) ? "bottom" : "static"}
+        steps={numSteps+1}
+        activeStep={activeStep}
+        className={classes.rootCommon}
+        nextButton={
+            <Button color="green"
+                style={{
+                    marginLeft: "0.5rem",
+                }}
+                size="small"
+                onClick={activeStep < numSteps ? next : handleYes}
+            >{activeStep === numSteps ? "Finish" : "Next"}
+            </Button>
+        }
+        backButton={
+            <Button color="yellow"
+                style={{
+                    marginRight: "0.5rem",
+                }}
+                size="small"
+                onClick={cancel}
+            >
+            Cancel
+            </Button>
+        }
+    />
+    
 }
 
 
@@ -133,7 +132,7 @@ export default func.compose(
         (dispatch) => bindActionCreators({
             cancel,
             handleYes,
-            incrementActiveStep,
+            next,
         }, dispatch),
     ),
 )(StepperCreateAccount)
