@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
 import { func } from "@xcmats/js-toolbox"
 import {
+    Grow,
     Typography,
     withMobileDialog
 } from "@material-ui/core"
@@ -36,24 +37,25 @@ const Step0 = ({
 }) => {
 
     return (
-        
-        <div className="flex-box-col">
-            <Typography
-                style={{ marginBottom: "1rem" }}
-                variant="body2"
-            >
-                Please select the name that will best identify your
-                new account. You can always change this name later.
-            </Typography>
-            <TextInput
-                autoFocus
-                label="Account Name"
-                onChange={(e) => setAccountName(e.target.value)}
-                error={error}
-                errorMessage={errorMessage}
-                errorClasses={classes.inputError}
-            />
-        </div>
+        <Grow in={true}>
+            <div className="flex-box-col">
+                <Typography
+                    style={{ marginBottom: "1rem" }}
+                    variant="body2"
+                >
+                    Please select the name that will best identify your
+                    new account. You can always change this name later.
+                </Typography>
+                <TextInput
+                    autoFocus
+                    label="Account Name"
+                    onChange={(e) => setAccountName(e.target.value)}
+                    error={error}
+                    errorMessage={errorMessage}
+                    errorClasses={classes.inputError}
+                />
+            </div>
+        </Grow>
     )
 }
 

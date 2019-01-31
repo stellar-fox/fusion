@@ -5,6 +5,7 @@ import { withStyles } from "@material-ui/core/styles"
 import { func, type } from "@xcmats/js-toolbox"
 import {
     FormControlLabel,
+    Grow,
     Switch,
     Typography,
     withMobileDialog
@@ -62,18 +63,20 @@ const InputLedgerAccount = ({
         </div>
 
         {!useDefaultAccount &&
-            <div className="flex-box-row">
-                <TextInput
-                    label="Account"
-                    defaultValue={account}
-                    onChange={(e) => setAccount(e.target.value)}
-                    type="number"
-                    min="0"
-                    error={error}
-                    errorMessage={errorMessage}
-                    errorClasses={classes.inputError}
-                />
-            </div>
+            <Grow in={true}>
+                <div className="flex-box-row">
+                    <TextInput
+                        label="Account"
+                        defaultValue={account}
+                        onChange={(e) => setAccount(e.target.value)}
+                        type="number"
+                        min="0"
+                        error={error}
+                        errorMessage={errorMessage}
+                        errorClasses={classes.inputError}
+                    />
+                </div>
+            </Grow>
         }
         
     </div>

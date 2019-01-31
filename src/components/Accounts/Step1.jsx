@@ -4,8 +4,10 @@ import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
 import { func } from "@xcmats/js-toolbox"
 import {
+    Fade,
     FormControl,
     FormControlLabel,
+    Grow,
     Radio,
     RadioGroup,
     Typography,
@@ -37,7 +39,7 @@ import InputLedgerAccount from "./InputLedgerAccount"
  * @function Step1
  * @returns {React.ReactElement}
  */
-const Step1 = ({classes, signingMethod, setSigningMethod}) =>
+const Step1 = ({ classes, signingMethod, setSigningMethod }) => <Grow in={true}>
     <div className="flex-box-col">
         <Typography
             style={{ margin: "0 0 1rem 0" }}
@@ -112,22 +114,24 @@ const Step1 = ({classes, signingMethod, setSigningMethod}) =>
         </FormControl>
         <div className="flex-box-col">
             {func.choose(signingMethod, {
-                [sm.SHAMBHALA]: () => <div className="flex-box-col">
-                    <Typography
-                        style={{ marginTop: "1rem" }}
-                        variant="h4"
-                    >
-                        Your account will be secured by
-                        multisignature mechanism and you will have
-                        full control of your account at all times.
-                        This is option is meant for novice users.
-                    </Typography>
-                </div>,
+                [sm.SHAMBHALA]: () =>
+                    <div className="flex-box-col"><Fade in={true}>
+                        <Typography
+                            style={{ marginTop: "1rem" }}
+                            variant="h4"
+                        >
+                            Your account will be secured by
+                            multisignature mechanism and you will have
+                            full control of your account at all times.
+                            This is option is meant for novice users.
+                        </Typography>
+                    </Fade></div>,
                 [sm.LEDGERHQ]: () => <InputLedgerAccount />,
                 [sm.MANUAL]: () => <InputAccountId />,
             }, () => "unknown signing method")}
         </div>
     </div>
+</Grow>
 
 
 
