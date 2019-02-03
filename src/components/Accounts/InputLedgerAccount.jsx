@@ -43,17 +43,17 @@ const InputLedgerAccount = ({
     useDefaultAccount,
 }) => {
 
-    return <div className="flex-box-col">
-        <Fade in={true}>
+    return <Fade in timeout={{ enter: 700, exit: 300 }}>
+        <div className="flex-box-col">
+        
             <Typography style={{ marginTop: "1rem" }} variant="h4">
                 Associate your <span className="cursive">
                 Ledger Nano S</span> device with your bank.
                 Gives you convenience of signing transactions
                 with a PIN with no physical device present.
             </Typography>
-        </Fade>
-        <div className="m-t flex-box-row">
-            <Fade in={true}>
+
+            <div className="m-t flex-box-row">
                 <FormControlLabel control={
                     <Switch
                         checked={type.toBool(useDefaultAccount)}
@@ -63,25 +63,25 @@ const InputLedgerAccount = ({
                     />
                 } label="Use Default Account"
                 />
-            </Fade>
-        </div>
-        
-        {!useDefaultAccount &&
-            <div className="flex-box-row">
-                <TextInput
-                    label="Account"
-                    defaultValue={account}
-                    onChange={(e) => setAccount(e.target.value)}
-                    type="number"
-                    min="0"
-                    error={error}
-                    errorMessage={errorMessage}
-                    errorClasses={classes.inputError}
-                />
             </div>
-        }
-        
-    </div>
+            
+            {!useDefaultAccount &&
+                <div className="flex-box-row">
+                    <TextInput
+                        label="Account"
+                        defaultValue={account}
+                        onChange={(e) => setAccount(e.target.value)}
+                        type="number"
+                        min="0"
+                        error={error}
+                        errorMessage={errorMessage}
+                        errorClasses={classes.inputError}
+                    />
+                </div>
+            }
+            
+        </div>
+    </Fade>
 }
     
 

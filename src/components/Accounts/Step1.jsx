@@ -115,7 +115,7 @@ const Step1 = ({ classes, signingMethod, setSigningMethod }) => <Grow in={true}>
         <div className="flex-box-col">
             {func.choose(signingMethod, {
                 [sm.SHAMBHALA]: () =>
-                    <div className="flex-box-col"><Fade in={true}>
+                    <div className="flex-box-col"><Fade in timeout={{ enter: 700, exit: 300 }}>
                         <Typography
                             style={{ marginTop: "1rem" }}
                             variant="h4"

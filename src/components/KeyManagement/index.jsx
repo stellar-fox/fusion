@@ -44,50 +44,44 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, width }) =>
-                <Switch>
-                    <Route exact path={this.rr(".")}>
+            ({ classes, width }) => <Switch><Route exact path={this.rr(".")}>
                         
-                        <Fade in={true} timeout={{
-                            enter: 700,
-                            exit: 300,
-                        }}
-                        >
-                            <Paper className={classes.paperCanvas}>
-                                <Snacky />
-                                
-                                <Fragment>
-                                    <Typography variant="h6">
-                                        Key Management
-                                    </Typography>
-                                    <Typography variant="h4">
-                                        Manage additional keys with your account.
-                                    </Typography>
-                                    <div style={{
-                                        position: "relative",
-                                    }} className={isWidthDown("md", width) ?
-                                        "m-t m-b flex-box-col items-centered" :
-                                        "m-t m-b flex-box-row space-around"}
-                                    >
-                                        <ShambhalaPureCard />
+                <Fade in timeout={{ enter: 700, exit: 300 }}>
+                    <Paper className={classes.paperCanvas}>
+                        <Snacky />
+                        
+                        <Fragment>
+                            <Typography variant="h6">
+                                Key Management
+                            </Typography>
+                            <Typography variant="h4">
+                                Manage additional keys with your account.
+                            </Typography>
+                            <div style={{
+                                position: "relative",
+                            }} className={isWidthDown("md", width) ?
+                                "m-t m-b flex-box-col items-centered" :
+                                "m-t m-b flex-box-row space-around"}
+                            >
+                                <ShambhalaPureCard />
 
-                                        {isWidthDown("md", width) &&
-                                            <div className="m-b"></div>}
+                                {isWidthDown("md", width) &&
+                                    <div className="m-b"></div>}
 
-                                        <ShambhalaLedgerCard />
+                                <ShambhalaLedgerCard />
 
-                                        {isWidthDown("md", width) &&
-                                            <div className="m-b"></div>}
+                                {isWidthDown("md", width) &&
+                                    <div className="m-b"></div>}
 
-                                        <ShambhalaScepticCard />
-                                    </div>
-                                </Fragment>
-                                    
-                            </Paper>
-                        </Fade>
-                    </Route>
-                    <Redirect to={this.rr(".")} />
-                </Switch>
+                                <ShambhalaScepticCard />
+                            </div>
+                        </Fragment>
+                            
+                    </Paper>
+                </Fade>
+            </Route>
+            <Redirect to={this.rr(".")} />
+            </Switch>
         )(this.props)
 
     }

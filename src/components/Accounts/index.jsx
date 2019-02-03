@@ -82,11 +82,7 @@ export default compose(
                         </div> : <Fragment>
                             <ModalCreateAccount />
                             <ModalEditName />
-                            <Fade in={true} timeout={{
-                                enter: 700,
-                                exit: 300,
-                            }}
-                            >
+                            <Fade in timeout={{ enter: 700, exit: 300 }}>
                                 <Paper style={{
                                     height: height - 90,
                                 }} className={classes.paperCanvas}

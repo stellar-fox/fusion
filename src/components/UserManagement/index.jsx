@@ -72,63 +72,58 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, cropInProgress, tabSelected }) =>
-                <Switch>
-                    <Route exact path={this.rr(".")}>
+            ({ classes, cropInProgress, tabSelected }) => <Switch>
+                <Route exact path={this.rr(".")}>
 
-                        <Fade in={true} timeout={{
-                            enter: 700,
-                            exit: 300,
-                        }}
-                        >
-                            <Paper className={classes.paperCanvas}>
-                                <Snacky />
-                                
-                                <Fragment>
-                                    <Tabs
-                                        value={tabSelected}
-                                        onChange={this.onTabChange}
-                                        variant="fullWidth"
-                                        classes={{ indicator: classes.indicator }}
+                    <Fade in timeout={{ enter: 700, exit: 300 }}>
+                        <Paper className={classes.paperCanvas}>
+                            <Snacky />
+                            
+                            <Fragment>
+                                <Tabs
+                                    value={tabSelected}
+                                    onChange={this.onTabChange}
+                                    variant="fullWidth"
+                                    classes={{ indicator: classes.indicator }}
+                                >
+                                    <Tab label="Profile" />
+                                    <Tab label="Settings" />
+                                    <Tab label="Security" />
+                                </Tabs>
+
+                                <SwipeableViews
+                                    axis={this.props.theme.direction === "rtl" ? "x-reverse" : "x"}
+                                    index={tabSelected}
+                                    onChangeIndex={this.handleChangeIndex}
+                                    disabled={cropInProgress}
+                                >
+                                    <Typography component="div"
+                                        dir={this.props.theme.direction}
+                                        style={{ padding: "1rem 0.5rem" }}
                                     >
-                                        <Tab label="Profile" />
-                                        <Tab label="Settings" />
-                                        <Tab label="Security" />
-                                    </Tabs>
+                                        <Profile />
+                                    </Typography>
 
-                                    <SwipeableViews
-                                        axis={this.props.theme.direction === "rtl" ? "x-reverse" : "x"}
-                                        index={tabSelected}
-                                        onChangeIndex={this.handleChangeIndex}
-                                        disabled={cropInProgress}
+                                    <Typography component="div"
+                                        dir={this.props.theme.direction}
+                                        style={{ padding: "2rem 0" }}
                                     >
-                                        <Typography component="div"
-                                            dir={this.props.theme.direction}
-                                            style={{ padding: "1rem 0.5rem" }}
-                                        >
-                                            <Profile />
-                                        </Typography>
+                                        Settings
+                                    </Typography>
+                                    <Typography component="div"
+                                        dir={this.props.theme.direction}
+                                        style={{ padding: "2rem 0" }}
+                                    >
+                                        Security
+                                    </Typography>
 
-                                        <Typography component="div"
-                                            dir={this.props.theme.direction}
-                                            style={{ padding: "2rem 0" }}
-                                        >
-                                            Settings
-                                        </Typography>
-                                        <Typography component="div"
-                                            dir={this.props.theme.direction}
-                                            style={{ padding: "2rem 0" }}
-                                        >
-                                            Security
-                                        </Typography>
-
-                                    </SwipeableViews>
-                                </Fragment>
-                            </Paper>
-                        </Fade>
-                    </Route>
-                    <Redirect to={this.rr(".")} />
-                </Switch>
+                                </SwipeableViews>
+                            </Fragment>
+                        </Paper>
+                    </Fade>
+                </Route>
+                <Redirect to={this.rr(".")} />
+            </Switch>
         )(this.props)
 
     }

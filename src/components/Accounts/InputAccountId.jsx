@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
 import { func } from "@xcmats/js-toolbox"
 import {
+    Fade,
     Typography,
     withMobileDialog
 } from "@material-ui/core"
@@ -33,7 +34,7 @@ import { handleAccountIdInput } from "../../actions/recipes/signup"
  */
 const InputAccountId = ({
     accountId, classes, error, errorMessage, handleAccountIdInput,
-}) => <div className="flex-box-col">
+}) => <Fade in timeout={{ enter: 700, exit: 300 }}><div className="flex-box-col">
     <Typography style={{ marginTop: "1rem" }} variant="h4">
         This option will attach two additional signers to
         your bank account. When you provide signed transaction,
@@ -53,7 +54,7 @@ const InputAccountId = ({
             errorClasses={ classes.inputError }
         />
     </div>
-</div>
+</div></Fade>
 
 
 

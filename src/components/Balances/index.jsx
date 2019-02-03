@@ -78,88 +78,85 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, height, tabSelected }) =>
-                <Switch>
-                    <Route exact path={this.rr(".")}>
+            ({ classes, height, tabSelected }) => <Switch><Route exact path={this.rr(".")}>
 
-                        <Fade in={true} timeout={{
-                            enter: 700,
-                            exit: 300,
-                        }}
-                        >
-                            <Paper style={{
-                                height: height - 90,
-                            }} className={classes.paperCanvas}
+                <Fade in timeout={{ enter: 700, exit: 300 }}>
+                    <Paper style={{
+                        height: height - 90,
+                    }} className={classes.paperCanvas}
+                    >
+                        <ModalPay />
+                        
+                        <Fragment>
+                            <Grid
+                                container
+                                direction={"column"}
+                                wrap={"nowrap"}
+                                style={{ position: "relative" }}
+                                className="m-b"
                             >
-                                <ModalPay />
-                                
-                                <Fragment>
-                                    <Grid
-                                        container
-                                        direction={"column"}
-                                        wrap={"nowrap"}
-                                        style={{ position: "relative" }}
-                                        className="m-b"
+                                <Grid item>
+                                    <Typography style={{
+                                        position: "relative",
+                                    }} variant="h6"
                                     >
-                                        <Grid item>
-                                            <Typography style={{
-                                                position: "relative",
-                                            }} variant="h6"
-                                            >
-                                                Balances
-                                            </Typography>
-                                        </Grid>
-                                        <Grid item>
-                                            <Typography style={{
-                                                position: "relative",
-                                            }} variant="h4"
-                                            >
-                                                Overview of your accounts in one place.
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>
-
-                                    <Tabs
-                                        style={{
-                                            position: "relative",
-                                        }}
-                                        value={tabSelected}
-                                        onChange={this.onTabChange}
-                                        variant="fullWidth"
-                                        classes={{
-                                            indicator: func.choose(tabSelected, {
-                                                0: () => classes.indicatorGreen,
-                                                1: () => classes.indicatorRed,
-                                            }, () => classes.indicator),
-                                        }}
+                                        Balances
+                                    </Typography>
+                                </Grid>
+                                <Grid item>
+                                    <Typography style={{
+                                        position: "relative",
+                                    }} variant="h4"
                                     >
-                                        <Tab classes={{ label: classes.labelRealAccounts }} label="Real" />
-                                        <Tab classes={{ label: classes.labelDemoAccounts }} label="Demo" />
-                                    </Tabs>
+                                        Overview of your accounts in one place.
+                                    </Typography>
+                                </Grid>
+                            </Grid>
 
-                                    <SwipeableViews
-                                        style={{
-                                            position: "relative",
-                                            height: height - 220,
-                                        }}
-                                        slideStyle={{
-                                            height: height - 220,
-                                        }}
-                                        index={tabSelected}
-                                    >
-                                        <RosterReal />
-                                        <RosterDemo />
-                                    </SwipeableViews>
+                            <Tabs
+                                style={{
+                                    position: "relative",
+                                }}
+                                value={tabSelected}
+                                onChange={this.onTabChange}
+                                variant="fullWidth"
+                                classes={{
+                                    indicator: func.choose(tabSelected, {
+                                        0: () => classes.indicatorGreen,
+                                        1: () => classes.indicatorRed,
+                                    }, () => classes.indicator),
+                                }}
+                            >
+                                <Tab classes={{ label: classes.labelRealAccounts }}
+                                    label="Real"
+                                />
+                                <Tab classes={{ label: classes.labelDemoAccounts }}
+                                    label="Demo"
+                                />
+                            </Tabs>
 
-                                </Fragment>
-                                    
+                            <SwipeableViews
+                                style={{
+                                    position: "relative",
+                                    height: height - 220,
+                                }}
+                                slideStyle={{
+                                    height: height - 220,
+                                }}
+                                index={tabSelected}
+                            >
+                                <RosterReal />
+                                <RosterDemo />
+                            </SwipeableViews>
 
-                            </Paper>
-                        </Fade>
+                        </Fragment>
+                            
+                    </Paper>
+                </Fade>
 
-                    </Route>
-                    <Redirect to={this.rr(".")} />
-                </Switch>
+            </Route>
+            <Redirect to={this.rr(".")} />
+            </Switch>
         )(this.props)
 
     }
