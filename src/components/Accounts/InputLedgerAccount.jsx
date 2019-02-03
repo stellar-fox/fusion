@@ -4,8 +4,8 @@ import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
 import { func, type } from "@xcmats/js-toolbox"
 import {
+    Fade,
     FormControlLabel,
-    Grow,
     Switch,
     Typography,
     withMobileDialog
@@ -44,39 +44,41 @@ const InputLedgerAccount = ({
 }) => {
 
     return <div className="flex-box-col">
-        <Typography style={{ marginTop: "1rem" }} variant="h4">
-            Associate your <span className="cursive">
-            Ledger Nano S</span> device with your bank.
-            Gives you convenience of signing transactions
-            with a PIN with no physical device present.
-        </Typography>
+        <Fade in={true}>
+            <Typography style={{ marginTop: "1rem" }} variant="h4">
+                Associate your <span className="cursive">
+                Ledger Nano S</span> device with your bank.
+                Gives you convenience of signing transactions
+                with a PIN with no physical device present.
+            </Typography>
+        </Fade>
         <div className="m-t flex-box-row">
-            <FormControlLabel control={
-                <Switch
-                    checked={type.toBool(useDefaultAccount)}
-                    onChange={(e) => setUseDefaultAccount(
-                        e.target.checked
-                    )}
-                />
-            } label="Use Default Account"
-            />
-        </div>
-
-        {!useDefaultAccount &&
-            <Grow in={true}>
-                <div className="flex-box-row">
-                    <TextInput
-                        label="Account"
-                        defaultValue={account}
-                        onChange={(e) => setAccount(e.target.value)}
-                        type="number"
-                        min="0"
-                        error={error}
-                        errorMessage={errorMessage}
-                        errorClasses={classes.inputError}
+            <Fade in={true}>
+                <FormControlLabel control={
+                    <Switch
+                        checked={type.toBool(useDefaultAccount)}
+                        onChange={(e) => setUseDefaultAccount(
+                            e.target.checked
+                        )}
                     />
-                </div>
-            </Grow>
+                } label="Use Default Account"
+                />
+            </Fade>
+        </div>
+        
+        {!useDefaultAccount &&
+            <div className="flex-box-row">
+                <TextInput
+                    label="Account"
+                    defaultValue={account}
+                    onChange={(e) => setAccount(e.target.value)}
+                    type="number"
+                    min="0"
+                    error={error}
+                    errorMessage={errorMessage}
+                    errorClasses={classes.inputError}
+                />
+            </div>
         }
         
     </div>
