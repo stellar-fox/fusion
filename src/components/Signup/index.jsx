@@ -1,10 +1,15 @@
 import React, { Fragment } from "react"
 import { compose } from "redux"
 import { withStyles } from "@material-ui/core/styles"
-import { url, rgba } from "../../lib/utils"
-import { Button, Grid, Hidden, Paper } from "@material-ui/core"
+import {
+    Button,
+    Fade,
+    Grid,
+    Hidden,
+    Paper
+} from "@material-ui/core"
+import { fade } from "@material-ui/core/styles/colorManipulator"
 import UserSignup from "../UserSignup"
-import background from "../Fusion/static/bg.png"
 import { Link } from "react-router-dom"
 
 
@@ -12,10 +17,9 @@ import { Link } from "react-router-dom"
 
 // <Signup> component
 export default compose(
-    withStyles((_theme) => ({
+    withStyles((theme) => ({
 
         container: {
-            backgroundImage: url(background),
             backgroundPosition: "center center",
             backgroundSize: "cover",
             height: "100%",
@@ -24,7 +28,7 @@ export default compose(
         loginPaper: {
             width: "460px",
             padding: "40px 80px 40px 80px",
-            backgroundColor: rgba(29, 36, 46, 0.25),
+            backgroundColor: fade(theme.palette.custom.onyx, 0.3),
         },
 
         button: {
@@ -47,13 +51,14 @@ export default compose(
                     wrap={"nowrap"}
                 >
                     <Grid item>
-                        <UserSignup />
-                        <div className="flex-box-row space-between">
-                            <Button size="small" component={Link} to="/"
-                                variant="outlined" color="secondary"
-                                className={classes.button}
-                            >Log In</Button>
-                        </div>
+                        <Fade in><div>
+                            <UserSignup />
+                            <div className="flex-box-row space-between">
+                                <Button size="small" component={Link} to="/"
+                                    color="secondary" className={classes.button}
+                                >Log In</Button>
+                            </div>
+                        </div></Fade>
                     </Grid>
                 </Grid>
             </Hidden>
@@ -69,12 +74,13 @@ export default compose(
                 >
                     <Grid item>
                         <Paper elevation={2} className={classes.loginPaper}>
-                            <UserSignup />
-                            <div className="flex-box-row space-between">
-                                <Button size="small" component={Link} to="/"
-                                    color="secondary" className={classes.button}
-                                >Log In</Button>
-                            </div>
+                            <Fade in><div><UserSignup />
+                                <div className="flex-box-row space-between m-t-small">
+                                    <Button size="small" component={Link} to="/"
+                                        color="secondary" className={classes.button}
+                                    >Log In</Button>
+                                </div>
+                            </div></Fade>
                         </Paper>
                     </Grid>
                 </Grid>

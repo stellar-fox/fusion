@@ -71,7 +71,6 @@ export default createMuiTheme({
             blue,
             blueLight,
 
-
             silverChalice,
             spanishGray,
             antiFlashWhite,

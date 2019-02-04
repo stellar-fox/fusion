@@ -3,10 +3,15 @@ import { bindActionCreators } from "redux"
 import { connect } from "react-redux"
 import { func } from "@xcmats/js-toolbox"
 import { withStyles } from "@material-ui/core/styles"
-import { url, rgba } from "../../lib/utils"
-import { Button, Grid, Hidden, Paper } from "@material-ui/core"
+import {
+    Button,
+    Fade,
+    Grid,
+    Hidden,
+    Paper
+} from "@material-ui/core"
+import { fade } from "@material-ui/core/styles/colorManipulator"
 import UserLogin from "../UserLogin"
-import background from "../Fusion/static/bg.png"
 import { Link } from "react-router-dom"
 import Awaiter from "../Awaiter"
 
@@ -15,10 +20,9 @@ import Awaiter from "../Awaiter"
 
 // <Welcome> component
 export default func.compose(
-    withStyles((_theme) => ({
+    withStyles((theme) => ({
 
         container: {
-            backgroundImage: url(background),
             backgroundPosition: "center center",
             backgroundSize: "cover",
             height: "100%",
@@ -27,7 +31,7 @@ export default func.compose(
         loginPaper: {
             width: "460px",
             padding: "40px 80px 40px 80px",
-            backgroundColor: rgba(29, 36, 46, 0.25),
+            backgroundColor: fade(theme.palette.custom.onyx, 0.3),
         },
         button: {
             margin: "1em 0em",
@@ -61,27 +65,29 @@ export default func.compose(
                     <Grid item>
                         {loading ?
                             <Awaiter /> :
-                            <Fragment>
-                                <UserLogin />
-                                <div className="flex-box-row space-between">
-                                    <Button
-                                        size="small"
-                                        component={Link}
-                                        to="/reset"
-                                        color="secondary"
-                                        className={classes.button}
-                                        disabled={disabled}
-                                    >Reset Password</Button>
-                                    <Button
-                                        size="small"
-                                        component={Link}
-                                        to="/signup"
-                                        color="secondary"
-                                        className={classes.button}
-                                        disabled={disabled}
-                                    >Signup</Button>
+                            <Fade in>
+                                <div>
+                                    <UserLogin />
+                                    <div className="flex-box-row space-between">
+                                        <Button
+                                            size="small"
+                                            component={Link}
+                                            to="/reset"
+                                            color="secondary"
+                                            className={classes.button}
+                                            disabled={disabled}
+                                        >Reset Password</Button>
+                                        <Button
+                                            size="small"
+                                            component={Link}
+                                            to="/signup"
+                                            color="secondary"
+                                            className={classes.button}
+                                            disabled={disabled}
+                                        >Signup</Button>
+                                    </div>
                                 </div>
-                            </Fragment>
+                            </Fade>
                         }
                     </Grid>
                 </Grid>
@@ -98,9 +104,9 @@ export default func.compose(
                 >
                     <Grid item>
                         {loading ?
-                            <Awaiter /> :
-                            <Fragment>
-                                <Paper elevation={2} className={classes.loginPaper}>
+                            <Awaiter /> :                            
+                            <Paper elevation={2} className={classes.loginPaper}>
+                                <Fade in><div>
                                     <UserLogin />
                                     <div className="flex-box-row space-between m-t-small">
                                         <Button
@@ -120,8 +126,8 @@ export default func.compose(
                                             disabled={disabled}
                                         >Signup</Button>
                                     </div>
-                                </Paper>
-                            </Fragment>
+                                </div></Fade>
+                            </Paper>
                         }
                     </Grid>
                 </Grid>

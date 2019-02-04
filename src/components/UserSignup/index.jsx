@@ -5,10 +5,12 @@ import { connect } from "react-redux"
 import { string } from "@xcmats/js-toolbox"
 import { action as AuthActions } from "../../redux/Auth"
 import { withStyles } from "@material-ui/core/styles"
-import { LinearProgress } from "@material-ui/core"
 import Button from "../../lib/mui-v1/Button"
 import TextInput from "../../lib/mui-v1/TextInput"
-import { Typography } from "@material-ui/core"
+import {
+    LinearProgress,
+    Typography
+} from "@material-ui/core"
 import { env } from "../Fusion"
 import logo from "../Fusion/static/logo.svg"
 
