@@ -19,6 +19,13 @@ import {
 
 
 
+// Private memory for the functions in this file.
+const context = {
+    shambhala: null,
+}
+
+
+
 /**
  * 
  * @param {String} accountType 
@@ -122,14 +129,24 @@ export const saveAccountData = () =>
  */
 export const generateAccountId = () =>
     async (dispatch, getState) => {
+        context.shambhala = await new Shambhala(
+            config.shambhala.client,
+            { token: jwt }
+        )
         const
             { jwt } = getState().Auth,
-            accountId = await new Shambhala(
-                config.shambhala.client,
-                { token: jwt }
-            ).generateAddress()
+            accountId = await context.shambhala.generateAddress()
         await dispatch(await AddAccountActions.setAccountId(accountId))
     }
+
+
+
+
+/**
+ * 
+ */
+export const closeShambhalaPopup = () =>
+    async (_dispatch, _getState) => await context.shambhala.close()
 
 
 
@@ -140,10 +157,16 @@ export const generateAccountId = () =>
 export const runAddAccountRecipe = () =>
     async (dispatch, _getState) => {
 
-        // 0. set awaiter
+        // 1. set awaiter
         await dispatch(await setAwaiterLoading("Generating account number ..."))
-        // 1. generate new accountId using Shambhala
+        // 2. generate new accountId using Shambhala
         await dispatch(await generateAccountId())
-        // 2. clear awaiter
+        // 3. save account data
+        await dispatch(await saveAccountData())
+        // 4. clear Redux child data by calling cancel action
+        await dispatch(await cancel())
+        // 5. close Shambhala pop-up
+        await dispatch(await closeShambhalaPopup())
+        // 6. clear awaiter
         await dispatch(await clearAwaiter())
     }
