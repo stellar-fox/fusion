@@ -12,6 +12,10 @@ import { actions as AddAccountActions } from "../../redux/AddAccount"
 import { string } from "@xcmats/js-toolbox"
 import { Shambhala } from "../../lib/shambhala.client"
 import { config } from "../../firebase/config"
+import {
+    clearAwaiter,
+    setAwaiterLoading,
+} from "../main"
 
 
 
@@ -135,6 +139,11 @@ export const generateAccountId = () =>
  */
 export const runAddAccountRecipe = () =>
     async (dispatch, _getState) => {
+
+        // 0. set awaiter
+        await dispatch(await setAwaiterLoading("Generating account number ..."))
         // 1. generate new accountId using Shambhala
         await dispatch(await generateAccountId())
+        // 2. clear awaiter
+        await dispatch(await clearAwaiter())
     }
