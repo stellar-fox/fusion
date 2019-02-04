@@ -50,6 +50,17 @@ export const setAccountName = (accountName) =>
 
 /**
  * 
+ * @param {String} signingMethod 
+ */
+export const setSigningMethod = (signingMethod) =>
+    async (dispatch, _getState) =>
+        await dispatch(await AddAccountActions.setSigningMethod(signingMethod))
+
+
+
+
+/**
+ * 
  */
 export const incrementActiveStep = () =>
     async (dispatch, getState) => {

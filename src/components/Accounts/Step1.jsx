@@ -13,7 +13,7 @@ import {
     Typography,
     withMobileDialog
 } from "@material-ui/core"
-import { setSigningMethod } from "../../actions/onboarding"
+import { setSigningMethod } from "../../thunks/AddAccount"
 import { signingMethod as sm } from "../../redux/Keys"
 import InputAccountId from "./InputAccountId"
 import InputLedgerAccount from "./InputLedgerAccount"
@@ -149,7 +149,7 @@ export default func.compose(
     })),
     connect(
         (state) => ({
-            signingMethod: state.Keys.signingMethod,
+            signingMethod: state.AddAccount.signingMethod,
         }),
         (dispatch) => bindActionCreators({
             setSigningMethod,

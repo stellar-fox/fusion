@@ -1,5 +1,5 @@
 import { createReducer, string, toBool } from "@xcmats/js-toolbox"
-
+import { signingMethod } from "./Keys"
 
 
 
@@ -13,7 +13,7 @@ const initState = {
     error: false,
     errorMessage: string.empty(),
     name: string.empty(),
-    signingMethod: string.empty(),
+    signingMethod: signingMethod.SHAMBHALA,
 }
 
 
