@@ -10,7 +10,8 @@
 
 import { actions as AddAccountActions } from "../../redux/AddAccount"
 import { string } from "@xcmats/js-toolbox"
-
+import { Shambhala } from "../../lib/shambhala.client"
+import { config } from "../../firebase/config"
 
 
 
@@ -96,4 +97,44 @@ export const next = () =>
         }
 
         await dispatch(await incrementActiveStep())
+    }
+
+
+
+
+/**
+ * 
+ */
+export const saveAccountData = () =>
+    async (_dispatch, _getState) => {
+
+    }
+
+
+
+
+/**
+ * 
+ */
+export const generateAccountId = () =>
+    async (dispatch, getState) => {
+        const
+            { jwt } = getState().Auth,
+            accountId = await new Shambhala(
+                config.shambhala.client,
+                { token: jwt }
+            ).generateAddress()
+        await dispatch(await AddAccountActions.setAccountId(accountId))
+    }
+
+
+
+
+/**
+ * 
+ */
+export const runAddAccountRecipe = () =>
+    async (dispatch, _getState) => {
+        // 1. generate new accountId using Shambhala
+        await dispatch(await generateAccountId())
     }

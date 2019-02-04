@@ -12,6 +12,7 @@ const initState = {
     dialogShowing: false,
     error: false,
     errorMessage: string.empty(),
+    accountId: string.empty(),
     name: string.empty(),
     signingMethod: signingMethod.SHAMBHALA,
 }
@@ -23,6 +24,7 @@ const initState = {
  * Action Types
  */
 export const RESET_STATE = "@AddAccount/RESET_STATE"
+export const SET_ACCOUNT_ID = "@AddAccount/SET_ACCOUNT_ID"
 export const SET_ACCOUNT_TYPE = "@AddAccount/SET_ACCOUNT_TYPE"
 export const SET_ACTIVE_STEP = "@AddAccount/SET_ACTIVE_STEP"
 export const SET_NAME = "@AddAccount/SET_NAME"
@@ -41,6 +43,13 @@ export const actions = {
 
     // ...
     resetState: () => ({ type: RESET_STATE }),
+
+
+    // Sets the generated stellar account id.
+    setAccountId: (accountId) => ({
+        type: SET_ACCOUNT_ID,
+        accountId,
+    }),  
 
 
     // Sets account type (DEMO or REAL).
@@ -103,6 +112,13 @@ export const reducers = createReducer(initState)({
     
     // ...
     [RESET_STATE]: () => initState,
+
+
+    // ...
+    [SET_ACCOUNT_ID]: (state, action) => ({
+        ...state,
+        accountId: action.accountId,
+    }),
 
 
     // ...

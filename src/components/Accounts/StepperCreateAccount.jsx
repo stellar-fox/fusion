@@ -9,9 +9,7 @@ import {
 } from "@material-ui/core"
 import withWidth, { isWidthDown } from "@material-ui/core/withWidth"
 import Button from "../../lib/mui-v1/Button"
-import {
-    handleYes,
-} from "../../actions/createAccount"
+import { runAddAccountRecipe } from "../../thunks/AddAccount"
 import { accountType as at } from "../../redux/Accounts"
 import {
     cancel,
@@ -40,7 +38,7 @@ import {
  * @returns {React.ReactElement}
  */
 const StepperCreateAccount = ({
-    accountType, activeStep, classes, cancel, handleYes, next,
+    accountType, activeStep, classes, cancel, runAddAccountRecipe, next,
     width,
 }) => {
 
@@ -72,7 +70,7 @@ const StepperCreateAccount = ({
                     marginLeft: "0.5rem",
                 }}
                 size="small"
-                onClick={activeStep < numSteps ? next : handleYes}
+                onClick={activeStep < numSteps ? next : runAddAccountRecipe}
             >{activeStep === numSteps ? "Finish" : "Next"}
             </Button>
         }
@@ -131,7 +129,7 @@ export default func.compose(
         }),
         (dispatch) => bindActionCreators({
             cancel,
-            handleYes,
+            runAddAccountRecipe,
             next,
         }, dispatch),
     ),
