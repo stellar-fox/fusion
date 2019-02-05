@@ -23,7 +23,7 @@ import { config } from "../firebase/config"
 import axios from "axios"
 import { firebaseSingleton } from "../firebase"
 import { loadAccountState } from "../lib/logic/stellarAccount"
-import { async } from "@xcmats/js-toolbox"
+// import { async } from "@xcmats/js-toolbox"
 
 
 
@@ -94,39 +94,38 @@ export const detectAccount = (uid) =>
     async (dispatch, _getState) => {
         firebaseSingleton.database().ref(`user/${uid}/stellarAccounts`)
             .once("value", async (snapshot) => {
-                const snap = snapshot.val()
+                // const snap = snapshot.val()
                 // Set initial Firebase stored account state in Redux
                 dispatch(StellarAccountsActions.setState({
                     ...snapshot.val(),
                 }))
 
-                await dispatch(await UserLoginActions.setState({
-                    statusMessage: "Fetching latest accounts state ...",
-                }))
+                // await dispatch(await UserLoginActions.setState({
+                //     statusMessage: "Fetching latest accounts state ...",
+                // }))
 
-                // load user stellar accounts and their latest state
-                await async.parMap(Object.keys(snap), async (accountId) => {
-                    try {
-                        let stellarAccount = await loadAccountState(
-                            accountId, snap[accountId].networkPassphrase
-                        )
-                        await dispatch(
-                            await StellarAccountsActions.updateBalances(
-                                stellarAccount.id,
-                                stellarAccount.balances.find(
-                                    (balance) => balance.asset_type === "native"
-                                ),
-                                stellarAccount.balances.filter(
-                                    (balance) => balance.asset_type !== "native"
-                                ),
-                            )
-                        )
-                    } catch (error) {
-                        // eslint-disable-next-line
-                        console.log(`Error loading ${accountId}: ${error.message}`)
-                    }
-                    
-                })
+                // // load user stellar accounts and their latest state
+                // await async.parMap(Object.keys(snap), async (accountId) => {
+                //     try {
+                //         let stellarAccount = await loadAccountState(
+                //             accountId, snap[accountId].networkPassphrase
+                //         )
+                //         await dispatch(
+                //             await StellarAccountsActions.updateBalances(
+                //                 stellarAccount.id,
+                //                 stellarAccount.balances.find(
+                //                     (balance) => balance.asset_type === "native"
+                //                 ),
+                //                 stellarAccount.balances.filter(
+                //                     (balance) => balance.asset_type !== "native"
+                //                 ),
+                //             )
+                //         )
+                //     } catch (error) {
+                //         // eslint-disable-next-line
+                //         console.log(`Error loading ${accountId}: ${error.message}`)
+                //     }
+                // })
 
                 // done
                 await dispatch(AuthActions.setState({ uid }))
