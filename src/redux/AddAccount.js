@@ -7,13 +7,14 @@ import { signingMethod } from "./Keys"
  * Initial state for _AddAccount_ Redux key.
  */
 const initState = {
+    accountId: string.empty(),
     accountType: string.empty(),
     activeStep: 0,
-    dialogShowing: false,
     error: false,
     errorMessage: string.empty(),
-    accountId: string.empty(),
+    dialogShowing: false,
     name: string.empty(),
+    networkPassphrase: string.empty(),
     signingMethod: signingMethod.SHAMBHALA,
 }
 
@@ -28,6 +29,7 @@ export const SET_ACCOUNT_ID = "@AddAccount/SET_ACCOUNT_ID"
 export const SET_ACCOUNT_TYPE = "@AddAccount/SET_ACCOUNT_TYPE"
 export const SET_ACTIVE_STEP = "@AddAccount/SET_ACTIVE_STEP"
 export const SET_NAME = "@AddAccount/SET_NAME"
+export const SET_NETWORK_PASSPHRASE = "@AddAccount/SET_NETWORK_PASSPHRASE"
 export const SET_SIGNING_METHOD = "@AddAccount/SET_SIGNING_METHOD"
 export const SET_STATE = "@AddAccount/SET_STATE"
 export const TOGGLE_DIALOG = "@AddAccount/TOGGLE_DIALOG"
@@ -70,6 +72,13 @@ export const actions = {
     setName: (name) => ({
         type: SET_NAME,
         name,
+    }),
+
+
+    // Sets the network passphrase based on account type selection
+    setNetworkPassphrase: (networkPassphrase) => ({
+        type: SET_NETWORK_PASSPHRASE,
+        networkPassphrase,
     }),
 
 
@@ -139,6 +148,13 @@ export const reducers = createReducer(initState)({
     [SET_NAME]: (state, action) => ({
         ...state,
         name: action.name,
+    }),
+
+
+    // ...
+    [SET_NETWORK_PASSPHRASE]: (state, action) => ({
+        ...state,
+        networkPassphrase: action.networkPassphrase,
     }),
 
 

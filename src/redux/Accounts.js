@@ -44,6 +44,15 @@ export const accountType = Object.freeze({
 
 
 
+// better alias
+export const AccountTypes = Object.freeze({
+    REAL: "real",
+    DEMO: "demo",
+})
+
+
+
+
 // ...
 export const action = {
 
