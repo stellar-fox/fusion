@@ -97,6 +97,15 @@ export default compose(
 
 
         // ...
+        renderBalance = (stellarAccount) =>
+            <Typography variant="body1">
+                {stellarAccount.nativeBalance ?
+                    stellarAccount.nativeBalance.balance : "0"
+                } <span style={{ fontSize: "0.7rem" }}>XLM</span>
+            </Typography>
+
+
+        // ...
         render = () => (
             ({ accountId, accountType, classes, stellarAccounts }) =>
                 <Card className={classnames(func.choose(accountType, {
@@ -134,7 +143,7 @@ export default compose(
                                 Current Balance
                             </Typography>
                             <Typography variant="body1">
-                                {stellarAccounts[accountId].nativeBalance.balance} <span style={{ fontSize: "0.7rem" }}>XLM</span>
+                                {this.renderBalance(stellarAccounts[accountId])}
                             </Typography>
                         </div>
                         

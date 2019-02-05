@@ -177,7 +177,9 @@ export default compose(
                                             {availableBalance(accountId, stellarAccounts)}
                                         </TableCell>
                                         <TableCell classes={{ root: classes.tableCellEczar }} align="right" padding="none">
-                                            {stellarAccounts[accountId].nativeBalance.balance}
+                                            {stellarAccounts[accountId].nativeBalance ?
+                                                stellarAccounts[accountId].nativeBalance.balance : "0"
+                                            }
                                         </TableCell>
                                     </TableRow>
                                 })}

@@ -195,7 +195,9 @@ export const updateAccountName = async (uid, accountId, name) =>
  */
 export const totalForAllAccounts = (accountIds, stellarAccounts) =>
     accountIds.map((
-        accountId => stellarAccounts[accountId].nativeBalance.balance
+        accountId =>
+            stellarAccounts[accountId].nativeBalance ?
+                stellarAccounts[accountId].nativeBalance.balance : 0
     )).reduce((a, b) => {
         let bna = BigNumber(a)
         let bnb = BigNumber(b)
@@ -213,10 +215,14 @@ export const totalForAllAccounts = (accountIds, stellarAccounts) =>
  * @param {Object} stellarAccounts HOlds user stellar accounts.
  */
 export const availableBalance = (accountId, stellarAccounts) => {
-    let balance = BigNumber(stellarAccounts[accountId].nativeBalance.balance)
-    let buyingLiabilities = BigNumber(stellarAccounts[accountId]
-        .nativeBalance.buying_liabilities)
-    let sellingLiabilities = BigNumber(stellarAccounts[accountId]
-        .nativeBalance.selling_liabilities)
+    let balance = stellarAccounts[accountId].nativeBalance ?
+        BigNumber(stellarAccounts[accountId].nativeBalance.balance) :
+        BigNumber(0)
+    let buyingLiabilities = stellarAccounts[accountId].nativeBalance ?
+        BigNumber(stellarAccounts[accountId].nativeBalance.buying_liabilities) :
+        BigNumber(0)
+    let sellingLiabilities = stellarAccounts[accountId].nativeBalance ?
+        BigNumber(stellarAccounts[accountId].nativeBalance.selling_liabilities) :
+        BigNumber(0)
     return balance.minus(buyingLiabilities).minus(sellingLiabilities).toFixed(7)
 }
