@@ -3,8 +3,7 @@ import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
-import { url, rgba } from "../../lib/utils"
-import background from "../Fusion/static/bg.png"
+import { fade } from "@material-ui/core/styles/colorManipulator"
 import { Grid, Paper, Typography } from "@material-ui/core"
 import UserPasswordUpdate from "../UserPasswordUpdate"
 
@@ -16,9 +15,6 @@ export default compose(
     withStyles((theme) => ({
 
         container: {
-            [theme.breakpoints.up("md")]: {
-                backgroundImage: url(background),
-            },
             backgroundPosition: "center center",
             backgroundSize: "cover",
             height: "100%",
@@ -32,7 +28,7 @@ export default compose(
         loginPaper: {
             [theme.breakpoints.up("md")]: {
                 padding: "1em",
-                backgroundColor: rgba(29, 36, 46, 0.25),
+                backgroundColor: fade(theme.palette.custom.onyx, 0.3),
             },
             [theme.breakpoints.down("sm")]: {
                 backgroundColor: "unset",

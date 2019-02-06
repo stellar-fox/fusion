@@ -1,21 +1,19 @@
 import React, { Fragment } from "react"
 import { compose } from "redux"
 import { withStyles } from "@material-ui/core/styles"
-import { url, rgba } from "../../lib/utils"
 import { Button, Grid, Hidden, Paper } from "@material-ui/core"
 import ResetRequest from "../ResetRequest"
-import background from "../Fusion/static/bg.png"
 import { Link } from "react-router-dom"
+import { fade } from "@material-ui/core/styles/colorManipulator"
 
 
 
 
 // <PasswordReset> component
 export default compose(
-    withStyles((_theme) => ({
+    withStyles((theme) => ({
 
         container: {
-            backgroundImage: url(background),
             backgroundPosition: "center center",
             backgroundSize: "cover",
             height: "100%",
@@ -24,7 +22,7 @@ export default compose(
         loginPaper: {
             width: "460px",
             padding: "40px 80px 40px 80px",
-            backgroundColor: rgba(29, 36, 46, 0.25),
+            backgroundColor: fade(theme.palette.custom.onyx, 0.3),
         },
 
         button: {
@@ -49,8 +47,7 @@ export default compose(
                         <ResetRequest />
                         <div className="flex-box-row space-between">
                             <Button size="small" component={Link} to="/"
-                                variant="outlined" color="secondary"
-                                className={classes.button}
+                                color="secondary" className={classes.button}
                             >Log In</Button>
                         </div>
                     </Grid>
