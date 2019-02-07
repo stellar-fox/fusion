@@ -172,8 +172,12 @@ export const saveAccountData = () =>
 export const generateAccountId = () =>
     async (dispatch, getState) => {
 
+        
+        const
+            { accountType } = getState().AddAccount,
+            { jwt } = getState().Auth
+        
         // 0. Set Network passphrase based on accountType
-        const { accountType } = getState().AddAccount
         await dispatch(await AddAccountActions.setNetworkPassphrase(
             accountType === AccountTypes.REAL ? Networks.PUBLIC : Networks.TESTNET
         ))
@@ -185,9 +189,7 @@ export const generateAccountId = () =>
         )
 
         // 2. Obtain accountId from Shambhala
-        const
-            { jwt } = getState().Auth,
-            accountId = await context.shambhala.generateAddress()
+        const accountId = await context.shambhala.generateAddress()
         await dispatch(await AddAccountActions.setAccountId(accountId))
     }
 
