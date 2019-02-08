@@ -44,8 +44,7 @@ export const showEditNameModal = (accountId) =>
 export const handleYes = () => {
     return async (dispatch, getState) => {
         try {
-            let
-                { uid } = getState().Auth,
+            let { uid } = getState().Auth,
                 { accountId, name } = getState().Accounts
             await dispatch(AwaiterActions.showSpinner())
             await dispatch(AwaiterActions.setProgressMessage("Updating ..."))

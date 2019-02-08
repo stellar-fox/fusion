@@ -82,8 +82,7 @@ export const setAccount = (account) =>
 export const signTxWithLedgerHQ = (tx) =>
     async (_dispatch, getState) => {
         try {
-            let
-                { accountId } = getState().Keys,
+            let { accountId } = getState().Keys,
                 { useDefaultAccount, account } = getState().LedgerHQ,
                 signedTx = await signTransaction(
                     tx, accountId, useDefaultAccount ? "0" : account

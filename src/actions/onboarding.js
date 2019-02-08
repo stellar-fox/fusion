@@ -83,8 +83,7 @@ export const setSigningMethod = (signingMethod) =>
 export const obtainAccountId = () =>
     async (dispatch, getState) => {
 
-        let
-            { signingMethod } = getState().Keys,
+        let { signingMethod } = getState().Keys,
             { useDefaultAccount, account } = getState().LedgerHQ,
             { jwt } = getState().Auth,
 
@@ -141,8 +140,7 @@ export const obtainAccountId = () =>
  */
 export const generateSigningKeys = () =>
     async (dispatch, getState) => {
-        let
-            { accountId } = getState().Keys,
+        let { accountId } = getState().Keys,
             { jwt } = getState().Auth,
             signingKeys = await new Shambhala(
                 config.shambhala.client,
@@ -167,8 +165,7 @@ export const generateSigningKeys = () =>
 export const generateSignedMultisigTx = () =>
     async (_dispatch, getState) => {
 
-        let
-            { jwt } = getState().Auth,
+        let { jwt } = getState().Auth,
             { accountId } = getState().Keys,
             { networkPassphrase, sequence } = getState().StellarAccounts[accountId],
 
@@ -191,8 +188,7 @@ export const generateSignedMultisigTx = () =>
 export const generateMultisigTx = () =>
     async (_dispatch, getState) => {
 
-        let
-            { jwt } = getState().Auth,
+        let { jwt } = getState().Auth,
             { accountId } = getState().Keys,
             { networkPassphrase, sequence } = getState().StellarAccounts[accountId],
 
@@ -272,8 +268,7 @@ export const closeShambhala = () =>
  */
 export const saveAccountData = () =>
     async (_dispatch, getState) => {
-        let
-            { accountId, signingMethod, networkPassphrase } = getState().Keys,
+        let { accountId, signingMethod, networkPassphrase } = getState().Keys,
             { name } = getState().Accounts
 
         await update(`user/${getState().Auth.uid}/stellarAccounts/${accountId}`, {

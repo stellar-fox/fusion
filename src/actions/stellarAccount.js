@@ -146,8 +146,7 @@ export const detectAccount = (uid) =>
  */
 export const getLatestAccountState = () =>
     async (dispatch, getState) => {
-        let
-            { accountId } = getState().Keys,
+        let { accountId } = getState().Keys,
             stellarAccount = await context.server.loadAccount(accountId)
 
         stellarAccount.networkPassphrase = context.network
@@ -171,8 +170,7 @@ export const getLatestAccountState = () =>
  */
 export const tagSigningMethod = () =>
     async (dispatch, getState) => {
-        let
-            { accountId, signingMethod } = getState().Keys,
+        let { accountId, signingMethod } = getState().Keys,
             account = getState().LedgerHQ.useDefaultAccount ?
                 "0" : getState().LedgerHQ.account
 
@@ -200,9 +198,7 @@ export const tagSigningMethod = () =>
  */
 export const fundAccount = () =>
     async (dispatch, getState) => {
-        let
-            { accountId, networkPassphrase } = getState().Keys,
-
+        let { accountId, networkPassphrase } = getState().Keys,
             fundReponse = networkPassphrase === testNetworkPassphrase ?
                 await axios.get(config.friendbot.client, {
                     params: { addr: accountId },
