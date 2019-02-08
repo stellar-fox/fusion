@@ -142,9 +142,7 @@ export default compose(
                             <Typography variant="h4">
                                 Current Balance
                             </Typography>
-                            <Typography variant="body1">
-                                {this.renderBalance(stellarAccounts[accountId])}
-                            </Typography>
+                            {this.renderBalance(stellarAccounts[accountId])}
                         </div>
                         
                     </CardContent>
