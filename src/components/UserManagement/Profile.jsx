@@ -371,7 +371,7 @@ export default compose(
                             onClick={this.saveData}
                         >
                             {this.state.saveInProgress ? <CircularProgress
-                                color="secondary" thickness={4} size={16}
+                                color="secondary" thickness={4} size={20}
                             /> : "Save"}
                         </Button>
                         <he.Nbsp /><he.Nbsp />
