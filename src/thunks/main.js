@@ -147,13 +147,16 @@ export const doAuthenticate = () =>
 export const getStorageAvatar = (user) =>
     async (dispatch, _getState) =>
         storageRef().child(`${user.uid}/avatar.jpeg`)
-            .getDownloadURL().then((photoUrl) => {
+            .getDownloadURL()
+            .then((photoUrl) => {
                 dispatch(AuthActions.setState({ photoUrl }))
             })
+            .catch((_error) => { /* no-op */ })
 
 
 
 
+// ...
 export const setDataLoading = () =>
     async (dispatch, _getState) => {
         dispatch(AppActions.setState({ loading: true }))
@@ -163,6 +166,7 @@ export const setDataLoading = () =>
 
 
 
+// ...
 export const setDataLoaded = () =>
     async (dispatch, _getState) => {
         dispatch(AppActions.setState({ loading: false }))
@@ -172,6 +176,7 @@ export const setDataLoaded = () =>
 
 
 
+// ...
 export const setAwaiterLoading = (message) =>
     async (dispatch, _getState) => {
         dispatch(AwaiterActions.setLoading())
@@ -182,6 +187,7 @@ export const setAwaiterLoading = (message) =>
 
 
 
+// ...
 export const clearAwaiter = () =>
     async (dispatch, _getState) => {
         dispatch(AwaiterActions.resetState())
