@@ -1,7 +1,13 @@
 import React, { Fragment } from "react"
 import { compose } from "redux"
 import { withStyles } from "@material-ui/core/styles"
-import { Button, Grid, Hidden, Paper } from "@material-ui/core"
+import {
+    Button,
+    Fade,
+    Grid,
+    Hidden,
+    Paper
+} from "@material-ui/core"
 import ResetRequest from "../ResetRequest"
 import { Link } from "react-router-dom"
 import { fade } from "@material-ui/core/styles/colorManipulator"
@@ -44,12 +50,14 @@ export default compose(
                     wrap={"nowrap"}
                 >
                     <Grid item>
-                        <ResetRequest />
-                        <div className="flex-box-row space-between">
-                            <Button size="small" component={Link} to="/"
-                                color="secondary" className={classes.button}
-                            >Log In</Button>
-                        </div>
+                        <Fade in><div>
+                            <ResetRequest />
+                            <div className="flex-box-row space-between">
+                                <Button size="small" component={Link} to="/"
+                                    color="secondary" className={classes.button}
+                                >Log In</Button>
+                            </div>
+                        </div></Fade>
                     </Grid>
                 </Grid>
             </Hidden>
@@ -65,12 +73,14 @@ export default compose(
                 >
                     <Grid item>
                         <Paper elevation={2} className={classes.loginPaper}>
-                            <ResetRequest />
-                            <div className="flex-box-row space-between">
-                                <Button size="small" component={Link} to="/"
-                                    color="secondary" className={classes.button}
-                                >Log In</Button>
-                            </div>
+                            <Fade in><div>
+                                <ResetRequest />
+                                <div className="flex-box-row space-between m-t-small">
+                                    <Button size="small" component={Link} to="/"
+                                        color="secondary" className={classes.button}
+                                    >Log In</Button>
+                                </div>
+                            </div></Fade>
                         </Paper>
                     </Grid>
                 </Grid>

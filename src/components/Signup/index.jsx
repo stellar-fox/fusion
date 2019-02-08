@@ -74,7 +74,8 @@ export default compose(
                 >
                     <Grid item>
                         <Paper elevation={2} className={classes.loginPaper}>
-                            <Fade in><div><UserSignup />
+                            <Fade in><div>
+                                <UserSignup />
                                 <div className="flex-box-row space-between m-t-small">
                                     <Button size="small" component={Link} to="/"
                                         color="secondary" className={classes.button}
