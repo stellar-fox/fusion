@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react"
+import React, { Component } from "react"
 import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
@@ -73,22 +73,21 @@ export default compose(
                 style={{ height: "100%" }}
             >
                 <Grid item>
-                    <img
-                        className={classes.appLogo}
-                        src={logo} alt="logo"
-                    />
-                </Grid>
-
-                <Grid item>
                     <Paper elevation={2} className={classes.loginPaper}>
-                        <Fragment>
-                            <Typography align="center" variant="subtitle1">
-                                {actionMessage}
-                            </Typography>
-                            <Typography align="center" variant="body2">
-                                {emailVerificationMessage}
-                            </Typography>
-                        </Fragment>
+                        <div className="flex-box-col items-centered">
+                            <img
+                                className={classes.appLogo}
+                                src={logo} alt="logo"
+                            />
+                            <div>
+                                <Typography align="center" variant="subtitle1">
+                                    {actionMessage}
+                                </Typography>
+                                <Typography align="center" variant="body2">
+                                    {emailVerificationMessage}
+                                </Typography>
+                            </div>
+                        </div>
                     </Paper>
                 </Grid>
             </Grid>
