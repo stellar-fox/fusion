@@ -1,14 +1,17 @@
-import React, { Component, Fragment } from "react"
+import React, { Component } from "react"
 import PropTypes from "prop-types"
 import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
 import { string } from "@xcmats/js-toolbox"
 import { action as AuthActions } from "../../redux/Auth"
 import { withStyles } from "@material-ui/core/styles"
-import { LinearProgress } from "@material-ui/core"
+import {
+    Fade,
+    LinearProgress,
+    Typography,
+} from "@material-ui/core"
 import Button from "../../lib/mui-v1/Button"
 import TextInput from "../../lib/mui-v1/TextInput"
-import { Typography } from "@material-ui/core"
 import { env } from "../Fusion"
 import logo from "../Fusion/static/logo.svg"
 
@@ -22,24 +25,13 @@ export default compose(
         appLogo: {
             ...theme.fusion.appLogo,
             [theme.breakpoints.up("md")]: {
-                height: "100px",
+                height: "60px",
                 margin: "40px",
             },
             [theme.breakpoints.down("sm")]: {
-                height: "80px",
+                height: "40px",
                 margin: "20px",
             },
-        },
-
-        avatar: {
-            margin: "0rem 1rem",
-            backgroundColor: theme.palette.background.default,
-            boxShadow: "0px 0px 20px 2px #0ff",
-        },
-
-        avatarRoot: {
-            borderRadius: "3px",
-            opacity: "0.5",
         },
 
         root: {
@@ -47,20 +39,6 @@ export default compose(
             alignContent: "flex-start",
             alignItems: "center",
             flexDirection: "column",
-        },
-
-        header: {
-            color: "white",
-            textAlign: "center",
-            fontSize: "1.2rem",
-            marginBottom: "10px",
-        },
-
-        subHeader: {
-            color: "white",
-            textAlign: "center",
-            fontSize: "1rem",
-            marginBottom: "30px",
         },
 
         progressBar: {
@@ -72,9 +50,7 @@ export default compose(
 
     })),
     connect(
-        (state) => ({
-            loginAttempts: state.Auth.status.loginAttempts,
-            maxLoginAttempts: state.Auth.status.maxLoginAttempts,
+        (_state) => ({
         }),
         (dispatch) => bindActionCreators({
             updatePassword: AuthActions.updatePassword,
@@ -153,16 +129,20 @@ export default compose(
 
                 <div className={classes.root}>
 
-                    {this.state.passwordUpdated ?
-                        <Fragment>
+                    {this.state.passwordUpdated ? <Fade in>
+                        <div className="flex-box-col items-centered">
+                            <img
+                                className={classes.appLogo}
+                                src={logo} alt="logo"
+                            />
                             <Typography variant="subtitle1">
                                 Password has been updated.
                             </Typography>
                             <Typography variant="body2">
                                 You can now sign in with new password.
                             </Typography>
-                        </Fragment> :
-                        <Fragment>
+                        </div></Fade> :
+                        <Fade in><div className="flex-box-col items-centered">
                             <img
                                 className={classes.appLogo}
                                 src={logo} alt="logo"
@@ -204,7 +184,7 @@ export default compose(
                                 }}
                                 style={{ opacity: this.state.progressBarOpacity }}
                             />
-                        </Fragment>
+                        </div></Fade>
                     }
                 </div>
         )(this.props)

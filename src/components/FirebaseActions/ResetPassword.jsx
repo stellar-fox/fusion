@@ -1,10 +1,15 @@
-import React, { Component, Fragment } from "react"
+import React, { Component } from "react"
 import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
-import { fade } from "@material-ui/core/styles/colorManipulator"
-import { Grid, Paper, Typography } from "@material-ui/core"
+import {
+    Grid,
+    Fade,
+    Paper,
+    Typography,
+} from "@material-ui/core"
+import logo from "../Fusion/static/logo.svg"
 import UserPasswordUpdate from "../UserPasswordUpdate"
 
 
@@ -13,6 +18,17 @@ import UserPasswordUpdate from "../UserPasswordUpdate"
 // <ResetPassword> component
 export default compose(
     withStyles((theme) => ({
+        appLogo: {
+            ...theme.fusion.appLogo,
+            [theme.breakpoints.up("md")]: {
+                height: "60px",
+                margin: "40px",
+            },
+            [theme.breakpoints.down("sm")]: {
+                height: "40px",
+                margin: "20px",
+            },
+        },
 
         container: {
             backgroundPosition: "center center",
@@ -28,12 +44,8 @@ export default compose(
         loginPaper: {
             [theme.breakpoints.up("md")]: {
                 padding: "1em",
-                backgroundColor: fade(theme.palette.custom.onyx, 0.3),
             },
-            [theme.breakpoints.down("sm")]: {
-                backgroundColor: "unset",
-                boxShadow: "none",
-            },
+            backgroundColor: theme.palette.custom.darkGunmetal,
             margin: "0em 0.5em",
             padding: "0.5em",
         },
@@ -66,15 +78,27 @@ export default compose(
                 wrap={"nowrap"}
             >
                 <Grid item>
-                    <Paper elevation={2} className={classes.loginPaper}>
+                    <Paper elevation={0} className={classes.loginPaper}>
                         {resetLinkValid &&
                             <UserPasswordUpdate oobCode={oobCode} continueUrl={continueUrl} />
                         }
-                        {resetLinkInvalid &&
-                            <Fragment>
-                                <Typography align="center" variant="subtitle1">Try resetting your password again.</Typography>
-                                <Typography align="center" variant="body2">Your request to reset your password has expired or the link has already been used.</Typography>
-                            </Fragment>
+                        {resetLinkInvalid && <Fade in>
+                            <div className="flex-box-col items-centered">
+                                <img
+                                    className={classes.appLogo}
+                                    src={logo} alt="logo"
+                                />
+                                <div>
+                                    <Typography align="center" variant="subtitle1">
+                                        Try resetting your password again.
+                                    </Typography>
+                                    <Typography align="center" variant="body2">
+                                        Your request to reset your password has 
+                                        expired or the link has already been used.
+                                    </Typography>
+                                </div>
+                            </div>
+                        </Fade>
                         }
                     </Paper>
                 </Grid>

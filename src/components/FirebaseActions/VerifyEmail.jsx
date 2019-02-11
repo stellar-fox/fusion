@@ -3,9 +3,13 @@ import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
-import { fade } from "@material-ui/core/styles/colorManipulator"
 import logo from "../Fusion/static/logo.svg"
-import { Grid, Paper, Typography, } from "@material-ui/core"
+import {
+    Grid,
+    Fade,
+    Paper,
+    Typography,
+} from "@material-ui/core"
 
 
 
@@ -36,9 +40,8 @@ export default compose(
         loginPaper: {
             [theme.breakpoints.up("md")]: {
                 padding: "1em",
-                backgroundColor: fade(theme.palette.custom.onyx, 0.3),
             },
-            backgroundColor: theme.palette.primary.light,
+            backgroundColor: theme.palette.custom.darkGunmetal,
             margin: "0em 0.5em",
             padding: "0.5em",
         },
@@ -73,21 +76,19 @@ export default compose(
                 style={{ height: "100%" }}
             >
                 <Grid item>
-                    <Paper elevation={2} className={classes.loginPaper}>
-                        <div className="flex-box-col items-centered">
+                    <Paper elevation={0} className={classes.loginPaper}>
+                        <Fade in><div className="flex-box-col items-centered">
                             <img
                                 className={classes.appLogo}
                                 src={logo} alt="logo"
                             />
-                            <div>
-                                <Typography align="center" variant="subtitle1">
-                                    {actionMessage}
-                                </Typography>
-                                <Typography align="center" variant="body2">
-                                    {emailVerificationMessage}
-                                </Typography>
-                            </div>
-                        </div>
+                            <Typography align="center" variant="subtitle1">
+                                {actionMessage}
+                            </Typography>
+                            <Typography align="center" variant="body2">
+                                {emailVerificationMessage}
+                            </Typography>
+                        </div></Fade>
                     </Paper>
                 </Grid>
             </Grid>
