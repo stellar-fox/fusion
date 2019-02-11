@@ -23,7 +23,6 @@ import { action as SigningMethodsActions } from "../redux/SigningMethods"
 // <Auth> state
 const initState = {
     ready: true,
-    
 }
 
 
@@ -107,6 +106,7 @@ export const action = {
             try {
                 dispatch(action.setState({
                     actionMessage: "Recovering email ...",
+                    emailRecoveryMessage: string.empty(),
                 }))
                 await applyVerificationCode(qs.oobCode)
                 dispatch(action.setState({
@@ -128,6 +128,8 @@ export const action = {
             try {
                 dispatch(action.setState({
                     actionMessage: "Veryfying email ...",
+                    emailVerified: false,
+                    emailVerificationMessage: string.empty(),
                 }))
                 await applyVerificationCode(qs.oobCode)
                 dispatch(action.setState({
