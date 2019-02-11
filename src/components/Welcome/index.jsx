@@ -8,7 +8,8 @@ import {
     Fade,
     Grid,
     Hidden,
-    Paper
+    Paper,
+    Typography,
 } from "@material-ui/core"
 import { fade } from "@material-ui/core/styles/colorManipulator"
 import UserLogin from "../UserLogin"
@@ -65,10 +66,16 @@ export default func.compose(
                     <Grid item>
                         {loading ?
                             <Awaiter /> :
-                            <Fade in>
-                                <div>
-                                    <UserLogin />
-                                    <div className="flex-box-row space-between">
+                            <Fade in><div>
+                                <UserLogin />
+                                <div style={{
+                                    opacity: "0.7",
+                                }} className="flex-box-col space-between m-t"
+                                >
+                                    <div className="flex-box-col">
+                                        <Typography variant="h4">
+                                            Did you forget password?
+                                        </Typography>
                                         <Button
                                             size="small"
                                             component={Link}
@@ -76,7 +83,13 @@ export default func.compose(
                                             color="secondary"
                                             className={classes.button}
                                             disabled={disabled}
+                                            variant="outlined"
                                         >Reset Password</Button>
+                                    </div>
+                                    <div className="flex-box-col">
+                                        <Typography variant="h4">
+                                            Don't have an account yet?
+                                        </Typography>
                                         <Button
                                             size="small"
                                             component={Link}
@@ -84,10 +97,11 @@ export default func.compose(
                                             color="secondary"
                                             className={classes.button}
                                             disabled={disabled}
-                                        >Signup</Button>
+                                            variant="outlined"
+                                        >Create Account</Button>
                                     </div>
                                 </div>
-                            </Fade>
+                            </div></Fade>
                         }
                     </Grid>
                 </Grid>
@@ -108,23 +122,38 @@ export default func.compose(
                             <Paper elevation={2} className={classes.loginPaper}>
                                 <Fade in><div>
                                     <UserLogin />
-                                    <div className="flex-box-row space-between m-t-small">
-                                        <Button
-                                            size="small"
-                                            component={Link}
-                                            to="/reset"
-                                            color="secondary"
-                                            className={classes.button}
-                                            disabled={disabled}
-                                        >Reset Password</Button>
-                                        <Button
-                                            size="small"
-                                            component={Link}
-                                            to="/signup"
-                                            color="secondary"
-                                            className={classes.button}
-                                            disabled={disabled}
-                                        >Signup</Button>
+                                    <div style={{
+                                        opacity: "0.7",
+                                    }} className="flex-box-row space-between m-t"
+                                    >
+                                        <div className="flex-box-col">
+                                            <Typography variant="h4">
+                                                Did you forget password?
+                                            </Typography>
+                                            <Button
+                                                size="small"
+                                                component={Link}
+                                                to="/reset"
+                                                color="secondary"
+                                                className={classes.button}
+                                                disabled={disabled}
+                                                variant="outlined"
+                                            >Reset Password</Button>
+                                        </div>
+                                        <div className="flex-box-col">
+                                            <Typography variant="h4">
+                                                Don't have an account yet?
+                                            </Typography>
+                                            <Button
+                                                size="small"
+                                                component={Link}
+                                                to="/signup"
+                                                color="secondary"
+                                                className={classes.button}
+                                                disabled={disabled}
+                                                variant="outlined"
+                                            >Create Account</Button>
+                                        </div>
                                     </div>
                                 </div></Fade>
                             </Paper>
