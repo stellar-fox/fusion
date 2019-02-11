@@ -83,9 +83,10 @@ export default withStyles((theme) => ({
         // ...
         render = () => (
             ({
-                autoFocus, classes, id, error, errorMessage, margin, label, type,
-                onChange, fullWidth, autoComplete, lighter, value, required,
-                errorClasses, defaultValue, min, max, step, shrink,
+                autoFocus, classes, id, error, endAdornment, errorMessage,
+                margin, label, type, onChange, fullWidth, autoComplete, lighter,
+                value, required, errorClasses, defaultValue, min, max, step,
+                shrink,
             }) =>
                 <FormControl
                     error={error}
@@ -114,6 +115,7 @@ export default withStyles((theme) => ({
                             input: classes.input,
                             error: errorClasses || classes.inputError,
                         }}
+                        endAdornment={endAdornment}
                         type={type}
                         onChange={onChange}
                         fullWidth={fullWidth}

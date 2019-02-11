@@ -1,12 +1,22 @@
 import React, { Component, Fragment } from "react"
 import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
-import PropTypes from "prop-types"
 import {
-    Button as GenericButton, CircularProgress, DialogContent,
-    DialogContentText, DialogTitle, Typography, withStyles,
+    Button as GenericButton,
+    CircularProgress,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    InputAdornment,
+    Typography,
+    Tooltip,
+    withStyles,
 } from "@material-ui/core"
-import { VerifiedUserRounded } from "@material-ui/icons"
+import { fade } from "@material-ui/core/styles/colorManipulator"
+import {
+    NotificationImportantRounded,
+    VerifiedUserRounded,
+} from "@material-ui/icons"
 import TextInput from "../../lib/mui-v1/TextInput"
 import withWidth, { isWidthDown } from "@material-ui/core/withWidth"
 import { string } from "@xcmats/js-toolbox"
@@ -32,10 +42,18 @@ import {
 export default compose(
     withStyles((theme) => ({
         iconVerified: {
-            color: theme.palette.custom.green,
+            color: fade(theme.palette.custom.green, 0.7),
+            marginBottom: "0.5rem",
         },
         button: {
             margin: "1rem, 0",
+        },
+        iconNotVerified: {
+            color: fade(theme.palette.error.main, 0.7),
+            marginBottom: "0.5rem",
+        },
+        tooltip: {
+            fontFamily: "'Roboto Condensed', sans-serif",
         },
     })),
     connect(
@@ -61,12 +79,6 @@ export default compose(
     withWidth(),
 )(
     class extends Component {
-
-        // ...
-        static propTypes = {
-            classes: PropTypes.object.isRequired,
-        }
-
 
         // ...
         state = {
@@ -275,7 +287,7 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, countDemo, countReal, email, photoUrl, uid, width }) => <Fragment>
+            ({ countDemo, countReal, email, photoUrl, uid, width }) => <Fragment>
                 <ConfirmDialog
                     dialogVisible={this.state.dialogReAuthVisible}
                     onOk={this.reAuthenticate}
@@ -340,15 +352,23 @@ export default compose(
                                 autocomplete={false}
                                 error={this.state.errorEmail}
                                 errorMessage={this.state.errorMessageEmail}
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        {this.state.emailVerified ?
+                                            <Tooltip classes={{ tooltip: this.props.classes.tooltip }} title="Email was verified."><VerifiedUserRounded
+                                                classes={{
+                                                    root: this.props.classes.iconVerified,
+                                                }}
+                                            /></Tooltip> :
+                                            <Tooltip classes={{ tooltip: this.props.classes.tooltip }} title="Please verify your email."><NotificationImportantRounded
+                                                classes={{
+                                                    root: this.props.classes.iconNotVerified,
+                                                }}
+                                            /></Tooltip>
+                                        }
+                                    </InputAdornment>
+                                }
                             />
-                            {this.state.emailVerified &&
-                            <Fragment>
-                                <he.Nbsp />
-                                <VerifiedUserRounded
-                                    classes={{ root: classes.iconVerified }}
-                                />
-                            </Fragment>
-                            }
                         </div>
                         <div className="flex-box-row">
                             <TextInput
