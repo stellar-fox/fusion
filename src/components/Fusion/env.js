@@ -11,7 +11,7 @@ export const appName = name
 
 
 // application visible name
-export const appVisName = "Fusion™"
+export const appVisName = "Stellar Fusion™"
 
 
 
