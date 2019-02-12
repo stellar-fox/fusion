@@ -6,7 +6,8 @@ import {
     Fade,
     Grid,
     Hidden,
-    Paper
+    Paper,
+    Typography,
 } from "@material-ui/core"
 import ResetRequest from "../ResetRequest"
 import { Link } from "react-router-dom"
@@ -52,10 +53,22 @@ export default compose(
                     <Grid item>
                         <Fade in><div>
                             <ResetRequest />
-                            <div className="flex-box-row space-between">
-                                <Button size="small" component={Link} to="/"
-                                    color="secondary" className={classes.button}
-                                >Log In</Button>
+                            <div style={{ opacity: "0.7" }}
+                                className="flex-box-col space-between m-t-large"
+                            >
+                                <div className="flex-box-col">
+                                    <Typography variant="h4">
+                                        Already have an account?
+                                    </Typography>
+                                    <Button
+                                        size="small"
+                                        component={Link}
+                                        to="/"
+                                        color="secondary"
+                                        className={classes.button}
+                                        variant="outlined"
+                                    >Log In</Button>
+                                </div>
                             </div>
                         </div></Fade>
                     </Grid>
@@ -75,10 +88,22 @@ export default compose(
                         <Paper elevation={2} className={classes.loginPaper}>
                             <Fade in><div>
                                 <ResetRequest />
-                                <div className="flex-box-row space-between m-t-small">
-                                    <Button size="small" component={Link} to="/"
-                                        color="secondary" className={classes.button}
-                                    >Log In</Button>
+                                <div style={{ opacity: "0.7" }}
+                                    className="flex-box-row space-between m-t-large"
+                                >
+                                    <div className="flex-box-col">
+                                        <Typography variant="h4">
+                                            Already have an account?
+                                        </Typography>
+                                        <Button
+                                            size="small"
+                                            component={Link}
+                                            to="/"
+                                            color="secondary"
+                                            className={classes.button}
+                                            variant="outlined"
+                                        >Log In</Button>
+                                    </div>
                                 </div>
                             </div></Fade>
                         </Paper>

@@ -81,7 +81,11 @@ export default compose(
 
         // ...
         setEmail = (e) =>
-            this.setState({ email: e.target.value })
+            this.setState({
+                email: e.target.value,
+                errorEmail: false,
+                errorMessageEmail: string.empty(),
+            })
 
 
         // ...
@@ -91,7 +95,7 @@ export default compose(
                 await this.setState({
                     disabled: true,
                     errorEmail: false,
-                    errorEmailMessage: string.empty(),
+                    errorMessageEmail: string.empty(),
                     progressBarOpacity: 1,
                 })
                 await this.props.sendPasswordReset(this.state.email)
@@ -100,7 +104,9 @@ export default compose(
                     progressBarOpacity: 0,
                 })
                 await this.props.setSnackyColor("success")
-                await this.props.setSnackyMessage("Reset link sent.")
+                await this.props.setSnackyMessage(
+                    "Password reset link has been sent."
+                )
                 await this.props.showSnacky()
             } catch (error) {
 
@@ -154,7 +160,7 @@ export default compose(
                         {env.appVisName}
                     </Typography>
                     <Typography variant="subtitle1">
-                        Request password reset.
+                        Request password reset link.
                     </Typography>
                     <TextInput
                         id="username"
@@ -173,7 +179,7 @@ export default compose(
                         disabled={this.state.disabled}
                         onClick={this.sendPasswordResetLink}
                     >
-                        Request
+                        Request Link
                     </Button>
                     <LinearProgress
                         variant="indeterminate"
