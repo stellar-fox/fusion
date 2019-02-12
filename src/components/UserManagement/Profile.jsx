@@ -34,8 +34,10 @@ import {
     getCountOfDemoAccounts,
     getCountOfRealAccounts,
 } from "../../lib/logic/stellarAccount"
-import { storageRef } from "../../firebase"
-
+import {
+    clearAvatar,
+    toggleConfirmDialog,
+} from "../../thunks/ClearAvatar"
 
 
 
@@ -59,6 +61,7 @@ export default compose(
     })),
     connect(
         (state) => ({
+            confirmDialogVisible: state.Auth.confirmDialogVisible,
             email: state.Auth.email,
             emailVerified: state.Auth.emailVerified,
             uid: state.Auth.uid,
@@ -68,6 +71,7 @@ export default compose(
             countReal: getCountOfRealAccounts(state.StellarAccounts),
         }),
         (dispatch) => bindActionCreators({
+            clearAvatar,
             sendEmailVerification: AuthActions.sendEmailVerification,
             sendPasswordReset: AuthActions.sendPasswordReset,
             showSnacky: SnackyActions.showSnacky,
@@ -75,6 +79,7 @@ export default compose(
             setSnackyColor: SnackyActions.setColor,
             updateUserProfile: AuthActions.updateUserProfile,
             updateEmail: AuthActions.updateEmail,
+            toggleConfirmDialog,
         }, dispatch)
     ),
     withWidth(),
@@ -241,23 +246,22 @@ export default compose(
 
 
         // ...
-        clearAvatar = async () => {
-            try {
-                const avatarRef = storageRef().child(
-                    `${this.props.uid}/avatar.jpeg`
-                )
-                await avatarRef.delete()
-                await this.props.updateUserProfile({ photoUrl: string.empty() })
-                await this.props.setSnackyColor("success")
-                await this.props.setSnackyMessage("Avatar has been deleted.")
-                await this.props.showSnacky()
-            } catch (error) {
-                await this.props.setSnackyColor("error")
-                await this.props.setSnackyMessage(error.message)
-                await this.props.showSnacky()
-            }
+        handleClearAvatar = () => {
+            this.props.clearAvatar()
         }
 
+
+        // ...
+        handleHideDialog = () => {
+            this.props.toggleConfirmDialog(false)
+        }
+
+
+        // ...
+        handleShowConfirmDialog = () => {
+            this.props.toggleConfirmDialog(true)
+        }
+        
 
         // ...
         reAuthenticate = async () => {
@@ -307,11 +311,13 @@ export default compose(
 
         // ...
         render = () => (
-            ({ countDemo, countReal, email, photoUrl, uid, width }) => <Fragment>
+            ({ confirmDialogVisible, countDemo, countReal, email, photoUrl,
+                uid, width }) => <Fragment>
                 <ConfirmDialog
                     dialogVisible={this.state.dialogReAuthVisible}
                     onOk={this.reAuthenticate}
                     onCancel={this.hideDialog}
+                    okButtonText="Authenticate"
                     inProgress={this.state.reauthInProgress}
                     fullScreen={isWidthDown("sm", width)}
                 >
@@ -336,6 +342,28 @@ export default compose(
                         />
                     </DialogContent>
                 </ConfirmDialog>
+
+
+                <ConfirmDialog
+                    dialogVisible={confirmDialogVisible}
+                    onOk={this.handleClearAvatar}
+                    onCancel={this.handleHideDialog}
+                    okButtonText="OK"
+                    inProgress={this.state.reauthInProgress}
+                    fullScreen={isWidthDown("sm", width)}
+                >
+                    <DialogTitle id="responsive-dialog-title">
+                        {"Please confirm your action"}
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText style={{ paddingBottom: "1em" }}>
+                            You are about to delete your avatar. This action
+                            cannot be undone.
+                        </DialogContentText>
+                    </DialogContent>
+                </ConfirmDialog>
+
+
 
                 <div className={isWidthDown("sm", width) ?
                     "flex-box-col" : "flex-box-row space-around"}
@@ -463,7 +491,7 @@ export default compose(
                                 <GenericButton style={{ marginBottom: "1em" }}
                                     size="small"
                                     fullWidth
-                                    onClick={this.clearAvatar}
+                                    onClick={this.handleShowConfirmDialog}
                                     variant="outlined" color="secondary"
                                 >Delete Avatar</GenericButton>
                             </div>

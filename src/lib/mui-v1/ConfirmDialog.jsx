@@ -37,18 +37,18 @@ export default compose(
 
 
         // ...
-        state = { open: false, }
+        state = { open: false }
 
 
         // ...
         handleOpen = () => {
-            this.setState({ open: true, })
+            this.setState({ open: true })
         }
 
 
         // ...
         handleClose = () => {
-            this.setState({ open: false, })
+            this.setState({ open: false })
         }
 
 
@@ -56,7 +56,7 @@ export default compose(
         render = () => (
             ({
                 classes, children, fullScreen, dialogVisible, onOk, onCancel,
-                inProgress,
+                inProgress, okButtonText,
             }) =>
 
                 <Dialog
@@ -65,19 +65,19 @@ export default compose(
                     onClose={this.handleClose}
                     aria-labelledby="responsive-dialog-title"
                     disableBackdropClick
-                    classes={{ root: classes.backDrop, }}
+                    classes={{ root: classes.backDrop }}
                 >
                     {children}
                     <DialogActions>
-                        <Button style={{ margin: "0.5em 0.75em 0.25em 0", }}
+                        <Button style={{ margin: "0.5em 0.75em 0.25em 0" }}
                             onClick={onOk} color="green"
                             disabled={inProgress}
                         >
                             {inProgress ? <CircularProgress
                                 color="secondary" thickness={4} size={16}
-                            /> : "Authenticate"}
+                            /> : okButtonText}
                         </Button>
-                        <Button style={{ margin: "0.5em 0.5em 0.25em 0", }}
+                        <Button style={{ margin: "0.5em 0.5em 0.25em 0" }}
                             onClick={onCancel} color="yellowDark"
                             disabled={inProgress}
                         >Cancel</Button>

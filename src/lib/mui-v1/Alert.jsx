@@ -33,24 +33,24 @@ export default compose(
 
 
         // ...
-        state = { open: false, }
+        state = { open: false }
 
 
         // ...
         handleOpen = () => {
-            this.setState({ open: true, })
+            this.setState({ open: true })
         }
 
 
         // ...
         handleClose = () => {
-            this.setState({ open: false, })
+            this.setState({ open: false })
         }
 
 
         // ...
         render = () => (
-            ({ classes, children, fullScreen, dialogVisible, }) =>
+            ({ classes, children, fullScreen, dialogVisible }) =>
 
                 <Dialog
                     fullScreen={fullScreen}
@@ -58,11 +58,11 @@ export default compose(
                     onClose={this.handleClose}
                     aria-labelledby="responsive-dialog-title"
                     disableBackdropClick
-                    classes={{ root: classes.backDrop, }}
+                    classes={{ root: classes.backDrop }}
                 >
                     {children}
                     <DialogActions>
-                        <Button style={{ margin: "0 0.75em 0.5em 0", }}
+                        <Button style={{ margin: "0 0.75em 0.5em 0" }}
                             onClick={this.handleClose} color="green"
                         >{"OK"}</Button>
                     </DialogActions>
