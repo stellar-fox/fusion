@@ -34,6 +34,7 @@ import {
     getCountOfDemoAccounts,
     getCountOfRealAccounts,
 } from "../../lib/logic/stellarAccount"
+import { storageRef } from "../../firebase"
 
 
 
@@ -240,6 +241,25 @@ export default compose(
 
 
         // ...
+        clearAvatar = async () => {
+            try {
+                const avatarRef = storageRef().child(
+                    `${this.props.uid}/avatar.jpeg`
+                )
+                await avatarRef.delete()
+                await this.props.updateUserProfile({ photoUrl: string.empty() })
+                await this.props.setSnackyColor("success")
+                await this.props.setSnackyMessage("Avatar has been deleted.")
+                await this.props.showSnacky()
+            } catch (error) {
+                await this.props.setSnackyColor("error")
+                await this.props.setSnackyMessage(error.message)
+                await this.props.showSnacky()
+            }
+        }
+
+
+        // ...
         reAuthenticate = async () => {
             try {
                 await this.setState({ reauthInProgress: true })
@@ -408,7 +428,7 @@ export default compose(
                         >
                             Verification link didn't arrive?
                         </Typography>
-                        <GenericButton size="small"
+                        <GenericButton size="small" fullWidth
                             onClick={this.sendVerificationLink}
                             variant="outlined" color="secondary"
                         >Send Link Again</GenericButton>
@@ -419,13 +439,39 @@ export default compose(
                             Forgot password?
                         </Typography>
                         <GenericButton style={{ marginBottom: "1em" }}
-                            size="small"
+                            size="small" fullWidth
                             onClick={this.sendPasswordResetLink}
                             variant="outlined" color="secondary"
                         >Reset Password</GenericButton>
                     </div>
                     <div >
-                        <Typography variant="subtitle1">
+                        <div className="m-t-large">
+                            <Typography style={{ paddingBottom: "1em" }}
+                                variant="h4"
+                            >
+                                Don't like Gravatar photo?
+                            </Typography>
+                            <ImageCropper />
+                        </div>
+                        {photoUrl &&
+                            <div className="m-t">
+                                <Typography style={{ paddingBottom: "1em" }}
+                                    variant="h4"
+                                >
+                                    Bored with your Avatar?
+                                </Typography>
+                                <GenericButton style={{ marginBottom: "1em" }}
+                                    size="small"
+                                    fullWidth
+                                    onClick={this.clearAvatar}
+                                    variant="outlined" color="secondary"
+                                >Delete Avatar</GenericButton>
+                            </div>
+                        }
+
+                        <Typography style={{ marginTop: "1rem" }}
+                            variant="subtitle1"
+                        >
                             Bank Summary
                         </Typography>
 
@@ -447,18 +493,9 @@ export default compose(
                                 variant="h4"
                             />
                         </div>
-
-                        <div className="m-t-large">
-                            <Typography style={{ paddingBottom: "1em" }}
-                                variant="h4"
-                            >
-                                Don't like Gravatar photo?
-                            </Typography>
-                            <ImageCropper />
-                        </div>
-
-
                     </div>
+
+
                 </div>
             </Fragment>
         )(this.props)

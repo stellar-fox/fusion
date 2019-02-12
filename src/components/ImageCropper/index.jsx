@@ -218,7 +218,7 @@ export default compose(
                     />
                     <label htmlFor="photo-upload">
                         <GenericButton style={{ marginBottom: "0.5em" }}
-                            size="small" component="span"
+                            size="small" component="span" fullWidth
                             variant="outlined" color="secondary"
                         >Upload Custom Photo</GenericButton>
                         <Typography style={{ marginBottom: "0.5em" }}
