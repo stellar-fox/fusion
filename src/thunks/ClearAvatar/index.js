@@ -35,6 +35,16 @@ export const toggleConfirmDialog = (showing) =>
  */
 export const clearAvatar = () =>
     async (dispatch, getState) => {
+        
+        // hide modal confirmation dialog first and unblock UI
+        await dispatch(await toggleConfirmDialog(false))
+        await dispatch(await SnackyActions.setColor("success"))
+        await dispatch(await SnackyActions.setMessage(
+            "Avatar scheduled for deletion."
+        ))
+        await dispatch(await SnackyActions.showSnacky())
+
+        // attempt to delete user's avatar
         try {
             const  avatarRef = storageRef().child(
                 `${getState().Auth.uid}/avatar.jpeg`
@@ -52,7 +62,5 @@ export const clearAvatar = () =>
             await dispatch(await SnackyActions.setColor("error"))
             await dispatch(await SnackyActions.setMessage(error.message))
             await dispatch(await SnackyActions.showSnacky())
-        } finally {
-            await dispatch(await toggleConfirmDialog(false))
         }
     }
