@@ -52,7 +52,7 @@ export default compose(
                             disabled={inProgress}
                         >
                             {inProgress ? <CircularProgress
-                                color="secondary" thickness={4} size={16}
+                                color="secondary" thickness={4} size={20}
                             /> : okButtonText}
                         </Button>
                         <Button style={{ margin: "0.5em 0.5em 0.25em 0" }}
