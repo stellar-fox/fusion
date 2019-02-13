@@ -9,15 +9,29 @@
 
 
 
-
+// import {
+//     async,
+//     type,
+// } from "@xcmats/js-toolbox"
 import { action as SnackyActions } from "../../redux/Snacky"
 import {
     actions as ModalsActions,
     modalNames,
 } from "../../redux/Modals"
+import {
+    actions as SemaphoreActions,
+    semaphoreNames,
+} from "../../redux/Semaphore"
 import { firebaseSingleton } from "../../firebase"
-import { clearAvatar } from "../ClearAvatar"
+import { deleteAvatarFromStorage } from "../ClearAvatar"
 
+
+
+/**
+ * @private
+ * @constant {Object} context Private memory space
+ */
+const context = {}
 
 
 
@@ -29,6 +43,21 @@ export const toggleModal = (showing) =>
     async (dispatch, _getState) => {
         await dispatch(await ModalsActions.toggleModal(
             modalNames.CONFIRM_DELETE_ACCOUNT,
+            showing
+        ))
+    }
+
+
+
+
+/**
+ * 
+ * @param {Boolean} showing 
+ */
+export const toggleReAuthModal = (showing) =>
+    async (dispatch, _getState) => {
+        await dispatch(await ModalsActions.toggleModal(
+            modalNames.REAUTHENTICATE,
             showing
         ))
     }
@@ -53,7 +82,7 @@ export const deleteUserAccount = () =>
 
         // attempt to delete user's account.
         try {
-            await dispatch(await clearAvatar())
+            await dispatch(await deleteAvatarFromStorage())
             await user.delete()
             await dispatch(await SnackyActions.setColor("success"))
             await dispatch(await SnackyActions.setMessage(
@@ -61,8 +90,19 @@ export const deleteUserAccount = () =>
             ))
             await dispatch(await SnackyActions.showSnacky())
         } catch (error) {
+
             if (error.code === "auth/requires-recent-login") {
-                console.log("display re-authentication dialog")
+                await dispatch(await SemaphoreActions.toggleSemaphore(
+                    semaphoreNames.PENDING_REAUTH, true
+                ))
+                // await async.repeat(async () => {
+                //     console.log("łejtin")
+                //     context.reAuthResult = async.createMutex()
+                //     let reAuthResult = await context.reAuthResult.lock()
+
+                    
+                // }, () => getState().Semaphore.pendingReAuth)
+                await dispatch(await toggleReAuthModal(true))
                 return
             }
             await dispatch(await SnackyActions.setColor("error"))
@@ -70,4 +110,13 @@ export const deleteUserAccount = () =>
             await dispatch(await SnackyActions.showSnacky())
         }
         
+    }
+
+
+export const getReAuthResult = (signature) =>
+    (_dispatch, _getState) => {
+        if (context.reAuthResult) {
+            context.reAuthResult.resolve(signature)
+            delete context.signatureInput
+        }
     }

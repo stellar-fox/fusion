@@ -43,6 +43,7 @@ import {
     actions as ModalsActions,
     modalNames,
 } from "../../redux/Modals"
+import ModalReauthenticate from "./ModalReauthenticate"
 
 
 // <Profile> component
@@ -72,7 +73,7 @@ export default compose(
             email: state.Auth.email,
             emailVerified: state.Auth.emailVerified,
             uid: state.Auth.uid,
-            displayName: state.Auth.displayName,
+            displayName: state.Auth.displayName || string.empty(),
             photoUrl: state.Auth.photoUrl,
             countDemo: getCountOfDemoAccounts(state.StellarAccounts),
             countReal: getCountOfRealAccounts(state.StellarAccounts),
@@ -376,6 +377,7 @@ export default compose(
                     </DialogContent>
                 </ConfirmDialog>
 
+                <ModalReauthenticate />
                 <ModalDeleteAccount />
 
 

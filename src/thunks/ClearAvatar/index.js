@@ -33,8 +33,27 @@ export const toggleConfirmDialog = (showing) =>
 /**
  * ...
  */
-export const clearAvatar = () =>
+export const deleteAvatarFromStorage = () =>
     async (dispatch, getState) => {
+        if (getState().Auth.photoUrl) {
+            const avatarRef = storageRef().child(
+                `${getState().Auth.uid}/avatar.jpeg`
+            )
+            await avatarRef.delete()
+            await dispatch(await AuthActions.updateUserProfile({
+                photoUrl: string.empty(),
+            }))
+        }
+    }
+
+
+
+
+/**
+ * ...
+ */
+export const clearAvatar = () =>
+    async (dispatch, _getState) => {
         
         // hide modal confirmation dialog first and unblock UI
         await dispatch(await toggleConfirmDialog(false))
@@ -46,13 +65,7 @@ export const clearAvatar = () =>
 
         // attempt to delete user's avatar
         try {
-            const  avatarRef = storageRef().child(
-                `${getState().Auth.uid}/avatar.jpeg`
-            )
-            await avatarRef.delete()
-            await dispatch(await AuthActions.updateUserProfile({
-                photoUrl: string.empty(),
-            }))
+            await dispatch(await deleteAvatarFromStorage())
             await dispatch(await SnackyActions.setColor("success"))
             await dispatch(await SnackyActions.setMessage(
                 "Avatar has been deleted."

@@ -14,10 +14,15 @@ import { action as AppActions } from "../redux/Fusion"
 import { action as AuthActions } from "../redux/Auth"
 import { action as AwaiterActions } from "../redux/Awaiter"
 import { action as FusionActions } from "../redux/Fusion"
+import { actions as ModalsActions } from "../redux/Modals"
 import { action as UserLoginActions } from "../redux/UserLogin"
 import { detectAccount } from "../actions/stellarAccount"
 import { detectSigningMethod } from "../actions/signingMethods"
-import { authenticate, storageRef } from "../firebase"
+import {
+    authenticate,
+    reauthenticate,
+    storageRef,
+} from "../firebase"
 import { string } from "@xcmats/js-toolbox"
 
 
@@ -131,6 +136,28 @@ export const doAuthenticate = () =>
                 errorMessageEmail: error.code,
                 errorMessagePassword: error.message,
             }))
+        }
+    }
+
+
+
+
+/**
+ * When a sensitive action is performed then recent authentication with
+ *   _Firebase_ is required.
+ * 
+ * @function reAuthenticate
+ * @param {String} password
+ * @returns {Function} thunk action 
+ */
+export const reAuthenticate = (password) =>
+    async (dispatch, _getState) => {
+        try {
+            await reauthenticate(password)
+        } catch (error) {
+            await dispatch(await ModalsActions.toggleError(
+                error.message
+            ))
         }
     }
 
