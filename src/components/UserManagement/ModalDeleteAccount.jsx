@@ -16,6 +16,8 @@ import { deleteUserAccount } from "../../thunks/DeleteUserAccount"
 
 
 
+
+// ...
 const ModalDeleteAccount = ({
     dialogVisible, deleteUserAccount, toggleModal,
 }) => {
@@ -55,7 +57,7 @@ export default compose(
     withMobileDialog(),
     connect(
         (state) => ({
-            dialogVisible: state.Modals.confirmDeleteAccount,
+            dialogVisible: state.Modals[modalNames.CONFIRM_DELETE_ACCOUNT],
         }),
         (dispatch) => bindActionCreators({
             deleteUserAccount,
