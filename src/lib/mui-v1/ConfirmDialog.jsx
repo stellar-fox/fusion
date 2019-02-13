@@ -2,7 +2,6 @@ import React, { Component } from "react"
 import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
-import { withStyles } from "@material-ui/core/styles"
 import {
     CircularProgress, Dialog, DialogActions, withMobileDialog
 } from "@material-ui/core"
@@ -14,11 +13,6 @@ import Button from "../../lib/mui-v1/Button"
 // <Dialog> component
 export default compose(
     withMobileDialog(),
-    withStyles({
-        backDrop: {
-            backgroundColor: "rgba(0, 139, 82, 0.1)",
-        },
-    }),
     connect(
         (_state) => ({}),
         (dispatch) => bindActionCreators({}, dispatch)
@@ -55,7 +49,7 @@ export default compose(
         // ...
         render = () => (
             ({
-                classes, children, fullScreen, dialogVisible, onOk, onCancel,
+                children, fullScreen, dialogVisible, onOk, onCancel,
                 inProgress, okButtonText,
             }) =>
 
@@ -65,7 +59,6 @@ export default compose(
                     onClose={this.handleClose}
                     aria-labelledby="responsive-dialog-title"
                     disableBackdropClick
-                    classes={{ root: classes.backDrop }}
                 >
                     {children}
                     <DialogActions>
