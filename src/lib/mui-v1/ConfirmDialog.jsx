@@ -3,7 +3,10 @@ import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import {
-    CircularProgress, Dialog, DialogActions, withMobileDialog
+    CircularProgress,
+    Dialog,
+    DialogActions,
+    withMobileDialog,
 } from "@material-ui/core"
 import Button from "../../lib/mui-v1/Button"
 
@@ -22,27 +25,10 @@ export default compose(
 
         // ...
         static propTypes = {
-            classes: PropTypes.object.isRequired,
             fullScreen: PropTypes.bool.isRequired,
             dialogVisible: PropTypes.bool.isRequired,
             onOk: PropTypes.func.isRequired,
             onCancel: PropTypes.func.isRequired,
-        }
-
-
-        // ...
-        state = { open: false }
-
-
-        // ...
-        handleOpen = () => {
-            this.setState({ open: true })
-        }
-
-
-        // ...
-        handleClose = () => {
-            this.setState({ open: false })
         }
 
 
@@ -56,7 +42,6 @@ export default compose(
                 <Dialog
                     fullScreen={fullScreen}
                     open={dialogVisible}
-                    onClose={this.handleClose}
                     aria-labelledby="responsive-dialog-title"
                     disableBackdropClick
                 >

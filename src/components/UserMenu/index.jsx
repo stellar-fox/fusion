@@ -92,7 +92,7 @@ class UserMenu extends Component {
                     open={Boolean(anchorEl)}
                     onClose={this.handleClose}
                 >
-                    <MenuItem component="div" className={classes.menuHeader}>
+                    <MenuItem disabled component="div" className={classes.menuHeader}>
                         <div>
                             <Typography variant="body2" noWrap>
                                 {displayName}
