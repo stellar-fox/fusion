@@ -52,6 +52,17 @@ export const toggleModal = (showing) =>
 
 /**
  * 
+ * @param {Boolean} progress 
+ */
+export const toggleProgress = (progress) =>
+    async (dispatch, _getState) =>
+        await dispatch(await ModalsActions.toggleProgress(progress))
+
+
+
+
+/**
+ * 
  * @param {Boolean} showing 
  */
 export const toggleReAuthModal = (showing) =>
@@ -72,18 +83,14 @@ export const deleteUserAccount = () =>
     async (dispatch, _getState) => {
         const user = firebaseSingleton.auth().currentUser
 
-        // hide modal confirmation dialog first and unblock UI
-        await dispatch(await toggleModal(false))
-        await dispatch(await SnackyActions.setColor("success"))
-        await dispatch(await SnackyActions.setMessage(
-            "User account scheduled for deletion."
-        ))
-        await dispatch(await SnackyActions.showSnacky())
+        await dispatch(await ModalsActions.toggleProgress(true))
 
         // attempt to delete user's account.
         try {
             await dispatch(await deleteAvatarFromStorage())
             await user.delete()
+            await dispatch(await toggleProgress(false))
+            await dispatch(await toggleModal(false))
             await dispatch(await SnackyActions.setColor("success"))
             await dispatch(await SnackyActions.setMessage(
                 "User account has been deleted."
@@ -92,6 +99,9 @@ export const deleteUserAccount = () =>
         } catch (error) {
 
             if (error.code === "auth/requires-recent-login") {
+                await dispatch(await toggleModal(false))
+                await dispatch(await toggleProgress(false))
+
                 await dispatch(await SemaphoreActions.toggleSemaphore(
                     semaphoreNames.PENDING_REAUTH, true
                 ))

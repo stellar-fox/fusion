@@ -19,7 +19,7 @@ import { deleteUserAccount } from "../../thunks/DeleteUserAccount"
 
 // ...
 const ModalDeleteAccount = ({
-    dialogVisible, deleteUserAccount, toggleModal,
+    dialogVisible, deleteUserAccount, inProgress, toggleModal,
 }) => {
     
     const handleDeleteAccount = () => deleteUserAccount()
@@ -33,6 +33,7 @@ const ModalDeleteAccount = ({
         onOk={handleDeleteAccount}
         onCancel={handleHideDialog}
         okButtonText="OK"
+        inProgress={inProgress}
     >
         <DialogTitle id="responsive-dialog-title">
             {"DELETING ACCOUNT"}
@@ -58,6 +59,7 @@ export default compose(
     connect(
         (state) => ({
             dialogVisible: state.Modals[modalNames.CONFIRM_DELETE_ACCOUNT],
+            inProgress: state.Modals.inProgress,
         }),
         (dispatch) => bindActionCreators({
             deleteUserAccount,
