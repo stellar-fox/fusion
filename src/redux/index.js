@@ -9,6 +9,7 @@ import { reducer as LedgerHQ } from "./LedgerHQ"
 import { reducer as Modals } from "./Modals"
 import { reducer as Pay } from "./Pay"
 import { reducer as Router } from "./FusionRouter"
+import { reducer as Semaphore } from "./Semaphore"
 import { reducer as SigningMethods } from "./SigningMethods"
 import { reducer as Snacky } from "./Snacky"
 import { reducer as StellarAccounts } from "./StellarAccounts"
@@ -31,6 +32,7 @@ export default {
     Modals,
     Pay,
     Router,
+    Semaphore,
     SigningMethods,
     Snacky,
     StellarAccounts,
