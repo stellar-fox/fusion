@@ -54,9 +54,9 @@ export default compose(
             marginBottom: "0.5rem",
         },
         buttonDanger: {
-            backgroundColor: fade(theme.palette.error.main, 0.6),
+            backgroundColor: fade(theme.palette.error.main, 0.4),
             "&:hover": {
-                backgroundColor: fade(theme.palette.error.main, 0.9),
+                backgroundColor: fade(theme.palette.error.main, 0.6),
             },
         },
         iconNotVerified: {
