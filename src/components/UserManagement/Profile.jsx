@@ -38,7 +38,11 @@ import {
     clearAvatar,
     toggleConfirmDialog,
 } from "../../thunks/ClearAvatar"
-
+import ModalDeleteAccount from "./ModalDeleteAccount"
+import {
+    actions as ModalsActions,
+    modalNames,
+} from "../../redux/Modals"
 
 
 // <Profile> component
@@ -48,8 +52,11 @@ export default compose(
             color: fade(theme.palette.custom.green, 0.7),
             marginBottom: "0.5rem",
         },
-        button: {
-            margin: "1rem, 0",
+        buttonDanger: {
+            backgroundColor: fade(theme.palette.error.main, 0.6),
+            "&:hover": {
+                backgroundColor: fade(theme.palette.error.main, 0.9),
+            },
         },
         iconNotVerified: {
             color: fade(theme.palette.error.main, 0.7),
@@ -80,6 +87,7 @@ export default compose(
             updateUserProfile: AuthActions.updateUserProfile,
             updateEmail: AuthActions.updateEmail,
             toggleConfirmDialog,
+            toggleModal: ModalsActions.toggleModal,
         }, dispatch)
     ),
     withWidth(),
@@ -261,6 +269,11 @@ export default compose(
         handleShowConfirmDialog = () => {
             this.props.toggleConfirmDialog(true)
         }
+
+        // ...
+        handleDeleteAccount = () => {
+            this.props.toggleModal(modalNames.CONFIRM_DELETE_ACCOUNT, true)
+        }
         
 
         // ...
@@ -311,8 +324,9 @@ export default compose(
 
         // ...
         render = () => (
-            ({ confirmDialogVisible, countDemo, countReal, email, photoUrl,
-                uid, width }) => <Fragment>
+            ({ classes, confirmDialogVisible, countDemo, countReal, email,
+                photoUrl, uid, width }) => <Fragment>
+                
                 <ConfirmDialog
                     dialogVisible={this.state.dialogReAuthVisible}
                     onOk={this.reAuthenticate}
@@ -349,11 +363,10 @@ export default compose(
                     onOk={this.handleClearAvatar}
                     onCancel={this.handleHideDialog}
                     okButtonText="OK"
-                    inProgress={this.state.reauthInProgress}
                     fullScreen={isWidthDown("sm", width)}
                 >
                     <DialogTitle id="responsive-dialog-title">
-                        {"Please confirm your action"}
+                        {"DELETING AVATAR"}
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText style={{ paddingBottom: "1em" }}>
@@ -363,6 +376,7 @@ export default compose(
                     </DialogContent>
                 </ConfirmDialog>
 
+                <ModalDeleteAccount />
 
 
                 <div className={isWidthDown("sm", width) ?
@@ -403,14 +417,14 @@ export default compose(
                                 endAdornment={
                                     <InputAdornment position="end">
                                         {this.state.emailVerified ?
-                                            <Tooltip classes={{ tooltip: this.props.classes.tooltip }} title="Email was verified."><VerifiedUserRounded
+                                            <Tooltip classes={{ tooltip: classes.tooltip }} title="Email was verified."><VerifiedUserRounded
                                                 classes={{
-                                                    root: this.props.classes.iconVerified,
+                                                    root: classes.iconVerified,
                                                 }}
                                             /></Tooltip> :
-                                            <Tooltip classes={{ tooltip: this.props.classes.tooltip }} title="Please verify your email."><NotificationImportantRounded
+                                            <Tooltip classes={{ tooltip: classes.tooltip }} title="Please verify your email."><NotificationImportantRounded
                                                 classes={{
-                                                    root: this.props.classes.iconNotVerified,
+                                                    root: classes.iconNotVerified,
                                                 }}
                                             /></Tooltip>
                                         }
@@ -496,6 +510,24 @@ export default compose(
                                 >Delete Avatar</GenericButton>
                             </div>
                         }
+
+                        <div className="m-t">
+                            <Typography style={{ paddingBottom: "1em" }}
+                                variant="h4"
+                            >
+                                Wanna leave?
+                            </Typography>
+                            <GenericButton
+                                classes={{ root: classes.buttonDanger }}
+                                style={{
+                                    marginBottom: "1em",
+                                }}
+                                size="small"
+                                fullWidth
+                                onClick={this.handleDeleteAccount}
+                                variant="outlined" color="secondary"
+                            >Delete Account</GenericButton>
+                        </div>
 
                         <Typography style={{ marginTop: "1rem" }}
                             variant="subtitle1"
