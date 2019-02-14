@@ -27,6 +27,7 @@ export default compose(
         static propTypes = {
             fullScreen: PropTypes.bool.isRequired,
             dialogVisible: PropTypes.bool.isRequired,
+            inProgress: PropTypes.bool.isRequired,
             onOk: PropTypes.func.isRequired,
             onCancel: PropTypes.func.isRequired,
         }
