@@ -24,6 +24,7 @@ import {
     storageRef,
 } from "../firebase"
 import { string } from "@xcmats/js-toolbox"
+import { approveAccountDeletion } from "../thunks/DeleteUserAccount"
 
 
 
@@ -152,13 +153,33 @@ export const doAuthenticate = () =>
  */
 export const reAuthenticate = (password) =>
     async (dispatch, _getState) => {
+        await dispatch(await ModalsActions.toggleError(string.empty()))
+        await dispatch(await ModalsActions.toggleProgress(true))
         try {
             await reauthenticate(password)
+            await dispatch(await approveAccountDeletion(true))
         } catch (error) {
             await dispatch(await ModalsActions.toggleError(
                 error.message
             ))
+        } finally {
+            await dispatch(await ModalsActions.toggleProgress(false))
         }
+    }
+
+
+
+
+/**
+ * Clears _Auth_ Redux key, hence, logging out the user.
+ * 
+ * @function logOut
+ * @returns {Function} thunk action
+ */
+export const logOut = () =>
+    async (dispatch, _getState) => {
+        await dispatch(await AuthActions.resetState())
+        await dispatch(await UserLoginActions.resetState())
     }
 
 
