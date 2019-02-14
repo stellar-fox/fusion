@@ -20,7 +20,8 @@ import { reAuthenticate } from "../../thunks/main"
 
 
 const ModalDeleteAccount = ({
-    dialogVisible, error, errorMessage, toggleError, toggleModal, reAuthenticate,
+    dialogVisible, error, errorMessage, inProgress, toggleError, toggleModal,
+    reAuthenticate,
 }) => {
 
     const [state, setState] = React.useState({
@@ -50,6 +51,7 @@ const ModalDeleteAccount = ({
 
     return <ConfirmDialog
         dialogVisible={dialogVisible}
+        inProgress={inProgress}
         onOk={handleReauthenticate}
         onCancel={handleHideDialog}
         okButtonText="OK"
@@ -88,6 +90,7 @@ export default compose(
             error: state.Modals.error,
             errorMessage: state.Modals.errorMessage,
             dialogVisible: state.Modals[modalNames.REAUTHENTICATE],
+            inProgress: state.Modals.inProgress,
         }),
         (dispatch) => bindActionCreators({
             deleteUserAccount,
