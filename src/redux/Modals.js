@@ -16,6 +16,7 @@ export const modalNames = {
 
 
 export const MODAL_TOGGLE = "@Modals/TOGGLE"
+export const RESET_STATE = "@Modals/RESET_STATE"
 export const TOGGLE_ERROR = "@Modals/TOGGLE_ERROR"
 export const TOGGLE_PROGRESS = "@Modals/TOGGLE_PROGRESS"
 
@@ -36,6 +37,10 @@ const initState = {
 
 // ...
 export const actions = {
+
+    // ...
+    resetState: () => ({ type: RESET_STATE }),
+
 
     // Turns error indicator on/off in a user input component.
     toggleError: (errorMessage) => ({
@@ -70,6 +75,10 @@ export const reducer = createReducer(initState)({
         ...state,
         [action.modalKey]: action.showing,
     }),
+
+
+    // ...
+    [RESET_STATE]: () => initState,
 
 
     // ...
