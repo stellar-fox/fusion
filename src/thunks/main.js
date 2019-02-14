@@ -53,6 +53,9 @@ export const doAuthenticate = () =>
         try {
             const { email, password } = getState().UserLogin
 
+            // hide reCaptcha widget
+            await dispatch(AuthActions.toggleRecaptcha(false))
+
             // reset user login UI state
             await dispatch( await UserLoginActions.setState({
                 disabled: true,
@@ -76,6 +79,7 @@ export const doAuthenticate = () =>
                 emailVerified: auth.user.emailVerified,
                 jwt,
             }))
+            
             
             // Fetch photo url once
             !auth.user.photoURL &&
@@ -127,6 +131,14 @@ export const doAuthenticate = () =>
                     errorMessageEmail: "Invalid credentials.",
                     errorMessagePassword: "Invalid credentials.",
                 }))
+                return
+            }
+
+            if (error.code === "auth/too-many-requests") {
+                await dispatch(UserLoginActions.setState({
+                    disabled: true,
+                }))
+                await dispatch(AuthActions.toggleRecaptcha(true))
                 return
             }
 
@@ -240,3 +252,23 @@ export const clearAwaiter = () =>
     async (dispatch, _getState) => {
         dispatch(AwaiterActions.resetState())
     }
+
+
+
+
+// ...
+export const reCaptchaAvailable = () =>
+    async (dispatch, _getState) => {
+        await dispatch(AuthActions.setState({
+            reCaptchaAvailable: true,
+        }))
+    }
+
+
+
+// ...
+export const reCaptchaSolved = (_value) =>
+    async (dispatch, _getState) =>
+        await dispatch(UserLoginActions.setState({
+            disabled: false,
+        }))

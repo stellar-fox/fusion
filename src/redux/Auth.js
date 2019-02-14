@@ -24,6 +24,8 @@ import { action as SigningMethodsActions } from "../redux/SigningMethods"
 const initState = {
     confirmDialogVisible: false,
     ready: true,
+    reCaptchaAvailable: false,
+    reCaptchaVisible: false,
 }
 
 
@@ -34,6 +36,7 @@ export const RESET_STATE = "@Auth/RESET_STATE"
 export const SET_STATE = "@Auth/SET_STATE"
 export const SEND_EMAIL_VERIFICATION = "@Auth/SEND_EMAIL_VERIFICATION"
 export const TOGGLE_CONFIRM_DIALOG = "@Auth/TOGGLE_CONFIRM_DIALOG"
+export const TOGGLE_RECAPTCHA = "@Auth/TOGGLE_RECAPTCHA"
 
 
 
@@ -74,6 +77,13 @@ export const action = {
     // ...
     toggleConfirmDialog: (showing) => ({
         type: TOGGLE_CONFIRM_DIALOG,
+        showing,
+    }),
+
+
+    // ...
+    toggleRecaptcha: (showing) => ({
+        type: TOGGLE_RECAPTCHA,
         showing,
     }),
         
@@ -235,6 +245,13 @@ export const reducer = createReducer(initState)({
     [TOGGLE_CONFIRM_DIALOG]: (state, action) => ({
         ...state,
         confirmDialogVisible: action.showing,
+    }),
+
+
+    // ...
+    [TOGGLE_RECAPTCHA]: (state, action) => ({
+        ...state,
+        reCaptchaVisible: action.showing,
     }),
 
 })

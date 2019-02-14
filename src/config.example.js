@@ -26,4 +26,7 @@ export const config = {
     friendbot: {
         client: "<PROTOSTAR_FRIENDBOT_URL>",
     },
+    reCaptchaV2: {
+        siteKey: "<RECAPTCHA_SITE_KEY>",
+    },
 }
