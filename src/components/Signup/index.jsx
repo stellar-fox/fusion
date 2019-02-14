@@ -55,7 +55,7 @@ export default compose(
                         <Fade in><div>
                             <UserSignup />
                             <div style={{ opacity: "0.7" }}
-                                className="flex-box-col space-between m-t-large"
+                                className="flex-box-col space-between m-t"
                             >
                                 <div className="flex-box-col">
                                     <Typography variant="h4">
@@ -90,7 +90,7 @@ export default compose(
                             <Fade in><div>
                                 <UserSignup />
                                 <div style={{ opacity: "0.7" }}
-                                    className="flex-box-row m-t-large"
+                                    className="flex-box-row m-t"
                                 >
                                     <div className="flex-box-col">
                                         <Typography variant="h4">

@@ -3,15 +3,17 @@ import PropTypes from "prop-types"
 import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
-import { LinearProgress } from "@material-ui/core"
+import {
+    LinearProgress,
+    Typography,
+} from "@material-ui/core"
 import Button from "../../lib/mui-v1/Button"
 import TextInput from "../../lib/mui-v1/TextInput"
-import { Typography } from "@material-ui/core"
 import { env } from "../Fusion"
 import logo from "../Fusion/static/logo.svg"
 import { doAuthenticate } from "../../thunks/main"
 import { action as UserLoginActions } from "../../redux/UserLogin"
-
+import ReCaptchaV2 from "../ReCaptchaV2"
 
 
 
@@ -48,6 +50,8 @@ export default compose(
     })),
     connect(
         (state) => ({
+            reCaptchaAvailable: state.Auth.reCaptchaAvailable,
+            reCaptchaVisible: state.Auth.reCaptchaVisible,
             userLogin: state.UserLogin,
         }),
         (dispatch) => bindActionCreators({
@@ -71,7 +75,8 @@ export default compose(
 
         // ...
         render = () => (
-            ({ doAuthenticate, classes, setEmail, setPassword, userLogin }) =>
+            ({ doAuthenticate, classes, setEmail, reCaptchaAvailable,
+                reCaptchaVisible, setPassword, userLogin }) =>
                 <div className={classes.root}>
                     <img
                         className={classes.appLogo}
@@ -128,6 +133,9 @@ export default compose(
                     >
                         {userLogin.statusMessage}
                     </Typography>
+
+                    {reCaptchaAvailable && reCaptchaVisible && <ReCaptchaV2 />}
+                    
                 </div>
         )(this.props)
     }

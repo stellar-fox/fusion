@@ -13,6 +13,7 @@ import {
 } from "@material-ui/core"
 import { env } from "../Fusion"
 import logo from "../Fusion/static/logo.svg"
+import ReCaptchaV2 from "../ReCaptchaV2"
 
 
 
@@ -49,9 +50,7 @@ export default compose(
 
     })),
     connect(
-        (_state) => ({
-
-        }),
+        (_state) => ({}),
         (dispatch) => bindActionCreators({
             signup: AuthActions.signup,
         }, dispatch)
@@ -73,6 +72,7 @@ export default compose(
             password: string.empty(),
             passwordConf: string.empty(),
             progressBarOpacity: 0,
+            statusMessage: string.empty(),
             errorEmail: false,
             errorPassword: false,
             errorPasswordConf: false,
@@ -260,6 +260,20 @@ export default compose(
                         }}
                         style={{ opacity: this.state.progressBarOpacity }}
                     />
+                    <Typography
+                        style={{
+                            height: 11,
+                            marginTop: "0.5rem",
+                            marginBottom: "1rem",
+                            opacity: 0.5,
+                        }}
+                        variant="h4"
+                    >
+                        {this.state.statusMessage}
+                    </Typography>
+
+                    <ReCaptchaV2 />
+
                 </div>
         )(this.props)
     }
