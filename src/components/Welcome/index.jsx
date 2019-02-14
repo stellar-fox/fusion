@@ -15,6 +15,7 @@ import { fade } from "@material-ui/core/styles/colorManipulator"
 import UserLogin from "../UserLogin"
 import { Link } from "react-router-dom"
 import Awaiter from "../Awaiter"
+import Snacky from "../../lib/mui-v1/Snacky"
 
 
 
@@ -55,6 +56,7 @@ export default func.compose(
 
     return (
         <Fragment>
+            <Snacky />
             <Hidden mdUp>
                 <Grid
                     container
