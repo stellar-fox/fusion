@@ -110,6 +110,7 @@ export default compose(
             password: string.empty(),
             errorPassword: false,
             errorMessagePassword: string.empty(),
+            reauthInProgress: false,
         }
 
 
@@ -365,6 +366,7 @@ export default compose(
                     onCancel={this.handleHideDialog}
                     okButtonText="OK"
                     fullScreen={isWidthDown("sm", width)}
+                    inProgress={false}
                 >
                     <DialogTitle id="responsive-dialog-title">
                         {"DELETING AVATAR"}
