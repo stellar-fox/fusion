@@ -134,6 +134,7 @@ export const doAuthenticate = () =>
                 return
             }
 
+            // in case of too many requests display reCaptcha widget
             if (error.code === "auth/too-many-requests") {
                 await dispatch(UserLoginActions.setState({
                     disabled: true,
@@ -164,13 +165,32 @@ export const doAuthenticate = () =>
  * @returns {Function} thunk action 
  */
 export const reAuthenticate = (password) =>
-    async (dispatch, _getState) => {
+    async (dispatch, getState) => {
         await dispatch(await ModalsActions.toggleError(string.empty()))
         await dispatch(await ModalsActions.toggleProgress(true))
         try {
+            const { reCaptchaVisible, reCaptchaToken } = getState().Auth
+            if (reCaptchaVisible && !reCaptchaToken) {
+                await dispatch(await toggleRecaptchaError(
+                    "Please validate with reCaptcha"
+                ))
+                return
+            }
             await reauthenticate(password)
             await dispatch(await approveAccountDeletion(true))
         } catch (error) {
+            // reset reCaptcha error message
+            await dispatch(await toggleRecaptchaError(string.empty()))
+
+            // in case of too many requests display reCaptcha widget
+            if (error.code === "auth/too-many-requests") {
+                await dispatch(UserLoginActions.setState({
+                    disabled: true,
+                }))
+                await dispatch(AuthActions.toggleRecaptcha(true))
+                return
+            }
+
             await dispatch(await ModalsActions.toggleError(
                 error.message
             ))

@@ -9,6 +9,7 @@ import {
     DialogContent,
     DialogContentText,
     DialogTitle,
+    Typography,
     withMobileDialog,
 } from "@material-ui/core"
 import ConfirmDialog from "../../lib/mui-v1/ConfirmDialog"
@@ -16,12 +17,13 @@ import TextInput from "../../lib/mui-v1/TextInput"
 import { actions as ModalsActions, modalNames } from "../../redux/Modals"
 import { deleteUserAccount } from "../../thunks/DeleteUserAccount"
 import { reAuthenticate } from "../../thunks/main"
+import ReCaptchaV2 from "../ReCaptchaV2"
 
 
 
 const ModalDeleteAccount = ({
     dialogVisible, error, errorMessage, inProgress, toggleError, toggleModal,
-    reAuthenticate,
+    reAuthenticate, reCaptchaError, reCaptchaVisible,
 }) => {
 
     const [state, setState] = React.useState({
@@ -75,6 +77,23 @@ const ModalDeleteAccount = ({
                 error={error}
                 errorMessage={errorMessage}
             />
+
+            {reCaptchaVisible && <ReCaptchaV2 />}
+
+            {reCaptchaError &&
+                <Typography
+                    style={{
+                        height: 11,
+                        marginTop: "0.5rem",
+                        marginBottom: "1rem",
+                        opacity: 0.5,
+                    }}
+                    variant="h4"
+                >
+                    {reCaptchaError}
+                </Typography>
+            }
+
         </DialogContent>
     </ConfirmDialog>
 }
@@ -91,6 +110,8 @@ export default compose(
             errorMessage: state.Modals.errorMessage,
             dialogVisible: state.Modals[modalNames.REAUTHENTICATE],
             inProgress: state.Modals.inProgress,
+            reCaptchaError: state.Auth.reCaptchaError,
+            reCaptchaVisible: state.Auth.reCaptchaVisible,
         }),
         (dispatch) => bindActionCreators({
             deleteUserAccount,
