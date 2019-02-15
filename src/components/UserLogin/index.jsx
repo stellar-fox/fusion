@@ -50,8 +50,8 @@ export default compose(
     })),
     connect(
         (state) => ({
-            reCaptchaAvailable: state.Auth.reCaptchaAvailable,
             reCaptchaVisible: state.Auth.reCaptchaVisible,
+            reCaptchaToken: state.Auth.reCaptchaToken,
             userLogin: state.UserLogin,
         }),
         (dispatch) => bindActionCreators({
@@ -74,69 +74,87 @@ export default compose(
 
 
         // ...
-        render = () => (
-            ({ doAuthenticate, classes, setEmail, reCaptchaAvailable,
-                reCaptchaVisible, setPassword, userLogin }) =>
-                <div className={classes.root}>
-                    <img
-                        className={classes.appLogo}
-                        src={logo} alt="logo"
-                    />
-                    <Typography variant="h6">
-                        {env.appVisName}
-                    </Typography>
-                    <Typography variant="subtitle1">
-                        Sign-in and bank.
-                    </Typography>
-                    <TextInput
-                        id="email"
-                        label="Email"
-                        type="text"
-                        fullWidth
-                        value={userLogin.email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        autocomplete={false}
-                        error={userLogin.errorEmail}
-                        errorMessage={userLogin.errorMessageEmail}
-                    />
-                    <TextInput
-                        id="password"
-                        label="Password"
-                        type="password"
-                        fullWidth
-                        value={userLogin.password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        autocomplete={false}
-                        error={userLogin.errorPassword}
-                        errorMessage={userLogin.errorMessagePassword}
-                    />
-                    <Button
-                        fullWidth
-                        color="green"
-                        disabled={userLogin.disabled}
-                        onClick={() => doAuthenticate()}
-                    >
-                        Sign In
-                    </Button>
-                    <LinearProgress
-                        variant="indeterminate"
-                        classes={{ root: this.props.classes.progressBar }}
-                        style={{ opacity: userLogin.progressBarOpacity }}
-                    />
+        render = () => (({
+            doAuthenticate, classes, setEmail, reCaptchaToken, reCaptchaVisible,
+            setPassword, userLogin,
+        }) =>
+            <div className={classes.root}>
+                <img
+                    className={classes.appLogo}
+                    src={logo} alt="logo"
+                />
+                <Typography variant="h6">
+                    {env.appVisName}
+                </Typography>
+                <Typography variant="subtitle1">
+                    Sign-in and bank.
+                </Typography>
+                <TextInput
+                    id="email"
+                    label="Email"
+                    type="text"
+                    fullWidth
+                    value={userLogin.email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    autocomplete={false}
+                    error={userLogin.errorEmail}
+                    errorMessage={userLogin.errorMessageEmail}
+                />
+                <TextInput
+                    id="password"
+                    label="Password"
+                    type="password"
+                    fullWidth
+                    value={userLogin.password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    autocomplete={false}
+                    error={userLogin.errorPassword}
+                    errorMessage={userLogin.errorMessagePassword}
+                />
+                <Button
+                    fullWidth
+                    color="green"
+                    disabled={
+                        reCaptchaVisible && !reCaptchaToken ? true : 
+                            userLogin.disabled
+                    }
+                    onClick={() => doAuthenticate()}
+                >
+                    Sign In
+                </Button>
+                <LinearProgress
+                    variant="indeterminate"
+                    classes={{ root: this.props.classes.progressBar }}
+                    style={{ opacity: userLogin.progressBarOpacity }}
+                />
+                <Typography
+                    style={{
+                        height: 11,
+                        marginTop: "0.5rem",
+                        opacity: userLogin.progressBarOpacity - 0.5,
+                    }}
+                    variant="h4"
+                >
+                    {userLogin.statusMessage}
+                </Typography>
+
+                {reCaptchaVisible && <ReCaptchaV2 />}
+                
+                {this.props.reCaptchaError &&
                     <Typography
                         style={{
                             height: 11,
                             marginTop: "0.5rem",
-                            opacity: userLogin.progressBarOpacity - 0.5,
+                            marginBottom: "1rem",
+                            opacity: 0.5,
                         }}
                         variant="h4"
                     >
-                        {userLogin.statusMessage}
+                        {this.props.reCaptchaError}
                     </Typography>
-
-                    {reCaptchaAvailable && reCaptchaVisible && <ReCaptchaV2 />}
-                    
-                </div>
+                }
+                
+            </div>
         )(this.props)
     }
 )
