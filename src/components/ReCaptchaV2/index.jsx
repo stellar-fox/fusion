@@ -7,6 +7,7 @@ import {
 } from "redux"
 import ReCAPTCHA from "react-google-recaptcha"
 import { config } from "../../firebase/config"
+import { Fade } from "@material-ui/core"
 import {
     toggleRecaptchaToken,
     reCaptchaAvailable,
@@ -48,15 +49,17 @@ const ReCaptchaV2 = ({
             reCaptchaObj.loaded && reCaptchaAvailable()
         }
 
-    return <ReCAPTCHA
-        ref={reCaptchaRef}
-        sitekey={config.reCaptchaV2.siteKey}
-        theme="dark"
-        onChange={handleChange}
-        asyncScriptOnLoad={handleOnLoad}
-        onExpired={handleExpired}
-        onErrored={handleErrored}
-    />
+    return <Fade in timeout={{ enter: 700, exit: 300 }}><div>
+        <ReCAPTCHA
+            ref={reCaptchaRef}
+            sitekey={config.reCaptchaV2.siteKey}
+            theme="dark"
+            onChange={handleChange}
+            asyncScriptOnLoad={handleOnLoad}
+            onExpired={handleExpired}
+            onErrored={handleErrored}
+        />
+    </div></Fade>
 }
 
 
