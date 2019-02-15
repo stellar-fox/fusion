@@ -48,6 +48,7 @@ export default compose(
 
         // ...
         state = {
+            disabled: false,
             src: null,
             pixelCrop: null,
             crop: {
@@ -174,7 +175,10 @@ export default compose(
 
         // ...
         uploadImage = async () => {
-            await this.setState({ uploadInProgress: true })
+            await this.setState({
+                disabled: true,
+                uploadInProgress: true,
+            })
             await this.props.setCropStatus(false)
             const imgData = this.getCroppedImage(
                 this.state.image, this.state.pixelCrop
@@ -192,14 +196,22 @@ export default compose(
                         await this.props.setSnackyMessage("Image uploaded.")
                         await this.props.showSnacky()
                         this.props.updateUserProfile({ photoUrl: imgData })
-                        this.setState({ uploadInProgress: false, src: null })
+                        this.setState({
+                            disabled: false,
+                            uploadInProgress: false,
+                            src: null,
+                        })
                     }
                 })
             } catch (error) {
                 await this.props.setSnackyColor("error")
                 await this.props.setSnackyMessage("Image upload failed.")
                 await this.props.showSnacky()
-                await this.setState({ uploadInProgress: false, src: null })
+                await this.setState({
+                    disabled: false,
+                    uploadInProgress: false,
+                    src: null,
+                })
             }
         }
 
