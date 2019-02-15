@@ -52,9 +52,8 @@ export default compose(
     })),
     connect(
         (state) => ({
-            reCaptchaAvailable: state.Auth.reCaptchaAvailable,
             reCaptchaError: state.Auth.reCaptchaError,
-            reCaptchaToken: state.Auth.reCaptchaToken,            
+            reCaptchaToken: state.Auth.reCaptchaToken,
         }),
         (dispatch) => bindActionCreators({
             toggleRecaptchaToken,
@@ -230,7 +229,7 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes }) =>
+            ({ classes, reCaptchaError }) =>
                 <div className={classes.root}>
                     <img
                         className={classes.appLogo}
@@ -276,11 +275,28 @@ export default compose(
                         errorMessage={this.state.errorMessagePasswordConf}
                     />
 
+                    <ReCaptchaV2 onVerify={this.onCaptchaVerify} />
+
+                    {reCaptchaError &&
+                        <Typography
+                            style={{
+                                height: 11,
+                                marginTop: "0.5rem",
+                                marginBottom: "1rem",
+                                opacity: 0.5,
+                            }}
+                            variant="h4"
+                        >
+                            {reCaptchaError}
+                        </Typography>
+                    }
+
                     <Button
                         fullWidth
                         color="yellowDark"
                         disabled={this.state.disabled}
                         onClick={this.signup}
+                        style={{ marginTop: "1rem" }}
                     >
                         Sign Up
                     </Button>
@@ -300,29 +316,12 @@ export default compose(
                         style={{
                             height: 11,
                             marginTop: "0.5rem",
-                            marginBottom: "1rem",
                             opacity: 0.5,
                         }}
                         variant="h4"
                     >
                         {this.state.statusMessage}
                     </Typography>
-
-                    <ReCaptchaV2 onVerify={this.onCaptchaVerify} />
-
-                    {this.props.reCaptchaError &&
-                        <Typography
-                            style={{
-                                height: 11,
-                                marginTop: "0.5rem",
-                                marginBottom: "1rem",
-                                opacity: 0.5,
-                            }}
-                            variant="h4"
-                        >
-                            {this.props.reCaptchaError}
-                        </Typography>
-                    }
 
                 </div>
         )(this.props)

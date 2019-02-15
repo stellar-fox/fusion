@@ -13,7 +13,8 @@ import { Typography } from "@material-ui/core"
 import { env } from "../Fusion"
 import logo from "../Fusion/static/logo.svg"
 import { action as SnackyActions } from "../../redux/Snacky"
-
+import ReCaptchaV2 from "../ReCaptchaV2"
+import { toggleRecaptchaToken } from "../../thunks/main"
 
 
 
@@ -49,13 +50,16 @@ export default compose(
 
     })),
     connect(
-        (_state) => ({
+        (state) => ({
+            reCaptchaError: state.Auth.reCaptchaError,
+            reCaptchaToken: state.Auth.reCaptchaToken,
         }),
         (dispatch) => bindActionCreators({
             sendPasswordReset: AuthActions.sendPasswordReset,
             showSnacky: SnackyActions.showSnacky,
             setSnackyMessage: SnackyActions.setMessage,
             setSnackyColor: SnackyActions.setColor,
+            toggleRecaptchaToken,
         }, dispatch)
     ),
 )(
@@ -76,6 +80,7 @@ export default compose(
             errorEmail: false,
             errorMessageEmail: string.empty(),
             progressBarOpacity: 0,
+            statusMessage: string.empty(),
         }
 
 
@@ -90,6 +95,17 @@ export default compose(
 
         // ...
         sendPasswordResetLink = async () => {
+            
+            this.setState({
+                statusMessage: string.empty(),
+            })
+
+            if (!this.props.reCaptchaToken) {
+                this.setState({
+                    statusMessage: "Please verify with reCaptcha.",
+                })
+                return
+            }
 
             try {
                 await this.setState({
@@ -148,7 +164,7 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes }) =>
+            ({ classes, reCaptchaError }) =>
 
                 <div className={classes.root}>
                     <Snacky />
@@ -173,6 +189,22 @@ export default compose(
                         error={this.state.errorEmail}
                         errorMessage={this.state.errorMessageEmail}
                     />
+
+                    <ReCaptchaV2 onVerify={this.onCaptchaVerify} />
+
+                    <Typography
+                        style={{
+                            height: 11,
+                            marginTop: "0.5rem",
+                            marginBottom: "1rem",
+                            opacity: 0.5,
+                        }}
+                        variant="h4"
+                    >
+                        {reCaptchaError}
+                        {this.state.statusMessage}
+                    </Typography>
+                    
                     <Button
                         fullWidth
                         color="yellowDark"
@@ -181,6 +213,7 @@ export default compose(
                     >
                         Request Link
                     </Button>
+
                     <LinearProgress
                         variant="indeterminate"
                         classes={{
@@ -191,7 +224,10 @@ export default compose(
                             barColorPrimary:
                                 this.props.classes.barColorPrimary,
                         }}
-                        style={{ opacity: this.state.progressBarOpacity }}
+                        style={{
+                            opacity: this.state.progressBarOpacity,
+                            marginBottom: "0.5rem",
+                        }}
                     />
 
                 </div>
