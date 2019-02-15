@@ -239,8 +239,8 @@ export const getStorageAvatar = (user) =>
 // ...
 export const setDataLoading = () =>
     async (dispatch, _getState) => {
-        dispatch(AppActions.setState({ loading: true }))
-        dispatch(setAwaiterLoading("Loading application data ..."))
+        await dispatch(AppActions.setState({ loading: true }))
+        await dispatch(setAwaiterLoading("Loading application data ..."))
     }
 
 
@@ -249,8 +249,8 @@ export const setDataLoading = () =>
 // ...
 export const setDataLoaded = () =>
     async (dispatch, _getState) => {
-        dispatch(AppActions.setState({ loading: false }))
-        dispatch(AwaiterActions.resetState())
+        await dispatch(AppActions.setState({ loading: false }))
+        await dispatch(AwaiterActions.resetState())
     }
 
 
@@ -259,9 +259,9 @@ export const setDataLoaded = () =>
 // ...
 export const setAwaiterLoading = (message) =>
     async (dispatch, _getState) => {
-        dispatch(AwaiterActions.setLoading())
-        dispatch(AwaiterActions.showSpinner())
-        dispatch(AwaiterActions.setProgressMessage(message))
+        await dispatch(AwaiterActions.setProgressMessage(message))
+        await dispatch(AwaiterActions.setLoading())
+        await dispatch(AwaiterActions.showSpinner())
     }
 
 
