@@ -1,12 +1,5 @@
 import React from "react"
-
 import { Provider } from "react-redux"
-
-
-
-
-
-
 import {
     ConnectedSwitch as Switch,
     FusionRouter as Router,
@@ -15,28 +8,12 @@ import {
     Redirect,
     Route,
 } from "react-router-dom"
-
-
 import * as env from "./env"
-
 import { MuiThemeProvider } from "@material-ui/core/styles"
 import CssBaseline from "@material-ui/core/CssBaseline"
 import defaultMuiTheme from "../../lib/default-mui-theme"
-
 import Layout from "../Layout"
-
-import "typeface-eczar"
-import "typeface-roboto-condensed"
 import "./index.css"
-
-
-
-
-
-
-
-
-
 
 
 
@@ -56,11 +33,6 @@ export default ({ history, store }) =>
             </MuiThemeProvider>
         </Router>
     </Provider>
-
-
-
-
-
 
 
 

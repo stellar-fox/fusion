@@ -36,7 +36,8 @@ import {
     setDataLoading,
     setScreenDimensions
 } from "./thunks/main"
-
+import "typeface-eczar"
+import "typeface-roboto-condensed"
 
 
 
