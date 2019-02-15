@@ -259,16 +259,38 @@ export const clearAwaiter = () =>
 // ...
 export const reCaptchaAvailable = () =>
     async (dispatch, _getState) => {
+        await dispatch(await toggleRecaptchaError(string.empty()))
         await dispatch(AuthActions.setState({
             reCaptchaAvailable: true,
         }))
+        await dispatch(await toggleRecaptchaToken(string.empty()))
     }
 
 
 
+
 // ...
-export const reCaptchaSolved = (_value) =>
-    async (dispatch, _getState) =>
+export const reCaptchaSolved = (token, customFunc) =>
+    async (dispatch, _getState) => {
+        await dispatch(await toggleRecaptchaToken(token))
         await dispatch(UserLoginActions.setState({
             disabled: false,
         }))
+        customFunc && customFunc()
+    }
+
+
+
+
+// ...
+export const toggleRecaptchaToken = (token) =>
+    async (dispatch, _getState) =>
+        await dispatch(AuthActions.toggleRecaptchaToken(token))
+ 
+
+
+
+// ...
+export const toggleRecaptchaError = (error) =>
+    async (dispatch, _getState) =>
+        await dispatch(AuthActions.toggleRecaptchaError(error))

@@ -1,5 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
+import { string } from "@xcmats/js-toolbox"
 import {
     bindActionCreators,
     compose,
@@ -7,36 +8,45 @@ import {
 import ReCAPTCHA from "react-google-recaptcha"
 import { config } from "../../firebase/config"
 import {
+    toggleRecaptchaToken,
     reCaptchaAvailable,
     reCaptchaSolved,
+    toggleRecaptchaError,
 } from "../../thunks/main"
 
 
-const ReCaptchaV2 = ({ reCaptchaAvailable, reCaptchaSolved }) => {
+
+
+// ...
+const ReCaptchaV2 = ({
+    onVerify, reCaptchaAvailable, reCaptchaSolved, toggleRecaptchaError,
+    toggleRecaptchaToken,
+}) => {
 
     const reCaptchaRef = React.useRef(null),
         
         // callback for successful reCaptcha solution, calls thunk action
-        // and resets reCaptcha widget
-        handleChange = (value) => {
-            reCaptchaSolved(value)
-            reCaptchaRef.reset()
-        },
+        // and passes custom onVerify function from widget prop
+        handleChange = (value) => reCaptchaSolved(value, onVerify),
 
 
-        handleExpired = () => {
-            console.log("handle reCaptcha expired")
-        },
+        // clear token from Redux tree when the reCaptcha expires
+        handleExpired = () => toggleRecaptchaToken(string.empty()),
 
-        handleErrored = (error) => {
-            console.log("handle reCaptcha error:", error)
-        },
+        
+        // set proper Redux state to signify widget error
+        handleErrored = () =>
+            toggleRecaptchaError("reCaptcha error. Please try again."),
+
 
         // set proper Redux state to signify widget availability
-        handleOnLoad = () => reCaptchaAvailable()
-
-
-
+        handleOnLoad = (reCaptchaObj) => {
+            if (reCaptchaObj.errored) {
+                toggleRecaptchaError("reCaptcha could not be loaded.")
+                return
+            }
+            reCaptchaObj.loaded && reCaptchaAvailable()
+        }
 
     return <ReCAPTCHA
         ref={reCaptchaRef}
@@ -51,6 +61,7 @@ const ReCaptchaV2 = ({ reCaptchaAvailable, reCaptchaSolved }) => {
 
 
 
+
 // <ReCaptchaV2> component
 export default compose(
     connect(
@@ -58,6 +69,8 @@ export default compose(
         (dispatch) => bindActionCreators({
             reCaptchaAvailable,
             reCaptchaSolved,
+            toggleRecaptchaError,
+            toggleRecaptchaToken,
         }, dispatch),
     )
 )(ReCaptchaV2)

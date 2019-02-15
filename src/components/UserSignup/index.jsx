@@ -14,6 +14,7 @@ import {
 import { env } from "../Fusion"
 import logo from "../Fusion/static/logo.svg"
 import ReCaptchaV2 from "../ReCaptchaV2"
+import { toggleRecaptchaToken } from "../../thunks/main"
 
 
 
@@ -50,8 +51,13 @@ export default compose(
 
     })),
     connect(
-        (_state) => ({}),
+        (state) => ({
+            reCaptchaAvailable: state.Auth.reCaptchaAvailable,
+            reCaptchaError: state.Auth.reCaptchaError,
+            reCaptchaToken: state.Auth.reCaptchaToken,            
+        }),
         (dispatch) => bindActionCreators({
+            toggleRecaptchaToken,
             signup: AuthActions.signup,
         }, dispatch)
     ),
@@ -79,6 +85,11 @@ export default compose(
             errorMessagePassword: string.empty(),
             errorMessagePasswordConf: string.empty(),
         }
+
+
+        // ...
+        onCaptchaVerify = () =>
+            this.setState({ statusMessage: string.empty() })
 
 
         // ...
@@ -114,8 +125,18 @@ export default compose(
                 return
             }
 
-            try {
+            if(!this.props.reCaptchaToken) {
                 this.setState({
+                    statusMessage: "Please verify with reCaptcha.",
+                    disabled: false,
+                    progressBarOpacity: 0,
+                })
+                return
+            }
+
+            try {
+                // prepare UI
+                await this.setState({
                     disabled: true,
                     errorEmail: false,
                     errorPassword: false,
@@ -124,11 +145,26 @@ export default compose(
                     errorMessagePassword: string.empty(),
                     errorMessagePasswordConf: string.empty(),
                     progressBarOpacity: 1,
+                    statusMessage: "Creating your account ...",
                 })
+
+                // create user account with Firebase.
                 await this.props.signup(
                     this.state.email,
                     this.state.password
                 )
+
+                // reset UI
+                await this.setState({
+                    disabled: false,
+                    progressBarOpacity: 0,
+                    statusMessage: "Account created.",
+                })
+
+
+                // clear reCaptcha token upon signup from Redux tree
+                await this.props.toggleRecaptchaToken(string.empty())
+                
             } catch (error) {
 
                 // reset button and progress bar
@@ -272,7 +308,21 @@ export default compose(
                         {this.state.statusMessage}
                     </Typography>
 
-                    <ReCaptchaV2 />
+                    <ReCaptchaV2 onVerify={this.onCaptchaVerify} />
+
+                    {this.props.reCaptchaError &&
+                        <Typography
+                            style={{
+                                height: 11,
+                                marginTop: "0.5rem",
+                                marginBottom: "1rem",
+                                opacity: 0.5,
+                            }}
+                            variant="h4"
+                        >
+                            {this.props.reCaptchaError}
+                        </Typography>
+                    }
 
                 </div>
         )(this.props)
