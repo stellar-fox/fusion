@@ -25,6 +25,8 @@ const initState = {
     confirmDialogVisible: false,
     ready: true,
     reCaptchaAvailable: false,
+    reCaptchaError: string.empty(),
+    reCaptchaToken: string.empty(),
     reCaptchaVisible: false,
 }
 
@@ -37,6 +39,8 @@ export const SET_STATE = "@Auth/SET_STATE"
 export const SEND_EMAIL_VERIFICATION = "@Auth/SEND_EMAIL_VERIFICATION"
 export const TOGGLE_CONFIRM_DIALOG = "@Auth/TOGGLE_CONFIRM_DIALOG"
 export const TOGGLE_RECAPTCHA = "@Auth/TOGGLE_RECAPTCHA"
+export const TOGGLE_RECAPTCHA_ERROR = "@Auth/TOGGLE_RECAPTCHA_ERROR"
+export const TOGGLE_RECAPTCHA_TOKEN = "@Auth/TOGGLE_RECAPTCHA_TOKEN"
 
 
 
@@ -85,6 +89,20 @@ export const action = {
     toggleRecaptcha: (showing) => ({
         type: TOGGLE_RECAPTCHA,
         showing,
+    }),
+
+
+    // ...
+    toggleRecaptchaError: (error) => ({
+        type: TOGGLE_RECAPTCHA_ERROR,
+        error,
+    }),
+
+
+    // ...
+    toggleRecaptchaToken: (token) => ({
+        type: TOGGLE_RECAPTCHA_TOKEN,
+        token,
     }),
         
 
@@ -226,6 +244,20 @@ export const reducer = createReducer(initState)({
 
     // ...
     [RESET_STATE]: () => initState,
+
+
+    // ...
+    [TOGGLE_RECAPTCHA_ERROR]: (state, action) => ({
+        ...state,
+        reCaptchaError: action.error,
+    }),
+
+
+    // ...
+    [TOGGLE_RECAPTCHA_TOKEN]: (state, action) => ({
+        ...state,
+        reCaptchaToken: action.token,
+    }),
 
 
     // ...
