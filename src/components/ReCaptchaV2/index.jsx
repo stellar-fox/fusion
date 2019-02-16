@@ -1,6 +1,9 @@
 import React from "react"
 import { connect } from "react-redux"
-import { string } from "@xcmats/js-toolbox"
+import {
+    string,
+    timeUnit,
+} from "@xcmats/js-toolbox"
 import {
     bindActionCreators,
     compose,
@@ -9,10 +12,11 @@ import ReCAPTCHA from "react-google-recaptcha"
 import { config } from "../../firebase/config"
 import { Fade } from "@material-ui/core"
 import {
-    toggleRecaptchaToken,
     reCaptchaAvailable,
     reCaptchaSolved,
+    setDataLoaded,
     toggleRecaptchaError,
+    toggleRecaptchaToken,
 } from "../../thunks/main"
 
 
@@ -20,8 +24,8 @@ import {
 
 // ...
 const ReCaptchaV2 = ({
-    onVerify, reCaptchaAvailable, reCaptchaSolved, toggleRecaptchaError,
-    toggleRecaptchaToken,
+    onVerify, reCaptchaAvailable, reCaptchaSolved, setDataLoaded,
+    toggleRecaptchaError, toggleRecaptchaToken,
 }) => {
 
     const reCaptchaRef = React.useRef(null),
@@ -47,6 +51,7 @@ const ReCaptchaV2 = ({
                 return
             }
             reCaptchaObj.loaded && reCaptchaAvailable()
+            setTimeout(setDataLoaded, 1.2 * timeUnit.second)
         }
 
     return <Fade in timeout={{ enter: 700, exit: 300 }}><div>
@@ -72,6 +77,7 @@ export default compose(
         (dispatch) => bindActionCreators({
             reCaptchaAvailable,
             reCaptchaSolved,
+            setDataLoaded,
             toggleRecaptchaError,
             toggleRecaptchaToken,
         }, dispatch),

@@ -14,7 +14,7 @@ import {
 import { env } from "../Fusion"
 import logo from "../Fusion/static/logo.svg"
 import ReCaptchaV2 from "../ReCaptchaV2"
-import { toggleRecaptchaToken } from "../../thunks/main"
+import { toggleRecaptchaToken, setDataLoading } from "../../thunks/main"
 
 
 
@@ -58,6 +58,7 @@ export default compose(
         (dispatch) => bindActionCreators({
             toggleRecaptchaToken,
             signup: AuthActions.signup,
+            setDataLoading,
         }, dispatch)
     ),
 )(
@@ -67,6 +68,13 @@ export default compose(
         static propTypes = {
             classes: PropTypes.object.isRequired,
             signup: PropTypes.func.isRequired,
+        }
+
+
+        // ...
+        constructor (props) {
+            super(props)
+            this.props.setDataLoading() 
         }
 
 

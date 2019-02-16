@@ -1,7 +1,7 @@
 import React, { Fragment } from "react"
 import { bindActionCreators } from "redux"
 import { connect } from "react-redux"
-import { func } from "@xcmats/js-toolbox"
+import { func, timeUnit } from "@xcmats/js-toolbox"
 import { withStyles } from "@material-ui/core/styles"
 import {
     Button,
@@ -16,6 +16,7 @@ import UserLogin from "../UserLogin"
 import { Link } from "react-router-dom"
 import Awaiter from "../Awaiter"
 import Snacky from "../../lib/mui-v1/Snacky"
+import { setDataLoaded } from "../../thunks/main"
 
 
 
@@ -49,10 +50,12 @@ export default func.compose(
             loading: state.App.loading,
         }),
         (dispatch) => bindActionCreators({
-            
+            setDataLoaded,
         }, dispatch),
     ),
-)(({ classes, disabled, loading }) => {
+)(({ classes, disabled, loading, setDataLoaded }) => {
+    
+    setTimeout(setDataLoaded, 1.2 * timeUnit.second)
 
     return (
         <Fragment>
