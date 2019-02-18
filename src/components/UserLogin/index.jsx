@@ -11,7 +11,10 @@ import Button from "../../lib/mui-v1/Button"
 import TextInput from "../../lib/mui-v1/TextInput"
 import { env } from "../Fusion"
 import logo from "../Fusion/static/logo.svg"
-import { doAuthenticate } from "../../thunks/main"
+import {
+    doAuthenticate,
+    setDataLoaded,
+} from "../../thunks/main"
 import { action as UserLoginActions } from "../../redux/UserLogin"
 import ReCaptchaV2 from "../ReCaptchaV2"
 
@@ -56,6 +59,7 @@ export default compose(
         }),
         (dispatch) => bindActionCreators({
             doAuthenticate,
+            setDataLoaded,
             setEmail: UserLoginActions.setEmail,
             setPassword: UserLoginActions.setPassword,
         }, dispatch)
@@ -71,6 +75,10 @@ export default compose(
             setEmail: PropTypes.func.isRequired,
             setPassword: PropTypes.func.isRequired,
         }
+
+
+        // ...
+        componentDidMount = () => setTimeout(this.props.setDataLoaded, 500)
 
 
         // ...
@@ -139,7 +147,7 @@ export default compose(
                 </Typography>
 
                 {reCaptchaVisible && <ReCaptchaV2 />}
-                
+
                 {this.props.reCaptchaError &&
                     <Typography
                         style={{

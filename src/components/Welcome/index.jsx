@@ -1,7 +1,7 @@
 import React, { Fragment } from "react"
 import { bindActionCreators } from "redux"
 import { connect } from "react-redux"
-import { func, timeUnit } from "@xcmats/js-toolbox"
+import { func } from "@xcmats/js-toolbox"
 import { withStyles } from "@material-ui/core/styles"
 import {
     Button,
@@ -12,11 +12,10 @@ import {
     Typography,
 } from "@material-ui/core"
 import { fade } from "@material-ui/core/styles/colorManipulator"
+import Loader from "../Loader"
 import UserLogin from "../UserLogin"
 import { Link } from "react-router-dom"
-import Awaiter from "../Awaiter"
 import Snacky from "../../lib/mui-v1/Snacky"
-import { setDataLoaded } from "../../thunks/main"
 
 
 
@@ -50,12 +49,9 @@ export default func.compose(
             loading: state.App.loading,
         }),
         (dispatch) => bindActionCreators({
-            setDataLoaded,
         }, dispatch),
     ),
-)(({ classes, disabled, loading, setDataLoaded }) => {
-    
-    setTimeout(setDataLoaded, 1.2 * timeUnit.second)
+)(({ classes, disabled, loading }) => {
 
     return (
         <Fragment>
@@ -69,13 +65,64 @@ export default func.compose(
                     wrap={"nowrap"}
                 >
                     <Grid item>
-                        {loading ?
-                            <Awaiter /> :
-                            <Fade in><div>
+                        {loading && <Loader infoMessage="Loading ..." />}
+                        <Fade in={!loading}><div>
+                            <UserLogin />
+                            <div style={{
+                                opacity: "0.7",
+                            }} className="flex-box-col space-between m-t"
+                            >
+                                <div className="flex-box-col">
+                                    <Typography variant="h4">
+                                        Did you forget password?
+                                    </Typography>
+                                    <Button
+                                        size="small"
+                                        component={Link}
+                                        to="/reset"
+                                        color="secondary"
+                                        className={classes.button}
+                                        disabled={disabled}
+                                        variant="outlined"
+                                    >Reset Password</Button>
+                                </div>
+                                <div className="flex-box-col">
+                                    <Typography variant="h4">
+                                        Don't have an account yet?
+                                    </Typography>
+                                    <Button
+                                        size="small"
+                                        component={Link}
+                                        to="/signup"
+                                        color="secondary"
+                                        className={classes.button}
+                                        disabled={disabled}
+                                        variant="outlined"
+                                    >Create Account</Button>
+                                </div>
+                            </div>
+                        </div></Fade>
+                    </Grid>
+                </Grid>
+            </Hidden>
+
+            <Hidden smDown>
+                <Grid
+                    className={classes.container}
+                    container
+                    direction={"column"}
+                    justify={"space-around"}
+                    alignItems={"center"}
+                    wrap={"nowrap"}
+                >
+                    <Grid item>
+                        {loading && <Loader infoMessage="Loading ..." />}                            
+                        <Paper elevation={2} className={classes.loginPaper}>
+                            <Fade in={!loading}><div>
                                 <UserLogin />
                                 <div style={{
                                     opacity: "0.7",
-                                }} className="flex-box-col space-between m-t"
+                                }} className="flex-box-row space-between m-t"
                                 >
                                     <div className="flex-box-col">
                                         <Typography variant="h4">
@@ -107,62 +154,7 @@ export default func.compose(
                                     </div>
                                 </div>
                             </div></Fade>
-                        }
-                    </Grid>
-                </Grid>
-            </Hidden>
-
-            <Hidden smDown>
-                <Grid
-                    className={classes.container}
-                    container
-                    direction={"column"}
-                    justify={"space-around"}
-                    alignItems={"center"}
-                    wrap={"nowrap"}
-                >
-                    <Grid item>
-                        {loading ?
-                            <Awaiter /> :                            
-                            <Paper elevation={2} className={classes.loginPaper}>
-                                <Fade in><div>
-                                    <UserLogin />
-                                    <div style={{
-                                        opacity: "0.7",
-                                    }} className="flex-box-row space-between m-t"
-                                    >
-                                        <div className="flex-box-col">
-                                            <Typography variant="h4">
-                                                Did you forget password?
-                                            </Typography>
-                                            <Button
-                                                size="small"
-                                                component={Link}
-                                                to="/reset"
-                                                color="secondary"
-                                                className={classes.button}
-                                                disabled={disabled}
-                                                variant="outlined"
-                                            >Reset Password</Button>
-                                        </div>
-                                        <div className="flex-box-col">
-                                            <Typography variant="h4">
-                                                Don't have an account yet?
-                                            </Typography>
-                                            <Button
-                                                size="small"
-                                                component={Link}
-                                                to="/signup"
-                                                color="secondary"
-                                                className={classes.button}
-                                                disabled={disabled}
-                                                variant="outlined"
-                                            >Create Account</Button>
-                                        </div>
-                                    </div>
-                                </div></Fade>
-                            </Paper>
-                        }
+                        </Paper>
                     </Grid>
                 </Grid>
             </Hidden>

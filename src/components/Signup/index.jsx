@@ -1,5 +1,9 @@
 import React, { Fragment } from "react"
-import { compose } from "redux"
+import {
+    compose,
+    bindActionCreators,
+} from "redux"
+import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
 import {
     Button,
@@ -12,6 +16,7 @@ import {
 import { fade } from "@material-ui/core/styles/colorManipulator"
 import UserSignup from "../UserSignup"
 import { Link } from "react-router-dom"
+import Loader from "../Loader"
 
 
 
@@ -38,8 +43,16 @@ export default compose(
             borderRadius: "3px",
         },
 
-    }))
-)(({ classes }) => {
+    })),
+    connect(
+        (state) => ({
+            loading: state.App.loading,
+        }),
+        (dispatch) => bindActionCreators({
+
+        }, dispatch)
+    )
+)(({ classes, loading }) => {
 
     return (
         <Fragment>
@@ -52,7 +65,8 @@ export default compose(
                     wrap={"nowrap"}
                 >
                     <Grid item>
-                        <Fade in><div>
+                        {loading && <Loader infoMessage="Loading ..." />}
+                        <Fade in={!loading}><div>
                             <UserSignup />
                             <div style={{ opacity: "0.7" }}
                                 className="flex-box-col space-between m-t"
@@ -87,7 +101,8 @@ export default compose(
                 >
                     <Grid item>
                         <Paper elevation={2} className={classes.loginPaper}>
-                            <Fade in><div>
+                            {loading && <Loader infoMessage="Loading ..." />}
+                            <Fade in={!loading}><div>
                                 <UserSignup />
                                 <div style={{ opacity: "0.7" }}
                                     className="flex-box-row m-t"
