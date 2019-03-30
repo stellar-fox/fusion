@@ -9,7 +9,7 @@
  */
 
 
-import { config } from "./config"
+import { config } from "../config"
 import { emailVerificationUrl } from "../lib/constants"
 import firebase from "firebase/app"
 import "firebase/auth"

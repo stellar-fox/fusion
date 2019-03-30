@@ -9,7 +9,7 @@ import {
     compose,
 } from "redux"
 import ReCAPTCHA from "react-google-recaptcha"
-import { config } from "../../firebase/config"
+import { config } from "../../config"
 import { Fade } from "@material-ui/core"
 import {
     reCaptchaAvailable,

@@ -11,7 +11,7 @@
 
 import { Shambhala } from "../shambhala.client"
 import { storageRef } from "../../firebase"
-import { config } from "../../firebase/config"
+import { config } from "../../config"
 import { action as AppActions } from "../../redux/Fusion"
 import axios from "axios"
 import { string } from "@xcmats/js-toolbox"

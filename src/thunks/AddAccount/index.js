@@ -12,7 +12,7 @@ import { actions as AddAccountActions } from "../../redux/AddAccount"
 import { string } from "@xcmats/js-toolbox"
 import { Shambhala } from "../../lib/shambhala.client"
 import { update } from "../../firebase"
-import { config } from "../../firebase/config"
+import { config } from "../../config"
 import {
     clearAwaiter,
     setAwaiterLoading,

@@ -15,7 +15,7 @@
 import { codec, func } from "@xcmats/js-toolbox"
 import { Shambhala } from "../lib/shambhala.client"
 import { action as KeysActions, signingMethod as sm } from "../redux/Keys"
-import { config } from "../firebase/config"
+import { config } from "../config"
 import { Network, Networks, Server, Transaction } from "stellar-sdk"
 import { getAccountId, getSoftwareVersion } from "../lib/logic/ledgerhq"
 import { action as LedgerHQActions } from "../redux/LedgerHQ"

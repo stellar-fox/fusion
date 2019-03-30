@@ -44,7 +44,7 @@ $ npm i
 ```
 $ cp src/config.example.js src/config.localhost.js
 $ vi src/config.localhost.js
-$ ln -s src/config.localhost.js src/firebase/config.js
+$ ln -s src/config.localhost.js src/config.js
 ```
 
 <br />

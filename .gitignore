@@ -27,7 +27,7 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
-/src/firebase/config.js
+/src/config.js
 /src/config.localhost.js
 /src/config.production.js
 
