@@ -19,7 +19,7 @@ import ModalCreateAccount from "./ModalCreateAccount"
 import ModalEditName from "./ModalEditName"
 import Snacky from "../../lib/mui-v1/Snacky"
 import Fade from "@material-ui/core/Fade"
-
+import { setDataLoaded } from "../../thunks/main"
 
 
 
@@ -56,6 +56,7 @@ export default compose(
             changeTab: AccountsActions.changeTab,
             detectAccount,
             detectSigningMethod,
+            setDataLoaded,
         }, dispatch)
     ),
     withWidth(),
@@ -69,6 +70,10 @@ export default compose(
             // relative resolve
             this.rr = resolvePath(this.props.match.path)
         }
+
+
+        // ...
+        componentDidMount = () => this.props.setDataLoaded()
 
 
         // ...
