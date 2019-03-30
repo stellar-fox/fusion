@@ -31,7 +31,7 @@ export const isReader = (role) => role === "ROLE_RO"
 export const dynamicImportLibs = async () => {
     let [
 
-        axios, jss, lodash, mui, cryptops,
+        axios, jss, mui, cryptops,
         redshift, redux, stellar, theme, toolbox, utils,
 
         // actions
@@ -45,7 +45,6 @@ export const dynamicImportLibs = async () => {
     ] = await Promise.all([
         import("axios"),
         import("jss"),
-        import("lodash"),
         import("@material-ui/core"),
         import("@stellar-fox/cryptops"),
         import("@stellar-fox/redshift"),
@@ -65,7 +64,7 @@ export const dynamicImportLibs = async () => {
     ])
     return {
         axios,
-        jss, lodash, mui, cryptops, redshift,
+        jss, mui, cryptops, redshift,
         redux, stellar,
         theme: theme.default,
         toolbox, utils,
@@ -235,4 +234,43 @@ export const shambhalaTesting = devEnv() ? {
     init: () => {
         throw new Error("Sorry. Not in the production.")
     },
+}
+
+
+
+
+// ...
+export const throttle = (func, limit) => {
+    let lastFunc
+    let lastRan
+    return function () {
+        const context = this
+        const args = arguments
+        if (!lastRan) {
+            func.apply(context, args)
+            lastRan = Date.now()
+        } else {
+            clearTimeout(lastFunc)
+            lastFunc = setTimeout(function () {
+                if ((Date.now() - lastRan) >= limit) {
+                    func.apply(context, args)
+                    lastRan = Date.now()
+                }
+            }, limit - (Date.now() - lastRan))
+        }
+    }
+}
+
+
+
+
+// ...
+export const debounce = (func, delay) => {
+    let inDebounce
+    return function () {
+        const context = this
+        const args = arguments
+        clearTimeout(inDebounce)
+        inDebounce = setTimeout(() => func.apply(context, args), delay)
+    }
 }

@@ -15,7 +15,7 @@ import {
 import {
     composeWithDevTools as composeWithDevTools_dev
 } from "redux-devtools-extension"
-import throttle from "lodash/throttle"
+import { throttle } from "./lib/utils"
 import { routerMiddleware } from "react-router-redux"
 import {
     loadState,
@@ -83,7 +83,7 @@ window.addEventListener("load", () => {
         () => store.dispatch(setScreenDimensions())
     )
 
-    // TODO
+    // surface page loading spinner while everything else finishes loading
     store.dispatch(setDataLoading())
 
 
