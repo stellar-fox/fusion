@@ -2,7 +2,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { unregister } from "./lib/caching-service-worker"
 import Fusion, { env } from "./components/Fusion"
-import createHistory from "history/createBrowserHistory"
+import { createBrowserHistory } from "history"
 import {
     applyMiddleware,
     createStore,
@@ -45,7 +45,7 @@ window.addEventListener("load", () => {
 
     
     // browser history
-    const history = createHistory({ /* basename: env.appBasePath, */ })
+    const history = createBrowserHistory()
 
     // store with router-redux integration and redux-devtools-extension
     const store = (() => {
