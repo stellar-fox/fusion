@@ -79,6 +79,21 @@ export const toggleReAuthModal = (showing) =>
 
 
 /**
+ * Deletes uid data root from realtime database.
+ * 
+ * @function deleteUserDataFromDB
+ * @param {String} uid Firebase user id.
+ * @returns {Function} Thunk action.
+ */
+export const deleteUserDataFromDB = (uid) =>
+    async (_dispatch, _getState) => {
+        await firebaseSingleton.database().ref(`user/${uid}`).remove()
+    }
+
+
+
+
+/**
  * ...
  */
 export const deleteUserAccount = () =>
@@ -90,6 +105,7 @@ export const deleteUserAccount = () =>
         // attempt to delete user's account.
         try {
             await dispatch(await deleteAvatarFromStorage())
+            await dispatch(await deleteUserDataFromDB(user.uid))
             await user.delete()
             await dispatch(await toggleConfirmationProgress(false))
             await dispatch(await toggleConfirmationModal(false))
