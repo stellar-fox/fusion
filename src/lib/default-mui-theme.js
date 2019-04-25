@@ -126,39 +126,46 @@ export default createMuiTheme({
 
         useNextVariants: true,
 
-        h6: {
-            fontSize: 20,
+        h1: {
+            fontSize: 96,
+            fontWeight: 100,
+            fontFamily: "'Roboto Condensed', sans-serif",
+        },
+
+        h2: {
+            fontSize: 60,
+            fontWeight: 100,
+            fontFamily: "'Roboto Condensed', sans-serif",
+        },
+
+        h3: {
+            fontSize: 48,
+            fontFamily: "Eczar, sans-serif",
+        },
+
+        h4: {
+            fontSize: 34,
             fontFamily: "'Roboto Condensed', sans-serif",
         },
 
         h5: {
             fontSize: 24,
-            fontFamily: "Eczar, sans-serif",
-        },
-
-        h4: {
-            fontSize: 11,
             fontFamily: "'Roboto Condensed', sans-serif",
         },
 
-        h3: {
-            fontSize: 9,
-            fontFamily: "'Roboto Condensed', sans-serif",
-            fontWeight: 100,
-        },
-
-        h2: {
-            fontSize: 48,
-            fontFamily: "Eczar, sans-serif",
-        },
-
-        h1: {
-            fontSize: 34,
+        h6: {
+            fontSize: 20,
+            fontWeight: 200,
             fontFamily: "'Roboto Condensed', sans-serif",
         },
 
         subtitle1: {
             fontSize: 16,
+            fontFamily: "'Roboto Condensed', sans-serif",
+        },
+
+        subtitle2: {
+            fontSize: 14,
             fontFamily: "'Roboto Condensed', sans-serif",
         },
 
@@ -174,13 +181,21 @@ export default createMuiTheme({
         },
 
         button: {
+            fontSize: 14,
             fontFamily: "'Roboto Condensed', sans-serif",
             fontWeight: 600,
+            textTransform: "uppercase",
         },
 
         caption: {
             fontSize: 12,
             fontFamily: "'Roboto Condensed', sans-serif",
+        },
+
+        overline: {
+            fontSize: 10,
+            fontFamily: "'Roboto Condensed', sans-serif",
+            textTransform: "uppercase",
         },
     },
 
