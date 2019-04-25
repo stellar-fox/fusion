@@ -8,7 +8,6 @@ import {
     Paper,
     Tab,
     Tabs,
-    Typography,
 } from "@material-ui/core"
 import SwipeableViews from "react-swipeable-views"
 import { ConnectedSwitch as Switch, resolvePath } from "../FusionRouter"
@@ -18,6 +17,7 @@ import { action as BalancesActions } from "../../redux/Balances"
 import ModalPay from "./ModalPay"
 import Fade from "@material-ui/core/Fade"
 import { func } from "@xcmats/js-toolbox"
+import ViewTitle from "../ViewTitle"
 
 
 
@@ -86,7 +86,7 @@ export default compose(
                     }} className={classes.paperCanvas}
                     >
                         <ModalPay />
-                        
+
                         <Fragment>
                             <Grid
                                 container
@@ -95,22 +95,10 @@ export default compose(
                                 style={{ position: "relative" }}
                                 className="m-b"
                             >
-                                <Grid item>
-                                    <Typography style={{
-                                        position: "relative",
-                                    }} variant="h6"
-                                    >
-                                        Balances
-                                    </Typography>
-                                </Grid>
-                                <Grid item>
-                                    <Typography style={{
-                                        position: "relative",
-                                    }} variant="h4"
-                                    >
-                                        Overview of your accounts in one place.
-                                    </Typography>
-                                </Grid>
+                                <ViewTitle
+                                    title="Balances"
+                                    subtitle="Overview of your accounts in one place."
+                                />
                             </Grid>
 
                             <Tabs
@@ -150,7 +138,7 @@ export default compose(
                             </SwipeableViews>
 
                         </Fragment>
-                            
+
                     </Paper>
                 </Fade>
 

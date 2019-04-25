@@ -22,7 +22,7 @@ import {
 import { accountType as at } from "../../redux/Accounts"
 import { action as AccountsActions } from "../../redux/Accounts"
 import { addAccount } from "../../thunks/AddAccount/"
-
+import ViewTitle from "../ViewTitle"
 
 
 
@@ -48,7 +48,7 @@ const MainContent = ({
     changeTab, classes, demoAccounts, height, realAccounts, addAccount,
     tabSelected, width,
 }) => {
-    
+
     const transitionDuration = {
         enter: 225,
         exit: 195,
@@ -62,16 +62,11 @@ const MainContent = ({
             style={{ position: "relative" }}
             className="m-b"
         >
-            <Grid item>
-                <Typography variant="h6">
-                    Accounts
-                </Typography>
-            </Grid>
-            <Grid item>
-                <Typography variant="h4">
-                    Manage all your accounts in one place.
-                </Typography>
-            </Grid>
+            <ViewTitle
+                title="Accounts"
+                subtitle="Manage all your accounts in one place."
+            />
+
             <Grid item>
                 <Zoom
                     key="add-real"
@@ -122,7 +117,7 @@ const MainContent = ({
             variant="fullWidth"
             classes={{ indicator: func.choose(tabSelected, {
                 0: () => classes.indicatorGreen,
-                1: () => classes.indicatorRed, 
+                1: () => classes.indicatorRed,
             }, () => classes.indicator) }}
         >
             <Tab classes={{ label: classes.labelRealAccounts }}
@@ -150,11 +145,11 @@ const MainContent = ({
                     opacity: 0.3,
                 }}
             >
-                <Typography variant={isWidthUp("md", width) ? "h1" : "h4"}>
+                <Typography variant={isWidthUp("md", width) ? "h5" : "h6"}>
                     You have no real accounts at the moment.
                 </Typography>
-                <Typography variant={isWidthUp("md", width) ? "h4" : "h3"}>
-                    Open one today! It only takes 15 seconds.
+                <Typography variant="body2">
+                    Open one today! It only takes few seconds.
                 </Typography>
             </div> :
                 <Grid
@@ -182,11 +177,11 @@ const MainContent = ({
                     opacity: 0.3,
                 }}
             >
-                <Typography variant="h1">
+                <Typography variant={isWidthUp("md", width) ? "h5" : "h6"}>
                     You have no demo accounts at the moment.
                 </Typography>
-                <Typography variant="h4">
-                    Open one today! It only takes 15 seconds.
+                <Typography variant="body2">
+                     Open one today! It only takes few seconds.
                 </Typography>
             </div> :
                 <Grid
@@ -207,7 +202,7 @@ const MainContent = ({
                 </Grid>
             }
         </SwipeableViews>
-    </Fragment>   
+    </Fragment>
 }
 
 
@@ -246,7 +241,7 @@ export default func.compose(
         indicatorGreen: {
             backgroundColor: theme.palette.custom.greenDark,
         },
-        
+
         indicatorRed: {
             backgroundColor: theme.palette.error.main,
         },

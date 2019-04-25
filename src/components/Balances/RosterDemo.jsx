@@ -27,6 +27,8 @@ import { signingMethods } from "../../lib/logic/signingMethods"
 import { action as PayActions } from "../../redux/Pay"
 import { accountType as at } from "../../redux/Accounts"
 import { fade } from "@material-ui/core/styles/colorManipulator"
+import withWidth, { isWidthUp } from "@material-ui/core/withWidth"
+
 
 
 
@@ -74,6 +76,7 @@ export default compose(
             },
         },
     })),
+    withWidth(),
     connect(
         (state) => ({
             demoAccountIds: getDemoAccountIds(state.StellarAccounts),
@@ -130,7 +133,7 @@ export default compose(
 
         // ...
         render = () => (
-            ({ classes, demoAccountIds, stellarAccounts }) =>
+            ({ classes, demoAccountIds, stellarAccounts, width }) =>
                 demoAccountIds.length === 0 ? <div
                     className="flex-box-col items-centered content-centered"
                     style={{
@@ -138,15 +141,15 @@ export default compose(
                         opacity: 0.3,
                     }}
                 >
-                    <Typography variant="h1">
+                    <Typography variant={isWidthUp("md", width) ? "h5" : "h6"}>
                         You have no real accounts at the moment.
                     </Typography>
-                    <Typography variant="h4">
+                    <Typography variant="body2">
                         Please create a real account first in order to view the balance roster.
                     </Typography>
                 </div> :
                     <Fragment>
-                        <Typography style={{ padding: "1rem 0 0 0", opacity: 0.5 }} variant="h4">
+                        <Typography style={{ padding: "1rem 0 0 0", opacity: 0.5 }} variant="body2">
                             Total for all demo accounts
                         </Typography>
                         <Typography style={{ padding: "0 0 0.5rem 0" }} variant="body1">
@@ -168,8 +171,8 @@ export default compose(
                                             <div className="flex-box-row">
                                                 {this.bar(accountId)}
                                                 <div className="flex-box-col">
-                                                    <Typography style={{ marginBottom: "0.2rem" }} variant="h4">{stellarAccounts[accountId].name || "No Name"}</Typography>
-                                                    <Typography style={{ opacity: 0.5 }} variant="h3">{string.shorten(accountId, 11, string.shorten.MIDDLE, "-")}</Typography>
+                                                    <Typography style={{ marginBottom: "0.2rem" }} variant="body2">{stellarAccounts[accountId].name || "No Name"}</Typography>
+                                                    <Typography style={{ opacity: 0.5 }} variant="caption">{string.shorten(accountId, 11, string.shorten.MIDDLE, "-")}</Typography>
                                                 </div>
                                             </div>
                                         </TableCell>

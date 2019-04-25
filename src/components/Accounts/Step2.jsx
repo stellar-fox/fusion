@@ -40,7 +40,7 @@ import { signingMethod as sm } from "../../redux/Keys"
  * @returns {React.ReactElement}
  */
 const Step2 = ({account, accountId, classes, name, signingMethod}) =>
-    
+
     <div className="flex-box-col">
         <Typography
             style={{ margin: "0 0 1rem 0" }}
@@ -90,7 +90,7 @@ const Step2 = ({account, accountId, classes, name, signingMethod}) =>
         </Table>
         <Typography
             style={{ margin: "1rem 0" }}
-            variant="h4"
+            variant="body2"
         >
             Please make sure the information in the above table is
             correct and click <span className="cursive">FINISH

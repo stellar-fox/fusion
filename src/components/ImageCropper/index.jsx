@@ -234,7 +234,7 @@ export default compose(
                             variant="outlined" color="secondary"
                         >Upload Custom Photo</GenericButton>
                         <Typography style={{ marginBottom: "0.5em" }}
-                            variant="h3"
+                            variant="caption"
                         >
                             Maximum size: 100kb
                         </Typography>

@@ -73,7 +73,7 @@ export default func.compose(
                             }} className="flex-box-col space-between m-t"
                             >
                                 <div className="flex-box-col">
-                                    <Typography variant="h4">
+                                    <Typography variant="caption">
                                         Did you forget password?
                                     </Typography>
                                     <Button
@@ -87,7 +87,7 @@ export default func.compose(
                                     >Reset Password</Button>
                                 </div>
                                 <div className="flex-box-col">
-                                    <Typography variant="h4">
+                                    <Typography variant="caption">
                                         Don't have an account yet?
                                     </Typography>
                                     <Button
@@ -116,7 +116,7 @@ export default func.compose(
                     wrap={"nowrap"}
                 >
                     <Grid item>
-                        {loading && <Loader infoMessage="Loading ..." />}                            
+                        {loading && <Loader infoMessage="Loading ..." />}
                         <Paper elevation={2} className={classes.loginPaper}>
                             <Fade in={!loading}><div>
                                 <UserLogin />
@@ -125,7 +125,7 @@ export default func.compose(
                                 }} className="flex-box-row space-between m-t"
                                 >
                                     <div className="flex-box-col">
-                                        <Typography variant="h4">
+                                        <Typography variant="caption">
                                             Did you forget password?
                                         </Typography>
                                         <Button
@@ -139,7 +139,7 @@ export default func.compose(
                                         >Reset Password</Button>
                                     </div>
                                     <div className="flex-box-col">
-                                        <Typography variant="h4">
+                                        <Typography variant="caption">
                                             Don't have an account yet?
                                         </Typography>
                                         <Button

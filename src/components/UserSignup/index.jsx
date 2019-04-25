@@ -74,7 +74,7 @@ export default compose(
         // ...
         constructor (props) {
             super(props)
-            this.props.setDataLoading() 
+            this.props.setDataLoading()
         }
 
 
@@ -171,7 +171,7 @@ export default compose(
 
                 // clear reCaptcha token upon signup from Redux tree
                 await this.props.toggleRecaptchaToken(string.empty())
-                
+
             } catch (error) {
 
                 // reset button and progress bar
@@ -293,7 +293,7 @@ export default compose(
                                 marginBottom: "1rem",
                                 opacity: 0.5,
                             }}
-                            variant="h4"
+                            variant="caption"
                         >
                             {reCaptchaError}
                         </Typography>
@@ -326,7 +326,7 @@ export default compose(
                             marginTop: "0.5rem",
                             opacity: 0.5,
                         }}
-                        variant="h4"
+                        variant="caption"
                     >
                         {this.state.statusMessage}
                     </Typography>

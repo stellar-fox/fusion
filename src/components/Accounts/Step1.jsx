@@ -118,7 +118,7 @@ const Step1 = ({ classes, signingMethod, setSigningMethod }) => <Grow in={true}>
                     <div className="flex-box-col"><Fade in timeout={{ enter: 700, exit: 300 }}>
                         <Typography
                             style={{ marginTop: "1rem" }}
-                            variant="h4"
+                            variant="body2"
                         >
                             Your account will be secured by
                             multisignature mechanism and you will have

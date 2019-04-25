@@ -35,7 +35,7 @@ import { handleAccountIdInput } from "../../actions/recipes/signup"
 const InputAccountId = ({
     accountId, classes, error, errorMessage, handleAccountIdInput,
 }) => <Fade in timeout={{ enter: 700, exit: 300 }}><div className="flex-box-col">
-    <Typography style={{ marginTop: "1rem" }} variant="h4">
+    <Typography style={{ marginTop: "1rem" }} variant="subtitle2">
         This option will attach two additional signers to
         your bank account. When you provide signed transaction,
         it will be verified against multisignature set.

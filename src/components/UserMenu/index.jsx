@@ -94,11 +94,8 @@ class UserMenu extends Component {
                 >
                     <MenuItem disabled component="div" className={classes.menuHeader}>
                         <div>
-                            <Typography variant="body2" noWrap>
+                            <Typography variant="subtitle2" noWrap>
                                 {displayName}
-                            </Typography>
-                            <Typography variant="h4" noWrap>
-                                Bank Owner
                             </Typography>
                         </div>
                     </MenuItem>

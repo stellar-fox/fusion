@@ -72,7 +72,7 @@ export default compose(
                                 className="flex-box-col space-between m-t"
                             >
                                 <div className="flex-box-col">
-                                    <Typography variant="h4">
+                                    <Typography variant="caption">
                                         Already have an account?
                                     </Typography>
                                     <Button
@@ -108,7 +108,7 @@ export default compose(
                                     className="flex-box-row m-t"
                                 >
                                     <div className="flex-box-col">
-                                        <Typography variant="h4">
+                                        <Typography variant="caption">
                                             Already have an account?
                                         </Typography>
                                         <Button

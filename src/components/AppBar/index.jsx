@@ -128,10 +128,10 @@ export default compose(
                                         src={logo} alt="logo"
                                     />
                                     <div className="flex-box-col">
-                                        <Typography variant="h1">
+                                        <Typography variant="h6">
                                             {env.appVisName}
                                         </Typography>
-                                        <Typography variant="h4">
+                                        <Typography variant="caption">
                                             <span className="yellow-dark">
                                                 v.{env.appVersion}
                                             </span>

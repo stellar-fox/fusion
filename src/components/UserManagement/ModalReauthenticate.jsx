@@ -32,7 +32,7 @@ const ModalDeleteAccount = ({
         errorMessage: string.empty(),
     })
 
-    
+
     const setPassword = (e) => {
         toggleError(string.empty())
         setState({
@@ -88,7 +88,7 @@ const ModalDeleteAccount = ({
                         marginBottom: "1rem",
                         opacity: 0.5,
                     }}
-                    variant="h4"
+                    variant="body2"
                 >
                     {reCaptchaError}
                 </Typography>

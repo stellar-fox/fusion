@@ -46,6 +46,9 @@ import {
 import ModalReauthenticate from "./ModalReauthenticate"
 
 
+
+
+
 // <Profile> component
 export default compose(
     withStyles((theme) => ({
@@ -276,7 +279,7 @@ export default compose(
         handleDeleteAccount = () => {
             this.props.toggleModal(modalNames.CONFIRM_DELETE_ACCOUNT, true)
         }
-        
+
 
         // ...
         reAuthenticate = async () => {
@@ -328,7 +331,7 @@ export default compose(
         render = () => (
             ({ classes, confirmDialogVisible, countDemo, countReal, email,
                 photoUrl, uid, width }) => <Fragment>
-                
+
                 <ConfirmDialog
                     dialogVisible={this.state.dialogReAuthVisible}
                     onOk={this.reAuthenticate}
@@ -387,19 +390,20 @@ export default compose(
                     "flex-box-col" : "flex-box-row space-around"}
                 >
                     <div>
-                        <Typography variant="subtitle1">
+
+                        {/* <Typography variant="subtitle1">
                             Manage user profile data here.
-                        </Typography>
+                        </Typography> */}
 
                         <div className="flex-box-row items-centered m-t m-b">
                             {photoUrl ? <PhotoAvatar src={photoUrl} /> :
                                 <Gravatar email={email} />}
 
                             <div className="flex-box-col m-l-small">
-                                <Typography variant="h4">
-                                    USER ID
+                                <Typography variant="subtitle1">
+                                    User ID
                                 </Typography>
-                                <Typography variant="h3">
+                                <Typography variant="overline">
                                     {uid}
                                 </Typography>
                             </div>
@@ -421,16 +425,26 @@ export default compose(
                                 endAdornment={
                                     <InputAdornment position="end">
                                         {this.state.emailVerified ?
-                                            <Tooltip classes={{ tooltip: classes.tooltip }} title="Email was verified."><VerifiedUserRounded
-                                                classes={{
-                                                    root: classes.iconVerified,
-                                                }}
-                                            /></Tooltip> :
-                                            <Tooltip classes={{ tooltip: classes.tooltip }} title="Please verify your email."><NotificationImportantRounded
-                                                classes={{
-                                                    root: classes.iconNotVerified,
-                                                }}
-                                            /></Tooltip>
+                                            <Tooltip
+                                                classes={{ tooltip: classes.tooltip }}
+                                                title="Email was verified."
+                                            >
+                                                <VerifiedUserRounded
+                                                    classes={{
+                                                        root: classes.iconVerified,
+                                                    }}
+                                                />
+                                            </Tooltip> :
+                                            <Tooltip
+                                                classes={{ tooltip: classes.tooltip }}
+                                                title="Please verify your email."
+                                            >
+                                                <NotificationImportantRounded
+                                                    classes={{
+                                                        root: classes.iconNotVerified,
+                                                    }}
+                                                />
+                                            </Tooltip>
                                         }
                                     </InputAdornment>
                                 }
@@ -470,7 +484,7 @@ export default compose(
                         </Button>
                         <br /><br />
                         <Typography style={{ paddingBottom: "1em" }}
-                            variant="h4"
+                            variant="subtitle1"
                         >
                             Verification link didn't arrive?
                         </Typography>
@@ -480,7 +494,7 @@ export default compose(
                         >Send Link Again</GenericButton>
                         <br /><br />
                         <Typography style={{ paddingBottom: "1em" }}
-                            variant="h4"
+                            variant="subtitle1"
                         >
                             Forgot password?
                         </Typography>
@@ -493,7 +507,7 @@ export default compose(
                     <div >
                         <div className="m-t-large">
                             <Typography style={{ paddingBottom: "1em" }}
-                                variant="h4"
+                                variant="subtitle1"
                             >
                                 Don't like Gravatar photo?
                             </Typography>
@@ -502,7 +516,7 @@ export default compose(
                         {photoUrl &&
                             <div className="m-t">
                                 <Typography style={{ paddingBottom: "1em" }}
-                                    variant="h4"
+                                    variant="subtitle1"
                                 >
                                     Bored with your Avatar?
                                 </Typography>
@@ -517,7 +531,7 @@ export default compose(
 
                         <div className="m-t">
                             <Typography style={{ paddingBottom: "1em" }}
-                                variant="h4"
+                                variant="subtitle1"
                             >
                                 Wanna leave?
                             </Typography>
@@ -540,21 +554,21 @@ export default compose(
                         </Typography>
 
                         <div className="m-t m-b flex-box-row">
-                            <Typography className="p-r" variant="h4">
+                            <Typography className="p-r" variant="subtitle2">
                                 Number of Real Accounts:
                             </Typography>
                             <AnimatedValue
                                 valueToAnimate={countReal}
-                                variant="h4"
+                                variant="subtitle2"
                             />
                         </div>
                         <div className="m-t m-b flex-box-row">
-                            <Typography className="p-r" variant="h4">
+                            <Typography className="p-r" variant="subtitle2">
                                 Number of Demo Accounts:
                             </Typography>
                             <AnimatedValue
                                 valueToAnimate={countDemo}
-                                variant="h4"
+                                variant="subtitle2"
                             />
                         </div>
                     </div>

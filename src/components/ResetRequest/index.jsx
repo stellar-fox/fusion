@@ -95,7 +95,7 @@ export default compose(
 
         // ...
         sendPasswordResetLink = async () => {
-            
+
             this.setState({
                 statusMessage: string.empty(),
             })
@@ -199,12 +199,12 @@ export default compose(
                             marginBottom: "1rem",
                             opacity: 0.5,
                         }}
-                        variant="h4"
+                        variant="body2"
                     >
                         {reCaptchaError}
                         {this.state.statusMessage}
                     </Typography>
-                    
+
                     <Button
                         fullWidth
                         color="yellowDark"

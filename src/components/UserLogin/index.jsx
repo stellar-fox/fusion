@@ -123,7 +123,7 @@ export default compose(
                     fullWidth
                     color="green"
                     disabled={
-                        reCaptchaVisible && !reCaptchaToken ? true : 
+                        reCaptchaVisible && !reCaptchaToken ? true :
                             userLogin.disabled
                     }
                     onClick={() => doAuthenticate()}
@@ -141,7 +141,7 @@ export default compose(
                         marginTop: "0.5rem",
                         opacity: userLogin.progressBarOpacity - 0.5,
                     }}
-                    variant="h4"
+                    variant="body2"
                 >
                     {userLogin.statusMessage}
                 </Typography>
@@ -156,12 +156,12 @@ export default compose(
                             marginBottom: "1rem",
                             opacity: 0.5,
                         }}
-                        variant="h4"
+                        variant="body2"
                     >
                         {this.props.reCaptchaError}
                     </Typography>
                 }
-                
+
             </div>
         )(this.props)
     }

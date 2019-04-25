@@ -139,12 +139,12 @@ export default compose(
                     />
                     <CardContent classes={{ root: classes.cardContent }}>
                         <div>
-                            <Typography variant="h4">
+                            <Typography variant="subtitle1">
                                 Current Balance
                             </Typography>
                             {this.renderBalance(stellarAccounts[accountId])}
                         </div>
-                        
+
                     </CardContent>
 
                     <CardActions className={classes.actions} disableActionSpacing>

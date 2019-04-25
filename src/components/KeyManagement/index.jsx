@@ -3,7 +3,7 @@ import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
 import { Redirect, Route } from "react-router-dom"
-import { Paper, Typography } from "@material-ui/core"
+import { Paper } from "@material-ui/core"
 import { ConnectedSwitch as Switch, resolvePath } from "../FusionRouter"
 import ShambhalaPureCard from "./ShambhalaPureCard"
 import ShambhalaLedgerCard from "./ShambhalaLedgerCard"
@@ -11,6 +11,7 @@ import ShambhalaScepticCard from "./ShambhalaScepticCard"
 import withWidth, { isWidthDown } from "@material-ui/core/withWidth"
 import Snacky from "../../lib/mui-v1/Snacky"
 import Fade from "@material-ui/core/Fade"
+import ViewTitle from "../ViewTitle"
 
 
 
@@ -45,18 +46,16 @@ export default compose(
         // ...
         render = () => (
             ({ classes, width }) => <Switch><Route exact path={this.rr(".")}>
-                        
+
                 <Fade in timeout={{ enter: 700, exit: 300 }}>
                     <Paper className={classes.paperCanvas}>
                         <Snacky />
-                        
+
                         <Fragment>
-                            <Typography variant="h6">
-                                Key Management
-                            </Typography>
-                            <Typography variant="h4">
-                                Manage additional keys with your account.
-                            </Typography>
+                            <ViewTitle
+                                title="Key Management"
+                                subtitle="Manage additional keys with your account."
+                            />
                             <div style={{
                                 position: "relative",
                             }} className={isWidthDown("md", width) ?
@@ -76,7 +75,7 @@ export default compose(
                                 <ShambhalaScepticCard />
                             </div>
                         </Fragment>
-                            
+
                     </Paper>
                 </Fade>
             </Route>

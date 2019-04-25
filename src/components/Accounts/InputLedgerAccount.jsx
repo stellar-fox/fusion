@@ -45,8 +45,8 @@ const InputLedgerAccount = ({
 
     return <Fade in timeout={{ enter: 700, exit: 300 }}>
         <div className="flex-box-col">
-        
-            <Typography style={{ marginTop: "1rem" }} variant="h4">
+
+            <Typography style={{ marginTop: "1rem" }} variant="subtitle2">
                 Associate your <span className="cursive">
                 Ledger Nano S</span> device with your bank.
                 Gives you convenience of signing transactions
@@ -64,7 +64,7 @@ const InputLedgerAccount = ({
                 } label="Use Default Account"
                 />
             </div>
-            
+
             {!useDefaultAccount &&
                 <div className="flex-box-row">
                     <TextInput
@@ -79,11 +79,11 @@ const InputLedgerAccount = ({
                     />
                 </div>
             }
-            
+
         </div>
     </Fade>
 }
-    
+
 
 
 

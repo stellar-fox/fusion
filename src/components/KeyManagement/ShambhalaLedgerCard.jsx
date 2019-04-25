@@ -90,7 +90,7 @@ export default compose(
                         />
                         }
                         <CardContent>
-                            <Typography gutterBottom variant="h1" component="h2">
+                            <Typography gutterBottom variant="h5" component="h2">
                                 Shambhala Ledger
                             </Typography>
                             <Typography component="p">
