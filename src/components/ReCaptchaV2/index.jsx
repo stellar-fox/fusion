@@ -29,7 +29,7 @@ const ReCaptchaV2 = ({
 }) => {
 
     const reCaptchaRef = React.useRef(null),
-        
+
         // callback for successful reCaptcha solution, calls thunk action
         // and passes custom onVerify function from widget prop
         handleChange = (value) => reCaptchaSolved(value, onVerify),
@@ -38,7 +38,7 @@ const ReCaptchaV2 = ({
         // clear token from Redux tree when the reCaptcha expires
         handleExpired = () => toggleRecaptchaToken(string.empty()),
 
-        
+
         // set proper Redux state to signify widget error
         handleErrored = () =>
             toggleRecaptchaError("reCaptcha error. Please try again."),

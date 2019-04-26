@@ -9,10 +9,10 @@ import {
     Button,
     Fade,
     Grid,
-    Hidden,
     Paper,
     Typography,
 } from "@material-ui/core"
+import withWidth, { isWidthUp } from "@material-ui/core/withWidth"
 import ResetRequest from "../ResetRequest"
 import { Link } from "react-router-dom"
 import { fade } from "@material-ui/core/styles/colorManipulator"
@@ -43,6 +43,7 @@ export default compose(
             borderRadius: "3px",
         },
     })),
+    withWidth(),
     connect(
         (state) => ({
             loading: state.App.loading,
@@ -51,80 +52,47 @@ export default compose(
 
         }, dispatch)
     )
-)(({ classes, loading }) => {
+)(({ classes, loading, width }) => {
 
-    return (
-        <Fragment>
-            <Hidden mdUp>
-                <Grid
-                    container
-                    direction={"column"}
-                    justify={"space-around"}
-                    alignItems={"center"}
-                    wrap={"nowrap"}
+    const children = <Fragment>
+        {loading && <Loader infoMessage="Loading ..." />}
+        <Fade in={!loading}>
+            <div>
+                <ResetRequest />
+                <div style={{ opacity: "0.7" }}
+                    className="flex-box-row space-between m-t-large"
                 >
-                    <Grid item>
-                        {loading && <Loader infoMessage="Loading ..." />}
-                        <Fade in={!loading}><div>
-                            <ResetRequest />
-                            <div style={{ opacity: "0.7" }}
-                                className="flex-box-col space-between m-t-large"
-                            >
-                                <div className="flex-box-col">
-                                    <Typography variant="caption">
-                                        Already have an account?
-                                    </Typography>
-                                    <Button
-                                        size="small"
-                                        component={Link}
-                                        to="/"
-                                        color="secondary"
-                                        className={classes.button}
-                                        variant="outlined"
-                                    >Log In</Button>
-                                </div>
-                            </div>
-                        </div></Fade>
-                    </Grid>
-                </Grid>
-            </Hidden>
+                    <div className="flex-box-col">
+                        <Typography variant="caption">
+                            Already have an account?
+                        </Typography>
+                        <Button
+                            size="small"
+                            component={Link}
+                            to="/"
+                            color="secondary"
+                            className={classes.button}
+                            variant="outlined"
+                        >Log In</Button>
+                    </div>
+                </div>
+            </div>
+        </Fade>
+    </Fragment>
 
-            <Hidden smDown>
-                <Grid
-                    className={classes.container}
-                    container
-                    direction={"column"}
-                    justify={"space-around"}
-                    alignItems={"center"}
-                    wrap={"nowrap"}
-                >
-                    <Grid item>
-                        <Paper elevation={2} className={classes.loginPaper}>
-                            {loading && <Loader infoMessage="Loading ..." />}
-                            <Fade in={!loading}><div>
-                                <ResetRequest />
-                                <div style={{ opacity: "0.7" }}
-                                    className="flex-box-row space-between m-t-large"
-                                >
-                                    <div className="flex-box-col">
-                                        <Typography variant="caption">
-                                            Already have an account?
-                                        </Typography>
-                                        <Button
-                                            size="small"
-                                            component={Link}
-                                            to="/"
-                                            color="secondary"
-                                            className={classes.button}
-                                            variant="outlined"
-                                        >Log In</Button>
-                                    </div>
-                                </div>
-                            </div></Fade>
-                        </Paper>
-                    </Grid>
-                </Grid>
-            </Hidden>
-        </Fragment>
-    )
+    return <Grid
+        container
+        direction={"column"}
+        justify={"space-around"}
+        alignItems={"center"}
+        wrap={"nowrap"}
+    >
+        <Grid item>
+            {isWidthUp("md", width) ?
+                <Paper elevation={2} className={classes.loginPaper}>
+                    {children}
+                </Paper> : children
+            }
+        </Grid>
+    </Grid>
 })

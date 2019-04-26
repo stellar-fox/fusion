@@ -141,7 +141,7 @@ export default compose(
                         marginTop: "0.5rem",
                         opacity: userLogin.progressBarOpacity - 0.5,
                     }}
-                    variant="body2"
+                    variant="caption"
                 >
                     {userLogin.statusMessage}
                 </Typography>
@@ -156,7 +156,7 @@ export default compose(
                             marginBottom: "1rem",
                             opacity: 0.5,
                         }}
-                        variant="body2"
+                        variant="caption"
                     >
                         {this.props.reCaptchaError}
                     </Typography>

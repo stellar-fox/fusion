@@ -3,7 +3,6 @@ import { bindActionCreators, compose } from "redux"
 import { connect } from "react-redux"
 import { withStyles } from "@material-ui/core/styles"
 import { Redirect, Route } from "react-router-dom"
-import withWidth from "@material-ui/core/withWidth"
 import { Paper } from "@material-ui/core"
 import { ConnectedSwitch as Switch, resolvePath } from "../FusionRouter"
 import { action as AccountsActions } from "../../redux/Accounts"
@@ -59,7 +58,6 @@ export default compose(
             setDataLoaded,
         }, dispatch)
     ),
-    withWidth(),
 )(
     class extends Component {
 
