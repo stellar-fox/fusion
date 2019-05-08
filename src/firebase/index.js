@@ -264,7 +264,7 @@ export const updateUserProfile = (...args) =>
  */
 export const reauthenticate = (password) =>
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
-        .then((_) => firebase.auth().signInAndRetrieveDataWithCredential(
+        .then((_) => firebase.auth().signInWithCredential(
             new firebase.auth.EmailAuthProvider.credential(
                 firebase.auth().currentUser.email, password
             ))
