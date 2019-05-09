@@ -50,7 +50,6 @@ export default compose(
         state = {
             disabled: false,
             src: null,
-            pixelCrop: null,
             crop: {
                 x: 20,
                 y: 20,
@@ -112,19 +111,19 @@ export default compose(
 
 
         // ...
-        onCropChange = (crop, pixelCrop) => {
-            this.setState({ crop, pixelCrop })
+        onCropChange = (crop) => {
+            this.setState({ crop })
         }
 
 
         // ...
-        onCropComplete = (crop, pixelCrop) => {
-            this.setState({ crop, pixelCrop })
+        onCropComplete = (crop) => {
+            this.setState({ crop })
         }
 
 
         // ...
-        onImageLoaded = (image, pixelCrop) => {
+        onImageLoaded = (image) => {
             this.props.setCropStatus(true)
             this.setState({
                 crop: makeAspectCrop(
@@ -138,28 +137,30 @@ export default compose(
                     image.naturalWidth / image.naturalHeight
                 ),
                 image,
-                pixelCrop,
             })
         }
 
 
         // ...
-        getCroppedImage = (image, pixelCrop) => {
+        getCroppedImage = (image, crop) => {
             const canvas = document.createElement("canvas")
-            canvas.width = pixelCrop.width
-            canvas.height = pixelCrop.height
             const ctx = canvas.getContext("2d")
+            const scaleX = image.naturalWidth / image.width
+            const scaleY = image.naturalHeight / image.height
+            canvas.width = crop.width
+            canvas.height = crop.height
+
 
             ctx.drawImage(
                 image,
-                pixelCrop.x,
-                pixelCrop.y,
-                pixelCrop.width,
-                pixelCrop.height,
+                crop.x * scaleX,
+                crop.y * scaleY,
+                crop.width * scaleX,
+                crop.height * scaleY,
                 0,
                 0,
-                pixelCrop.width,
-                pixelCrop.height
+                crop.width,
+                crop.height
             )
 
             return canvas.toDataURL("image/jpeg", 0.8)
@@ -181,7 +182,7 @@ export default compose(
             })
             await this.props.setCropStatus(false)
             const imgData = this.getCroppedImage(
-                this.state.image, this.state.pixelCrop
+                this.state.image, this.state.crop
             )
             try {
                 const avatarRef = storageRef().child(
